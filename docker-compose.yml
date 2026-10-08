@@ -1,0 +1,14 @@
+version: '3.8'
+
+services:
+  rakshak-console:
+    build: .
+    container_name: rakshak-defense-console
+    ports:
+      - "8000:8000"
+    restart: unless-stopped
+    volumes:
+      - ./backend/rakshak.db:/app/backend/rakshak.db
+      - ./backend/uploads:/app/backend/uploads
+    environment:
+      - PYTHONUNBUFFERED=1

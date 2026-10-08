@@ -1,0 +1,35 @@
+# Python virtual environments & bytecode
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+
+# Node dependencies & local builds
+node_modules/
+frontend/node_modules/
+frontend/dist/
+
+# Heavy raw datasets (Prevent pushing 14GB of raw satellite rasters into Docker)
+train_images/
+sentinal2/
+sentinel2/
+IMAGES/
+
+# Heavy intermediate training checkouts (Keep only runs/train/ weights)
+runs/xview_yolo/
+runs/xview_vessel/
+
+# Git & IDE
+.git/
+.gitignore
+.dockerignore
+.idea/
+.vscode/
+
+# Temp files & documents
+*.docx
+*.tmp
+backend/rakshak.db-shm
+backend/rakshak.db-wal

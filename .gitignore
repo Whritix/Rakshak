@@ -1,0 +1,43 @@
+# Python
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.pytest_cache/
+
+# Node
+node_modules/
+frontend/node_modules/
+
+# Uploads / Test Data (Keep uploads folder, ignore files)
+backend/uploads/*
+!backend/uploads/.gitkeep
+
+# Large Datasets (> 100MB blocked by GitHub)
+train_images/
+train_labels/
+val_images/
+sentinal2/
+sentinel2/
+IMAGES/
+data/
+database/
+Ultralytics/
+weights/
+
+# Intermediate YOLO training caches
+runs/xview_yolo/
+runs/xview_vessel/
+runs/detect/
+
+# Database temporary WAL locks
+backend/rakshak.db-shm
+backend/rakshak.db-wal
+
+# OS / Editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/

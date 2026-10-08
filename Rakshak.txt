@@ -1,0 +1,473 @@
+RAKSHAK
+NAVAL / ARMY GEOSPATIAL OBJECT DETECTION - PROJECT HANDOFF
+Generated: 29 September 2026
+Project folder: C:\Users\awhri\OneDrive\Desktop\DEF
+
+======================================================================
+1. PROJECT PROBLEM STATEMENT
+======================================================================
+
+Problem: Leverage AI to enhance naval (and army) analysts' ability to process
+geospatial and multimodal data — satellite imagery, maritime sensor feeds,
+drone footage, ground sensor reports — enabling faster threat detection and
+mission planning within limited shipboard / field-deployed resources and tight
+budgets.
+
+The intended full system could combine:
+- Earth-observation imagery: Sentinel-1 SAR, Sentinel-2 optical, Landsat,
+  and commercial high-resolution imagery such as Maxar or Planet.
+- Public overhead-image benchmarks: xView, xView3-SAR, SpaceNet, DOTA, FMoW.
+- Maritime data: AIS tracks, radar tracks, satellite vessel detections, and
+  simulated sensor feeds.
+- Army data: drone/FMVs, ground-sensor reports, text reports, terrain, and GIS.
+- Fusion metadata: timestamps, georegistration, sensor calibration, and source.
+
+This project is deliberately scoped as a college hackathon prototype. It is
+not a complete operational military or maritime system. It currently provides
+a local xView object-detection demonstration and a separate Sentinel-2/Pipe V4
+data explorer. It does not determine whether a detected object is a threat.
+
+======================================================================
+2. CURRENT PROJECT STATUS
+======================================================================
+
+WORKING HACKATHON FEATURES
+- Local dataset audit and xView image/label explorer.
+- Local vessel-only YOLO11n detector integrated into the xView explorer.
+- Browser overlay distinguishes dataset labels (cyan) from model candidates
+  (amber); confidence threshold can be adjusted.
+- Separate Sentinel-2 browser for local GeoTIFF previews and footprints.
+- Separate Pipe V4 browser that plots downloaded vessel detections inside a
+  selected Sentinel-2 image footprint.
+- A synthetic coastal operations dashboard at /dashboard for illustrating an
+  analyst queue and simulated tracks.
+- Training, dataset preparation, single-image inference, audit, and setup
+  documentation.
+
+NOT COMPLETE / NOT VERIFIED
+- No India-specific vessel model or independent India evaluation set.
+- No model trained or validated on the supplied Sentinel-2 pixels.
+- No live AIS, radar, drone, ground sensor, classified, or operational feeds.
+- Pipe V4 points are displayed as provider detections; they are not outputs
+  from the locally trained model.
+- The coastal dashboard is synthetic and is not connected to xView, Pipe V4,
+  the vessel model, or live feeds.
+- No review-history database, user authentication, team collaboration,
+  deployment hardening, Jetson/TensorRT benchmark, disconnected-mode test,
+  or operational readiness evaluation.
+
+The current vessel model improves the xView tile benchmark but still misses
+many vessels. It must be treated as a visual-review aid, not a dependable
+detector. Its confidence score is not a calibrated probability.
+
+======================================================================
+3. WHAT HAS BEEN DONE, IN ORDER
+======================================================================
+
+A. PROJECT AND DATA AUDIT
+- Inspected the project folders, frontend, image data, annotations, and CSVs.
+- Added a local Python HTTP server and pages for the dashboard, xView explorer,
+  and Sentinel-2 explorer.
+- The xView audit reads the GeoJSON and discovers real TIFF files recursively.
+- Added safeguards to ignore macOS archive artifacts such as __MACOSX folders
+  and ._* AppleDouble sidecar files. Those files can look like TIFFs but are
+  not actual image rasters; ignoring them prevents the prior TIFF read error.
+- Earlier cleanup removed 249 retained-validation TIFFs outside a broad India
+  coordinate extent, freeing approximately 7.10 GiB. The remaining 32
+  validation TIFFs were kept. The xView dataset itself is not India-specific.
+
+B. XVIEW DATA EXPLORER
+- Shows the supplied overhead TIFF, scene ID, dimensions, object counts,
+  numeric xView class labels, and polygon-derived bounding boxes.
+- Supports train/validation selection, class filtering, image search, and
+  keyboard scene navigation.
+- Reports image/label coverage. It does not claim that xView is Sentinel-2 or
+  that its labels represent Indian maritime conditions.
+
+C. SATELLITE DETECTION TRAINING PIPELINE
+- satellite_detector.py converts xView annotations into YOLO labels, cuts
+  overlapping 1024-pixel tiles, and separates source scenes between training
+  and validation to avoid putting tiles from one scene in both splits.
+- Groups xView's detailed source classes into Vessel, Aircraft, Vehicle, and
+  Infrastructure for the initial multi-class demonstration.
+- Added a separate vessel-only dataset preparation command. It keeps vessel-
+  positive training tiles and samples hard-negative (no vessel) tiles at a
+  2:1 negative-to-positive tile ratio, preserving the pre-existing scene split.
+- Added configurable training and inference options, model-path validation,
+  tile/overlap validation, confidence/IoU validation, output-folder creation,
+  and a maximum-detections setting.
+- Inference uses overlapping windows and global duplicate suppression to
+  reduce duplicate boxes between neighboring tiles.
+- Ultralytics warned that a tile contains more than 300 objects. The training
+  run automatically adjusted validation max_det to 314; the code now sets a
+  500-box per-tile ceiling for future training and inference.
+
+D. MODEL TRAINING AND RESULTS
+- Initial four-class YOLO11n model trained for 8 epochs on the local xView
+  subset. Overall xView validation: precision 0.426, recall 0.357, mAP@50
+  0.332, mAP@50:95 0.160. Vessel mAP@50 was only 0.027, so this checkpoint is
+  not recommended for vessel detections.
+- Vessel-focused YOLO11n initial run used 897 train tiles (299 vessel-positive,
+  598 sampled negative) and 183 validation tiles (61 positive, 122 negative),
+  containing 449 vessel instances. Run used 1024-pixel images, batch 2, CUDA
+  device 0 on an NVIDIA GeForce RTX 4060 Laptop GPU with 8 GiB reported VRAM.
+- Initial focused-model best checkpoint:
+  runs\train\xview_vessel_1024\weights\best.pt
+  Its best epoch (25 of 30 maximum) scored precision 0.469, recall 0.238,
+  mAP@50 0.210, and mAP@50:95 0.098.
+- Extended fine-tuning started from that vessel checkpoint, with 50 epochs
+  maximum and patience 12. It stopped early at epoch 13; the selected best
+  epoch was epoch 1. Current checkpoint:
+  runs\train\xview_vessel_1024_extended\weights\best.pt
+  Best xView validation: precision 0.389, recall 0.347, mAP@50 0.277,
+  mAP@50:95 0.115. This is the checkpoint used by the browser explorer.
+- Single-scene spot check, scene 109.tif, has 43 vessel labels. At confidence
+  threshold 0.25, the current checkpoint returned 9 candidates, of which 5
+  matched a label at IoU >= 0.5 (precision 0.56, recall 0.12). At 0.05 it
+  returned 33 candidates, with 8 matches (precision 0.24, recall 0.19).
+  This is one source scene and not a broad evaluation; low recall remains a
+  major limitation.
+- A sample annotated prediction image is saved at:
+  runs\train\xview_vessel_1024_extended\validation_scene_109_detections.jpg
+
+E. BROWSER INFERENCE
+- Added /api/detect to dataset_explorer.py. It lazily loads the local vessel
+  checkpoint, reads the selected TIFF, performs tiled inference, runs NMS,
+  and returns candidate boxes with confidence scores.
+- Added Run vessel model and threshold controls in dataset_explorer.html.
+- Corrected client-side state handling so a model response for an old scene
+  cannot be overlaid on a different scene after the user changes selection.
+- Corrected the image frame sizing so bounding boxes remain aligned with the
+  displayed image as the viewport changes.
+- Added visible notes about the model's held-out tile scores, its lack of
+  Sentinel-2/India validation, and uncalibrated confidence scores.
+
+F. SENTINEL-2 AND PIPE V4 BROWSER
+- Reads local Sentinel-2 GeoTIFFs, previews true-color and individual bands,
+  displays image metadata/footprint when GeoTIFF tags are available, and
+  catalogs Pipe V4 CSVs.
+- The user-requested “Load detections” action streams a selected CSV, filters
+  rows by the selected image's geographic bounds, plots coordinates, and
+  displays available scores, timestamps, inferred vessel attributes, and
+  optional provider AIS-match fields.
+- This is a published-detection overlay. It is not locally trained AI output,
+  and a calendar-month match is not proof of exact scene/time alignment.
+
+G. DEMO SERVER AND DOCUMENTATION
+- Local Python ThreadingHTTPServer binds to 127.0.0.1 by default.
+- Added/updated readme, DETECTOR_MVP.md, TRAINING_REPORT.md, and
+  VESSEL_TRAINING_REPORT.md.
+- Pinned the currently tested Python package versions in
+  requirements-detector.txt. PyTorch wheel selection remains hardware-specific.
+- Latest local checks: Python syntax compilation passed; root and /sentinel2
+  pages returned HTTP 200; live /api/detect returned 9 detections on scene
+  109.tif using the current extended checkpoint; invalid confidence returned
+  HTTP 400.
+
+======================================================================
+4. LOCAL DATA INVENTORY (AS FOUND 29 SEP 2026)
+======================================================================
+
+XVIEW IMAGERY AND LABELS
+- train_images/: 379 files total (about 9.95 GiB); 378 valid TIFF images are
+  discoverable after ignoring metadata sidecars/duplicates.
+- val_images/: 32 retained TIFFs (about 0.81 GiB), without xView labels in the
+  supplied GeoJSON.
+- train_labels/xView_train.geojson: about 0.347 GiB; 601,937 labeled features
+  across 847 image IDs.
+- All 378 local train TIFFs have labels; 469 label image IDs have no matching
+  local train TIFF; zero supplied label IDs occur in the retained validation
+  TIFFs.
+- These xView files are overhead imagery. Do not assume they are India-only.
+
+SENTINEL-2 IMAGES
+- IMAGES/Browser_images/: 14 GeoTIFFs, about 25 MiB in total.
+- Two acquisition dates represented: 28 April 2026 and 31 May 2026.
+- For each date, files include B02, B03, B04, B08, B11, B12 and True_color.
+- No Sentinel-1 SAR scenes were found in this local image folder.
+- These browser images are for viewing/comparison; the YOLO vessel model was
+  not trained or scored on these Sentinel-2 pixels.
+
+PIPE V4 FILES
+- Folder spelling in the project is sentinal2/ (keep this spelling unless
+  changing the code's configured path too).
+- Six local monthly CSVs, about 3.92 GiB total:
+  sentinel2_vessel_detections_pipev4_202602.csv
+  sentinel2_vessel_detections_pipev4_202603.csv
+  sentinel2_vessel_detections_pipev4_202604.csv
+  sentinel2_vessel_detections_pipev4_202606.csv
+  sentinel2_vessel_detections_pipev4_202607.csv
+  sentinel2_vessel_detections_pipev4_202608.csv
+- No May 2026 CSV was found. April CSV and 28-April image share a calendar
+  date, but exact per-detection time/image alignment must be checked.
+- CSVs include detection coordinates and provider-derived scores/fields; some
+  rows have optional MMSI/AIS-match attributes. These files are not raw AIS
+  track histories.
+
+NOT FOUND / NOT AVAILABLE AS A COMPLETE INPUT
+- Complete xView image coverage for all 847 labeled image IDs.
+- India-specific reviewed high-resolution vessel labels and hard negatives.
+- A separate India geographic/time test set.
+- Full raw AIS track history with source/license and timestamps.
+- Sentinel-1 SAR training data; local radar feeds; local drone/FMVs and ground
+  sensor/SIGINT reports; classified operational data.
+
+======================================================================
+5. TECHNOLOGY STACK
+======================================================================
+
+IMPLEMENTED IN THIS HACKATHON BUILD
+- Language/runtime: Python 3.13.9, local virtual environment at .venv.
+- Web server: Python standard-library ThreadingHTTPServer; no external web
+  framework or cloud server is required.
+- Frontend: HTML, CSS, vanilla JavaScript, SVG overlays; no frontend build
+  system required.
+- Raster preview: Pillow; NumPy for 16-bit image display stretching.
+- Object detection: Ultralytics YOLO11n, PyTorch 2.11.0+cu128 in the current
+  machine environment; CUDA device 0 used for training.
+- Current tested Python pins: Ultralytics 8.4.165, Pillow 12.3.0,
+  NumPy 2.5.2 (requirements-detector.txt).
+- Model: one-class Vessel YOLO11n checkpoint, 1024-pixel overlapping crops,
+  256-pixel overlap, per-tile max_det 500, global IoU suppression.
+- Geospatial display: reads available GeoTIFF metadata and uses browser pixel
+  overlays or latitude/longitude plots; no full spatial database is present.
+- All data and inference used by this demo are local to the project machine.
+
+PLANNED / NOT YET IMPLEMENTED FROM THE ORIGINAL CONCEPT
+- GDAL/Rasterio, QGIS, PostGIS, STAC catalog, ESA SNAP SAR processing.
+- Sentinel-1 SAR vessel detector, change detection, xView3-SAR benchmark.
+- DETR, Grounding DINO, SAM, CLIP-style multimodal models, report summarizer.
+- AIS/radar multi-target fusion (Kalman/JPDA), track continuity and ID metrics.
+- Jetson Orin/field edge deployment, ONNX/TensorRT, Triton, MLflow, K3s.
+- Operational geospatial COP using CesiumJS/Kepler.gl and a persistent
+  human-review/mission-planning workflow.
+
+======================================================================
+6. HOW TO RUN THE DEMO
+======================================================================
+
+Open PowerShell in the project folder:
+C:\Users\awhri\OneDrive\Desktop\DEF
+
+Start or restart the local server:
+  .\.venv\Scripts\python.exe .\dataset_explorer.py --host 127.0.0.1 --port 8765
+
+Open these local pages:
+  xView audit, labels, and vessel model: http://127.0.0.1:8765/
+  Simulated coastal dashboard:          http://127.0.0.1:8765/dashboard
+  Sentinel-2 and Pipe V4 explorer:      http://127.0.0.1:8765/sentinel2
+
+xView model use:
+1. Open the root page and choose a scene from the right-hand list.
+2. Keep “Show boxes” selected to see supplied labels (cyan).
+3. Pick a minimum confidence and click “Run vessel model”.
+4. Inspect amber model candidate boxes alongside cyan labels. Try scene 109.tif
+   to reproduce the documented labeled-scene spot check.
+5. Higher thresholds normally show fewer candidates; this changes the
+   precision/recall tradeoff. Scores are not calibrated probabilities.
+
+Sentinel-2/Pipe V4 use:
+1. Open /sentinel2 and choose an image or band.
+2. Select a Pipe V4 monthly CSV and load detections.
+3. Read the timestamp and source scores; confirm temporal alignment before
+   interpreting a location that overlaps a displayed image.
+
+Stop the server with Ctrl+C in the PowerShell window running it.
+
+======================================================================
+7. TRAINING AND INFERENCE COMMANDS
+======================================================================
+
+The local trained checkpoints are already present. Training again is optional.
+The vessel preparation command requires the general xView tile dataset to
+exist and refuses to overwrite a non-empty output folder.
+
+Prepare the general xView tiles (only if they are not prepared already):
+  .\.venv\Scripts\python.exe .\satellite_detector.py prepare
+
+Build a vessel-only data subset (only if runs\xview_vessel is absent/empty):
+  .\.venv\Scripts\python.exe .\satellite_detector.py prepare-vessel
+
+Reproduce the initial vessel run:
+  .\.venv\Scripts\python.exe .\satellite_detector.py train --data .\runs\xview_vessel\data.yaml --name xview_vessel_1024 --weights .\yolo11n.pt --epochs 30 --imgsz 1024 --batch 2 --patience 8 --device 0
+
+Reproduce extended fine-tuning:
+  .\.venv\Scripts\python.exe .\satellite_detector.py train --data .\runs\xview_vessel\data.yaml --name xview_vessel_1024_extended --weights .\runs\train\xview_vessel_1024\weights\best.pt --epochs 50 --imgsz 1024 --batch 2 --patience 12 --device 0
+
+Run the current checkpoint on one TIFF:
+  .\.venv\Scripts\python.exe .\satellite_detector.py detect .\train_images\train_images\109.tif --model .\runs\train\xview_vessel_1024_extended\weights\best.pt --imgsz 1024 --conf 0.25 --max-det 500
+
+Output defaults to a sibling *_detections.jpg file. Use --output to choose a
+different filename. Use --device cpu when no CUDA GPU is available for training.
+
+======================================================================
+8. DATA AND RESOURCES NEEDED NEXT
+======================================================================
+
+HIGHEST PRIORITY - INDIA VESSEL OBJECT DETECTION
+1. High-resolution coastal satellite imagery for the intended Indian regions.
+   Include acquisition date/time, pixel size/GSD, CRS/geotransform, sensor,
+   processing level, cloud/nodata masks, license, and source/provenance.
+2. Human-reviewed pixel bounding boxes (or polygons) for visible vessels in
+   those exact images. Include empty/background chips and hard negatives such
+   as wakes, docks, roofs, clouds, whitecaps, and non-vessel artifacts.
+3. A separate geographic region and/or later collection date held out from
+   training. Do not randomly split adjacent image chips from the same scene
+   across training and final evaluation.
+4. Annotation rules for partially occluded vessels, crowded harbors, vessel
+   classes, minimum size, and uncertain cases.
+
+FOR AIS / MARITIME TRACK ASSOCIATION
+5. Raw AIS points with UTC timestamp, MMSI, latitude/longitude, source,
+   provenance, and redistribution rights. Include enough time history to
+   associate tracks, not only isolated matching fields in a monthly CSV.
+6. Image-to-AIS time window and spatial matching rules, plus known gaps and
+   position uncertainty. AIS is optional for image-only detection.
+
+FOR MULTIMODAL / ARMY EXTENSION
+7. Permission-cleared drone/FMVs, sensor observations, terrain/GIS layers,
+   and synthetic text reports with synchronized timestamps and georegistration.
+   Classified/operational inputs must stay in their approved sovereign,
+   air-gapped environment; none are required for this public-data prototype.
+
+FOR ACCEPTANCE AND EDGE ENGINEERING
+8. Target hardware (GPU/Jetson/CPU), allowed model size, power draw, memory,
+   offline/disconnected behavior, expected image volume, response-time target,
+   and acceptable false-alert/recall thresholds.
+9. Named reviewers who can adjudicate model misses and false positives, and a
+   stable validation/test set that is never used for model tuning.
+
+======================================================================
+9. KPI STATUS AND LIMITATIONS
+======================================================================
+
+KPI / STATUS
+- Detection precision, recall, mAP: measured only on the local xView tile
+  validation split. Current vessel scores: P 0.389, R 0.347, mAP@50 0.277,
+  mAP@50:95 0.115.
+- Dark-vessel detection rate: not measured on xView3-SAR or local SAR data.
+- Sensor-to-alert latency: not benchmarked systematically; local inference is
+  tile-based and depends on machine/GPU.
+- False alarms per hour: not measured; no continuous sensor feed is connected.
+- Track continuity / ID switches: not implemented; no AIS/radar track fusion.
+- Geolocation accuracy / CEP: not measured for model boxes. xView browser
+  inference is shown in source-image pixel coordinates.
+- Edge throughput, model power draw, and Jetson performance: not measured.
+- Analyst workload and mission cycle time: not evaluated with analysts.
+- Disconnected/DDIL availability: local pages can run offline after runtime
+  dependencies are installed; restart/recovery and edge behavior are untested.
+
+The Sentinel-2 imagery is useful to show coasts, ports, and broad change, but
+its 10 m bands generally cannot support reliable identification of small
+individual vessels. Pipe V4's provider detections can be plotted on a map, but
+are not an independent ground-truth annotation set for the model.
+
+======================================================================
+10. FILE GUIDE
+======================================================================
+
+index.html                         Synthetic coastal dashboard UI.
+dataset_explorer.html              xView explorer and vessel inference UI.
+dataset_explorer.py                Local web server, dataset audit, TIFF APIs,
+                                   Pipe V4 footprint filtering, model endpoint.
+sentinel2_explorer.html            Sentinel-2 and provider detection browser.
+satellite_detector.py              Tile preparation, training, and inference.
+requirements-detector.txt          Tested Python dependency pins.
+DETECTOR_MVP.md                    General detector setup and results.
+TRAINING_REPORT.md                 Initial four-class training notes.
+VESSEL_TRAINING_REPORT.md          Current vessel model and evaluation.
+dataset_audit.json                 Saved summary of local dataset audit.
+runs\xview_vessel\                 Vessel-only train/validation tile data.
+runs\train\xview_vessel_1024\      Initial vessel checkpoint and run outputs.
+runs\train\xview_vessel_1024_extended\ Current model and run outputs.
+IMAGES\Browser_images\             Local Sentinel-2 TIFFs.
+sentinal2\                         Local monthly Pipe V4 CSVs (folder spelling).
+
+======================================================================
+11. FINAL SUMMARY
+======================================================================
+
+Rakshak is a local hackathon prototype with an xView vessel candidate detector,
+Sentinel-2/Pipe V4 data, and a new end-to-end React/FastAPI review application.
+The best current xView vessel model improves over the first detector, but its
+recall and India-specific evidence are not sufficient to call it dependable.
+The highest-value next step is to obtain reviewed high-resolution India
+coastal vessel chips and an independent evaluation split, then retrain and
+measure against agreed KPIs. Do not present model boxes as verified targets or
+threat judgments.
+
+======================================================================
+12. HACKATHON APPLICATION BUILT FROM 2.o.txt SPECIFICATION
+======================================================================
+
+Delivered files:
+frontend\                         React + TypeScript single-page application.
+frontend\src\App.tsx              Overview, image screening, threat map,
+                                   reports, and mission-planner pages.
+backend\app\main.py               FastAPI local API, uploads, inference,
+                                   SQLite storage, scoring, CSV filtering.
+backend\uploads\                  Local uploaded imagery.
+backend\rakshak.db                Local SQLite detections, zones, missions.
+database\schema_postgis.sql        Optional PostgreSQL/PostGIS schema starter.
+requirements.txt                   Backend dependencies.
+RUN_RAKSHAK.md                     Setup, operations, scope, limitations.
+
+Application flow:
+1. Upload PNG/JPG/TIFF/GeoTIFF (maximum 512 MiB).
+2. Scan image in overlapping 1024-pixel tiles with the existing xView
+   one-class vessel checkpoint; overlapping boxes are merged by IoU.
+3. Review model confidence and candidate boxes over the original image.
+4. Analyst marks AIS association matched, unmatched, or unknown; only an
+   explicit unmatched review adds +50 points.
+5. A deterministic score includes unknown identity +10, same-image nearby
+   cluster +20, and analyst-created zone +30; score is capped at 100.
+6. View georeferenced model detections on the OSM map, score report, and
+   highest-score-first review route. Route is not navigation guidance.
+7. Select available local PipeV4 monthly CSVs, shown separately from model
+   output. Empty MMSI stays unknown.
+
+Local runtime / URLs:
+Backend:  http://127.0.0.1:8000 (Swagger: /docs)
+Frontend: http://127.0.0.1:5173/
+Start backend from project root:
+  $env:YOLO_CONFIG_DIR=(Join-Path (Get-Location) 'Ultralytics')
+  .\.venv\Scripts\python.exe -m uvicorn backend.app.main:app --host 127.0.0.1 --port 8000
+Start frontend in another PowerShell:
+  cd frontend
+  npm run dev
+
+Verified in the current workspace:
+- Frontend TypeScript/Vite production build succeeds.
+- FastAPI health and catalog endpoints return successfully.
+- Sentinel-2 true-color TIFF upload creates a browser-readable preview and
+  returned one unverified candidate on the tested scene.
+- xView scene 109.tif upload returns 12 vessel candidates.
+- SQLite persistence and detection listing are active.
+
+Important limitations:
+- The checkpoint's held-out xView mAP@50 is 0.277; scene-specific performance
+  varies substantially. Sentinel-2 has much coarser ground sampling distance
+  than the overhead training imagery; one tested Sentinel-2 true-color scene
+  yielded one candidate after contrast normalization, which is not a validated hit.
+- Coordinates are available only if the input has valid raster georeferencing.
+- The deterministic score is a review-priority heuristic, not probability or
+  an operational threat judgment.
+- Current user-created restricted zones are supported by API scoring; a map
+  drawing workflow and zone CRUD UI remain future work.
+- PipeV4 points currently appear in the threat map and table and are not
+  AIS-ground-truth associations or detector labels. Up to 1,000 rows are read
+  from an approximate regional rectangle; this is not an exact India border.
+- Tile output is shown on the original-image overlay; there is no separate
+  rendered prediction-image export yet.
+- SQLite is the running store. PostGIS is only an optional schema; no Postgres
+  service is configured or required for the local demo.
+- OpenStreetMap background tiles require connectivity; API and model run local.
+
+Suggested next phase:
+1. Create held-out India coastal evaluation chips and expert-reviewed labels.
+2. Add image-source/date filters, zone drawing/deletion, CSV import tuning,
+   prediction export and analyst feedback capture.
+3. Improve segmentation/rendering and tiled GeoTIFF geotransforms, then compare
+   against Sentinel-1 SAR vessel benchmarks before making KPI claims.
+
+END OF DOCUMENT

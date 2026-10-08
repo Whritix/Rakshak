@@ -1,0 +1,31 @@
+{
+  "overall_mAP50": 0.4344,
+  "overall_mAP50_95": 0.1321,
+  "per_class": {
+    "Vessel": {
+      "precision": 0.5058,
+      "recall": 0.2918,
+      "mAP50": 0.2084,
+      "F1": 0.3701
+    },
+    "Aircraft": {
+      "precision": 0.7194,
+      "recall": 0.813,
+      "mAP50": 0.7404,
+      "F1": 0.7634
+    },
+    "Vehicle": {
+      "precision": 0.6468,
+      "recall": 0.5788,
+      "mAP50": 0.4489,
+      "F1": 0.6109
+    },
+    "Infrastructure": {
+      "precision": 0.6151,
+      "recall": 0.4433,
+      "mAP50": 0.3399,
+      "F1": 0.5153
+    }
+  },
+  "lowest_f1_class": "Vessel"
+}
