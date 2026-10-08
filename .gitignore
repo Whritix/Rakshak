@@ -24,8 +24,9 @@ sentinel2/
 IMAGES/
 data/
 database/
-Ultralytics/
-weights/
+/Ultralytics/
+/weights/
+!runs/train/*/weights/best.pt
 
 # Intermediate YOLO training caches
 runs/xview_yolo/
