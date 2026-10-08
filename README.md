@@ -45,14 +45,15 @@ Project Rakshak 2.0 follows a strict 4-tier air-gapped pipeline:
 ```
 ┌────────────────────────────────────────────────────────────────────────────────────────┐
 │                        TIER 1: MULTI-MODAL SENSOR INGESTION LAYER                      │
-│   Sentinel-1 SAR Radar   │   xView GeoTIFFs (0.3m)   │   Drone UAV EO/IR   │    AIS Transponders   │
+│   Sentinel-1 SAR Radar   │   xView GeoTIFFs (0.3m)   │   Drone UAV EO/IR   │   AIS
+                                                                              Transponders│
 └───────────────────────────────────────────┬────────────────────────────────────────────┘
                                             │
                                             ▼
 ┌────────────────────────────────────────────────────────────────────────────────────────┐
 │                        TIER 2: SOVEREIGN EDGE INFERENCE CORE                           │
 │   • CA-CFAR Radar Speckle Filter (RCS in dB, Hull Length Estimation)                   │
-│   • Retrained YOLO11m Military Detector (Vessel, Aircraft, Vehicle, Infrastructure)     │
+│   • Retrained YOLO11m Military Detector (Vessel, Aircraft, Vehicle, Infrastructure)    │
 │   • O(N) Spatial Grid Indexer (500m Convoy Clustering & Geofence Intersection)         │
 └───────────────────────────────────────────┬────────────────────────────────────────────┘
                                             │
