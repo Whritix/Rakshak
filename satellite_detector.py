@@ -205,7 +205,7 @@ def train(args: argparse.Namespace) -> None:
     try:
         from ultralytics import YOLO
     except ImportError as exc:
-        raise SystemExit("Install dependencies first: python -m pip install -r requirements-detector.txt") from exc
+        raise SystemExit("Install dependencies first: python -m pip install -r requirements.txt") from exc
     config = Path(args.data).expanduser().resolve()
     if not config.exists():
         raise SystemExit("Prepare the xView tiles first: python satellite_detector.py prepare")
@@ -227,7 +227,7 @@ def detect(args: argparse.Namespace) -> None:
     try:
         from ultralytics import YOLO
     except ImportError as exc:
-        raise SystemExit("Install dependencies first: python -m pip install -r requirements-detector.txt") from exc
+        raise SystemExit("Install dependencies first: python -m pip install -r requirements.txt") from exc
     image_path = Path(args.image).expanduser().resolve()
     model_path = Path(args.model).expanduser().resolve()
     if not image_path.is_file():

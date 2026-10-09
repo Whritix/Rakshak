@@ -71,7 +71,7 @@ def get_system_kpis() -> Dict[str, Any]:
         active_ckpt = "xview_hackathon"
 
     # Build the per-class breakdown
-    # xView validation numbers from TRAINING_REPORT.md (hackathon model, 8-epoch baseline)
+    # xView validation numbers (hackathon model, 8-epoch baseline)
     baseline_classes = [
         {
             "class_name": "Vessel",

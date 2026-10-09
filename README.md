@@ -5,7 +5,7 @@
 [![Domain](https://img.shields.io/badge/KLS%20Hackfest%202026-Problem%201A%20(Naval%2FArmy%20Threat%20Detection)-blue.svg)](#)
 [![Model](https://img.shields.io/badge/AI%20Model-YOLO11m%20(43.4%25%20mAP50)-green.svg)](#)
 [![Tests](https://img.shields.io/badge/Smoke%20Tests-12%2F12%20Passing-brightgreen.svg)](#)
-[![Docker](https://img.shields.io/badge/Deployment-Docker%20%2F%20Render%20Ready-blueviolet.svg)](#)
+[![Docker](https://img.shields.io/badge/Deployment-Docker%20%2F%20Air--Gapped-blueviolet.svg)](#)
 
 > **Sovereign Multi-Modal Geospatial Threat Intelligence & Common Operating Picture (COP) Engine**  
 > *Engineered for Hackfest 2026 — Problem Statement 1A: Naval / Army Geospatial & Multimodal Threat Detection*  
@@ -155,8 +155,8 @@ Double-click the pre-configured batch scripts in the project root:
 
 ```bash
 # 1. Clone repository
-git clone https://github.com/YOUR_USERNAME/rakshak-c4isr.git
-cd rakshak-c4isr
+git clone https://github.com/Whritix/Rakshak.git
+cd Rakshak
 
 # 2. Set up Python virtual environment
 python -m venv .venv
@@ -185,23 +185,23 @@ Access the console at **`http://localhost:8000`**.
 
 ---
 
-## ☁️ Deployment Guide
-
-### A. Deploy to Render.com (Free 24/7 Cloud Host)
-This repository includes a production-ready [`Dockerfile`](file:///c:/Users/awhri/OneDrive/Desktop/DEF/Dockerfile) and [`render.yaml`](file:///c:/Users/awhri/OneDrive/Desktop/DEF/render.yaml) blueprint:
-1. Push this repository to your GitHub account.
-2. Log in to [Render.com](https://render.com) and click **New +** $\rightarrow$ **Web Service**.
-3. Select your repository.
-4. Render automatically detects the `Dockerfile` and builds the service.
-5. In ~3 minutes, your live URL will be active at: `https://project-rakshak.onrender.com`.
-
-### B. Share Live from Laptop via Public Tunnel (Mentoring / Remote Jury)
-Double-click [`share_online_public_link.bat`](file:///c:/Users/awhri/OneDrive/Desktop/DEF/share_online_public_link.bat) or run:
-```cmd
-npx localtunnel --port 8000
+## 📦 Deployment & Containerization
+ 
+### A. Multi-Stage Docker Container (Air-Gapped Ready)
+The repository includes an optimized multi-stage [`Dockerfile`](file:///c:/Users/awhri/OneDrive/Desktop/DEF/Dockerfile) and [`docker-compose.yml`](file:///c:/Users/awhri/OneDrive/Desktop/DEF/docker-compose.yml):
+```bash
+# Build and run the self-contained tactical server
+docker compose up --build
 ```
-Share the generated `https://...loca.lt` URL with mentors or evaluators.
-
+Access the tactical console at **`http://localhost:8000`**.
+ 
+### B. Standalone Edge Production Server
+For air-gapped field workstations without Node.js or external network access, FastAPI directly mounts and serves the optimized compiled React SPA:
+```bash
+python -m uvicorn backend.app.main:app --host 0.0.0.0 --port 8000
+```
+Or simply double-click [`start_production.bat`](file:///c:/Users/awhri/OneDrive/Desktop/DEF/start_production.bat).
+ 
 ---
 
 ## 🎯 Live Hackathon Demonstration Flow (2-Minute Jury Walkthrough)

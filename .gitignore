@@ -14,6 +14,8 @@ frontend/node_modules/
 # Uploads / Test Data (Keep uploads folder, ignore files)
 backend/uploads/*
 !backend/uploads/.gitkeep
+samples/*_preview*
+samples/*_cached*
 
 # Large Datasets (> 100MB blocked by GitHub)
 train_images/
@@ -36,6 +38,16 @@ runs/detect/
 # Database temporary WAL locks
 backend/rakshak.db-shm
 backend/rakshak.db-wal
+
+# Environment & Secrets
+.env
+*.env
+*.bak
+
+# Logs
+*.log
+backend/*.log
+frontend/*.log
 
 # OS / Editor
 .DS_Store

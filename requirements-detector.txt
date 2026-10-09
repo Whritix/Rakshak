@@ -1,5 +1,0 @@
-# Tested demo runtime. Choose/install the PyTorch wheel separately for the
-# available CPU or CUDA hardware before installing this file if needed.
-ultralytics==8.4.165
-Pillow==12.3.0
-numpy==2.5.2
