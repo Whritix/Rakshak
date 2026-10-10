@@ -1,85 +1,87 @@
 {
   "metadata": {
-    "suite": "Project Rakshak 2.0 Multi-Temporal Change Detection Benchmark",
-    "eval_date": "2026-10-10T19:52:42.329706+00:00",
+    "suite": "Project Rakshak 2.0 Multi-Temporal Change Detection Benchmark (Held-Out Seeds 21-60)",
+    "eval_date": "2026-10-10T20:02:11.910302+00:00",
     "provenance": "SIMULATED",
     "dataset_partition": "val_report (540 tiles)",
-    "sample_size_seeds": 20,
+    "start_seed": 21,
+    "end_seed": 60,
+    "sample_size_seeds": 40,
     "edits_per_pair": 3,
-    "total_ground_truth_edits": 60,
+    "total_ground_truth_edits": 120,
     "detector_model": "YOLO11m Military (best.pt)",
     "coregistration_method": "ORB (2500 kp) + RANSAC Affine with Phase Correlation Fallback",
     "stability_filter_rule": "Report change only if conf >= 0.40 in appearing scene AND no detection of same class within 28px in partner scene at conf >= 0.15",
     "operational_isolation": "Strictly isolated from operational threat scoring table"
   },
   "baseline_raw_metrics": {
-    "precision_mean": 0.3117,
-    "precision_std": 0.3086,
-    "recall_mean": 0.4,
-    "recall_std": 0.2495,
-    "f1_mean": 0.3005,
-    "f1_std": 0.2142,
-    "pooled_tp": 24,
-    "pooled_fp": 77,
-    "pooled_fn": 36,
-    "pooled_precision": 0.2376,
-    "pooled_recall": 0.4,
-    "pooled_f1": 0.2981
+    "precision_mean": 0.2804,
+    "precision_std": 0.3157,
+    "recall_mean": 0.375,
+    "recall_std": 0.3179,
+    "f1_mean": 0.2812,
+    "f1_std": 0.261,
+    "pooled_tp": 45,
+    "pooled_fp": 170,
+    "pooled_fn": 75,
+    "pooled_precision": 0.2093,
+    "pooled_recall": 0.375,
+    "pooled_f1": 0.2687
   },
   "stability_filtered_metrics": {
-    "precision_mean": 0.325,
-    "precision_std": 0.4548,
-    "recall_mean": 0.1167,
-    "recall_std": 0.159,
-    "f1_mean": 0.17,
-    "f1_std": 0.2326,
-    "pooled_tp": 7,
-    "pooled_fp": 1,
-    "pooled_fn": 53,
-    "pooled_precision": 0.875,
-    "pooled_recall": 0.1167,
-    "pooled_f1": 0.2059
+    "precision_mean": 0.3,
+    "precision_std": 0.4583,
+    "recall_mean": 0.1417,
+    "recall_std": 0.257,
+    "f1_mean": 0.1825,
+    "f1_std": 0.2982,
+    "pooled_tp": 17,
+    "pooled_fp": 4,
+    "pooled_fn": 103,
+    "pooled_precision": 0.8095,
+    "pooled_recall": 0.1417,
+    "pooled_f1": 0.2411
   },
   "false_positive_breakdown": {
-    "total_false_positives": 77,
+    "total_false_positives": 170,
     "detector_flicker_unchanged": {
-      "count": 49,
-      "percentage": 63.64,
+      "count": 128,
+      "percentage": 75.29,
       "description": "Detector flicker on unedited objects present in both scenes (partner conf below 0.25 floor)"
     },
     "inpainting_artifacts": {
-      "count": 24,
-      "percentage": 31.17,
+      "count": 35,
+      "percentage": 20.59,
       "description": "Hallucinated detections at inpainting patch boundaries where objects were removed or moved"
     },
     "misregistration_texture_noise": {
-      "count": 4,
-      "percentage": 5.19,
+      "count": 7,
+      "percentage": 4.12,
       "description": "Residual sub-pixel displacement noise and unassociated background textures"
     }
   },
   "per_class_metrics_raw": {
     "Vehicle": {
-      "tp": 18,
-      "fp": 64,
-      "fn": 26,
-      "precision": 0.2195,
-      "recall": 0.4091,
-      "f1": 0.2857,
-      "f1_std": 0.1789
+      "tp": 33,
+      "fp": 137,
+      "fn": 57,
+      "precision": 0.1941,
+      "recall": 0.3667,
+      "f1": 0.2538,
+      "f1_std": 0.2821
     },
     "Aircraft": {
-      "tp": 6,
-      "fp": 2,
-      "fn": 10,
+      "tp": 12,
+      "fp": 4,
+      "fn": 18,
       "precision": 0.75,
-      "recall": 0.375,
-      "f1": 0.5,
-      "f1_std": 0.3333
+      "recall": 0.4,
+      "f1": 0.5217,
+      "f1_std": 0.4305
     },
     "Infrastructure": {
       "tp": 0,
-      "fp": 11,
+      "fp": 29,
       "fn": 0,
       "precision": 0.0,
       "recall": 0.0,
@@ -89,34 +91,34 @@
   },
   "per_change_type_metrics_raw": {
     "NEW": {
-      "tp": 8,
-      "fp": 31,
-      "fn": 12,
-      "precision": 0.2051,
-      "recall": 0.4,
-      "f1": 0.2712
+      "tp": 9,
+      "fp": 58,
+      "fn": 31,
+      "precision": 0.1343,
+      "recall": 0.225,
+      "f1": 0.1682
     },
     "REMOVED": {
-      "tp": 9,
-      "fp": 38,
-      "fn": 11,
-      "precision": 0.1915,
-      "recall": 0.45,
-      "f1": 0.2687
+      "tp": 24,
+      "fp": 94,
+      "fn": 16,
+      "precision": 0.2034,
+      "recall": 0.6,
+      "f1": 0.3038
     },
     "MOVED": {
-      "tp": 7,
-      "fp": 8,
-      "fn": 13,
-      "precision": 0.4667,
-      "recall": 0.35,
-      "f1": 0.4
+      "tp": 12,
+      "fp": 18,
+      "fn": 28,
+      "precision": 0.4,
+      "recall": 0.3,
+      "f1": 0.3429
     }
   },
   "registration_metrics": {
-    "registration_error_mean_px": 0.1887,
-    "registration_error_std_px": 0.135,
-    "structural_anomaly_detection_rate": 0.7
+    "registration_error_mean_px": 0.1449,
+    "registration_error_std_px": 0.1034,
+    "structural_anomaly_detection_rate": 0.65
   },
   "registration_sensitivity_sweep": {
     "0.0_px": {
@@ -152,23 +154,23 @@
   },
   "seed_level_results": [
     {
-      "seed": 1,
+      "seed": 21,
       "tile_name": "1125_1536_0.jpg",
       "edits_count": 3,
       "injected_shift": [
-        3.05,
-        2.84
+        -3.01,
+        1.6
       ],
-      "shift_magnitude": 4.17,
-      "registration_error_px": 0.0456,
+      "shift_magnitude": 3.41,
+      "registration_error_px": 0.1858,
       "reg_method": "ORB_RANSAC",
       "raw": {
-        "tp": 2,
-        "fp": 1,
-        "fn": 1,
-        "precision": 0.6667,
-        "recall": 0.6667,
-        "f1": 0.6667,
+        "tp": 1,
+        "fp": 0,
+        "fn": 2,
+        "precision": 1.0,
+        "recall": 0.3333,
+        "f1": 0.5,
         "per_class": {
           "Vehicle": {
             "tp": 0,
@@ -176,13 +178,13 @@
             "fn": 0
           },
           "Aircraft": {
-            "tp": 2,
+            "tp": 1,
             "fp": 0,
-            "fn": 1
+            "fn": 2
           },
           "Infrastructure": {
             "tp": 0,
-            "fp": 1,
+            "fp": 0,
             "fn": 0
           },
           "Vessel": {
@@ -193,9 +195,9 @@
         },
         "per_type": {
           "NEW": {
-            "tp": 1,
-            "fp": 1,
-            "fn": 0
+            "tp": 0,
+            "fp": 0,
+            "fn": 1
           },
           "REMOVED": {
             "tp": 0,
@@ -211,7 +213,7 @@
         "fp_breakdown": {
           "flicker": 0,
           "inpaint": 0,
-          "misreg": 1
+          "misreg": 0
         }
       },
       "filtered": {
@@ -262,32 +264,32 @@
         }
       },
       "structural_anomaly_detected": 1,
-      "pixel_diff_changed_pct": 1.161,
+      "pixel_diff_changed_pct": 1.338,
       "timings": {
-        "registration_s": 0.1986,
-        "detection_s": 3.0748,
-        "pixel_diff_s": 0.0529,
-        "total_s": 3.3262
+        "registration_s": 0.209,
+        "detection_s": 2.9447,
+        "pixel_diff_s": 0.0515,
+        "total_s": 3.2052
       }
     },
     {
-      "seed": 2,
+      "seed": 22,
       "tile_name": "1125_2304_0.jpg",
       "edits_count": 3,
       "injected_shift": [
-        -6.76,
-        -0.5
+        -3.55,
+        -2.12
       ],
-      "shift_magnitude": 6.78,
-      "registration_error_px": 0.2386,
+      "shift_magnitude": 4.14,
+      "registration_error_px": 0.1025,
       "reg_method": "ORB_RANSAC",
       "raw": {
-        "tp": 2,
-        "fp": 1,
-        "fn": 1,
-        "precision": 0.6667,
-        "recall": 0.6667,
-        "f1": 0.6667,
+        "tp": 3,
+        "fp": 2,
+        "fn": 0,
+        "precision": 0.6,
+        "recall": 1.0,
+        "f1": 0.75,
         "per_class": {
           "Vehicle": {
             "tp": 0,
@@ -295,13 +297,13 @@
             "fn": 0
           },
           "Aircraft": {
-            "tp": 2,
+            "tp": 3,
             "fp": 1,
-            "fn": 1
+            "fn": 0
           },
           "Infrastructure": {
             "tp": 0,
-            "fp": 0,
+            "fp": 1,
             "fn": 0
           },
           "Vessel": {
@@ -313,7 +315,7 @@
         "per_type": {
           "NEW": {
             "tp": 1,
-            "fp": 1,
+            "fp": 2,
             "fn": 0
           },
           "REMOVED": {
@@ -322,24 +324,24 @@
             "fn": 0
           },
           "MOVED": {
-            "tp": 0,
+            "tp": 1,
             "fp": 0,
-            "fn": 1
+            "fn": 0
           }
         },
         "fp_breakdown": {
           "flicker": 0,
-          "inpaint": 0,
+          "inpaint": 1,
           "misreg": 1
         }
       },
       "filtered": {
-        "tp": 1,
-        "fp": 1,
-        "fn": 2,
-        "precision": 0.5,
-        "recall": 0.3333,
-        "f1": 0.4,
+        "tp": 3,
+        "fp": 0,
+        "fn": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
         "per_class": {
           "Vehicle": {
             "tp": 0,
@@ -347,9 +349,9 @@
             "fn": 0
           },
           "Aircraft": {
-            "tp": 1,
-            "fp": 1,
-            "fn": 2
+            "tp": 3,
+            "fp": 0,
+            "fn": 0
           },
           "Infrastructure": {
             "tp": 0,
@@ -364,9 +366,9 @@
         },
         "per_type": {
           "NEW": {
-            "tp": 0,
-            "fp": 1,
-            "fn": 1
+            "tp": 1,
+            "fp": 0,
+            "fn": 0
           },
           "REMOVED": {
             "tp": 1,
@@ -374,557 +376,81 @@
             "fn": 0
           },
           "MOVED": {
-            "tp": 0,
+            "tp": 1,
             "fp": 0,
-            "fn": 1
+            "fn": 0
           }
         }
       },
-      "structural_anomaly_detected": 1,
-      "pixel_diff_changed_pct": 0.883,
+      "structural_anomaly_detected": 0,
+      "pixel_diff_changed_pct": 0.676,
       "timings": {
-        "registration_s": 0.0871,
-        "detection_s": 0.0739,
-        "pixel_diff_s": 0.0509,
-        "total_s": 0.2119
+        "registration_s": 0.0748,
+        "detection_s": 0.0748,
+        "pixel_diff_s": 0.0523,
+        "total_s": 0.2018
       }
     },
     {
-      "seed": 3,
+      "seed": 23,
       "tile_name": "1125_2897_0.jpg",
       "edits_count": 3,
       "injected_shift": [
-        1.7,
-        1.28
+        3.12,
+        2.8
       ],
-      "shift_magnitude": 2.13,
-      "registration_error_px": 0.3764,
+      "shift_magnitude": 4.2,
+      "registration_error_px": 0.083,
       "reg_method": "ORB_RANSAC",
       "raw": {
-        "tp": 2,
-        "fp": 4,
-        "fn": 1,
-        "precision": 0.3333,
-        "recall": 0.6667,
-        "f1": 0.4444,
-        "per_class": {
-          "Vehicle": {
-            "tp": 1,
-            "fp": 2,
-            "fn": 0
-          },
-          "Aircraft": {
-            "tp": 1,
-            "fp": 0,
-            "fn": 1
-          },
-          "Infrastructure": {
-            "tp": 0,
-            "fp": 2,
-            "fn": 0
-          },
-          "Vessel": {
-            "tp": 0,
-            "fp": 0,
-            "fn": 0
-          }
-        },
-        "per_type": {
-          "NEW": {
-            "tp": 0,
-            "fp": 4,
-            "fn": 1
-          },
-          "REMOVED": {
-            "tp": 1,
-            "fp": 0,
-            "fn": 0
-          },
-          "MOVED": {
-            "tp": 1,
-            "fp": 0,
-            "fn": 0
-          }
-        },
-        "fp_breakdown": {
-          "flicker": 4,
-          "inpaint": 0,
-          "misreg": 0
-        }
-      },
-      "filtered": {
         "tp": 1,
-        "fp": 0,
+        "fp": 2,
         "fn": 2,
-        "precision": 1.0,
+        "precision": 0.3333,
         "recall": 0.3333,
-        "f1": 0.5,
-        "per_class": {
-          "Vehicle": {
-            "tp": 0,
-            "fp": 0,
-            "fn": 1
-          },
-          "Aircraft": {
-            "tp": 1,
-            "fp": 0,
-            "fn": 1
-          },
-          "Infrastructure": {
-            "tp": 0,
-            "fp": 0,
-            "fn": 0
-          },
-          "Vessel": {
-            "tp": 0,
-            "fp": 0,
-            "fn": 0
-          }
-        },
-        "per_type": {
-          "NEW": {
-            "tp": 0,
-            "fp": 0,
-            "fn": 1
-          },
-          "REMOVED": {
-            "tp": 1,
-            "fp": 0,
-            "fn": 0
-          },
-          "MOVED": {
-            "tp": 0,
-            "fp": 0,
-            "fn": 1
-          }
-        }
-      },
-      "structural_anomaly_detected": 1,
-      "pixel_diff_changed_pct": 1.033,
-      "timings": {
-        "registration_s": 0.0782,
-        "detection_s": 0.0769,
-        "pixel_diff_s": 0.053,
-        "total_s": 0.2081
-      }
-    },
-    {
-      "seed": 4,
-      "tile_name": "1125_2897_1536.jpg",
-      "edits_count": 3,
-      "injected_shift": [
-        -3.67,
-        -2.71
-      ],
-      "shift_magnitude": 4.56,
-      "registration_error_px": 0.4131,
-      "reg_method": "ORB_RANSAC",
-      "raw": {
-        "tp": 0,
-        "fp": 0,
-        "fn": 3,
-        "precision": 0.0,
-        "recall": 0.0,
-        "f1": 0.0,
-        "per_class": {
-          "Vehicle": {
-            "tp": 0,
-            "fp": 0,
-            "fn": 0
-          },
-          "Aircraft": {
-            "tp": 0,
-            "fp": 0,
-            "fn": 3
-          },
-          "Infrastructure": {
-            "tp": 0,
-            "fp": 0,
-            "fn": 0
-          },
-          "Vessel": {
-            "tp": 0,
-            "fp": 0,
-            "fn": 0
-          }
-        },
-        "per_type": {
-          "NEW": {
-            "tp": 0,
-            "fp": 0,
-            "fn": 1
-          },
-          "REMOVED": {
-            "tp": 0,
-            "fp": 0,
-            "fn": 1
-          },
-          "MOVED": {
-            "tp": 0,
-            "fp": 0,
-            "fn": 1
-          }
-        },
-        "fp_breakdown": {
-          "flicker": 0,
-          "inpaint": 0,
-          "misreg": 0
-        }
-      },
-      "filtered": {
-        "tp": 0,
-        "fp": 0,
-        "fn": 3,
-        "precision": 0.0,
-        "recall": 0.0,
-        "f1": 0.0,
-        "per_class": {
-          "Vehicle": {
-            "tp": 0,
-            "fp": 0,
-            "fn": 0
-          },
-          "Aircraft": {
-            "tp": 0,
-            "fp": 0,
-            "fn": 3
-          },
-          "Infrastructure": {
-            "tp": 0,
-            "fp": 0,
-            "fn": 0
-          },
-          "Vessel": {
-            "tp": 0,
-            "fp": 0,
-            "fn": 0
-          }
-        },
-        "per_type": {
-          "NEW": {
-            "tp": 0,
-            "fp": 0,
-            "fn": 1
-          },
-          "REMOVED": {
-            "tp": 0,
-            "fp": 0,
-            "fn": 1
-          },
-          "MOVED": {
-            "tp": 0,
-            "fp": 0,
-            "fn": 1
-          }
-        }
-      },
-      "structural_anomaly_detected": 1,
-      "pixel_diff_changed_pct": 0.614,
-      "timings": {
-        "registration_s": 0.0848,
-        "detection_s": 0.0727,
-        "pixel_diff_s": 0.052,
-        "total_s": 0.2096
-      }
-    },
-    {
-      "seed": 5,
-      "tile_name": "1125_2897_1993.jpg",
-      "edits_count": 3,
-      "injected_shift": [
-        0.94,
-        -4.4
-      ],
-      "shift_magnitude": 4.5,
-      "registration_error_px": 0.1815,
-      "reg_method": "ORB_RANSAC",
-      "raw": {
-        "tp": 2,
-        "fp": 7,
-        "fn": 1,
-        "precision": 0.2222,
-        "recall": 0.6667,
         "f1": 0.3333,
         "per_class": {
           "Vehicle": {
-            "tp": 2,
-            "fp": 7,
+            "tp": 1,
+            "fp": 0,
             "fn": 1
           },
           "Aircraft": {
             "tp": 0,
             "fp": 0,
-            "fn": 0
-          },
-          "Infrastructure": {
-            "tp": 0,
-            "fp": 0,
-            "fn": 0
-          },
-          "Vessel": {
-            "tp": 0,
-            "fp": 0,
-            "fn": 0
-          }
-        },
-        "per_type": {
-          "NEW": {
-            "tp": 1,
-            "fp": 0,
-            "fn": 0
-          },
-          "REMOVED": {
-            "tp": 1,
-            "fp": 7,
-            "fn": 0
-          },
-          "MOVED": {
-            "tp": 0,
-            "fp": 0,
-            "fn": 1
-          }
-        },
-        "fp_breakdown": {
-          "flicker": 0,
-          "inpaint": 7,
-          "misreg": 0
-        }
-      },
-      "filtered": {
-        "tp": 0,
-        "fp": 0,
-        "fn": 3,
-        "precision": 0.0,
-        "recall": 0.0,
-        "f1": 0.0,
-        "per_class": {
-          "Vehicle": {
-            "tp": 0,
-            "fp": 0,
-            "fn": 3
-          },
-          "Aircraft": {
-            "tp": 0,
-            "fp": 0,
-            "fn": 0
-          },
-          "Infrastructure": {
-            "tp": 0,
-            "fp": 0,
-            "fn": 0
-          },
-          "Vessel": {
-            "tp": 0,
-            "fp": 0,
-            "fn": 0
-          }
-        },
-        "per_type": {
-          "NEW": {
-            "tp": 0,
-            "fp": 0,
-            "fn": 1
-          },
-          "REMOVED": {
-            "tp": 0,
-            "fp": 0,
-            "fn": 1
-          },
-          "MOVED": {
-            "tp": 0,
-            "fp": 0,
-            "fn": 1
-          }
-        }
-      },
-      "structural_anomaly_detected": 1,
-      "pixel_diff_changed_pct": 0.269,
-      "timings": {
-        "registration_s": 0.0744,
-        "detection_s": 0.0773,
-        "pixel_diff_s": 0.0503,
-        "total_s": 0.2019
-      }
-    },
-    {
-      "seed": 6,
-      "tile_name": "1460_0_0.jpg",
-      "edits_count": 3,
-      "injected_shift": [
-        -0.74,
-        -6.06
-      ],
-      "shift_magnitude": 6.11,
-      "registration_error_px": 0.1103,
-      "reg_method": "ORB_RANSAC",
-      "raw": {
-        "tp": 1,
-        "fp": 0,
-        "fn": 2,
-        "precision": 1.0,
-        "recall": 0.3333,
-        "f1": 0.5,
-        "per_class": {
-          "Vehicle": {
-            "tp": 0,
-            "fp": 0,
-            "fn": 1
-          },
-          "Aircraft": {
-            "tp": 1,
-            "fp": 0,
             "fn": 1
           },
           "Infrastructure": {
             "tp": 0,
-            "fp": 0,
-            "fn": 0
-          },
-          "Vessel": {
-            "tp": 0,
-            "fp": 0,
-            "fn": 0
-          }
-        },
-        "per_type": {
-          "NEW": {
-            "tp": 0,
-            "fp": 0,
-            "fn": 1
-          },
-          "REMOVED": {
-            "tp": 0,
-            "fp": 0,
-            "fn": 1
-          },
-          "MOVED": {
-            "tp": 1,
-            "fp": 0,
-            "fn": 0
-          }
-        },
-        "fp_breakdown": {
-          "flicker": 0,
-          "inpaint": 0,
-          "misreg": 0
-        }
-      },
-      "filtered": {
-        "tp": 1,
-        "fp": 0,
-        "fn": 2,
-        "precision": 1.0,
-        "recall": 0.3333,
-        "f1": 0.5,
-        "per_class": {
-          "Vehicle": {
-            "tp": 0,
-            "fp": 0,
-            "fn": 1
-          },
-          "Aircraft": {
-            "tp": 1,
-            "fp": 0,
-            "fn": 1
-          },
-          "Infrastructure": {
-            "tp": 0,
-            "fp": 0,
-            "fn": 0
-          },
-          "Vessel": {
-            "tp": 0,
-            "fp": 0,
-            "fn": 0
-          }
-        },
-        "per_type": {
-          "NEW": {
-            "tp": 0,
-            "fp": 0,
-            "fn": 1
-          },
-          "REMOVED": {
-            "tp": 0,
-            "fp": 0,
-            "fn": 1
-          },
-          "MOVED": {
-            "tp": 1,
-            "fp": 0,
-            "fn": 0
-          }
-        }
-      },
-      "structural_anomaly_detected": 0,
-      "pixel_diff_changed_pct": 0.746,
-      "timings": {
-        "registration_s": 0.0782,
-        "detection_s": 0.0713,
-        "pixel_diff_s": 0.0518,
-        "total_s": 0.2013
-      }
-    },
-    {
-      "seed": 7,
-      "tile_name": "1460_0_768.jpg",
-      "edits_count": 3,
-      "injected_shift": [
-        0.03,
-        -4.78
-      ],
-      "shift_magnitude": 4.78,
-      "registration_error_px": 0.0594,
-      "reg_method": "ORB_RANSAC",
-      "raw": {
-        "tp": 2,
-        "fp": 13,
-        "fn": 1,
-        "precision": 0.1333,
-        "recall": 0.6667,
-        "f1": 0.2222,
-        "per_class": {
-          "Vehicle": {
-            "tp": 2,
-            "fp": 13,
-            "fn": 1
-          },
-          "Aircraft": {
-            "tp": 0,
-            "fp": 0,
-            "fn": 0
-          },
-          "Infrastructure": {
-            "tp": 0,
-            "fp": 0,
-            "fn": 0
-          },
-          "Vessel": {
-            "tp": 0,
-            "fp": 0,
-            "fn": 0
-          }
-        },
-        "per_type": {
-          "NEW": {
-            "tp": 1,
-            "fp": 8,
-            "fn": 0
-          },
-          "REMOVED": {
-            "tp": 0,
-            "fp": 3,
-            "fn": 1
-          },
-          "MOVED": {
-            "tp": 1,
             "fp": 2,
             "fn": 0
+          },
+          "Vessel": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 0
+          }
+        },
+        "per_type": {
+          "NEW": {
+            "tp": 0,
+            "fp": 2,
+            "fn": 1
+          },
+          "REMOVED": {
+            "tp": 1,
+            "fp": 0,
+            "fn": 0
+          },
+          "MOVED": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 1
           }
         },
         "fp_breakdown": {
-          "flicker": 9,
-          "inpaint": 4,
+          "flicker": 2,
+          "inpaint": 0,
           "misreg": 0
         }
       },
@@ -939,202 +465,16 @@
           "Vehicle": {
             "tp": 0,
             "fp": 0,
-            "fn": 3
-          },
-          "Aircraft": {
-            "tp": 0,
-            "fp": 0,
-            "fn": 0
-          },
-          "Infrastructure": {
-            "tp": 0,
-            "fp": 0,
-            "fn": 0
-          },
-          "Vessel": {
-            "tp": 0,
-            "fp": 0,
-            "fn": 0
-          }
-        },
-        "per_type": {
-          "NEW": {
-            "tp": 0,
-            "fp": 0,
-            "fn": 1
-          },
-          "REMOVED": {
-            "tp": 0,
-            "fp": 0,
-            "fn": 1
-          },
-          "MOVED": {
-            "tp": 0,
-            "fp": 0,
-            "fn": 1
-          }
-        }
-      },
-      "structural_anomaly_detected": 0,
-      "pixel_diff_changed_pct": 0.07,
-      "timings": {
-        "registration_s": 0.0915,
-        "detection_s": 0.0876,
-        "pixel_diff_s": 0.052,
-        "total_s": 0.2311
-      }
-    },
-    {
-      "seed": 8,
-      "tile_name": "1460_768_0.jpg",
-      "edits_count": 3,
-      "injected_shift": [
-        0.31,
-        4.97
-      ],
-      "shift_magnitude": 4.98,
-      "registration_error_px": 0.1997,
-      "reg_method": "ORB_RANSAC",
-      "raw": {
-        "tp": 0,
-        "fp": 1,
-        "fn": 3,
-        "precision": 0.0,
-        "recall": 0.0,
-        "f1": 0.0,
-        "per_class": {
-          "Vehicle": {
-            "tp": 0,
-            "fp": 0,
-            "fn": 0
-          },
-          "Aircraft": {
-            "tp": 0,
-            "fp": 1,
-            "fn": 3
-          },
-          "Infrastructure": {
-            "tp": 0,
-            "fp": 0,
-            "fn": 0
-          },
-          "Vessel": {
-            "tp": 0,
-            "fp": 0,
-            "fn": 0
-          }
-        },
-        "per_type": {
-          "NEW": {
-            "tp": 0,
-            "fp": 1,
-            "fn": 1
-          },
-          "REMOVED": {
-            "tp": 0,
-            "fp": 0,
-            "fn": 1
-          },
-          "MOVED": {
-            "tp": 0,
-            "fp": 0,
-            "fn": 1
-          }
-        },
-        "fp_breakdown": {
-          "flicker": 0,
-          "inpaint": 0,
-          "misreg": 1
-        }
-      },
-      "filtered": {
-        "tp": 0,
-        "fp": 0,
-        "fn": 3,
-        "precision": 0.0,
-        "recall": 0.0,
-        "f1": 0.0,
-        "per_class": {
-          "Vehicle": {
-            "tp": 0,
-            "fp": 0,
-            "fn": 0
-          },
-          "Aircraft": {
-            "tp": 0,
-            "fp": 0,
-            "fn": 3
-          },
-          "Infrastructure": {
-            "tp": 0,
-            "fp": 0,
-            "fn": 0
-          },
-          "Vessel": {
-            "tp": 0,
-            "fp": 0,
-            "fn": 0
-          }
-        },
-        "per_type": {
-          "NEW": {
-            "tp": 0,
-            "fp": 0,
-            "fn": 1
-          },
-          "REMOVED": {
-            "tp": 0,
-            "fp": 0,
-            "fn": 1
-          },
-          "MOVED": {
-            "tp": 0,
-            "fp": 0,
-            "fn": 1
-          }
-        }
-      },
-      "structural_anomaly_detected": 0,
-      "pixel_diff_changed_pct": 0.783,
-      "timings": {
-        "registration_s": 0.0727,
-        "detection_s": 0.0722,
-        "pixel_diff_s": 0.0545,
-        "total_s": 0.1994
-      }
-    },
-    {
-      "seed": 9,
-      "tile_name": "1460_768_768.jpg",
-      "edits_count": 3,
-      "injected_shift": [
-        4.96,
-        4.14
-      ],
-      "shift_magnitude": 6.46,
-      "registration_error_px": 0.605,
-      "reg_method": "ORB_RANSAC",
-      "raw": {
-        "tp": 1,
-        "fp": 6,
-        "fn": 2,
-        "precision": 0.1429,
-        "recall": 0.3333,
-        "f1": 0.2,
-        "per_class": {
-          "Vehicle": {
-            "tp": 1,
-            "fp": 5,
             "fn": 2
           },
           "Aircraft": {
             "tp": 0,
             "fp": 0,
-            "fn": 0
+            "fn": 1
           },
           "Infrastructure": {
             "tp": 0,
-            "fp": 1,
+            "fp": 0,
             "fn": 0
           },
           "Vessel": {
@@ -1146,23 +486,90 @@
         "per_type": {
           "NEW": {
             "tp": 0,
-            "fp": 3,
+            "fp": 0,
             "fn": 1
           },
           "REMOVED": {
-            "tp": 1,
-            "fp": 2,
-            "fn": 0
+            "tp": 0,
+            "fp": 0,
+            "fn": 1
           },
           "MOVED": {
             "tp": 0,
-            "fp": 1,
+            "fp": 0,
+            "fn": 1
+          }
+        }
+      },
+      "structural_anomaly_detected": 1,
+      "pixel_diff_changed_pct": 0.571,
+      "timings": {
+        "registration_s": 0.081,
+        "detection_s": 0.0798,
+        "pixel_diff_s": 0.0509,
+        "total_s": 0.2117
+      }
+    },
+    {
+      "seed": 24,
+      "tile_name": "1125_2897_1536.jpg",
+      "edits_count": 3,
+      "injected_shift": [
+        0.0,
+        -4.88
+      ],
+      "shift_magnitude": 4.88,
+      "registration_error_px": 0.2748,
+      "reg_method": "ORB_RANSAC",
+      "raw": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 3,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "per_class": {
+          "Vehicle": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 0
+          },
+          "Aircraft": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 3
+          },
+          "Infrastructure": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 0
+          },
+          "Vessel": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 0
+          }
+        },
+        "per_type": {
+          "NEW": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 1
+          },
+          "REMOVED": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 1
+          },
+          "MOVED": {
+            "tp": 0,
+            "fp": 0,
             "fn": 1
           }
         },
         "fp_breakdown": {
-          "flicker": 4,
-          "inpaint": 2,
+          "flicker": 0,
+          "inpaint": 0,
           "misreg": 0
         }
       },
@@ -1177,12 +584,12 @@
           "Vehicle": {
             "tp": 0,
             "fp": 0,
-            "fn": 3
+            "fn": 0
           },
           "Aircraft": {
             "tp": 0,
             "fp": 0,
-            "fn": 0
+            "fn": 3
           },
           "Infrastructure": {
             "tp": 0,
@@ -1213,25 +620,25 @@
           }
         }
       },
-      "structural_anomaly_detected": 0,
-      "pixel_diff_changed_pct": 0.124,
+      "structural_anomaly_detected": 1,
+      "pixel_diff_changed_pct": 0.346,
       "timings": {
-        "registration_s": 0.0846,
-        "detection_s": 0.0766,
-        "pixel_diff_s": 0.0524,
-        "total_s": 0.2136
+        "registration_s": 0.0707,
+        "detection_s": 0.0754,
+        "pixel_diff_s": 0.0504,
+        "total_s": 0.1965
       }
     },
     {
-      "seed": 10,
-      "tile_name": "1587_0_1536.jpg",
+      "seed": 25,
+      "tile_name": "1125_2897_1993.jpg",
       "edits_count": 3,
       "injected_shift": [
-        -6.13,
-        2.01
+        -7.18,
+        0.41
       ],
-      "shift_magnitude": 6.45,
-      "registration_error_px": 0.1257,
+      "shift_magnitude": 7.19,
+      "registration_error_px": 0.3041,
       "reg_method": "ORB_RANSAC",
       "raw": {
         "tp": 1,
@@ -1264,132 +671,13 @@
         },
         "per_type": {
           "NEW": {
-            "tp": 1,
-            "fp": 1,
-            "fn": 0
-          },
-          "REMOVED": {
-            "tp": 0,
-            "fp": 3,
-            "fn": 1
-          },
-          "MOVED": {
-            "tp": 0,
-            "fp": 0,
-            "fn": 1
-          }
-        },
-        "fp_breakdown": {
-          "flicker": 4,
-          "inpaint": 0,
-          "misreg": 0
-        }
-      },
-      "filtered": {
-        "tp": 0,
-        "fp": 0,
-        "fn": 3,
-        "precision": 0.0,
-        "recall": 0.0,
-        "f1": 0.0,
-        "per_class": {
-          "Vehicle": {
-            "tp": 0,
-            "fp": 0,
-            "fn": 3
-          },
-          "Aircraft": {
-            "tp": 0,
-            "fp": 0,
-            "fn": 0
-          },
-          "Infrastructure": {
-            "tp": 0,
-            "fp": 0,
-            "fn": 0
-          },
-          "Vessel": {
-            "tp": 0,
-            "fp": 0,
-            "fn": 0
-          }
-        },
-        "per_type": {
-          "NEW": {
             "tp": 0,
             "fp": 0,
             "fn": 1
           },
           "REMOVED": {
-            "tp": 0,
-            "fp": 0,
-            "fn": 1
-          },
-          "MOVED": {
-            "tp": 0,
-            "fp": 0,
-            "fn": 1
-          }
-        }
-      },
-      "structural_anomaly_detected": 1,
-      "pixel_diff_changed_pct": 0.321,
-      "timings": {
-        "registration_s": 0.0779,
-        "detection_s": 0.0724,
-        "pixel_diff_s": 0.0519,
-        "total_s": 0.2021
-      }
-    },
-    {
-      "seed": 11,
-      "tile_name": "1049_1536_768.jpg",
-      "edits_count": 3,
-      "injected_shift": [
-        -2.16,
-        -5.01
-      ],
-      "shift_magnitude": 5.46,
-      "registration_error_px": 0.168,
-      "reg_method": "ORB_RANSAC",
-      "raw": {
-        "tp": 2,
-        "fp": 9,
-        "fn": 1,
-        "precision": 0.1818,
-        "recall": 0.6667,
-        "f1": 0.2857,
-        "per_class": {
-          "Vehicle": {
-            "tp": 2,
-            "fp": 9,
-            "fn": 1
-          },
-          "Aircraft": {
-            "tp": 0,
-            "fp": 0,
-            "fn": 0
-          },
-          "Infrastructure": {
-            "tp": 0,
-            "fp": 0,
-            "fn": 0
-          },
-          "Vessel": {
-            "tp": 0,
-            "fp": 0,
-            "fn": 0
-          }
-        },
-        "per_type": {
-          "NEW": {
             "tp": 1,
-            "fp": 2,
-            "fn": 0
-          },
-          "REMOVED": {
-            "tp": 1,
-            "fp": 7,
+            "fp": 4,
             "fn": 0
           },
           "MOVED": {
@@ -1399,484 +687,8 @@
           }
         },
         "fp_breakdown": {
-          "flicker": 6,
+          "flicker": 1,
           "inpaint": 3,
-          "misreg": 0
-        }
-      },
-      "filtered": {
-        "tp": 1,
-        "fp": 0,
-        "fn": 2,
-        "precision": 1.0,
-        "recall": 0.3333,
-        "f1": 0.5,
-        "per_class": {
-          "Vehicle": {
-            "tp": 1,
-            "fp": 0,
-            "fn": 2
-          },
-          "Aircraft": {
-            "tp": 0,
-            "fp": 0,
-            "fn": 0
-          },
-          "Infrastructure": {
-            "tp": 0,
-            "fp": 0,
-            "fn": 0
-          },
-          "Vessel": {
-            "tp": 0,
-            "fp": 0,
-            "fn": 0
-          }
-        },
-        "per_type": {
-          "NEW": {
-            "tp": 0,
-            "fp": 0,
-            "fn": 1
-          },
-          "REMOVED": {
-            "tp": 1,
-            "fp": 0,
-            "fn": 0
-          },
-          "MOVED": {
-            "tp": 0,
-            "fp": 0,
-            "fn": 1
-          }
-        }
-      },
-      "structural_anomaly_detected": 1,
-      "pixel_diff_changed_pct": 0.353,
-      "timings": {
-        "registration_s": 0.0584,
-        "detection_s": 0.0892,
-        "pixel_diff_s": 0.053,
-        "total_s": 0.2005
-      }
-    },
-    {
-      "seed": 12,
-      "tile_name": "1049_2151_1778.jpg",
-      "edits_count": 3,
-      "injected_shift": [
-        0.58,
-        2.26
-      ],
-      "shift_magnitude": 2.34,
-      "registration_error_px": 0.1859,
-      "reg_method": "ORB_RANSAC",
-      "raw": {
-        "tp": 0,
-        "fp": 1,
-        "fn": 3,
-        "precision": 0.0,
-        "recall": 0.0,
-        "f1": 0.0,
-        "per_class": {
-          "Vehicle": {
-            "tp": 0,
-            "fp": 0,
-            "fn": 3
-          },
-          "Aircraft": {
-            "tp": 0,
-            "fp": 0,
-            "fn": 0
-          },
-          "Infrastructure": {
-            "tp": 0,
-            "fp": 1,
-            "fn": 0
-          },
-          "Vessel": {
-            "tp": 0,
-            "fp": 0,
-            "fn": 0
-          }
-        },
-        "per_type": {
-          "NEW": {
-            "tp": 0,
-            "fp": 1,
-            "fn": 1
-          },
-          "REMOVED": {
-            "tp": 0,
-            "fp": 0,
-            "fn": 1
-          },
-          "MOVED": {
-            "tp": 0,
-            "fp": 0,
-            "fn": 1
-          }
-        },
-        "fp_breakdown": {
-          "flicker": 1,
-          "inpaint": 0,
-          "misreg": 0
-        }
-      },
-      "filtered": {
-        "tp": 0,
-        "fp": 0,
-        "fn": 3,
-        "precision": 0.0,
-        "recall": 0.0,
-        "f1": 0.0,
-        "per_class": {
-          "Vehicle": {
-            "tp": 0,
-            "fp": 0,
-            "fn": 3
-          },
-          "Aircraft": {
-            "tp": 0,
-            "fp": 0,
-            "fn": 0
-          },
-          "Infrastructure": {
-            "tp": 0,
-            "fp": 0,
-            "fn": 0
-          },
-          "Vessel": {
-            "tp": 0,
-            "fp": 0,
-            "fn": 0
-          }
-        },
-        "per_type": {
-          "NEW": {
-            "tp": 0,
-            "fp": 0,
-            "fn": 1
-          },
-          "REMOVED": {
-            "tp": 0,
-            "fp": 0,
-            "fn": 1
-          },
-          "MOVED": {
-            "tp": 0,
-            "fp": 0,
-            "fn": 1
-          }
-        }
-      },
-      "structural_anomaly_detected": 1,
-      "pixel_diff_changed_pct": 0.3,
-      "timings": {
-        "registration_s": 0.0922,
-        "detection_s": 0.0716,
-        "pixel_diff_s": 0.0501,
-        "total_s": 0.2139
-      }
-    },
-    {
-      "seed": 13,
-      "tile_name": "1049_2151_768.jpg",
-      "edits_count": 3,
-      "injected_shift": [
-        7.23,
-        -0.92
-      ],
-      "shift_magnitude": 7.28,
-      "registration_error_px": 0.1353,
-      "reg_method": "ORB_RANSAC",
-      "raw": {
-        "tp": 1,
-        "fp": 2,
-        "fn": 2,
-        "precision": 0.3333,
-        "recall": 0.3333,
-        "f1": 0.3333,
-        "per_class": {
-          "Vehicle": {
-            "tp": 1,
-            "fp": 2,
-            "fn": 2
-          },
-          "Aircraft": {
-            "tp": 0,
-            "fp": 0,
-            "fn": 0
-          },
-          "Infrastructure": {
-            "tp": 0,
-            "fp": 0,
-            "fn": 0
-          },
-          "Vessel": {
-            "tp": 0,
-            "fp": 0,
-            "fn": 0
-          }
-        },
-        "per_type": {
-          "NEW": {
-            "tp": 0,
-            "fp": 1,
-            "fn": 1
-          },
-          "REMOVED": {
-            "tp": 1,
-            "fp": 1,
-            "fn": 0
-          },
-          "MOVED": {
-            "tp": 0,
-            "fp": 0,
-            "fn": 1
-          }
-        },
-        "fp_breakdown": {
-          "flicker": 1,
-          "inpaint": 1,
-          "misreg": 0
-        }
-      },
-      "filtered": {
-        "tp": 1,
-        "fp": 0,
-        "fn": 2,
-        "precision": 1.0,
-        "recall": 0.3333,
-        "f1": 0.5,
-        "per_class": {
-          "Vehicle": {
-            "tp": 1,
-            "fp": 0,
-            "fn": 2
-          },
-          "Aircraft": {
-            "tp": 0,
-            "fp": 0,
-            "fn": 0
-          },
-          "Infrastructure": {
-            "tp": 0,
-            "fp": 0,
-            "fn": 0
-          },
-          "Vessel": {
-            "tp": 0,
-            "fp": 0,
-            "fn": 0
-          }
-        },
-        "per_type": {
-          "NEW": {
-            "tp": 0,
-            "fp": 0,
-            "fn": 1
-          },
-          "REMOVED": {
-            "tp": 1,
-            "fp": 0,
-            "fn": 0
-          },
-          "MOVED": {
-            "tp": 0,
-            "fp": 0,
-            "fn": 1
-          }
-        }
-      },
-      "structural_anomaly_detected": 1,
-      "pixel_diff_changed_pct": 0.171,
-      "timings": {
-        "registration_s": 0.0729,
-        "detection_s": 0.0719,
-        "pixel_diff_s": 0.0517,
-        "total_s": 0.1965
-      }
-    },
-    {
-      "seed": 14,
-      "tile_name": "1072_0_1536.jpg",
-      "edits_count": 3,
-      "injected_shift": [
-        2.65,
-        -7.33
-      ],
-      "shift_magnitude": 7.8,
-      "registration_error_px": 0.0248,
-      "reg_method": "ORB_RANSAC",
-      "raw": {
-        "tp": 1,
-        "fp": 3,
-        "fn": 2,
-        "precision": 0.25,
-        "recall": 0.3333,
-        "f1": 0.2857,
-        "per_class": {
-          "Vehicle": {
-            "tp": 1,
-            "fp": 3,
-            "fn": 2
-          },
-          "Aircraft": {
-            "tp": 0,
-            "fp": 0,
-            "fn": 0
-          },
-          "Infrastructure": {
-            "tp": 0,
-            "fp": 0,
-            "fn": 0
-          },
-          "Vessel": {
-            "tp": 0,
-            "fp": 0,
-            "fn": 0
-          }
-        },
-        "per_type": {
-          "NEW": {
-            "tp": 0,
-            "fp": 0,
-            "fn": 1
-          },
-          "REMOVED": {
-            "tp": 0,
-            "fp": 1,
-            "fn": 1
-          },
-          "MOVED": {
-            "tp": 1,
-            "fp": 2,
-            "fn": 0
-          }
-        },
-        "fp_breakdown": {
-          "flicker": 2,
-          "inpaint": 1,
-          "misreg": 0
-        }
-      },
-      "filtered": {
-        "tp": 0,
-        "fp": 0,
-        "fn": 3,
-        "precision": 0.0,
-        "recall": 0.0,
-        "f1": 0.0,
-        "per_class": {
-          "Vehicle": {
-            "tp": 0,
-            "fp": 0,
-            "fn": 3
-          },
-          "Aircraft": {
-            "tp": 0,
-            "fp": 0,
-            "fn": 0
-          },
-          "Infrastructure": {
-            "tp": 0,
-            "fp": 0,
-            "fn": 0
-          },
-          "Vessel": {
-            "tp": 0,
-            "fp": 0,
-            "fn": 0
-          }
-        },
-        "per_type": {
-          "NEW": {
-            "tp": 0,
-            "fp": 0,
-            "fn": 1
-          },
-          "REMOVED": {
-            "tp": 0,
-            "fp": 0,
-            "fn": 1
-          },
-          "MOVED": {
-            "tp": 0,
-            "fp": 0,
-            "fn": 1
-          }
-        }
-      },
-      "structural_anomaly_detected": 1,
-      "pixel_diff_changed_pct": 0.305,
-      "timings": {
-        "registration_s": 0.0775,
-        "detection_s": 0.0723,
-        "pixel_diff_s": 0.0532,
-        "total_s": 0.203
-      }
-    },
-    {
-      "seed": 15,
-      "tile_name": "1072_0_1995.jpg",
-      "edits_count": 3,
-      "injected_shift": [
-        -1.05,
-        -0.09
-      ],
-      "shift_magnitude": 1.06,
-      "registration_error_px": 0.2237,
-      "reg_method": "ORB_RANSAC",
-      "raw": {
-        "tp": 2,
-        "fp": 1,
-        "fn": 1,
-        "precision": 0.6667,
-        "recall": 0.6667,
-        "f1": 0.6667,
-        "per_class": {
-          "Vehicle": {
-            "tp": 2,
-            "fp": 1,
-            "fn": 1
-          },
-          "Aircraft": {
-            "tp": 0,
-            "fp": 0,
-            "fn": 0
-          },
-          "Infrastructure": {
-            "tp": 0,
-            "fp": 0,
-            "fn": 0
-          },
-          "Vessel": {
-            "tp": 0,
-            "fp": 0,
-            "fn": 0
-          }
-        },
-        "per_type": {
-          "NEW": {
-            "tp": 0,
-            "fp": 0,
-            "fn": 1
-          },
-          "REMOVED": {
-            "tp": 1,
-            "fp": 1,
-            "fn": 0
-          },
-          "MOVED": {
-            "tp": 1,
-            "fp": 0,
-            "fn": 0
-          }
-        },
-        "fp_breakdown": {
-          "flicker": 0,
-          "inpaint": 1,
           "misreg": 0
         }
       },
@@ -1930,34 +742,1224 @@
       "structural_anomaly_detected": 1,
       "pixel_diff_changed_pct": 0.311,
       "timings": {
-        "registration_s": 0.0635,
-        "detection_s": 0.0737,
-        "pixel_diff_s": 0.0599,
-        "total_s": 0.197
+        "registration_s": 0.0796,
+        "detection_s": 0.0788,
+        "pixel_diff_s": 0.0494,
+        "total_s": 0.2078
       }
     },
     {
-      "seed": 16,
-      "tile_name": "1072_768_0.jpg",
+      "seed": 26,
+      "tile_name": "1460_0_0.jpg",
       "edits_count": 3,
       "injected_shift": [
-        -2.46,
-        3.85
+        -0.19,
+        3.56
       ],
-      "shift_magnitude": 4.57,
-      "registration_error_px": 0.1612,
+      "shift_magnitude": 3.57,
+      "registration_error_px": 0.1277,
+      "reg_method": "ORB_RANSAC",
+      "raw": {
+        "tp": 0,
+        "fp": 2,
+        "fn": 3,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "per_class": {
+          "Vehicle": {
+            "tp": 0,
+            "fp": 1,
+            "fn": 2
+          },
+          "Aircraft": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 1
+          },
+          "Infrastructure": {
+            "tp": 0,
+            "fp": 1,
+            "fn": 0
+          },
+          "Vessel": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 0
+          }
+        },
+        "per_type": {
+          "NEW": {
+            "tp": 0,
+            "fp": 1,
+            "fn": 1
+          },
+          "REMOVED": {
+            "tp": 0,
+            "fp": 1,
+            "fn": 1
+          },
+          "MOVED": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 1
+          }
+        },
+        "fp_breakdown": {
+          "flicker": 2,
+          "inpaint": 0,
+          "misreg": 0
+        }
+      },
+      "filtered": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 3,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "per_class": {
+          "Vehicle": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 2
+          },
+          "Aircraft": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 1
+          },
+          "Infrastructure": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 0
+          },
+          "Vessel": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 0
+          }
+        },
+        "per_type": {
+          "NEW": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 1
+          },
+          "REMOVED": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 1
+          },
+          "MOVED": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 1
+          }
+        }
+      },
+      "structural_anomaly_detected": 1,
+      "pixel_diff_changed_pct": 0.507,
+      "timings": {
+        "registration_s": 0.0782,
+        "detection_s": 0.0779,
+        "pixel_diff_s": 0.0506,
+        "total_s": 0.2066
+      }
+    },
+    {
+      "seed": 27,
+      "tile_name": "1460_0_768.jpg",
+      "edits_count": 3,
+      "injected_shift": [
+        3.58,
+        -1.79
+      ],
+      "shift_magnitude": 4.0,
+      "registration_error_px": 0.2472,
+      "reg_method": "ORB_RANSAC",
+      "raw": {
+        "tp": 0,
+        "fp": 16,
+        "fn": 3,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "per_class": {
+          "Vehicle": {
+            "tp": 0,
+            "fp": 15,
+            "fn": 3
+          },
+          "Aircraft": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 0
+          },
+          "Infrastructure": {
+            "tp": 0,
+            "fp": 1,
+            "fn": 0
+          },
+          "Vessel": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 0
+          }
+        },
+        "per_type": {
+          "NEW": {
+            "tp": 0,
+            "fp": 6,
+            "fn": 1
+          },
+          "REMOVED": {
+            "tp": 0,
+            "fp": 7,
+            "fn": 1
+          },
+          "MOVED": {
+            "tp": 0,
+            "fp": 3,
+            "fn": 1
+          }
+        },
+        "fp_breakdown": {
+          "flicker": 15,
+          "inpaint": 1,
+          "misreg": 0
+        }
+      },
+      "filtered": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 3,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "per_class": {
+          "Vehicle": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 3
+          },
+          "Aircraft": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 0
+          },
+          "Infrastructure": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 0
+          },
+          "Vessel": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 0
+          }
+        },
+        "per_type": {
+          "NEW": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 1
+          },
+          "REMOVED": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 1
+          },
+          "MOVED": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 1
+          }
+        }
+      },
+      "structural_anomaly_detected": 1,
+      "pixel_diff_changed_pct": 0.082,
+      "timings": {
+        "registration_s": 0.0845,
+        "detection_s": 0.0976,
+        "pixel_diff_s": 0.051,
+        "total_s": 0.2332
+      }
+    },
+    {
+      "seed": 28,
+      "tile_name": "1460_768_0.jpg",
+      "edits_count": 3,
+      "injected_shift": [
+        -0.68,
+        -0.08
+      ],
+      "shift_magnitude": 0.69,
+      "registration_error_px": 0.0637,
+      "reg_method": "ORB_RANSAC",
+      "raw": {
+        "tp": 0,
+        "fp": 1,
+        "fn": 3,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "per_class": {
+          "Vehicle": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 0
+          },
+          "Aircraft": {
+            "tp": 0,
+            "fp": 1,
+            "fn": 3
+          },
+          "Infrastructure": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 0
+          },
+          "Vessel": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 0
+          }
+        },
+        "per_type": {
+          "NEW": {
+            "tp": 0,
+            "fp": 1,
+            "fn": 1
+          },
+          "REMOVED": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 1
+          },
+          "MOVED": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 1
+          }
+        },
+        "fp_breakdown": {
+          "flicker": 0,
+          "inpaint": 1,
+          "misreg": 0
+        }
+      },
+      "filtered": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 3,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "per_class": {
+          "Vehicle": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 0
+          },
+          "Aircraft": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 3
+          },
+          "Infrastructure": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 0
+          },
+          "Vessel": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 0
+          }
+        },
+        "per_type": {
+          "NEW": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 1
+          },
+          "REMOVED": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 1
+          },
+          "MOVED": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 1
+          }
+        }
+      },
+      "structural_anomaly_detected": 0,
+      "pixel_diff_changed_pct": 1.04,
+      "timings": {
+        "registration_s": 0.0726,
+        "detection_s": 0.0695,
+        "pixel_diff_s": 0.0483,
+        "total_s": 0.1903
+      }
+    },
+    {
+      "seed": 29,
+      "tile_name": "1460_768_768.jpg",
+      "edits_count": 3,
+      "injected_shift": [
+        0.23,
+        1.42
+      ],
+      "shift_magnitude": 1.44,
+      "registration_error_px": 0.1159,
+      "reg_method": "ORB_RANSAC",
+      "raw": {
+        "tp": 0,
+        "fp": 6,
+        "fn": 3,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "per_class": {
+          "Vehicle": {
+            "tp": 0,
+            "fp": 5,
+            "fn": 3
+          },
+          "Aircraft": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 0
+          },
+          "Infrastructure": {
+            "tp": 0,
+            "fp": 1,
+            "fn": 0
+          },
+          "Vessel": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 0
+          }
+        },
+        "per_type": {
+          "NEW": {
+            "tp": 0,
+            "fp": 2,
+            "fn": 1
+          },
+          "REMOVED": {
+            "tp": 0,
+            "fp": 1,
+            "fn": 1
+          },
+          "MOVED": {
+            "tp": 0,
+            "fp": 3,
+            "fn": 1
+          }
+        },
+        "fp_breakdown": {
+          "flicker": 6,
+          "inpaint": 0,
+          "misreg": 0
+        }
+      },
+      "filtered": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 3,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "per_class": {
+          "Vehicle": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 3
+          },
+          "Aircraft": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 0
+          },
+          "Infrastructure": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 0
+          },
+          "Vessel": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 0
+          }
+        },
+        "per_type": {
+          "NEW": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 1
+          },
+          "REMOVED": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 1
+          },
+          "MOVED": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 1
+          }
+        }
+      },
+      "structural_anomaly_detected": 0,
+      "pixel_diff_changed_pct": 0.033,
+      "timings": {
+        "registration_s": 0.0825,
+        "detection_s": 0.0807,
+        "pixel_diff_s": 0.0512,
+        "total_s": 0.2144
+      }
+    },
+    {
+      "seed": 30,
+      "tile_name": "1587_0_1536.jpg",
+      "edits_count": 3,
+      "injected_shift": [
+        5.38,
+        1.71
+      ],
+      "shift_magnitude": 5.64,
+      "registration_error_px": 0.1022,
+      "reg_method": "ORB_RANSAC",
+      "raw": {
+        "tp": 1,
+        "fp": 6,
+        "fn": 2,
+        "precision": 0.1429,
+        "recall": 0.3333,
+        "f1": 0.2,
+        "per_class": {
+          "Vehicle": {
+            "tp": 1,
+            "fp": 6,
+            "fn": 2
+          },
+          "Aircraft": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 0
+          },
+          "Infrastructure": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 0
+          },
+          "Vessel": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 0
+          }
+        },
+        "per_type": {
+          "NEW": {
+            "tp": 0,
+            "fp": 2,
+            "fn": 1
+          },
+          "REMOVED": {
+            "tp": 1,
+            "fp": 4,
+            "fn": 0
+          },
+          "MOVED": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 1
+          }
+        },
+        "fp_breakdown": {
+          "flicker": 5,
+          "inpaint": 1,
+          "misreg": 0
+        }
+      },
+      "filtered": {
+        "tp": 1,
+        "fp": 0,
+        "fn": 2,
+        "precision": 1.0,
+        "recall": 0.3333,
+        "f1": 0.5,
+        "per_class": {
+          "Vehicle": {
+            "tp": 1,
+            "fp": 0,
+            "fn": 2
+          },
+          "Aircraft": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 0
+          },
+          "Infrastructure": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 0
+          },
+          "Vessel": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 0
+          }
+        },
+        "per_type": {
+          "NEW": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 1
+          },
+          "REMOVED": {
+            "tp": 1,
+            "fp": 0,
+            "fn": 0
+          },
+          "MOVED": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 1
+          }
+        }
+      },
+      "structural_anomaly_detected": 1,
+      "pixel_diff_changed_pct": 0.269,
+      "timings": {
+        "registration_s": 0.0773,
+        "detection_s": 0.0844,
+        "pixel_diff_s": 0.0505,
+        "total_s": 0.2122
+      }
+    },
+    {
+      "seed": 31,
+      "tile_name": "1049_1536_768.jpg",
+      "edits_count": 3,
+      "injected_shift": [
+        0.95,
+        -0.82
+      ],
+      "shift_magnitude": 1.25,
+      "registration_error_px": 0.1353,
+      "reg_method": "ORB_RANSAC",
+      "raw": {
+        "tp": 1,
+        "fp": 7,
+        "fn": 2,
+        "precision": 0.125,
+        "recall": 0.3333,
+        "f1": 0.1818,
+        "per_class": {
+          "Vehicle": {
+            "tp": 1,
+            "fp": 7,
+            "fn": 2
+          },
+          "Aircraft": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 0
+          },
+          "Infrastructure": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 0
+          },
+          "Vessel": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 0
+          }
+        },
+        "per_type": {
+          "NEW": {
+            "tp": 0,
+            "fp": 2,
+            "fn": 1
+          },
+          "REMOVED": {
+            "tp": 1,
+            "fp": 5,
+            "fn": 0
+          },
+          "MOVED": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 1
+          }
+        },
+        "fp_breakdown": {
+          "flicker": 6,
+          "inpaint": 1,
+          "misreg": 0
+        }
+      },
+      "filtered": {
+        "tp": 0,
+        "fp": 1,
+        "fn": 3,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "per_class": {
+          "Vehicle": {
+            "tp": 0,
+            "fp": 1,
+            "fn": 3
+          },
+          "Aircraft": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 0
+          },
+          "Infrastructure": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 0
+          },
+          "Vessel": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 0
+          }
+        },
+        "per_type": {
+          "NEW": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 1
+          },
+          "REMOVED": {
+            "tp": 0,
+            "fp": 1,
+            "fn": 1
+          },
+          "MOVED": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 1
+          }
+        }
+      },
+      "structural_anomaly_detected": 1,
+      "pixel_diff_changed_pct": 0.185,
+      "timings": {
+        "registration_s": 0.0566,
+        "detection_s": 0.0768,
+        "pixel_diff_s": 0.0499,
+        "total_s": 0.1832
+      }
+    },
+    {
+      "seed": 32,
+      "tile_name": "1049_2151_1778.jpg",
+      "edits_count": 3,
+      "injected_shift": [
+        -2.83,
+        -2.73
+      ],
+      "shift_magnitude": 3.93,
+      "registration_error_px": 0.0865,
+      "reg_method": "ORB_RANSAC",
+      "raw": {
+        "tp": 0,
+        "fp": 3,
+        "fn": 3,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "per_class": {
+          "Vehicle": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 3
+          },
+          "Aircraft": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 0
+          },
+          "Infrastructure": {
+            "tp": 0,
+            "fp": 3,
+            "fn": 0
+          },
+          "Vessel": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 0
+          }
+        },
+        "per_type": {
+          "NEW": {
+            "tp": 0,
+            "fp": 3,
+            "fn": 1
+          },
+          "REMOVED": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 1
+          },
+          "MOVED": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 1
+          }
+        },
+        "fp_breakdown": {
+          "flicker": 2,
+          "inpaint": 0,
+          "misreg": 1
+        }
+      },
+      "filtered": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 3,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "per_class": {
+          "Vehicle": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 3
+          },
+          "Aircraft": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 0
+          },
+          "Infrastructure": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 0
+          },
+          "Vessel": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 0
+          }
+        },
+        "per_type": {
+          "NEW": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 1
+          },
+          "REMOVED": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 1
+          },
+          "MOVED": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 1
+          }
+        }
+      },
+      "structural_anomaly_detected": 1,
+      "pixel_diff_changed_pct": 0.204,
+      "timings": {
+        "registration_s": 0.089,
+        "detection_s": 0.0689,
+        "pixel_diff_s": 0.0488,
+        "total_s": 0.2068
+      }
+    },
+    {
+      "seed": 33,
+      "tile_name": "1049_2151_768.jpg",
+      "edits_count": 3,
+      "injected_shift": [
+        -2.16,
+        0.24
+      ],
+      "shift_magnitude": 2.17,
+      "registration_error_px": 0.1665,
+      "reg_method": "ORB_RANSAC",
+      "raw": {
+        "tp": 1,
+        "fp": 3,
+        "fn": 2,
+        "precision": 0.25,
+        "recall": 0.3333,
+        "f1": 0.2857,
+        "per_class": {
+          "Vehicle": {
+            "tp": 1,
+            "fp": 3,
+            "fn": 2
+          },
+          "Aircraft": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 0
+          },
+          "Infrastructure": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 0
+          },
+          "Vessel": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 0
+          }
+        },
+        "per_type": {
+          "NEW": {
+            "tp": 0,
+            "fp": 1,
+            "fn": 1
+          },
+          "REMOVED": {
+            "tp": 1,
+            "fp": 2,
+            "fn": 0
+          },
+          "MOVED": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 1
+          }
+        },
+        "fp_breakdown": {
+          "flicker": 2,
+          "inpaint": 1,
+          "misreg": 0
+        }
+      },
+      "filtered": {
+        "tp": 1,
+        "fp": 0,
+        "fn": 2,
+        "precision": 1.0,
+        "recall": 0.3333,
+        "f1": 0.5,
+        "per_class": {
+          "Vehicle": {
+            "tp": 1,
+            "fp": 0,
+            "fn": 2
+          },
+          "Aircraft": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 0
+          },
+          "Infrastructure": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 0
+          },
+          "Vessel": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 0
+          }
+        },
+        "per_type": {
+          "NEW": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 1
+          },
+          "REMOVED": {
+            "tp": 1,
+            "fp": 0,
+            "fn": 0
+          },
+          "MOVED": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 1
+          }
+        }
+      },
+      "structural_anomaly_detected": 1,
+      "pixel_diff_changed_pct": 0.312,
+      "timings": {
+        "registration_s": 0.0672,
+        "detection_s": 0.0726,
+        "pixel_diff_s": 0.0515,
+        "total_s": 0.1914
+      }
+    },
+    {
+      "seed": 34,
+      "tile_name": "1072_0_1536.jpg",
+      "edits_count": 3,
+      "injected_shift": [
+        3.83,
+        -3.33
+      ],
+      "shift_magnitude": 5.07,
+      "registration_error_px": 0.0628,
       "reg_method": "ORB_RANSAC",
       "raw": {
         "tp": 2,
-        "fp": 8,
+        "fp": 3,
         "fn": 1,
-        "precision": 0.2,
+        "precision": 0.4,
         "recall": 0.6667,
-        "f1": 0.3077,
+        "f1": 0.5,
         "per_class": {
           "Vehicle": {
             "tp": 2,
-            "fp": 6,
+            "fp": 3,
+            "fn": 1
+          },
+          "Aircraft": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 0
+          },
+          "Infrastructure": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 0
+          },
+          "Vessel": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 0
+          }
+        },
+        "per_type": {
+          "NEW": {
+            "tp": 1,
+            "fp": 1,
+            "fn": 0
+          },
+          "REMOVED": {
+            "tp": 0,
+            "fp": 2,
+            "fn": 1
+          },
+          "MOVED": {
+            "tp": 1,
+            "fp": 0,
+            "fn": 0
+          }
+        },
+        "fp_breakdown": {
+          "flicker": 0,
+          "inpaint": 3,
+          "misreg": 0
+        }
+      },
+      "filtered": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 3,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "per_class": {
+          "Vehicle": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 3
+          },
+          "Aircraft": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 0
+          },
+          "Infrastructure": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 0
+          },
+          "Vessel": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 0
+          }
+        },
+        "per_type": {
+          "NEW": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 1
+          },
+          "REMOVED": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 1
+          },
+          "MOVED": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 1
+          }
+        }
+      },
+      "structural_anomaly_detected": 1,
+      "pixel_diff_changed_pct": 0.272,
+      "timings": {
+        "registration_s": 0.0696,
+        "detection_s": 0.071,
+        "pixel_diff_s": 0.0496,
+        "total_s": 0.1903
+      }
+    },
+    {
+      "seed": 35,
+      "tile_name": "1072_0_1995.jpg",
+      "edits_count": 3,
+      "injected_shift": [
+        -3.78,
+        1.05
+      ],
+      "shift_magnitude": 3.93,
+      "registration_error_px": 0.1064,
+      "reg_method": "ORB_RANSAC",
+      "raw": {
+        "tp": 1,
+        "fp": 0,
+        "fn": 2,
+        "precision": 1.0,
+        "recall": 0.3333,
+        "f1": 0.5,
+        "per_class": {
+          "Vehicle": {
+            "tp": 1,
+            "fp": 0,
+            "fn": 2
+          },
+          "Aircraft": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 0
+          },
+          "Infrastructure": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 0
+          },
+          "Vessel": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 0
+          }
+        },
+        "per_type": {
+          "NEW": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 1
+          },
+          "REMOVED": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 1
+          },
+          "MOVED": {
+            "tp": 1,
+            "fp": 0,
+            "fn": 0
+          }
+        },
+        "fp_breakdown": {
+          "flicker": 0,
+          "inpaint": 0,
+          "misreg": 0
+        }
+      },
+      "filtered": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 3,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "per_class": {
+          "Vehicle": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 3
+          },
+          "Aircraft": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 0
+          },
+          "Infrastructure": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 0
+          },
+          "Vessel": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 0
+          }
+        },
+        "per_type": {
+          "NEW": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 1
+          },
+          "REMOVED": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 1
+          },
+          "MOVED": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 1
+          }
+        }
+      },
+      "structural_anomaly_detected": 1,
+      "pixel_diff_changed_pct": 0.258,
+      "timings": {
+        "registration_s": 0.0586,
+        "detection_s": 0.0712,
+        "pixel_diff_s": 0.0494,
+        "total_s": 0.1791
+      }
+    },
+    {
+      "seed": 36,
+      "tile_name": "1072_768_0.jpg",
+      "edits_count": 3,
+      "injected_shift": [
+        6.96,
+        -3.3
+      ],
+      "shift_magnitude": 7.71,
+      "registration_error_px": 0.069,
+      "reg_method": "ORB_RANSAC",
+      "raw": {
+        "tp": 2,
+        "fp": 4,
+        "fn": 1,
+        "precision": 0.3333,
+        "recall": 0.6667,
+        "f1": 0.4444,
+        "per_class": {
+          "Vehicle": {
+            "tp": 2,
+            "fp": 2,
             "fn": 1
           },
           "Aircraft": {
@@ -1978,23 +1980,23 @@
         },
         "per_type": {
           "NEW": {
-            "tp": 1,
+            "tp": 0,
             "fp": 2,
-            "fn": 0
+            "fn": 1
           },
           "REMOVED": {
             "tp": 1,
-            "fp": 5,
+            "fp": 1,
             "fn": 0
           },
           "MOVED": {
-            "tp": 0,
+            "tp": 1,
             "fp": 1,
-            "fn": 1
+            "fn": 0
           }
         },
         "fp_breakdown": {
-          "flicker": 8,
+          "flicker": 4,
           "inpaint": 0,
           "misreg": 0
         }
@@ -2046,38 +2048,38 @@
           }
         }
       },
-      "structural_anomaly_detected": 0,
-      "pixel_diff_changed_pct": 0.082,
+      "structural_anomaly_detected": 1,
+      "pixel_diff_changed_pct": 0.288,
       "timings": {
-        "registration_s": 0.0829,
-        "detection_s": 0.074,
-        "pixel_diff_s": 0.0519,
-        "total_s": 0.2088
+        "registration_s": 0.0774,
+        "detection_s": 0.0754,
+        "pixel_diff_s": 0.0509,
+        "total_s": 0.2037
       }
     },
     {
-      "seed": 17,
+      "seed": 37,
       "tile_name": "1072_768_1536.jpg",
       "edits_count": 3,
       "injected_shift": [
-        -1.0,
-        3.71
+        -4.4,
+        -1.3
       ],
-      "shift_magnitude": 3.84,
-      "registration_error_px": 0.123,
+      "shift_magnitude": 4.59,
+      "registration_error_px": 0.1232,
       "reg_method": "ORB_RANSAC",
       "raw": {
-        "tp": 1,
-        "fp": 8,
-        "fn": 2,
-        "precision": 0.1111,
-        "recall": 0.3333,
-        "f1": 0.1667,
+        "tp": 2,
+        "fp": 6,
+        "fn": 1,
+        "precision": 0.25,
+        "recall": 0.6667,
+        "f1": 0.3636,
         "per_class": {
           "Vehicle": {
-            "tp": 1,
-            "fp": 4,
-            "fn": 2
+            "tp": 2,
+            "fp": 2,
+            "fn": 1
           },
           "Aircraft": {
             "tp": 0,
@@ -2097,24 +2099,24 @@
         },
         "per_type": {
           "NEW": {
-            "tp": 0,
-            "fp": 5,
-            "fn": 1
+            "tp": 1,
+            "fp": 4,
+            "fn": 0
           },
           "REMOVED": {
-            "tp": 0,
-            "fp": 3,
-            "fn": 1
+            "tp": 1,
+            "fp": 1,
+            "fn": 0
           },
           "MOVED": {
-            "tp": 1,
-            "fp": 0,
-            "fn": 0
+            "tp": 0,
+            "fp": 1,
+            "fn": 1
           }
         },
         "fp_breakdown": {
           "flicker": 4,
-          "inpaint": 3,
+          "inpaint": 1,
           "misreg": 1
         }
       },
@@ -2166,37 +2168,89 @@
         }
       },
       "structural_anomaly_detected": 0,
-      "pixel_diff_changed_pct": 0.03,
+      "pixel_diff_changed_pct": 0.027,
       "timings": {
-        "registration_s": 0.0801,
-        "detection_s": 0.0736,
-        "pixel_diff_s": 0.0501,
-        "total_s": 0.2038
+        "registration_s": 0.0796,
+        "detection_s": 0.069,
+        "pixel_diff_s": 0.0492,
+        "total_s": 0.1978
       }
     },
     {
-      "seed": 18,
+      "seed": 38,
       "tile_name": "1072_768_1995.jpg",
       "edits_count": 3,
       "injected_shift": [
-        4.02,
-        -3.95
+        -1.33,
+        -2.4
       ],
-      "shift_magnitude": 5.64,
-      "registration_error_px": 0.0668,
+      "shift_magnitude": 2.75,
+      "registration_error_px": 0.1261,
       "reg_method": "ORB_RANSAC",
       "raw": {
-        "tp": 1,
-        "fp": 0,
-        "fn": 2,
-        "precision": 1.0,
-        "recall": 0.3333,
-        "f1": 0.5,
+        "tp": 0,
+        "fp": 2,
+        "fn": 3,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
         "per_class": {
           "Vehicle": {
-            "tp": 1,
+            "tp": 0,
+            "fp": 2,
+            "fn": 3
+          },
+          "Aircraft": {
+            "tp": 0,
             "fp": 0,
-            "fn": 2
+            "fn": 0
+          },
+          "Infrastructure": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 0
+          },
+          "Vessel": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 0
+          }
+        },
+        "per_type": {
+          "NEW": {
+            "tp": 0,
+            "fp": 2,
+            "fn": 1
+          },
+          "REMOVED": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 1
+          },
+          "MOVED": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 1
+          }
+        },
+        "fp_breakdown": {
+          "flicker": 2,
+          "inpaint": 0,
+          "misreg": 0
+        }
+      },
+      "filtered": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 3,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "per_class": {
+          "Vehicle": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 3
           },
           "Aircraft": {
             "tp": 0,
@@ -2221,9 +2275,195 @@
             "fn": 1
           },
           "REMOVED": {
-            "tp": 1,
+            "tp": 0,
+            "fp": 0,
+            "fn": 1
+          },
+          "MOVED": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 1
+          }
+        }
+      },
+      "structural_anomaly_detected": 1,
+      "pixel_diff_changed_pct": 0.188,
+      "timings": {
+        "registration_s": 0.0859,
+        "detection_s": 0.0741,
+        "pixel_diff_s": 0.0486,
+        "total_s": 0.2086
+      }
+    },
+    {
+      "seed": 39,
+      "tile_name": "1072_768_768.jpg",
+      "edits_count": 3,
+      "injected_shift": [
+        1.28,
+        -3.96
+      ],
+      "shift_magnitude": 4.16,
+      "registration_error_px": 0.0687,
+      "reg_method": "ORB_RANSAC",
+      "raw": {
+        "tp": 2,
+        "fp": 6,
+        "fn": 1,
+        "precision": 0.25,
+        "recall": 0.6667,
+        "f1": 0.3636,
+        "per_class": {
+          "Vehicle": {
+            "tp": 2,
+            "fp": 6,
+            "fn": 1
+          },
+          "Aircraft": {
+            "tp": 0,
             "fp": 0,
             "fn": 0
+          },
+          "Infrastructure": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 0
+          },
+          "Vessel": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 0
+          }
+        },
+        "per_type": {
+          "NEW": {
+            "tp": 1,
+            "fp": 1,
+            "fn": 0
+          },
+          "REMOVED": {
+            "tp": 1,
+            "fp": 4,
+            "fn": 0
+          },
+          "MOVED": {
+            "tp": 0,
+            "fp": 1,
+            "fn": 1
+          }
+        },
+        "fp_breakdown": {
+          "flicker": 6,
+          "inpaint": 0,
+          "misreg": 0
+        }
+      },
+      "filtered": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 3,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "per_class": {
+          "Vehicle": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 3
+          },
+          "Aircraft": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 0
+          },
+          "Infrastructure": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 0
+          },
+          "Vessel": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 0
+          }
+        },
+        "per_type": {
+          "NEW": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 1
+          },
+          "REMOVED": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 1
+          },
+          "MOVED": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 1
+          }
+        }
+      },
+      "structural_anomaly_detected": 0,
+      "pixel_diff_changed_pct": 0.092,
+      "timings": {
+        "registration_s": 0.0754,
+        "detection_s": 0.0748,
+        "pixel_diff_s": 0.0526,
+        "total_s": 0.2028
+      }
+    },
+    {
+      "seed": 40,
+      "tile_name": "109_768_0.jpg",
+      "edits_count": 3,
+      "injected_shift": [
+        -6.9,
+        0.92
+      ],
+      "shift_magnitude": 6.96,
+      "registration_error_px": 0.0701,
+      "reg_method": "ORB_RANSAC",
+      "raw": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 3,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "per_class": {
+          "Vehicle": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 3
+          },
+          "Aircraft": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 0
+          },
+          "Infrastructure": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 0
+          },
+          "Vessel": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 0
+          }
+        },
+        "per_type": {
+          "NEW": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 1
+          },
+          "REMOVED": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 1
           },
           "MOVED": {
             "tp": 0,
@@ -2284,41 +2524,212 @@
           }
         }
       },
-      "structural_anomaly_detected": 1,
-      "pixel_diff_changed_pct": 0.267,
+      "structural_anomaly_detected": 0,
+      "pixel_diff_changed_pct": 0.022,
       "timings": {
-        "registration_s": 0.0787,
-        "detection_s": 0.0718,
-        "pixel_diff_s": 0.0556,
-        "total_s": 0.2062
+        "registration_s": 0.0784,
+        "detection_s": 0.0878,
+        "pixel_diff_s": 0.0505,
+        "total_s": 0.2168
       }
     },
     {
-      "seed": 19,
-      "tile_name": "1072_768_768.jpg",
+      "seed": 41,
+      "tile_name": "1125_1536_0.jpg",
       "edits_count": 3,
       "injected_shift": [
-        -0.6,
-        -0.32
+        -2.42,
+        1.08
       ],
-      "shift_magnitude": 0.68,
-      "registration_error_px": 0.2061,
+      "shift_magnitude": 2.65,
+      "registration_error_px": 0.1578,
       "reg_method": "ORB_RANSAC",
       "raw": {
         "tp": 1,
-        "fp": 7,
+        "fp": 1,
         "fn": 2,
-        "precision": 0.125,
+        "precision": 0.5,
         "recall": 0.3333,
-        "f1": 0.1818,
+        "f1": 0.4,
         "per_class": {
           "Vehicle": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 0
+          },
+          "Aircraft": {
             "tp": 1,
-            "fp": 7,
+            "fp": 1,
             "fn": 2
+          },
+          "Infrastructure": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 0
+          },
+          "Vessel": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 0
+          }
+        },
+        "per_type": {
+          "NEW": {
+            "tp": 0,
+            "fp": 1,
+            "fn": 1
+          },
+          "REMOVED": {
+            "tp": 1,
+            "fp": 0,
+            "fn": 0
+          },
+          "MOVED": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 1
+          }
+        },
+        "fp_breakdown": {
+          "flicker": 0,
+          "inpaint": 0,
+          "misreg": 1
+        }
+      },
+      "filtered": {
+        "tp": 0,
+        "fp": 1,
+        "fn": 3,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "per_class": {
+          "Vehicle": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 0
           },
           "Aircraft": {
             "tp": 0,
+            "fp": 1,
+            "fn": 3
+          },
+          "Infrastructure": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 0
+          },
+          "Vessel": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 0
+          }
+        },
+        "per_type": {
+          "NEW": {
+            "tp": 0,
+            "fp": 1,
+            "fn": 1
+          },
+          "REMOVED": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 1
+          },
+          "MOVED": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 1
+          }
+        }
+      },
+      "structural_anomaly_detected": 1,
+      "pixel_diff_changed_pct": 1.422,
+      "timings": {
+        "registration_s": 0.0657,
+        "detection_s": 0.0708,
+        "pixel_diff_s": 0.0507,
+        "total_s": 0.1871
+      }
+    },
+    {
+      "seed": 42,
+      "tile_name": "1125_2304_0.jpg",
+      "edits_count": 3,
+      "injected_shift": [
+        -0.09,
+        0.74
+      ],
+      "shift_magnitude": 0.74,
+      "registration_error_px": 0.1707,
+      "reg_method": "ORB_RANSAC",
+      "raw": {
+        "tp": 3,
+        "fp": 1,
+        "fn": 0,
+        "precision": 0.75,
+        "recall": 1.0,
+        "f1": 0.8571,
+        "per_class": {
+          "Vehicle": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 0
+          },
+          "Aircraft": {
+            "tp": 3,
+            "fp": 0,
+            "fn": 0
+          },
+          "Infrastructure": {
+            "tp": 0,
+            "fp": 1,
+            "fn": 0
+          },
+          "Vessel": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 0
+          }
+        },
+        "per_type": {
+          "NEW": {
+            "tp": 1,
+            "fp": 1,
+            "fn": 0
+          },
+          "REMOVED": {
+            "tp": 1,
+            "fp": 0,
+            "fn": 0
+          },
+          "MOVED": {
+            "tp": 1,
+            "fp": 0,
+            "fn": 0
+          }
+        },
+        "fp_breakdown": {
+          "flicker": 0,
+          "inpaint": 1,
+          "misreg": 0
+        }
+      },
+      "filtered": {
+        "tp": 3,
+        "fp": 0,
+        "fn": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "per_class": {
+          "Vehicle": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 0
+          },
+          "Aircraft": {
+            "tp": 3,
             "fp": 0,
             "fn": 0
           },
@@ -2336,23 +2747,328 @@
         "per_type": {
           "NEW": {
             "tp": 1,
+            "fp": 0,
+            "fn": 0
+          },
+          "REMOVED": {
+            "tp": 1,
+            "fp": 0,
+            "fn": 0
+          },
+          "MOVED": {
+            "tp": 1,
+            "fp": 0,
+            "fn": 0
+          }
+        }
+      },
+      "structural_anomaly_detected": 1,
+      "pixel_diff_changed_pct": 1.511,
+      "timings": {
+        "registration_s": 0.077,
+        "detection_s": 0.0734,
+        "pixel_diff_s": 0.0505,
+        "total_s": 0.2008
+      }
+    },
+    {
+      "seed": 43,
+      "tile_name": "1125_2897_0.jpg",
+      "edits_count": 3,
+      "injected_shift": [
+        -2.72,
+        -4.03
+      ],
+      "shift_magnitude": 4.86,
+      "registration_error_px": 0.1456,
+      "reg_method": "ORB_RANSAC",
+      "raw": {
+        "tp": 3,
+        "fp": 3,
+        "fn": 0,
+        "precision": 0.5,
+        "recall": 1.0,
+        "f1": 0.6667,
+        "per_class": {
+          "Vehicle": {
+            "tp": 1,
+            "fp": 0,
+            "fn": 0
+          },
+          "Aircraft": {
+            "tp": 2,
             "fp": 1,
+            "fn": 0
+          },
+          "Infrastructure": {
+            "tp": 0,
+            "fp": 2,
+            "fn": 0
+          },
+          "Vessel": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 0
+          }
+        },
+        "per_type": {
+          "NEW": {
+            "tp": 1,
+            "fp": 2,
+            "fn": 0
+          },
+          "REMOVED": {
+            "tp": 1,
+            "fp": 0,
+            "fn": 0
+          },
+          "MOVED": {
+            "tp": 1,
+            "fp": 1,
+            "fn": 0
+          }
+        },
+        "fp_breakdown": {
+          "flicker": 2,
+          "inpaint": 0,
+          "misreg": 1
+        }
+      },
+      "filtered": {
+        "tp": 2,
+        "fp": 0,
+        "fn": 1,
+        "precision": 1.0,
+        "recall": 0.6667,
+        "f1": 0.8,
+        "per_class": {
+          "Vehicle": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 1
+          },
+          "Aircraft": {
+            "tp": 2,
+            "fp": 0,
+            "fn": 0
+          },
+          "Infrastructure": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 0
+          },
+          "Vessel": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 0
+          }
+        },
+        "per_type": {
+          "NEW": {
+            "tp": 1,
+            "fp": 0,
             "fn": 0
           },
           "REMOVED": {
             "tp": 0,
-            "fp": 4,
+            "fp": 0,
+            "fn": 1
+          },
+          "MOVED": {
+            "tp": 1,
+            "fp": 0,
+            "fn": 0
+          }
+        }
+      },
+      "structural_anomaly_detected": 0,
+      "pixel_diff_changed_pct": 0.703,
+      "timings": {
+        "registration_s": 0.0782,
+        "detection_s": 0.0878,
+        "pixel_diff_s": 0.0526,
+        "total_s": 0.2186
+      }
+    },
+    {
+      "seed": 44,
+      "tile_name": "1125_2897_1536.jpg",
+      "edits_count": 3,
+      "injected_shift": [
+        -4.17,
+        1.12
+      ],
+      "shift_magnitude": 4.32,
+      "registration_error_px": 0.0704,
+      "reg_method": "ORB_RANSAC",
+      "raw": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 3,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "per_class": {
+          "Vehicle": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 0
+          },
+          "Aircraft": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 3
+          },
+          "Infrastructure": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 0
+          },
+          "Vessel": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 0
+          }
+        },
+        "per_type": {
+          "NEW": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 1
+          },
+          "REMOVED": {
+            "tp": 0,
+            "fp": 0,
             "fn": 1
           },
           "MOVED": {
             "tp": 0,
-            "fp": 2,
+            "fp": 0,
             "fn": 1
           }
         },
         "fp_breakdown": {
-          "flicker": 5,
-          "inpaint": 2,
+          "flicker": 0,
+          "inpaint": 0,
+          "misreg": 0
+        }
+      },
+      "filtered": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 3,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "per_class": {
+          "Vehicle": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 0
+          },
+          "Aircraft": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 3
+          },
+          "Infrastructure": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 0
+          },
+          "Vessel": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 0
+          }
+        },
+        "per_type": {
+          "NEW": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 1
+          },
+          "REMOVED": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 1
+          },
+          "MOVED": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 1
+          }
+        }
+      },
+      "structural_anomaly_detected": 1,
+      "pixel_diff_changed_pct": 0.505,
+      "timings": {
+        "registration_s": 0.0753,
+        "detection_s": 0.0697,
+        "pixel_diff_s": 0.05,
+        "total_s": 0.1949
+      }
+    },
+    {
+      "seed": 45,
+      "tile_name": "1125_2897_1993.jpg",
+      "edits_count": 3,
+      "injected_shift": [
+        -7.21,
+        0.48
+      ],
+      "shift_magnitude": 7.23,
+      "registration_error_px": 0.1631,
+      "reg_method": "ORB_RANSAC",
+      "raw": {
+        "tp": 1,
+        "fp": 10,
+        "fn": 2,
+        "precision": 0.0909,
+        "recall": 0.3333,
+        "f1": 0.1429,
+        "per_class": {
+          "Vehicle": {
+            "tp": 1,
+            "fp": 9,
+            "fn": 2
+          },
+          "Aircraft": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 0
+          },
+          "Infrastructure": {
+            "tp": 0,
+            "fp": 1,
+            "fn": 0
+          },
+          "Vessel": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 0
+          }
+        },
+        "per_type": {
+          "NEW": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 1
+          },
+          "REMOVED": {
+            "tp": 1,
+            "fp": 9,
+            "fn": 0
+          },
+          "MOVED": {
+            "tp": 0,
+            "fp": 1,
+            "fn": 1
+          }
+        },
+        "fp_breakdown": {
+          "flicker": 6,
+          "inpaint": 4,
           "misreg": 0
         }
       },
@@ -2404,26 +3120,435 @@
         }
       },
       "structural_anomaly_detected": 1,
-      "pixel_diff_changed_pct": 0.217,
+      "pixel_diff_changed_pct": 0.235,
       "timings": {
-        "registration_s": 0.084,
-        "detection_s": 0.0735,
-        "pixel_diff_s": 0.054,
-        "total_s": 0.2114
+        "registration_s": 0.08,
+        "detection_s": 0.0739,
+        "pixel_diff_s": 0.0509,
+        "total_s": 0.2048
       }
     },
     {
-      "seed": 20,
-      "tile_name": "109_768_0.jpg",
+      "seed": 46,
+      "tile_name": "1460_0_0.jpg",
       "edits_count": 3,
       "injected_shift": [
-        -0.77,
-        -3.06
+        -0.26,
+        4.04
       ],
-      "shift_magnitude": 3.15,
-      "registration_error_px": 0.1237,
+      "shift_magnitude": 4.04,
+      "registration_error_px": 0.1556,
       "reg_method": "ORB_RANSAC",
       "raw": {
+        "tp": 1,
+        "fp": 0,
+        "fn": 2,
+        "precision": 1.0,
+        "recall": 0.3333,
+        "f1": 0.5,
+        "per_class": {
+          "Vehicle": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 2
+          },
+          "Aircraft": {
+            "tp": 1,
+            "fp": 0,
+            "fn": 0
+          },
+          "Infrastructure": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 0
+          },
+          "Vessel": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 0
+          }
+        },
+        "per_type": {
+          "NEW": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 1
+          },
+          "REMOVED": {
+            "tp": 1,
+            "fp": 0,
+            "fn": 0
+          },
+          "MOVED": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 1
+          }
+        },
+        "fp_breakdown": {
+          "flicker": 0,
+          "inpaint": 0,
+          "misreg": 0
+        }
+      },
+      "filtered": {
+        "tp": 1,
+        "fp": 0,
+        "fn": 2,
+        "precision": 1.0,
+        "recall": 0.3333,
+        "f1": 0.5,
+        "per_class": {
+          "Vehicle": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 2
+          },
+          "Aircraft": {
+            "tp": 1,
+            "fp": 0,
+            "fn": 0
+          },
+          "Infrastructure": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 0
+          },
+          "Vessel": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 0
+          }
+        },
+        "per_type": {
+          "NEW": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 1
+          },
+          "REMOVED": {
+            "tp": 1,
+            "fp": 0,
+            "fn": 0
+          },
+          "MOVED": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 1
+          }
+        }
+      },
+      "structural_anomaly_detected": 0,
+      "pixel_diff_changed_pct": 0.334,
+      "timings": {
+        "registration_s": 0.0837,
+        "detection_s": 0.0696,
+        "pixel_diff_s": 0.0532,
+        "total_s": 0.2066
+      }
+    },
+    {
+      "seed": 47,
+      "tile_name": "1460_0_768.jpg",
+      "edits_count": 3,
+      "injected_shift": [
+        -6.51,
+        -0.46
+      ],
+      "shift_magnitude": 6.53,
+      "registration_error_px": 0.1367,
+      "reg_method": "ORB_RANSAC",
+      "raw": {
+        "tp": 2,
+        "fp": 19,
+        "fn": 1,
+        "precision": 0.0952,
+        "recall": 0.6667,
+        "f1": 0.1667,
+        "per_class": {
+          "Vehicle": {
+            "tp": 2,
+            "fp": 19,
+            "fn": 1
+          },
+          "Aircraft": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 0
+          },
+          "Infrastructure": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 0
+          },
+          "Vessel": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 0
+          }
+        },
+        "per_type": {
+          "NEW": {
+            "tp": 0,
+            "fp": 5,
+            "fn": 1
+          },
+          "REMOVED": {
+            "tp": 1,
+            "fp": 12,
+            "fn": 0
+          },
+          "MOVED": {
+            "tp": 1,
+            "fp": 2,
+            "fn": 0
+          }
+        },
+        "fp_breakdown": {
+          "flicker": 14,
+          "inpaint": 5,
+          "misreg": 0
+        }
+      },
+      "filtered": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 3,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "per_class": {
+          "Vehicle": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 3
+          },
+          "Aircraft": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 0
+          },
+          "Infrastructure": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 0
+          },
+          "Vessel": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 0
+          }
+        },
+        "per_type": {
+          "NEW": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 1
+          },
+          "REMOVED": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 1
+          },
+          "MOVED": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 1
+          }
+        }
+      },
+      "structural_anomaly_detected": 1,
+      "pixel_diff_changed_pct": 0.12,
+      "timings": {
+        "registration_s": 0.0976,
+        "detection_s": 0.0797,
+        "pixel_diff_s": 0.0511,
+        "total_s": 0.2283
+      }
+    },
+    {
+      "seed": 48,
+      "tile_name": "1460_768_0.jpg",
+      "edits_count": 3,
+      "injected_shift": [
+        1.63,
+        -4.27
+      ],
+      "shift_magnitude": 4.57,
+      "registration_error_px": 0.2307,
+      "reg_method": "ORB_RANSAC",
+      "raw": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 3,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "per_class": {
+          "Vehicle": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 0
+          },
+          "Aircraft": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 3
+          },
+          "Infrastructure": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 0
+          },
+          "Vessel": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 0
+          }
+        },
+        "per_type": {
+          "NEW": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 1
+          },
+          "REMOVED": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 1
+          },
+          "MOVED": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 1
+          }
+        },
+        "fp_breakdown": {
+          "flicker": 0,
+          "inpaint": 0,
+          "misreg": 0
+        }
+      },
+      "filtered": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 3,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "per_class": {
+          "Vehicle": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 0
+          },
+          "Aircraft": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 3
+          },
+          "Infrastructure": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 0
+          },
+          "Vessel": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 0
+          }
+        },
+        "per_type": {
+          "NEW": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 1
+          },
+          "REMOVED": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 1
+          },
+          "MOVED": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 1
+          }
+        }
+      },
+      "structural_anomaly_detected": 0,
+      "pixel_diff_changed_pct": 0.684,
+      "timings": {
+        "registration_s": 0.0727,
+        "detection_s": 0.0716,
+        "pixel_diff_s": 0.0509,
+        "total_s": 0.1952
+      }
+    },
+    {
+      "seed": 49,
+      "tile_name": "1460_768_768.jpg",
+      "edits_count": 3,
+      "injected_shift": [
+        5.49,
+        -3.61
+      ],
+      "shift_magnitude": 6.57,
+      "registration_error_px": 0.1726,
+      "reg_method": "ORB_RANSAC",
+      "raw": {
+        "tp": 1,
+        "fp": 18,
+        "fn": 2,
+        "precision": 0.0526,
+        "recall": 0.3333,
+        "f1": 0.0909,
+        "per_class": {
+          "Vehicle": {
+            "tp": 1,
+            "fp": 16,
+            "fn": 2
+          },
+          "Aircraft": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 0
+          },
+          "Infrastructure": {
+            "tp": 0,
+            "fp": 2,
+            "fn": 0
+          },
+          "Vessel": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 0
+          }
+        },
+        "per_type": {
+          "NEW": {
+            "tp": 0,
+            "fp": 2,
+            "fn": 1
+          },
+          "REMOVED": {
+            "tp": 1,
+            "fp": 16,
+            "fn": 0
+          },
+          "MOVED": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 1
+          }
+        },
+        "fp_breakdown": {
+          "flicker": 14,
+          "inpaint": 4,
+          "misreg": 0
+        }
+      },
+      "filtered": {
         "tp": 0,
         "fp": 1,
         "fn": 3,
@@ -2468,9 +3593,314 @@
             "fp": 0,
             "fn": 1
           }
+        }
+      },
+      "structural_anomaly_detected": 0,
+      "pixel_diff_changed_pct": 0.041,
+      "timings": {
+        "registration_s": 0.0913,
+        "detection_s": 0.0858,
+        "pixel_diff_s": 0.0549,
+        "total_s": 0.2321
+      }
+    },
+    {
+      "seed": 50,
+      "tile_name": "1587_0_1536.jpg",
+      "edits_count": 3,
+      "injected_shift": [
+        -2.93,
+        6.57
+      ],
+      "shift_magnitude": 7.19,
+      "registration_error_px": 0.0934,
+      "reg_method": "ORB_RANSAC",
+      "raw": {
+        "tp": 1,
+        "fp": 9,
+        "fn": 2,
+        "precision": 0.1,
+        "recall": 0.3333,
+        "f1": 0.1538,
+        "per_class": {
+          "Vehicle": {
+            "tp": 0,
+            "fp": 8,
+            "fn": 2
+          },
+          "Aircraft": {
+            "tp": 1,
+            "fp": 0,
+            "fn": 0
+          },
+          "Infrastructure": {
+            "tp": 0,
+            "fp": 1,
+            "fn": 0
+          },
+          "Vessel": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 0
+          }
+        },
+        "per_type": {
+          "NEW": {
+            "tp": 0,
+            "fp": 3,
+            "fn": 1
+          },
+          "REMOVED": {
+            "tp": 1,
+            "fp": 6,
+            "fn": 0
+          },
+          "MOVED": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 1
+          }
         },
         "fp_breakdown": {
-          "flicker": 1,
+          "flicker": 8,
+          "inpaint": 1,
+          "misreg": 0
+        }
+      },
+      "filtered": {
+        "tp": 1,
+        "fp": 0,
+        "fn": 2,
+        "precision": 1.0,
+        "recall": 0.3333,
+        "f1": 0.5,
+        "per_class": {
+          "Vehicle": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 2
+          },
+          "Aircraft": {
+            "tp": 1,
+            "fp": 0,
+            "fn": 0
+          },
+          "Infrastructure": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 0
+          },
+          "Vessel": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 0
+          }
+        },
+        "per_type": {
+          "NEW": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 1
+          },
+          "REMOVED": {
+            "tp": 1,
+            "fp": 0,
+            "fn": 0
+          },
+          "MOVED": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 1
+          }
+        }
+      },
+      "structural_anomaly_detected": 0,
+      "pixel_diff_changed_pct": 0.172,
+      "timings": {
+        "registration_s": 0.0765,
+        "detection_s": 0.0743,
+        "pixel_diff_s": 0.052,
+        "total_s": 0.2028
+      }
+    },
+    {
+      "seed": 51,
+      "tile_name": "1049_1536_768.jpg",
+      "edits_count": 3,
+      "injected_shift": [
+        4.51,
+        3.21
+      ],
+      "shift_magnitude": 5.53,
+      "registration_error_px": 0.0333,
+      "reg_method": "ORB_RANSAC",
+      "raw": {
+        "tp": 1,
+        "fp": 8,
+        "fn": 2,
+        "precision": 0.1111,
+        "recall": 0.3333,
+        "f1": 0.1667,
+        "per_class": {
+          "Vehicle": {
+            "tp": 1,
+            "fp": 7,
+            "fn": 2
+          },
+          "Aircraft": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 0
+          },
+          "Infrastructure": {
+            "tp": 0,
+            "fp": 1,
+            "fn": 0
+          },
+          "Vessel": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 0
+          }
+        },
+        "per_type": {
+          "NEW": {
+            "tp": 0,
+            "fp": 2,
+            "fn": 1
+          },
+          "REMOVED": {
+            "tp": 1,
+            "fp": 5,
+            "fn": 0
+          },
+          "MOVED": {
+            "tp": 0,
+            "fp": 1,
+            "fn": 1
+          }
+        },
+        "fp_breakdown": {
+          "flicker": 5,
+          "inpaint": 2,
+          "misreg": 1
+        }
+      },
+      "filtered": {
+        "tp": 0,
+        "fp": 1,
+        "fn": 3,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "per_class": {
+          "Vehicle": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 3
+          },
+          "Aircraft": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 0
+          },
+          "Infrastructure": {
+            "tp": 0,
+            "fp": 1,
+            "fn": 0
+          },
+          "Vessel": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 0
+          }
+        },
+        "per_type": {
+          "NEW": {
+            "tp": 0,
+            "fp": 1,
+            "fn": 1
+          },
+          "REMOVED": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 1
+          },
+          "MOVED": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 1
+          }
+        }
+      },
+      "structural_anomaly_detected": 1,
+      "pixel_diff_changed_pct": 0.276,
+      "timings": {
+        "registration_s": 0.0623,
+        "detection_s": 0.074,
+        "pixel_diff_s": 0.0493,
+        "total_s": 0.1856
+      }
+    },
+    {
+      "seed": 52,
+      "tile_name": "1049_2151_1778.jpg",
+      "edits_count": 3,
+      "injected_shift": [
+        0.93,
+        -4.16
+      ],
+      "shift_magnitude": 4.26,
+      "registration_error_px": 0.0148,
+      "reg_method": "ORB_RANSAC",
+      "raw": {
+        "tp": 0,
+        "fp": 2,
+        "fn": 3,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "per_class": {
+          "Vehicle": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 3
+          },
+          "Aircraft": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 0
+          },
+          "Infrastructure": {
+            "tp": 0,
+            "fp": 2,
+            "fn": 0
+          },
+          "Vessel": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 0
+          }
+        },
+        "per_type": {
+          "NEW": {
+            "tp": 0,
+            "fp": 2,
+            "fn": 1
+          },
+          "REMOVED": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 1
+          },
+          "MOVED": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 1
+          }
+        },
+        "fp_breakdown": {
+          "flicker": 2,
           "inpaint": 0,
           "misreg": 0
         }
@@ -2525,17 +3955,969 @@
       "structural_anomaly_detected": 1,
       "pixel_diff_changed_pct": 0.213,
       "timings": {
-        "registration_s": 0.0787,
+        "registration_s": 0.1515,
+        "detection_s": 0.0813,
+        "pixel_diff_s": 0.0494,
+        "total_s": 0.2822
+      }
+    },
+    {
+      "seed": 53,
+      "tile_name": "1049_2151_768.jpg",
+      "edits_count": 3,
+      "injected_shift": [
+        -7.22,
+        2.2
+      ],
+      "shift_magnitude": 7.55,
+      "registration_error_px": 0.0712,
+      "reg_method": "ORB_RANSAC",
+      "raw": {
+        "tp": 1,
+        "fp": 3,
+        "fn": 2,
+        "precision": 0.25,
+        "recall": 0.3333,
+        "f1": 0.2857,
+        "per_class": {
+          "Vehicle": {
+            "tp": 1,
+            "fp": 3,
+            "fn": 2
+          },
+          "Aircraft": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 0
+          },
+          "Infrastructure": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 0
+          },
+          "Vessel": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 0
+          }
+        },
+        "per_type": {
+          "NEW": {
+            "tp": 0,
+            "fp": 1,
+            "fn": 1
+          },
+          "REMOVED": {
+            "tp": 1,
+            "fp": 2,
+            "fn": 0
+          },
+          "MOVED": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 1
+          }
+        },
+        "fp_breakdown": {
+          "flicker": 2,
+          "inpaint": 1,
+          "misreg": 0
+        }
+      },
+      "filtered": {
+        "tp": 1,
+        "fp": 0,
+        "fn": 2,
+        "precision": 1.0,
+        "recall": 0.3333,
+        "f1": 0.5,
+        "per_class": {
+          "Vehicle": {
+            "tp": 1,
+            "fp": 0,
+            "fn": 2
+          },
+          "Aircraft": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 0
+          },
+          "Infrastructure": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 0
+          },
+          "Vessel": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 0
+          }
+        },
+        "per_type": {
+          "NEW": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 1
+          },
+          "REMOVED": {
+            "tp": 1,
+            "fp": 0,
+            "fn": 0
+          },
+          "MOVED": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 1
+          }
+        }
+      },
+      "structural_anomaly_detected": 1,
+      "pixel_diff_changed_pct": 0.158,
+      "timings": {
+        "registration_s": 0.0729,
+        "detection_s": 0.0713,
+        "pixel_diff_s": 0.05,
+        "total_s": 0.1942
+      }
+    },
+    {
+      "seed": 54,
+      "tile_name": "1072_0_1536.jpg",
+      "edits_count": 3,
+      "injected_shift": [
+        6.51,
+        -1.36
+      ],
+      "shift_magnitude": 6.65,
+      "registration_error_px": 0.2348,
+      "reg_method": "ORB_RANSAC",
+      "raw": {
+        "tp": 2,
+        "fp": 2,
+        "fn": 1,
+        "precision": 0.5,
+        "recall": 0.6667,
+        "f1": 0.5714,
+        "per_class": {
+          "Vehicle": {
+            "tp": 2,
+            "fp": 2,
+            "fn": 1
+          },
+          "Aircraft": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 0
+          },
+          "Infrastructure": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 0
+          },
+          "Vessel": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 0
+          }
+        },
+        "per_type": {
+          "NEW": {
+            "tp": 1,
+            "fp": 1,
+            "fn": 0
+          },
+          "REMOVED": {
+            "tp": 1,
+            "fp": 1,
+            "fn": 0
+          },
+          "MOVED": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 1
+          }
+        },
+        "fp_breakdown": {
+          "flicker": 0,
+          "inpaint": 2,
+          "misreg": 0
+        }
+      },
+      "filtered": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 3,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "per_class": {
+          "Vehicle": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 3
+          },
+          "Aircraft": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 0
+          },
+          "Infrastructure": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 0
+          },
+          "Vessel": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 0
+          }
+        },
+        "per_type": {
+          "NEW": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 1
+          },
+          "REMOVED": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 1
+          },
+          "MOVED": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 1
+          }
+        }
+      },
+      "structural_anomaly_detected": 1,
+      "pixel_diff_changed_pct": 0.327,
+      "timings": {
+        "registration_s": 0.0725,
+        "detection_s": 0.0713,
+        "pixel_diff_s": 0.0503,
+        "total_s": 0.1941
+      }
+    },
+    {
+      "seed": 55,
+      "tile_name": "1072_0_1995.jpg",
+      "edits_count": 3,
+      "injected_shift": [
+        -0.96,
+        0.13
+      ],
+      "shift_magnitude": 0.97,
+      "registration_error_px": 0.6315,
+      "reg_method": "ORB_RANSAC",
+      "raw": {
+        "tp": 3,
+        "fp": 1,
+        "fn": 0,
+        "precision": 0.75,
+        "recall": 1.0,
+        "f1": 0.8571,
+        "per_class": {
+          "Vehicle": {
+            "tp": 3,
+            "fp": 1,
+            "fn": 0
+          },
+          "Aircraft": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 0
+          },
+          "Infrastructure": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 0
+          },
+          "Vessel": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 0
+          }
+        },
+        "per_type": {
+          "NEW": {
+            "tp": 1,
+            "fp": 0,
+            "fn": 0
+          },
+          "REMOVED": {
+            "tp": 1,
+            "fp": 1,
+            "fn": 0
+          },
+          "MOVED": {
+            "tp": 1,
+            "fp": 0,
+            "fn": 0
+          }
+        },
+        "fp_breakdown": {
+          "flicker": 0,
+          "inpaint": 1,
+          "misreg": 0
+        }
+      },
+      "filtered": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 3,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "per_class": {
+          "Vehicle": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 3
+          },
+          "Aircraft": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 0
+          },
+          "Infrastructure": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 0
+          },
+          "Vessel": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 0
+          }
+        },
+        "per_type": {
+          "NEW": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 1
+          },
+          "REMOVED": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 1
+          },
+          "MOVED": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 1
+          }
+        }
+      },
+      "structural_anomaly_detected": 1,
+      "pixel_diff_changed_pct": 0.348,
+      "timings": {
+        "registration_s": 0.0626,
+        "detection_s": 0.0727,
+        "pixel_diff_s": 0.0513,
+        "total_s": 0.1866
+      }
+    },
+    {
+      "seed": 56,
+      "tile_name": "1072_768_0.jpg",
+      "edits_count": 3,
+      "injected_shift": [
+        -0.43,
+        4.12
+      ],
+      "shift_magnitude": 4.14,
+      "registration_error_px": 0.1335,
+      "reg_method": "ORB_RANSAC",
+      "raw": {
+        "tp": 1,
+        "fp": 7,
+        "fn": 2,
+        "precision": 0.125,
+        "recall": 0.3333,
+        "f1": 0.1818,
+        "per_class": {
+          "Vehicle": {
+            "tp": 1,
+            "fp": 6,
+            "fn": 2
+          },
+          "Aircraft": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 0
+          },
+          "Infrastructure": {
+            "tp": 0,
+            "fp": 1,
+            "fn": 0
+          },
+          "Vessel": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 0
+          }
+        },
+        "per_type": {
+          "NEW": {
+            "tp": 0,
+            "fp": 1,
+            "fn": 1
+          },
+          "REMOVED": {
+            "tp": 1,
+            "fp": 5,
+            "fn": 0
+          },
+          "MOVED": {
+            "tp": 0,
+            "fp": 1,
+            "fn": 1
+          }
+        },
+        "fp_breakdown": {
+          "flicker": 7,
+          "inpaint": 0,
+          "misreg": 0
+        }
+      },
+      "filtered": {
+        "tp": 1,
+        "fp": 0,
+        "fn": 2,
+        "precision": 1.0,
+        "recall": 0.3333,
+        "f1": 0.5,
+        "per_class": {
+          "Vehicle": {
+            "tp": 1,
+            "fp": 0,
+            "fn": 2
+          },
+          "Aircraft": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 0
+          },
+          "Infrastructure": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 0
+          },
+          "Vessel": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 0
+          }
+        },
+        "per_type": {
+          "NEW": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 1
+          },
+          "REMOVED": {
+            "tp": 1,
+            "fp": 0,
+            "fn": 0
+          },
+          "MOVED": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 1
+          }
+        }
+      },
+      "structural_anomaly_detected": 0,
+      "pixel_diff_changed_pct": 0.097,
+      "timings": {
+        "registration_s": 0.0795,
+        "detection_s": 0.0748,
+        "pixel_diff_s": 0.0498,
+        "total_s": 0.2041
+      }
+    },
+    {
+      "seed": 57,
+      "tile_name": "1072_768_1536.jpg",
+      "edits_count": 3,
+      "injected_shift": [
+        4.89,
+        3.4
+      ],
+      "shift_magnitude": 5.96,
+      "registration_error_px": 0.1236,
+      "reg_method": "ORB_RANSAC",
+      "raw": {
+        "tp": 2,
+        "fp": 7,
+        "fn": 1,
+        "precision": 0.2222,
+        "recall": 0.6667,
+        "f1": 0.3333,
+        "per_class": {
+          "Vehicle": {
+            "tp": 2,
+            "fp": 4,
+            "fn": 1
+          },
+          "Aircraft": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 0
+          },
+          "Infrastructure": {
+            "tp": 0,
+            "fp": 3,
+            "fn": 0
+          },
+          "Vessel": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 0
+          }
+        },
+        "per_type": {
+          "NEW": {
+            "tp": 1,
+            "fp": 4,
+            "fn": 0
+          },
+          "REMOVED": {
+            "tp": 0,
+            "fp": 2,
+            "fn": 1
+          },
+          "MOVED": {
+            "tp": 1,
+            "fp": 1,
+            "fn": 0
+          }
+        },
+        "fp_breakdown": {
+          "flicker": 5,
+          "inpaint": 1,
+          "misreg": 1
+        }
+      },
+      "filtered": {
+        "tp": 1,
+        "fp": 0,
+        "fn": 2,
+        "precision": 1.0,
+        "recall": 0.3333,
+        "f1": 0.5,
+        "per_class": {
+          "Vehicle": {
+            "tp": 1,
+            "fp": 0,
+            "fn": 2
+          },
+          "Aircraft": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 0
+          },
+          "Infrastructure": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 0
+          },
+          "Vessel": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 0
+          }
+        },
+        "per_type": {
+          "NEW": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 1
+          },
+          "REMOVED": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 1
+          },
+          "MOVED": {
+            "tp": 1,
+            "fp": 0,
+            "fn": 0
+          }
+        }
+      },
+      "structural_anomaly_detected": 0,
+      "pixel_diff_changed_pct": 0.071,
+      "timings": {
+        "registration_s": 0.0811,
         "detection_s": 0.0721,
-        "pixel_diff_s": 0.0521,
-        "total_s": 0.2029
+        "pixel_diff_s": 0.0502,
+        "total_s": 0.2034
+      }
+    },
+    {
+      "seed": 58,
+      "tile_name": "1072_768_1995.jpg",
+      "edits_count": 3,
+      "injected_shift": [
+        -3.21,
+        2.0
+      ],
+      "shift_magnitude": 3.78,
+      "registration_error_px": 0.2804,
+      "reg_method": "ORB_RANSAC",
+      "raw": {
+        "tp": 2,
+        "fp": 0,
+        "fn": 1,
+        "precision": 1.0,
+        "recall": 0.6667,
+        "f1": 0.8,
+        "per_class": {
+          "Vehicle": {
+            "tp": 2,
+            "fp": 0,
+            "fn": 1
+          },
+          "Aircraft": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 0
+          },
+          "Infrastructure": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 0
+          },
+          "Vessel": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 0
+          }
+        },
+        "per_type": {
+          "NEW": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 1
+          },
+          "REMOVED": {
+            "tp": 1,
+            "fp": 0,
+            "fn": 0
+          },
+          "MOVED": {
+            "tp": 1,
+            "fp": 0,
+            "fn": 0
+          }
+        },
+        "fp_breakdown": {
+          "flicker": 0,
+          "inpaint": 0,
+          "misreg": 0
+        }
+      },
+      "filtered": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 3,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "per_class": {
+          "Vehicle": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 3
+          },
+          "Aircraft": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 0
+          },
+          "Infrastructure": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 0
+          },
+          "Vessel": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 0
+          }
+        },
+        "per_type": {
+          "NEW": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 1
+          },
+          "REMOVED": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 1
+          },
+          "MOVED": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 1
+          }
+        }
+      },
+      "structural_anomaly_detected": 1,
+      "pixel_diff_changed_pct": 0.204,
+      "timings": {
+        "registration_s": 0.0738,
+        "detection_s": 0.0719,
+        "pixel_diff_s": 0.0502,
+        "total_s": 0.1959
+      }
+    },
+    {
+      "seed": 59,
+      "tile_name": "1072_768_768.jpg",
+      "edits_count": 3,
+      "injected_shift": [
+        0.5,
+        0.04
+      ],
+      "shift_magnitude": 0.5,
+      "registration_error_px": 0.1143,
+      "reg_method": "ORB_RANSAC",
+      "raw": {
+        "tp": 2,
+        "fp": 5,
+        "fn": 1,
+        "precision": 0.2857,
+        "recall": 0.6667,
+        "f1": 0.4,
+        "per_class": {
+          "Vehicle": {
+            "tp": 2,
+            "fp": 5,
+            "fn": 1
+          },
+          "Aircraft": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 0
+          },
+          "Infrastructure": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 0
+          },
+          "Vessel": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 0
+          }
+        },
+        "per_type": {
+          "NEW": {
+            "tp": 0,
+            "fp": 1,
+            "fn": 1
+          },
+          "REMOVED": {
+            "tp": 1,
+            "fp": 2,
+            "fn": 0
+          },
+          "MOVED": {
+            "tp": 1,
+            "fp": 2,
+            "fn": 0
+          }
+        },
+        "fp_breakdown": {
+          "flicker": 5,
+          "inpaint": 0,
+          "misreg": 0
+        }
+      },
+      "filtered": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 3,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "per_class": {
+          "Vehicle": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 3
+          },
+          "Aircraft": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 0
+          },
+          "Infrastructure": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 0
+          },
+          "Vessel": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 0
+          }
+        },
+        "per_type": {
+          "NEW": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 1
+          },
+          "REMOVED": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 1
+          },
+          "MOVED": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 1
+          }
+        }
+      },
+      "structural_anomaly_detected": 0,
+      "pixel_diff_changed_pct": 0.136,
+      "timings": {
+        "registration_s": 0.0826,
+        "detection_s": 0.0741,
+        "pixel_diff_s": 0.0502,
+        "total_s": 0.2069
+      }
+    },
+    {
+      "seed": 60,
+      "tile_name": "109_768_0.jpg",
+      "edits_count": 3,
+      "injected_shift": [
+        -6.39,
+        -3.54
+      ],
+      "shift_magnitude": 7.3,
+      "registration_error_px": 0.0405,
+      "reg_method": "ORB_RANSAC",
+      "raw": {
+        "tp": 0,
+        "fp": 1,
+        "fn": 3,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "per_class": {
+          "Vehicle": {
+            "tp": 0,
+            "fp": 1,
+            "fn": 3
+          },
+          "Aircraft": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 0
+          },
+          "Infrastructure": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 0
+          },
+          "Vessel": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 0
+          }
+        },
+        "per_type": {
+          "NEW": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 1
+          },
+          "REMOVED": {
+            "tp": 0,
+            "fp": 1,
+            "fn": 1
+          },
+          "MOVED": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 1
+          }
+        },
+        "fp_breakdown": {
+          "flicker": 1,
+          "inpaint": 0,
+          "misreg": 0
+        }
+      },
+      "filtered": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 3,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "per_class": {
+          "Vehicle": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 3
+          },
+          "Aircraft": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 0
+          },
+          "Infrastructure": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 0
+          },
+          "Vessel": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 0
+          }
+        },
+        "per_type": {
+          "NEW": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 1
+          },
+          "REMOVED": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 1
+          },
+          "MOVED": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 1
+          }
+        }
+      },
+      "structural_anomaly_detected": 1,
+      "pixel_diff_changed_pct": 0.208,
+      "timings": {
+        "registration_s": 0.0774,
+        "detection_s": 0.072,
+        "pixel_diff_s": 0.05,
+        "total_s": 0.1993
       }
     }
   ],
   "honest_failure_analysis": [
-    "1. Detector Flicker on Unchanged Objects (63.64% of FPs): Targets present in both scenes with marginal detection confidence (~0.20-0.30) are detected in one epoch but pruned in the partner epoch, creating 49 false-positive change alerts in raw mode.",
-    "2. Inpainting Boundary Artifacts (31.17% of FPs): Telea inpainting on complex tarmac or vegetation occasionally leaves boundary texture transitions that trigger spurious post-scene detections (24 false positives).",
-    "3. Operational Trade-Off with Stability Filter: The stability filter prunes 76 of 77 False Positives, increasing pooled precision from 23.76% (31.17% mean) to 87.50% (32.50% mean), but reduces recall from 40.00% to 11.67% because low-confidence genuine changes are suppressed.",
-    "4. Sub-Pixel Co-Registration Resilience: Across misalignments up to 8.0 px, mean registration error remains 0.1887 \u00b1 0.1350 px, showing negligible mis-registration FP contribution (5.19%)."
+    "1. Detector Flicker on Unchanged Objects (75.29% of FPs): Targets present in both scenes with marginal detection confidence hovering around 0.25 trigger 128 false-positive change alerts in raw mode across seeds 21-60.",
+    "2. Inpainting Boundary Artifacts (20.59% of FPs): Telea inpainting on natural terrain creates high-frequency texture steps responsible for 35 false detections in raw mode.",
+    "3. Operational Trade-Off with Stability Filter: The frozen stability filter suppresses 166 of 170 False Positives (97.6% reduction down to 4 FPs), yielding 80.95% pooled precision (17/21 TP/FP), while recall contracts to 14.17% (17/120 TP/FN).",
+    "4. Sub-Pixel Co-Registration Resilience: Across misalignments up to 8.0 px, mean registration error remains 0.1449 \u00b1 0.1034 px."
   ]
 }
