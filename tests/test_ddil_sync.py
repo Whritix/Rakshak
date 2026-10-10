@@ -402,3 +402,41 @@ def test_priority_drain_ordering(edge_outbox):
     prio_ids = [a["alert_id"] for a in prio_alerts]
     assert prio_ids == ["ORD-HIGH-1", "ORD-HIGH-2", "ORD-MED-1", "ORD-LOW-1", "ORD-LOW-2"]
 
+
+def test_aging_rule_starvation_prevention(edge_outbox):
+    """Verify aging rule promotes LOW alerts older than 10 min (600s) to MEDIUM priority tier."""
+    ref_time = datetime(2026, 10, 10, 12, 0, 0, tzinfo=timezone.utc)
+    
+    # 1. Old LOW alert created 11 minutes (660s) prior to ref_time
+    old_low_iso = (ref_time - timedelta(seconds=660)).isoformat()
+    edge_outbox.write_alert("OLD-LOW", {}, threat_score=20, threat_level="LOW", created_at=old_low_iso)  # seq 1
+
+    # 2. Fresh LOW alert created 1 minute (60s) prior to ref_time
+    fresh_low_iso = (ref_time - timedelta(seconds=60)).isoformat()
+    edge_outbox.write_alert("FRESH-LOW", {}, threat_score=25, threat_level="LOW", created_at=fresh_low_iso)  # seq 2
+
+    # 3. Medium alert created 2 minutes (120s) prior to ref_time
+    med_iso = (ref_time - timedelta(seconds=120)).isoformat()
+    edge_outbox.write_alert("RECENT-MED", {}, threat_score=60, threat_level="MEDIUM", created_at=med_iso)  # seq 3
+
+    # 4. High alert created 30s prior to ref_time
+    high_iso = (ref_time - timedelta(seconds=30)).isoformat()
+    edge_outbox.write_alert("RECENT-HIGH", {}, threat_score=95, threat_level="HIGH", created_at=high_iso)  # seq 4
+
+    # Fetch with prioritized=True, aging_threshold_sec=600.0, as_of_time=ref_time
+    drained = edge_outbox.get_pending_alerts(
+        limit=10,
+        prioritized=True,
+        aging_threshold_sec=600.0,
+        as_of_time=ref_time
+    )
+    drained_ids = [a["alert_id"] for a in drained]
+
+    # Verify:
+    # 1. RECENT-HIGH drains first (tier 1)
+    # 2. OLD-LOW promoted to tier 2 (aged 11 min > 10 min), drains alongside/ahead of RECENT-MED by seq_num
+    # 3. RECENT-MED is native tier 2
+    # 4. FRESH-LOW remains tier 3 (unpromoted), drains last
+    assert drained_ids == ["RECENT-HIGH", "OLD-LOW", "RECENT-MED", "FRESH-LOW"]
+
+

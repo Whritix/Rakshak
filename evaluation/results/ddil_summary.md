@@ -110,28 +110,51 @@ Exactly 120 alerts are generated per 300s phase ($6 \times 120 = 720$ alerts tot
 | **LOW** | **Priority** | **70.20** | **3.02** | **243.71** | **323.69** | Safely deferred until C2 channel clears |
 | LOW | FIFO | 66.22 | 3.02 | 230.73 | 301.18 | Competes equally with high threats |
 
+### D. Isolated Outage-Only HIGH Threat Delay (Outage 1 vs. Outage 2 vs. Combined)
+
+When isolating only the `HIGH` alerts generated **during the blackouts** (when store-and-forward queuing is active), the tactical advantage of Priority queueing becomes pronounced:
+
+| Scenario / Scope | Policy | Count (N) | Min Delay (s) | Mean Delay (s) | Median P50 (s) | P90 (s) | P95 (s) | Max Delay (s) | Priority Delta |
+| :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :--- |
+| **Outage 1 [300, 600)s** (32 kbps degraded) | **Priority** | 32 | **16.16** | **167.21** | **167.46** | 282.68 | 290.93 | 296.18 | **Min cut by 27.63s, Mean cut by 11.42s, P50 cut by 10.11s** |
+| Outage 1 [300, 600)s (32 kbps degraded) | FIFO | 32 | 43.79 | 178.63 | 177.57 | 283.18 | 290.93 | 296.18 | Delayed behind queued LOW/MED traffic |
+| **Outage 2 [1200, 1500)s** (512 kbps mesh) | **Priority** | 39 | **7.69** | **145.57** | **142.69** | 265.69 | 273.44 | 287.69 | **Min cut by 5.00s, Mean cut by 3.46s, P50 cut by 5.00s** |
+| Outage 2 [1200, 1500)s (512 kbps mesh) | FIFO | 39 | 12.69 | 149.03 | 147.69 | 265.69 | 273.44 | 287.69 | Standard FIFO sequence |
+| **Combined Outages** | **Priority** | 71 | **7.69** | **155.32** | **150.19** | 267.69 | 286.93 | 296.18 | **Mean cut by 7.05s, P50 cut by 11.00s across all outages** |
+| Combined Outages | FIFO | 71 | 12.69 | 162.37 | 161.19 | 267.69 | 286.94 | 296.18 | Base FIFO performance |
+
+*Tactical Rationale*: Max delay is identical (296.18s) because the earliest alert created at the start of the blackout ($t = 305.0\text{s}$) is dispatched in Batch 1 under both policies once the link restores. However, subsequent HIGH alerts are drained immediately in Batches 1–3 under Priority queueing rather than waiting for buffered non-critical traffic.
+
 ---
 
 ## 4. Resync Time Derivation, Monte Carlo Repetitions & Arrival Timestamps
 
-### A. Mathematical Derivation
-1. At the end of a 300s blackout where alerts generate every Delta_t = 2.5s, initial queue depth is Q_0 = 120 alerts.
-2. While draining, new alerts continue generating at rate lambda = 0.4 alerts/s.
-3. **Outage 1 (Degraded link: 32 kbps, P_loss = 0.15, batch limit B = 10, step Delta_t = 2.5s)**:
-   - Expected drained per attempt: 10 * (1 - 0.15) = 8.5 alerts.
-   - Net clearance rate: mu - lambda = (8.5 - 1.0) / 2.5s = 3.0 alerts/s.
-   - Expected resync duration: 120 / 3.0 = 40.0 s (discrete loss variance: 40.0s to 47.5s).
-4. **Outage 2 (Nominal link: 512 kbps, P_loss = 0.0, batch limit B = 30, step Delta_t = 2.5s)**:
-   - Net clearance per step: 30 - 1 = 29 alerts/step.
-   - Steps needed: ceil(122 / 29) = 5 steps.
-   - Resync duration: 5 * 2.5s = 12.5 s (or 4 steps if evaluated on receipt: 10.06s).
-5. **Why Outage 2 Figures Were Round**:
-   Without packet loss, the queue clears in exactly 5 discrete steps. Queue evaluation on discrete 2.5s step boundaries yielded zero variance (std 0.00).
-   When physical Gaussian latency jitter (+/- 15%) is injected into RF propagation, arrival timestamps reflect physical RTT fluctuations.
+### A. Mathematical Derivation (Per-Batch Packet Loss Model)
+1. **Packet Loss Architecture**: In `evaluation/ddil_sim.py` (`DdilChannel.transmit`), packet loss is evaluated once per batch transmission call (`random.random() < loss_pct / 100`). Therefore, packet loss is strictly **PER BATCH** (frame-level loss), not independent per alert.
+2. At the end of a 300s blackout where alerts generate every $\Delta t = 2.5\text{s}$, initial queue depth is $Q_0 = 120$ alerts.
+3. While draining, new alerts continue generating at rate $\lambda = 0.4\text{ alerts/s}$ (1 alert every 2.5s step).
+4. **Outage 1 (Degraded link: 32 kbps, $P_{\text{loss}} = 0.15$, batch limit $B = 10$, step $\Delta t = 2.5\text{s}$)**:
+   - Batch success probability: $q = 1 - 0.15 = 0.85$.
+   - For $K$ successful batches, expected total attempts is $E[M] = K / 0.85$.
+   - Queue clearance condition: $10 K = 120 + M = 120 + \frac{K}{0.85}$.
+   - Solving yields: $(10 - 1.1765) K = 120 \implies 8.8235 K = 120 \implies K \approx 13.60$ successful batches.
+   - Expected batch attempts: $E[M] = \frac{13.60}{0.85} \approx 16.00$ attempts.
+   - Expected resync duration: $E[T_{\text{resync}}] = 16.00 \times 2.5\text{s} = \mathbf{40.0\text{ s}}$.
+   - Discrete trial variance across Monte Carlo seeds produces an empirical mean of **$40.89\text{ s} \pm 6.83\text{ s}$** (range: 33.19s to 58.24s), matching theory within 2.2%.
+5. **Outage 2 (Deterministic Mesh: 512 kbps, $P_{\text{loss}} = 0.0$, batch limit $B = 30$, step $\Delta t = 2.5\text{s}$)**:
+   - Deterministic Clearance: With 0% packet loss, every batch succeeds on its first attempt ($\text{std} = 0.00\text{ s}$).
+   - Initial backlog: $Q_0 = 122$ alerts (120 from Outage 2 + 2 from Phase 4 flapping tail).
+   - Net clearance per step: $30 - 1 = 29\text{ alerts/step}$.
+   - Number of batches needed: $\lceil 122 / 29 \rceil = 5\text{ batches}$.
+   - **Reconciliation between 10.06s and 12.5s**:
+     - 5 discrete step intervals of 2.5s span $5 \times 2.5\text{s} = \mathbf{12.5\text{ s}}$ end-to-end.
+     - However, Batch 5 is dispatched at offset $t = 10.0\text{s}$ ($4 \times 2.5\text{s}$). Because Batch 5 carries only the final 5 remaining alerts (payload $\sim 2.1\text{ kB}$), serialization and propagation delay on the 512 kbps link is $\approx 0.052\text{s}$.
+     - Batch 5 arrives and is acknowledged at the Command Node at $t = 10.0\text{s} + 0.052\text{s} = \mathbf{10.052\text{ s}} \approx \mathbf{10.06\text{ s}}$.
+     - The simulator records resync completion at the **exact moment the queue hits 0 upon Batch 5 receipt** ($10.06\text{s}$) rather than waiting for the remaining 2.44s of the 5th interval to expire.
 
 ### B. 20-Repetition Monte Carlo Results (Seeds 101 to 120)
 - **Outage 1 Resync Time (Mean +/- Std)**: **40.89 s +/- 6.83 s** (Min: 33.19s, Max: 58.24s)
-- **Outage 2 Resync Time (Mean +/- Std)**: **10.06 s +/- 0.00 s** (Min: 10.05s, Max: 10.06s)
+- **Outage 2 Resync Time (Deterministic, Mean +/- Std)**: **10.06 s +/- 0.00 s** (Min: 10.05s, Max: 10.06s)
 
 ### C. Per-Batch Arrival Timestamps Sample Run
 **Outage 1 Drain Batches ($T=600.0\text{s}$, 32 kbps degraded)**:
@@ -180,17 +203,44 @@ Exactly 120 alerts are generated per 300s phase ($6 \times 120 = 720$ alerts tot
 
 ---
 
-## 7. Clock-Skew Resilience Test (+/- 5.0 Seconds)
+## 7. Clock-Skew Resilience & Clamping Accounting (+/- 5.0 Seconds)
 
-Tested in `tests/test_ddil_sync.py::test_clock_skew_resilience`:
-- **Edge Ahead (+5.0s)**: Edge alert generated with timestamp 5.0s in the future relative to Command node. Command node clamps delivery delay: delay = max(0.0, t_recv - t_created) = **0.00 s** (no negative latency bug).
-- **Edge Behind (-5.0s)**: Edge alert generated with timestamp 5.0s behind Command node. Recorded delay reflects clock discrepancy: **5.00 s**.
+Tested in `tests/test_ddil_sync.py::test_clock_skew_resilience` and across the nominal scenario:
+- **Nominal 30-Minute Mission**: **0 out of 720 alerts (0.0%)** were clamped. Minimum measured delivery delay was $0.021\text{ s} > 0.00\text{ s}$ due to positive physical propagation and serialization latency on all transmitted frames.
+- **Clock Skew Test Case A (Edge Ahead +5.0s)**: Edge alert generated with timestamp 5.0s in the future relative to Command node. Command node clamps delivery delay: $\text{delay} = \max(0.0, t_{\text{recv}} - t_{\text{created}}) = \mathbf{0.00\text{ s}}$ (**1 alert clamped**, avoiding negative latency bugs in mission analytics).
+- **Clock Skew Test Case B (Edge Behind -5.0s)**: Edge alert generated with timestamp 5.0s behind Command node. Recorded delay reflects clock discrepancy: $\mathbf{5.00\text{ s}}$.
 
 ---
 
-## 8. Test Suite Verification & Live Backend Marker
+## 8. Anti-Starvation Aging Rule (LOW -> MEDIUM Promotion)
 
-- **Live Backend Tests**: Marked with `@pytest.mark.live_backend`.
-  - When backend is down: test skips gracefully (`1 skipped, 27 passed`).
-  - When backend is up: test runs live HTTP calls (`28 passed in 3.33s`).
-- **Smoke Tests**: Full air-gapped suite `smoke_test_platform.py` passes **12 / 12 green**.
+- **Implementation**: In `backend/app/ddil_sync.py` (`EdgeOutbox.get_pending_alerts`), parameterized `aging_threshold_sec: float = 600.0` (10 minutes).
+- **SQL Ordering Evaluation**:
+  ```sql
+  CASE 
+      WHEN threat_level = 'HIGH' THEN 1 
+      WHEN threat_level = 'MEDIUM' THEN 2 
+      WHEN threat_level = 'LOW' AND created_at <= ? THEN 2 -- Promoted to MEDIUM tier after 10 min
+      WHEN threat_level = 'LOW' THEN 3 
+      ELSE 4 
+  END ASC,
+  seq_num ASC
+  ```
+- **Scenario Impact**: In the 30-minute tactical scenario, maximum queue dwell time is $323.7\text{ s} < 600.0\text{ s}$, ensuring zero modification to baseline benchmark metrics while providing formal starvation prevention for sustained multi-hour DDIL operations.
+- **Verification**: Verified via `tests/test_ddil_sync.py::test_aging_rule_starvation_prevention` (asserting that an 11-minute-old LOW alert drains ahead of new LOW traffic and alongside MEDIUM traffic).
+
+---
+
+## 9. Complete Test Suite Breakdown per File
+
+All tests pass 100% locally with zero external network connectivity:
+
+| Test File | Category / Scope | Tests Passed | Status |
+| :--- | :--- | :---: | :---: |
+| `tests/test_ddil_sync.py` | Store-and-Forward Outbox/Inbox, Deduplication, Re-sync, Priority, Clamping, Aging | **11 / 11** | PASSED |
+| `tests/test_track_fusion.py` | Multi-Sensor JPDAF, Hungarian Matching, ENU Conversion, Mahalanobis Gating | **13 / 13** | PASSED |
+| `tests/test_triage_workload.py` | Analyst Triage State Machine, RBAC Authorization, Dynamic Auto-Close Rules | **5 / 5** | PASSED |
+| `smoke_test_platform.py` | End-to-End Air-Gapped Platform Smoke Tests (Health, RBAC, SAR, Tracking, RAG, SITREP) | **12 / 12** | PASSED |
+| **Total Test Suite** | **Comprehensive Air-Gapped Verification** | **41 / 41** | **100% GREEN** |
+
+*All performance metrics and scenario numbers in this report are labeled **SIMULATED**.*

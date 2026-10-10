@@ -14,9 +14,9 @@ import sqlite3
 import json
 import time
 import uuid
-from datetime import datetime, timezone
+from datetime import datetime, timezone, timedelta
 from pathlib import Path
-from typing import List, Dict, Any, Optional, Tuple
+from typing import List, Dict, Any, Optional, Tuple, Union
 
 ROOT = Path(__file__).resolve().parents[2]
 DEFAULT_EDGE_DB = ROOT / "backend" / "edge_outbox.db"
@@ -141,21 +141,52 @@ class EdgeOutbox:
             conn.commit()
             return seq, aid
 
-    def get_pending_alerts(self, limit: int = 50, prioritized: bool = False) -> List[Dict[str, Any]]:
-        """Fetch pending alerts. If prioritized=True, drains HIGH first, then MEDIUM, then LOW."""
-        order_clause = (
-            """
-            CASE threat_level 
-                WHEN 'HIGH' THEN 1 
-                WHEN 'MEDIUM' THEN 2 
-                WHEN 'LOW' THEN 3 
+    def get_pending_alerts(
+        self,
+        limit: int = 50,
+        prioritized: bool = False,
+        aging_threshold_sec: float = 600.0,
+        as_of_time: Optional[Union[str, float, datetime]] = None
+    ) -> List[Dict[str, Any]]:
+        """Fetch pending alerts.
+        
+        If prioritized=True:
+            Drains HIGH first, then MEDIUM, then LOW.
+            Aging Rule: Promotes LOW alerts older than aging_threshold_sec (default 600s = 10 min)
+            to MEDIUM priority tier to prevent starvation during sustained high-tempo operations.
+        """
+        if prioritized:
+            if as_of_time is None:
+                ref_dt = datetime.now(timezone.utc)
+            elif isinstance(as_of_time, str):
+                try:
+                    ref_dt = datetime.fromisoformat(as_of_time)
+                except Exception:
+                    ref_dt = datetime.now(timezone.utc)
+            elif isinstance(as_of_time, (int, float)):
+                ref_dt = datetime.fromtimestamp(as_of_time, timezone.utc)
+            elif isinstance(as_of_time, datetime):
+                ref_dt = as_of_time
+            else:
+                ref_dt = datetime.now(timezone.utc)
+
+            cutoff_iso = (ref_dt - timedelta(seconds=aging_threshold_sec)).isoformat()
+
+            order_clause = """
+            CASE 
+                WHEN threat_level = 'HIGH' THEN 1 
+                WHEN threat_level = 'MEDIUM' THEN 2 
+                WHEN threat_level = 'LOW' AND created_at <= ? THEN 2 
+                WHEN threat_level = 'LOW' THEN 3 
                 ELSE 4 
             END ASC,
             seq_num ASC
             """
-            if prioritized else
-            "seq_num ASC"
-        )
+            params: Tuple[Any, ...] = (cutoff_iso, limit)
+        else:
+            order_clause = "seq_num ASC"
+            params = (limit,)
+
         with self._get_conn() as conn:
             rows = conn.execute(
                 f"""
@@ -165,7 +196,7 @@ class EdgeOutbox:
                 ORDER BY {order_clause}
                 LIMIT ?
                 """,
-                (limit,)
+                params
             ).fetchall()
             results = []
             for r in rows:

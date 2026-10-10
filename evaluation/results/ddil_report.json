@@ -1635,6 +1635,35 @@
         }
       }
     },
+    "outage_only_high_delay_comparison": {
+      "outage_1_degraded": {
+        "count": 32,
+        "priority": {"min": 16.16, "mean": 167.21, "p50": 167.46, "p90": 282.68, "p95": 290.93, "p99": 295.40, "max": 296.18},
+        "fifo": {"min": 43.79, "mean": 178.63, "p50": 177.57, "p90": 283.18, "p95": 290.93, "p99": 295.41, "max": 296.18}
+      },
+      "outage_2_mesh": {
+        "count": 39,
+        "priority": {"min": 7.69, "mean": 145.57, "p50": 142.69, "p90": 265.69, "p95": 273.44, "p99": 284.84, "max": 287.69},
+        "fifo": {"min": 12.69, "mean": 149.03, "p50": 147.69, "p90": 265.69, "p95": 273.44, "p99": 284.84, "max": 287.69}
+      },
+      "combined_outages": {
+        "count": 71,
+        "priority": {"min": 7.69, "mean": 155.32, "p50": 150.19, "p90": 267.69, "p95": 286.93, "p99": 294.43, "max": 296.18},
+        "fifo": {"min": 12.69, "mean": 162.37, "p50": 161.19, "p90": 267.69, "p95": 286.94, "p99": 294.43, "max": 296.18}
+      }
+    },
+    "clock_skew_clamping_accounting": {
+      "nominal_mission_clamped_count": 0,
+      "nominal_mission_total_alerts": 720,
+      "nominal_mission_clamped_pct": 0.0,
+      "test_suite_clamped_count": 1
+    },
+    "anti_starvation_aging_rule": {
+      "enabled": true,
+      "aging_threshold_sec": 600.0,
+      "promoted_from": "LOW",
+      "promoted_to": "MEDIUM"
+    },
     "duplicates_breakdown_by_phase": {
       "Phase 3: Link Recovery (Degraded Mesh)": 12,
       "Phase 4: Tactical Flapping (Intermittent Jamming)": 1
