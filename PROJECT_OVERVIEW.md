@@ -5,7 +5,7 @@
 **Development Team:** Team BotS | KLS Gogte Institute of Technology (GIT) / KLE Technological University  
 **Classification:** Sovereign Defense Prototype // 100% Air-Gapped (EMCON-Alpha Mode, Target Envelope)  
 **System Architecture:** Edge-Deployable 4-Tier Multi-Modal C4ISR Engine  
-**Authoritative Baseline:** Every single metric and performance figure in this document is derived strictly and unverifiably from actual raw evaluation JSON reports stored in [`evaluation/results/`](file:///c:/Users/awhri/OneDrive/Desktop/DEF/evaluation/results). Every row in every table is explicitly tagged with its operational provenance.
+**Authoritative Baseline:** Every single metric and performance figure in this document is derived strictly and verifiably from actual raw evaluation JSON reports stored in [`evaluation/results/`](file:///c:/Users/awhri/OneDrive/Desktop/DEF/evaluation/results). Every row in every table is explicitly tagged with its operational provenance.
 
 ---
 

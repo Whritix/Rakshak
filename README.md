@@ -27,7 +27,7 @@ Modern military surveillance across India's maritime Exclusive Economic Zones (E
 
 ## 📊 2. Master Evaluation Matrix (One Table per Problem Statement KPI)
 
-Every single metric below is copied strictly and unverifiably from actual raw evaluation JSON reports stored in [evaluation/results/](file:///c:/Users/awhri/OneDrive/Desktop/DEF/evaluation/results). Every row includes an explicit provenance tag.
+Every single metric below is copied strictly and verifiably from actual raw evaluation JSON reports stored in [`evaluation/results/`](file:///c:/Users/awhri/OneDrive/Desktop/DEF/evaluation/results). Every row includes an explicit provenance tag.
 
 ---
 
