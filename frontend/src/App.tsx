@@ -20,6 +20,7 @@ import {
   TACTICAL_GRATICULES,
   STRATEGIC_HUBS
 } from './offlineGeoData';
+import { OfflineGeoOverlay } from './components/OfflineGeoOverlay';
 
 type Page = 'Joint COP' | 'Naval Domain' | 'Army Domain' | 'Change Detection' | 'Tactical SITREP' | 'Tactical AI (RAG)' | 'Mission Planner' | 'Edge & KPIs';
 type NavalMode = 'cv' | 'ops';
@@ -211,7 +212,13 @@ function generateEllipsePoints(
 
 type FlyTarget = { lat: number; lon: number; zoom?: number; timestamp: number } | null;
 
-function MapController({ flyTarget }: { flyTarget: FlyTarget }) {
+function MapController({
+  flyTarget,
+  routePoints
+}: {
+  flyTarget: FlyTarget;
+  routePoints?: [number, number][];
+}) {
   const map = useMap();
   useEffect(() => {
     if (flyTarget && flyTarget.lat != null && flyTarget.lon != null) {
@@ -219,8 +226,19 @@ function MapController({ flyTarget }: { flyTarget: FlyTarget }) {
         duration: 1.5,
         easeLinearity: 0.25
       });
+    } else if (routePoints && routePoints.length > 0) {
+      const allLats = routePoints.map(p => p[0]);
+      const minLat = Math.min(...allLats);
+      const maxLat = Math.max(...allLats);
+      // Include relevant Indian coastline points within and adjacent to this latitude span
+      const relevantCoast = INDIA_COASTLINE.filter(([lat, _lon]) => lat >= minLat - 1.5 && lat <= maxLat + 1.5);
+      const ptsToFit = [...routePoints, ...relevantCoast];
+      if (ptsToFit.length > 0) {
+        const bounds = L.latLngBounds(ptsToFit.map(([lat, lon]) => [lat, lon]));
+        map.fitBounds(bounds, { padding: [35, 35], maxZoom: 8 });
+      }
     }
-  }, [flyTarget, map]);
+  }, [flyTarget, routePoints, map]);
   return null;
 }
 
@@ -258,12 +276,14 @@ function TacticalMap({
     ? [validOptical[0].lat!, validOptical[0].lon!]
     : [18.92, 72.83]; // Mumbai Maritime Operational Center
 
-  type BasemapMode = 'satellite' | 'dark' | 'terrain';
-  const [basemapMode, setBasemapMode] = useState<BasemapMode>('satellite');
+  type BasemapMode = 'basemap' | 'dark' | 'terrain';
+  const [basemapMode, setBasemapMode] = useState<BasemapMode>('basemap');
+  const [localGeoOverlay, setLocalGeoOverlay] = useState<boolean>(true);
+  const effectiveGeoOverlay = layers.geoOverlay !== undefined ? layers.geoOverlay : localGeoOverlay;
 
   const BASEMAP_TILES: Record<string, { url: string; attr: string; maxZoom: number }> = {
-    satellite: {
-      url: '/api/tiles/satellite/{z}/{x}/{y}.png',
+    basemap: {
+      url: '/api/tiles/basemap/{z}/{x}/{y}.png',
       attr: 'Project Rakshak 2.0 Offline Basemap (Synthetic) — 100% Air-Gapped',
       maxZoom: 19
     },
@@ -274,121 +294,9 @@ function TacticalMap({
     },
     terrain: {
       url: '/api/tiles/terrain/{z}/{x}/{y}.png',
-      attr: 'Project Rakshak 2.0 Offline Terrain (Synthetic) — Air-Gapped Node',
+      attr: 'Project Rakshak 2.0 Offline Terrain (Synthetic) — synthetic, not real elevation',
       maxZoom: 19
     }
-  };
-
-  const tacticalGeoJsonData = useMemo<any>(() => {
-    const worldFeatures = ((worldLandData as any)?.features || []).map((f: any, idx: number) => ({
-      ...f,
-      id: f.id || `world-land-${idx}`,
-      properties: {
-        ...(f.properties || {}),
-        type: 'LANDMASS'
-      }
-    }));
-
-    const operationalFeatures = [
-      {
-        type: 'Feature',
-        properties: { name: 'Indian Sovereign Littoral Coastline', type: 'COASTLINE' },
-        geometry: {
-          type: 'LineString',
-          coordinates: INDIA_COASTLINE.map(([lat, lon]) => [lon, lat])
-        }
-      },
-      {
-        type: 'Feature',
-        properties: { name: 'Sri Lanka Coastline', type: 'COASTLINE' },
-        geometry: {
-          type: 'LineString',
-          coordinates: SRI_LANKA_COASTLINE.map(([lat, lon]) => [lon, lat])
-        }
-      },
-      {
-        type: 'Feature',
-        properties: { name: 'Andaman Archipelago', type: 'COASTLINE' },
-        geometry: {
-          type: 'LineString',
-          coordinates: ANDAMAN_CHAIN.map(([lat, lon]) => [lon, lat])
-        }
-      },
-      {
-        type: 'Feature',
-        properties: { name: 'Nicobar Archipelago', type: 'COASTLINE' },
-        geometry: {
-          type: 'LineString',
-          coordinates: NICOBAR_CHAIN.map(([lat, lon]) => [lon, lat])
-        }
-      },
-      {
-        type: 'Feature',
-        properties: { name: 'Lakshadweep Archipelago', type: 'COASTLINE' },
-        geometry: {
-          type: 'LineString',
-          coordinates: LAKSHADWEEP_ISLANDS.map(([lat, lon]) => [lon, lat])
-        }
-      },
-      {
-        type: 'Feature',
-        properties: { name: 'Indian Sovereign EEZ Boundary (200nm)', type: 'EEZ' },
-        geometry: {
-          type: 'LineString',
-          coordinates: INDIAN_EEZ_BOUNDARY.map(([lat, lon]) => [lon, lat])
-        }
-      },
-      ...TACTICAL_GRATICULES.map(g => ({
-        type: 'Feature',
-        properties: { name: g.name, type: 'GRATICULE' },
-        geometry: {
-          type: 'LineString',
-          coordinates: g.points.map(([lat, lon]) => [lon, lat])
-        }
-      }))
-    ];
-
-    return {
-      type: 'FeatureCollection',
-      features: [...worldFeatures, ...operationalFeatures]
-    };
-  }, []);
-
-  const tacticalGeoJsonStyle = (feature: any) => {
-    const fType = feature?.properties?.type;
-    if (fType === 'LANDMASS') {
-      return {
-        fillColor: '#122637',
-        fillOpacity: 0.95,
-        color: 'rgba(56, 189, 248, 0.45)',
-        weight: 1.0,
-        opacity: 0.8
-      };
-    }
-    if (fType === 'COASTLINE') {
-      return {
-        color: '#00f0ff',
-        weight: 3.0,
-        opacity: 1.0
-      };
-    }
-    if (fType === 'EEZ') {
-      return {
-        color: '#f59e0b',
-        weight: 2.2,
-        dashArray: '6 6',
-        opacity: 0.95
-      };
-    }
-    if (fType === 'GRATICULE') {
-      return {
-        color: 'rgba(56, 189, 248, 0.25)',
-        weight: 1,
-        dashArray: '3 6',
-        opacity: 0.6
-      };
-    }
-    return { color: '#00f0ff', weight: 1.5 };
   };
 
   const heatPoints: [number, number, number][] = useMemo(() => {
@@ -404,7 +312,7 @@ function TacticalMap({
 
   return (
     <div className="map-wrap" style={{ height: '560px' }}>
-      {/* Air-Gapped Synthetic Basemap Switcher */}
+      {/* Air-Gapped Synthetic Basemap Switcher & Overlay Toggle */}
       <div style={{
         position: 'absolute',
         top: '12px',
@@ -414,11 +322,11 @@ function TacticalMap({
         gap: '6px'
       }}>
         <button
-          onClick={() => setBasemapMode('satellite')}
+          onClick={() => setBasemapMode('basemap')}
           style={{
-            background: basemapMode === 'satellite' ? 'rgba(6, 182, 212, 0.35)' : 'rgba(7, 18, 29, 0.85)',
-            border: `1px solid ${basemapMode === 'satellite' ? '#00f0ff' : '#1e384b'}`,
-            color: basemapMode === 'satellite' ? '#00f0ff' : '#728d9c',
+            background: basemapMode === 'basemap' ? 'rgba(6, 182, 212, 0.35)' : 'rgba(7, 18, 29, 0.85)',
+            border: `1px solid ${basemapMode === 'basemap' ? '#00f0ff' : '#1e384b'}`,
+            color: basemapMode === 'basemap' ? '#00f0ff' : '#728d9c',
             padding: '5px 10px',
             fontSize: '10px',
             borderRadius: '4px',
@@ -473,10 +381,30 @@ function TacticalMap({
         >
           <MapIcon size={13} /> 🗺️ Offline terrain (synthetic)
         </button>
+        <button
+          onClick={() => setLocalGeoOverlay(v => !v)}
+          style={{
+            background: effectiveGeoOverlay ? 'rgba(16, 185, 129, 0.25)' : 'rgba(7, 18, 29, 0.85)',
+            border: `1px solid ${effectiveGeoOverlay ? '#10b981' : '#1e384b'}`,
+            color: effectiveGeoOverlay ? '#10b981' : '#728d9c',
+            padding: '5px 10px',
+            fontSize: '10px',
+            borderRadius: '4px',
+            cursor: 'pointer',
+            fontFamily: 'monospace',
+            fontWeight: 700,
+            display: 'flex',
+            alignItems: 'center',
+            gap: '5px'
+          }}
+          title="Toggle Coastline, 200nm EEZ & Tactical Graticule Overlay"
+        >
+          <Globe size={13} /> {effectiveGeoOverlay ? 'Coastline/EEZ: ON' : 'Coastline/EEZ: OFF'}
+        </button>
       </div>
 
       <MapContainer center={center} zoom={6} scrollWheelZoom className="map">
-        <MapController flyTarget={flyTarget || null} />
+        <MapController flyTarget={flyTarget || null} routePoints={routePoints} />
         <TileLayer
           key={basemapMode}
           attribution={BASEMAP_TILES[basemapMode].attr}
@@ -484,48 +412,11 @@ function TacticalMap({
           maxZoom={BASEMAP_TILES[basemapMode].maxZoom}
         />
 
-        {/* Toggleable Sovereign GeoJSON Overlay (Indian Coastline, EEZ, Graticules) */}
-        {layers.geoOverlay && (
-          <GeoJSON
-            key={`geo-overlay-${basemapMode}`}
-            data={tacticalGeoJsonData}
-            style={tacticalGeoJsonStyle}
-          />
-        )}
-
-        {/* Strategic Naval Commands & Coastal Radar Surveillance Rings */}
-        {STRATEGIC_HUBS.map(hub => (
-          <span key={hub.id}>
-            <Circle
-              center={[hub.lat, hub.lon]}
-              radius={hub.radarRangeKm * 1000}
-              pathOptions={{
-                color: hub.type === 'COMMAND_HQ' ? '#06b6d4' : '#64748b',
-                fillColor: hub.type === 'COMMAND_HQ' ? '#06b6d4' : '#64748b',
-                fillOpacity: 0.04,
-                weight: 1,
-                dashArray: '3 5'
-              }}
-            />
-            <CircleMarker
-              center={[hub.lat, hub.lon]}
-              radius={hub.type === 'COMMAND_HQ' ? 6 : 4}
-              pathOptions={{
-                color: hub.type === 'COMMAND_HQ' ? '#00f0ff' : '#94a3b8',
-                fillColor: '#071622',
-                fillOpacity: 1,
-                weight: 2
-              }}
-            >
-              <Popup>
-                <b>STRATEGIC ASSET: {hub.name}</b><br />
-                Code: {hub.code}<br />
-                Type: {hub.type}<br />
-                Coastal Radar Coverage: {hub.radarRangeKm} km
-              </Popup>
-            </CircleMarker>
-          </span>
-        ))}
+        {/* Reusable Sovereign GeoJSON Overlay (Indian Coastline, EEZ, Graticules, Radar Rings) */}
+        <OfflineGeoOverlay
+          enabled={effectiveGeoOverlay}
+          basemapMode={basemapMode}
+        />
 
         {sceneRect && <Rectangle bounds={sceneRect} pathOptions={{ color: '#54d2c5', weight: 2, dashArray: '5 5', fillOpacity: 0.05 }} />}
         {layers.heat && <HeatLayer points={heatPoints} />}
@@ -766,7 +657,7 @@ function TacticalMap({
 
       <div className="map-legend">
         <span style={{ color: '#38bdf8', fontWeight: 600 }}>
-          <i className="dot" style={{ background: '#38bdf8' }} /> {basemapMode === 'satellite' ? 'Offline basemap (synthetic)' : basemapMode === 'dark' ? 'Dark tactical (synthetic)' : 'Offline terrain (synthetic)'}
+          <i className="dot" style={{ background: '#38bdf8' }} /> {basemapMode === 'basemap' ? 'Offline basemap (synthetic)' : basemapMode === 'dark' ? 'Dark tactical (synthetic)' : 'Offline terrain (synthetic)'}
         </span>
         <span><i className="dot" style={{ background: '#00f0ff' }} /> Fused Track (Kalman Ellipse)</span>
         <span><i className="dot" style={{ background: '#f59e0b' }} /> 200nm Indian EEZ</span>
@@ -1156,6 +1047,10 @@ export function App() {
     heat: false,
     geoOverlay: true
   });
+
+  // Domain Specific Map vs Raster View Modes
+  const [navalViewMode, setNavalViewMode] = useState<'map' | 'raster'>('map');
+  const [armyViewMode, setArmyViewMode] = useState<'map' | 'uav'>('map');
 
   const toggleLayer = (k: keyof typeof layers) => setLayers(l => ({ ...l, [k]: !l[k] }));
 
@@ -2776,6 +2671,18 @@ export function App() {
                     <small>High-resolution optical (xView) & Sentinel-2 multispectral GeoTIFFs</small>
                   </div>
                   <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
+                    <button
+                      className={`button ${navalViewMode === 'map' ? 'primary' : 'secondary'} compact`}
+                      onClick={() => setNavalViewMode('map')}
+                    >
+                      <MapIcon size={13} /> Sector Map
+                    </button>
+                    <button
+                      className={`button ${navalViewMode === 'raster' ? 'primary' : 'secondary'} compact`}
+                      onClick={() => setNavalViewMode('raster')}
+                    >
+                      <Ship size={13} /> Optical Screening
+                    </button>
                     <select
                       value={modelType}
                       onChange={e => setModelType(e.target.value as any)}
@@ -2786,12 +2693,23 @@ export function App() {
                     </select>
                     <label className="button secondary compact">
                       <CloudUpload size={14} /> Upload Image
-                      <input type="file" hidden accept="image/*,.tif,.tiff" onChange={e => handleUpload(e.target.files?.[0])} />
+                      <input type="file" hidden accept="image/*,.tif,.tiff" onChange={e => { handleUpload(e.target.files?.[0]); setNavalViewMode('raster'); }} />
                     </label>
                   </div>
                 </div>
 
-                {preview ? (
+                {navalViewMode === 'map' ? (
+                  <TacticalMap
+                    opticalItems={opticalItems}
+                    sarDetections={sarDetections}
+                    armyFeeds={[]}
+                    providerPoints={pipe}
+                    zones={zones}
+                    layers={{ optical: true, sar: true, ais: true, army: false, zones: true, vectors: true, geoOverlay: true, heat: false }}
+                    flyTarget={flyTarget}
+                    fusedTracks={fusedTracks}
+                  />
+                ) : preview ? (
                   <div style={{ border: '1px solid #1a323d', borderRadius: '6px', overflow: 'hidden', background: '#061019' }}>
                     {/* Class Filter Bar for Clean Reading */}
                     <div style={{
@@ -3097,7 +3015,21 @@ export function App() {
                     <div className="panel-title"><Crosshair size={16} /> Army Tactical Multimodal Feeds</div>
                     <small>Tactical UAV FMV (VisDrone/VIRAT), Ground Seismic Sensors (UGS) & SIGINT</small>
                   </div>
-                  <span className="count-badge">{armyFeeds.length} active feeds</span>
+                  <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
+                    <button
+                      className={`button ${armyViewMode === 'map' ? 'primary' : 'secondary'} compact`}
+                      onClick={() => setArmyViewMode('map')}
+                    >
+                      <MapIcon size={13} /> Sector Map
+                    </button>
+                    <button
+                      className={`button ${armyViewMode === 'uav' ? 'primary' : 'secondary'} compact`}
+                      onClick={() => setArmyViewMode('uav')}
+                    >
+                      <Crosshair size={13} /> UAV Downlink
+                    </button>
+                    <span className="count-badge">{armyFeeds.length} active feeds</span>
+                  </div>
                 </div>
 
                 <div style={{ padding: '16px' }}>
@@ -3119,17 +3051,30 @@ export function App() {
                     </div>
                   </div>
 
-                  {/* Hidden file input for Army UAV Downlink */}
-                  <input
-                    ref={armyInputRef}
-                    type="file"
-                    accept="image/*,.tif,.tiff"
-                    style={{ display: 'none' }}
-                    onChange={(e) => {
-                      const f = e.target.files?.[0];
-                      if (f) handleUpload(f, 'multiclass');
-                    }}
-                  />
+                  {armyViewMode === 'map' ? (
+                    <TacticalMap
+                      opticalItems={[]}
+                      sarDetections={[]}
+                      armyFeeds={armyFeeds}
+                      providerPoints={[]}
+                      zones={zones}
+                      layers={{ optical: false, sar: false, ais: false, army: true, zones: true, vectors: true, geoOverlay: true, heat: false }}
+                      flyTarget={flyTarget}
+                      fusedTracks={fusedTracks}
+                    />
+                  ) : (
+                    <>
+                      {/* Hidden file input for Army UAV Downlink */}
+                      <input
+                        ref={armyInputRef}
+                        type="file"
+                        accept="image/*,.tif,.tiff"
+                        style={{ display: 'none' }}
+                        onChange={(e) => {
+                          const f = e.target.files?.[0];
+                          if (f) handleUpload(f, 'multiclass');
+                        }}
+                      />
 
                   {/* Interactive Tactical UAV / Drone Surveillance Downlink */}
                   <div style={{ border: '1px solid #23414f', background: '#091823', borderRadius: '8px', padding: '14px', marginBottom: '16px' }}>
@@ -3512,6 +3457,8 @@ export function App() {
                       </div>
                     </div>
                   </div>
+                  </>
+                )}
                 </div>
               </section>
 
@@ -4253,7 +4200,7 @@ export function App() {
                   armyFeeds={armyFeeds}
                   providerPoints={[]}
                   zones={zones}
-                  layers={{ optical: true, sar: true, ais: false, army: false, zones: true, vectors: true, heat: false }}
+                  layers={{ optical: true, sar: true, ais: false, army: false, zones: true, vectors: true, geoOverlay: true, heat: false }}
                   flyTarget={flyTarget}
                   fusedTracks={fusedTracks}
                   routePoints={[
