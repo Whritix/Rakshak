@@ -524,6 +524,9 @@ def match_detections_and_classify_changes(
     geo_meta: Dict[str, Any],
     stationary_dist_thr: float = 28.0,
     max_move_dist_thr: float = 120.0,
+    stability_filter: bool = False,
+    all_dets_before: Optional[List[Dict[str, Any]]] = None,
+    all_dets_after: Optional[List[Dict[str, Any]]] = None,
 ) -> Tuple[List[Dict[str, Any]], Dict[str, int]]:
     """Match before/after detections one-to-one, class-aware, and output NEW, REMOVED, and MOVED objects.
 
@@ -532,6 +535,10 @@ def match_detections_and_classify_changes(
     - MOVED: centroid distance between 28 px and 120 px with area similarity (0.35 to 2.8)
     - NEW: detections in after image with no match in before image
     - REMOVED: detections in before image with no match in after image
+
+    Stability Filter:
+    - Reports a change only if detection confidence >= 0.40 in the image where it appears
+      AND no detection of the same class lies within 28 px in the partner image at confidence >= 0.15.
     """
     def _box_iou(b1: Dict[str, Any], b2: Dict[str, Any]) -> float:
         ix1 = max(b1["x"], b2["x"])
@@ -657,6 +664,40 @@ def match_detections_and_classify_changes(
                     "details": f"Tactical {cname} departed / cleared from post-scene"
                 })
 
+    if stability_filter:
+        ref_dets_before = all_dets_before if all_dets_before is not None else dets_before
+        ref_dets_after = all_dets_after if all_dets_after is not None else dets_after
+
+        filtered_changes = []
+        for chg in changes:
+            # Condition 1: Detection confidence >= 0.40 in the image where it appears
+            if chg["confidence"] < 0.40:
+                continue
+
+            cname = chg["class_name"]
+            cx = chg["x"] + chg["w"] / 2.0
+            cy = chg["y"] + chg["h"] / 2.0
+
+            # Condition 2: No detection of same class lies within 28 px in other image at conf >= 0.15
+            partner_dets = ref_dets_before if chg["change_type"] in ("NEW", "MOVED") else ref_dets_after
+            has_partner_near = False
+            for pd in partner_dets:
+                if pd["class_name"] == cname and pd["confidence"] >= 0.15:
+                    pcx = pd["x"] + pd["w"] / 2.0
+                    pcy = pd["y"] + pd["h"] / 2.0
+                    if math.sqrt((cx - pcx) ** 2 + (cy - pcy) ** 2) <= 28.0:
+                        has_partner_near = True
+                        break
+
+            if not has_partner_near:
+                filtered_changes.append(chg)
+
+        # Update summary counts to reflect filtered set
+        summary = {"NEW": 0, "REMOVED": 0, "MOVED": 0, "UNCHANGED": summary["UNCHANGED"]}
+        for fc in filtered_changes:
+            summary[fc["change_type"]] += 1
+        changes = filtered_changes
+
     return changes, summary
 
 
@@ -770,6 +811,7 @@ def run_change_detection_analysis(
     shift_y: float = 0.0,
     seed: int = 42,
     confidence: float = 0.25,
+    stability_filter: bool = False,
 ) -> Dict[str, Any]:
     """Execute complete end-to-end change detection on a synthetic pair."""
     global _LAST_CHANGE_DETECTION_RESULT
@@ -809,9 +851,12 @@ def run_change_detection_analysis(
         injected_shift=(shift_x, shift_y)
     )
 
-    # 4. Neural Detection on Both Scenes
-    dets_before = run_yolo_detection(before_img, confidence=confidence)
-    dets_after = run_yolo_detection(aligned_after, confidence=confidence)
+    # 4. Neural Detection on Both Scenes (Floor 0.15 for ghost candidate cross-checking)
+    dets_before_all = run_yolo_detection(before_img, confidence=0.15)
+    dets_after_all = run_yolo_detection(aligned_after, confidence=0.15)
+
+    dets_before = [d for d in dets_before_all if d["confidence"] >= confidence]
+    dets_after = [d for d in dets_after_all if d["confidence"] >= confidence]
 
     # 5. One-to-one Class-Aware Matching & Change Classification
     object_changes, obj_summary = match_detections_and_classify_changes(
@@ -819,7 +864,10 @@ def run_change_detection_analysis(
         dets_after=dets_after,
         geo_meta=geo_meta,
         stationary_dist_thr=18.0,
-        max_move_dist_thr=120.0
+        max_move_dist_thr=120.0,
+        stability_filter=stability_filter,
+        all_dets_before=dets_before_all,
+        all_dets_after=dets_after_all,
     )
 
     # 6. Secondary Radiometric Pixel Difference
@@ -854,6 +902,7 @@ def run_change_detection_analysis(
     response_payload = {
         "status": "SUCCESS",
         "pair_label": "SYNTHETIC",
+        "stability_filter": stability_filter,
         "tile_name": tile_path.name,
         "tile_path": str(tile_path),
         "timestamp": datetime.now(timezone.utc).isoformat(),

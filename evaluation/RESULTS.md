@@ -311,13 +311,16 @@ Each scenario was evaluated over 10 repetitions (30 total runs) against local li
 ## 12. Multi-Temporal Satellite Change Detection
 
 **Source JSON:** [`evaluation/results/change_detection_report.json`](file:///c:/Users/awhri/OneDrive/Desktop/DEF/evaluation/results/change_detection_report.json) & [`evaluation/results/change_detection_summary.md`](file:///c:/Users/awhri/OneDrive/Desktop/DEF/evaluation/results/change_detection_summary.md)  
-**Dataset / Scenario:** 20 seeded synthetic bi-temporal pairs (`seed=1` to `seed=20`) constructed from 100% held-out `val_report` partition (540 tiles). Injected misalignments 0.0 to 8.0 px; class-aware Hungarian bipartite matching with stationary distance $\le 28$ px and movement distance $\le 120$ px; secondary radiometric normalisation with channel gain & bias calibration.
+**Dataset / Scenario:** 20 seeded synthetic bi-temporal pairs (`seed=1` to `seed=20`) constructed from 100% held-out `val_report` partition (540 tiles). Each synthetic pair contains exactly 3 ground-truth object edits (1 NEW, 1 REMOVED, 1 MOVED) = 60 total edits across 20 pairs (+1 structural revetment per pair). Injected misalignments 0.0 to 8.0 px; class-aware Hungarian bipartite matching with stationary distance $\le 28$ px and movement distance $\le 120$ px; secondary radiometric normalisation with channel gain & bias calibration.
 
 | Metric / Tactical Scenario | Value | Sample Size | Scenario Condition | Method | Date | Source JSON Path | Provenance |
 | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
-| **Headline Change Precision** | **31.17 ± 30.86%** (0.3117) | 20 seeds (60 ground-truth edits) | `val_report` holdout | YOLO11m + Class-Aware Hungarian Matcher | 2026-10-10 | `evaluation/results/change_detection_report.json` | `SIMULATED` |
-| **Headline Change Recall** | **40.00 ± 24.95%** (0.4000) | 20 seeds (60 ground-truth edits) | `val_report` holdout | YOLO11m + Class-Aware Hungarian Matcher | 2026-10-10 | `evaluation/results/change_detection_report.json` | `SIMULATED` |
-| **Headline Change F1 Score** | **0.3005 ± 0.2142** (0.3005) | 20 seeds (60 ground-truth edits) | `val_report` holdout | Harmonic mean of change precision & recall | 2026-10-10 | `evaluation/results/change_detection_report.json` | `SIMULATED` |
+| **Headline Change Precision (Raw)** | **31.17 ± 30.86%** (0.3117) [Pooled: **23.76%** (0.2376)] | 20 seeds (60 ground-truth edits, 3 edits/pair) | `val_report` holdout | YOLO11m + Class-Aware Hungarian Matcher | 2026-10-10 | `evaluation/results/change_detection_report.json` | `SIMULATED` |
+| **Headline Change Recall (Raw)** | **40.00 ± 24.95%** (0.4000) [Pooled: **40.00%** (0.4000)] | 20 seeds (60 ground-truth edits, 3 edits/pair) | `val_report` holdout | YOLO11m + Class-Aware Hungarian Matcher | 2026-10-10 | `evaluation/results/change_detection_report.json` | `SIMULATED` |
+| **Headline Change F1 Score (Raw)** | **0.3005 ± 0.2142** (0.3005) [Pooled: **0.2981**] | 20 seeds (60 ground-truth edits, 3 edits/pair) | `val_report` holdout | Harmonic mean of change precision & recall | 2026-10-10 | `evaluation/results/change_detection_report.json` | `SIMULATED` |
+| **Stability-Filtered Change Precision** | **32.50 ± 45.48%** (0.3250) [Pooled: **87.50%** (0.8750)] | 20 seeds (60 ground-truth edits, 3 edits/pair) | `val_report` holdout | Conf $\ge 0.40$, Ghost check $< 0.15$ within 28px | 2026-10-10 | `evaluation/results/change_detection_report.json` | `SIMULATED` |
+| **Stability-Filtered Change Recall** | **11.67 ± 15.90%** (0.1167) [Pooled: **11.67%** (0.1167)] | 20 seeds (60 ground-truth edits, 3 edits/pair) | `val_report` holdout | Conf $\ge 0.40$, Ghost check $< 0.15$ within 28px | 2026-10-10 | `evaluation/results/change_detection_report.json` | `SIMULATED` |
+| **Stability-Filtered Change F1 Score** | **0.1700 ± 0.2326** (0.1700) [Pooled: **0.2059**] | 20 seeds (60 ground-truth edits, 3 edits/pair) | `val_report` holdout | Conf $\ge 0.40$, Ghost check $< 0.15$ within 28px | 2026-10-10 | `evaluation/results/change_detection_report.json` | `SIMULATED` |
 | **Aircraft Change Precision** | **75.00%** (0.7500) | 16 GT aircraft edits | 10 aircraft holdout tiles | YOLO11m + Class-Aware Matching | 2026-10-10 | `evaluation/results/change_detection_report.json` | `SIMULATED` |
 | **Aircraft Change Recall** | **37.50%** (0.3750) | 16 GT aircraft edits | 10 aircraft holdout tiles | YOLO11m + Class-Aware Matching | 2026-10-10 | `evaluation/results/change_detection_report.json` | `SIMULATED` |
 | **Aircraft Change F1 Score** | **0.5000 ± 0.3333** (0.5000) | 16 GT aircraft edits | 10 aircraft holdout tiles | Class-specific F1 | 2026-10-10 | `evaluation/results/change_detection_report.json` | `SIMULATED` |
@@ -341,4 +344,24 @@ Each scenario was evaluated over 10 repetitions (30 total runs) against local li
 | **Registration Error @ 8.0 px Shift** | **0.1086 ± 0.0537 px** (Max: **0.2322 px**) | 8 trials | 8.0 px radial offset | ORB + RANSAC Affine | 2026-10-10 | `evaluation/results/change_detection_report.json` | `SIMULATED` |
 | **Structural Anomaly Capture Rate** | **70.00%** (0.7000) | 20 injected structural revetments | Secondary pixel diff signal | Radiometric gain/bias normalization & morphological filtering | 2026-10-10 | `evaluation/results/change_detection_report.json` | `SIMULATED` |
 | **Real-World Bi-Temporal Satellite Sea/Land Trials** | **NOT DONE** | 0 multi-pass satellite overflights | Operational satellite constellation passes | Requires multi-day satellite tasking | 2026-10-10 | `evaluation/results/change_detection_report.json` | `NOT DONE` |
+
+### False-Positive Root Cause Breakdown (77 Total Raw FPs)
+
+| Root Cause Category | Count | Percentage | Physical / Algorithmic Mechanism | Mitigation |
+| :--- | :---: | :---: | :--- | :--- |
+| **(a) Detector flicker on unchanged objects** | **49** | **63.64%** | Unedited ground-truth objects present in both scenes hovering near 0.25 threshold in one scene but missed in partner scene | Pruned by partner-scene ghost filter ($< 0.15$ within 28px) |
+| **(b) Inpainting boundary artifacts** | **24** | **31.17%** | Telea inpainting on natural structured terrain leaves high-frequency texture steps that trigger false detections | Pruned by confidence elevation ($\ge 0.40$) |
+| **(c) Mis-registration / texture noise** | **4** | **5.19%** | Residual sub-pixel displacement noise and unassociated background clutter | Controlled by ORB+RANSAC sub-pixel co-registration |
+| **Total Baseline False Positives** | **77** | **100.00%** | Combined false alarms before stability filtration | Reduced to **1 FP** (98.7% reduction) under stability filter |
+
+---
+
+## 13. Problem Statement Mapping & Milestone Grounding
+
+| Dimension | Implemented Status | Completion Rate |
+| :--- | :--- | :--- |
+| **Completed (Measured)** | 6 of 13 primary dimensions | **46.2%** |
+| **Completed (Simulated)** | 5 of 14 target dimensions | **35.7%** |
+| **Partially Completed** | 2 of 13 primary dimensions (SWaP-C & Mission Planning) | **15.4%** |
+| **Unmeasured / Field Exercise** | 1 of 13 primary dimensions (GPS CEP field survey) | **7.7%** |
 

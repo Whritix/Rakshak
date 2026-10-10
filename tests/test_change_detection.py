@@ -183,3 +183,63 @@ def test_changes_not_fed_to_threat_score(client):
         after_count = db.execute("SELECT COUNT(*) FROM detections").fetchone()[0]
 
     assert before_count == after_count, "Change detection detections must NOT be inserted into detections table!"
+
+
+def test_stability_filter_pruning():
+    """Verify stability filter prunes low-confidence (<0.40) or partner-ghost (>=0.15 within 28px) changes."""
+    geo_meta = {"has_geotiff": False, "base_lat": 28.6, "base_lon": 77.2, "deg_per_px_x": 2.7e-6, "deg_per_px_y": -2.7e-6}
+
+    # Case 1: Low confidence candidate (conf = 0.32 < 0.40) -> must be pruned
+    dets_b_low = []
+    dets_a_low = [
+        {"class_name": "Vehicle", "confidence": 0.32, "x": 100, "y": 100, "w": 30, "h": 20, "xc": 115, "yc": 110}
+    ]
+    changes_unfilt, _ = match_detections_and_classify_changes(
+        dets_b_low, dets_a_low, geo_meta, stability_filter=False
+    )
+    assert len(changes_unfilt) == 1
+
+    changes_filt, _ = match_detections_and_classify_changes(
+        dets_b_low, dets_a_low, geo_meta, stability_filter=True,
+        all_dets_before=[], all_dets_after=dets_a_low
+    )
+    assert len(changes_filt) == 0, "Candidate with confidence < 0.40 must be pruned by stability filter"
+
+    # Case 2: High confidence candidate (conf = 0.85 >= 0.40), but partner has ghost at 0.18 within 20px -> must be pruned
+    dets_b_ghost = [
+        {"class_name": "Vehicle", "confidence": 0.18, "x": 110, "y": 105, "w": 30, "h": 20, "xc": 125, "yc": 115}
+    ]
+    dets_a_high = [
+        {"class_name": "Vehicle", "confidence": 0.85, "x": 100, "y": 100, "w": 30, "h": 20, "xc": 115, "yc": 110}
+    ]
+    changes_ghost, _ = match_detections_and_classify_changes(
+        [], dets_a_high, geo_meta, stability_filter=True,
+        all_dets_before=dets_b_ghost, all_dets_after=dets_a_high
+    )
+    assert len(changes_ghost) == 0, "Candidate with partner detection >= 0.15 within 28px must be pruned"
+
+    # Case 3: High confidence candidate (conf = 0.85 >= 0.40), partner is clear -> must be retained
+    changes_retained, summary_retained = match_detections_and_classify_changes(
+        [], dets_a_high, geo_meta, stability_filter=True,
+        all_dets_before=[], all_dets_after=dets_a_high
+    )
+    assert len(changes_retained) == 1
+    assert summary_retained["NEW"] == 1
+    assert changes_retained[0]["confidence"] == 0.85
+
+
+def test_stability_filter_api_endpoint(client):
+    """Verify stability_filter parameter is supported in REST endpoint /api/change-detection/run."""
+    payload = {
+        "shift_x": 1.0,
+        "shift_y": -1.0,
+        "seed": 42,
+        "confidence": 0.25,
+        "stability_filter": True
+    }
+    resp = client.post('/api/change-detection/run', json=payload)
+    assert resp.status_code == 200
+    data = resp.json()
+    assert data["status"] == "SUCCESS"
+    assert data["stability_filter"] is True
+    assert "object_changes" in data

@@ -203,4 +203,5 @@ class ChangeDetectionRunRequest(BaseModel):
     seed: int = Field(42, ge=0, le=1000000, description="Deterministic pseudo-random seed for synthetic edits")
     confidence: float = Field(0.25, ge=0.05, le=1.0, description="YOLO detection confidence threshold")
     num_edits: int = Field(3, ge=1, le=10, description="Number of synthetic object edits to inject")
+    stability_filter: bool = Field(False, description="Enable dual-threshold stability filter (conf >= 0.40, ghost check < 0.15 within 28px)")
 

@@ -1550,7 +1550,8 @@ def run_change_detection_endpoint(payload: ChangeDetectionRunRequest):
             shift_x=payload.shift_x,
             shift_y=payload.shift_y,
             seed=payload.seed,
-            confidence=payload.confidence
+            confidence=payload.confidence,
+            stability_filter=payload.stability_filter,
         )
         return result
     except Exception as e:
