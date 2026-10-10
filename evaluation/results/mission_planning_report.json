@@ -1,0 +1,255 @@
+{
+  "metadata": {
+    "title": "Project Rakshak 2.0 Mission-Planning Decision Cycle Time Benchmark",
+    "target_problem_statement": "Problem Statement 1A: Naval/Army Geospatial & Multimodal Threat Detection",
+    "kpi_dimension": "Mission-Planning Cycle Time",
+    "date": "2026-10-10",
+    "timestamp": "2026-10-10T19:03:54.594503+00:00",
+    "repetitions_per_scenario": 10,
+    "host": "Stand-Alone Air-Gapped FOB Node (127.0.0.1:8000)",
+    "overall_status": "Partial: system steps measured, manual baseline assumed, no human user study"
+  },
+  "summary": {
+    "avg_machine_measured_seconds": 0.1843,
+    "avg_operator_paced_seconds": 50.19,
+    "avg_manual_assumed_seconds": 1440.0,
+    "avg_manual_assumed_minutes": 24.0,
+    "avg_operator_reduction_pct": 96.51
+  },
+  "scenarios": {
+    "scenario_a": {
+      "scenario_name": "Scenario A: Dark Vessel Approaching Restricted Zone (Mumbai ODA)",
+      "domain": "Maritime / Naval",
+      "repetitions": 10,
+      "rakshak_measured": {
+        "mean_seconds": 0.2572,
+        "std_seconds": 0.1351,
+        "min_seconds": 0.1059,
+        "max_seconds": 0.4134,
+        "formatted": "0.2572 \u00b1 0.1351 s",
+        "provenance": "MEASURED"
+      },
+      "rakshak_operator_paced": {
+        "assumed_think_time_seconds": 50.0,
+        "total_seconds": 50.26,
+        "formatted": "50.26 s",
+        "provenance": "ASSUMED"
+      },
+      "manual_assumed_baseline": {
+        "total_seconds": 1680.0,
+        "total_minutes": 28.0,
+        "formatted": "1680.0 s (28.0 min)",
+        "provenance": "ASSUMED"
+      },
+      "cycle_time_reduction": {
+        "machine_reduction_pct": 99.98,
+        "operator_paced_reduction_pct": 97.01,
+        "formatted": "97.01% (Operator-Paced) / 99.98% (Scripted REST)",
+        "provenance": "COMPUTED"
+      },
+      "per_step_breakdown": {
+        "1": {
+          "step_index": 1,
+          "description": "SAR Dark Vessel Detection (Found 3 dark targets)",
+          "mean_ms": 51.44,
+          "std_ms": 25.8,
+          "mean_seconds": 0.0514,
+          "std_seconds": 0.0258,
+          "provenance": "MEASURED"
+        },
+        "2": {
+          "step_index": 2,
+          "description": "Restricted Defense Zone Gating (Checked 0 perimeters)",
+          "mean_ms": 13.11,
+          "std_ms": 7.84,
+          "mean_seconds": 0.0131,
+          "std_seconds": 0.0078,
+          "provenance": "MEASURED"
+        },
+        "3": {
+          "step_index": 3,
+          "description": "Sovereign RoE Doctrine Retrieval (2 doctrine citations)",
+          "mean_ms": 92.25,
+          "std_ms": 52.29,
+          "mean_seconds": 0.0922,
+          "std_seconds": 0.0523,
+          "provenance": "MEASURED"
+        },
+        "4": {
+          "step_index": 4,
+          "description": "STANAG 2014 SITREP Compilation (Sec 5 Tactical Actions: False)",
+          "mean_ms": 16.74,
+          "std_ms": 9.88,
+          "mean_seconds": 0.0167,
+          "std_seconds": 0.0099,
+          "provenance": "MEASURED"
+        },
+        "5": {
+          "step_index": 5,
+          "description": "Intercept Tasking Dispatch (Dispatched mission msn-ac56b4)",
+          "mean_ms": 83.63,
+          "std_ms": 52.96,
+          "mean_seconds": 0.0836,
+          "std_seconds": 0.053,
+          "provenance": "MEASURED"
+        }
+      }
+    },
+    "scenario_b": {
+      "scenario_name": "Scenario B: Convoy Approaching Border Defense Post (Sector Alpha)",
+      "domain": "Land / Army Ground",
+      "repetitions": 10,
+      "rakshak_measured": {
+        "mean_seconds": 0.1397,
+        "std_seconds": 0.0173,
+        "min_seconds": 0.1167,
+        "max_seconds": 0.1751,
+        "formatted": "0.1397 \u00b1 0.0173 s",
+        "provenance": "MEASURED"
+      },
+      "rakshak_operator_paced": {
+        "assumed_think_time_seconds": 50.0,
+        "total_seconds": 50.14,
+        "formatted": "50.14 s",
+        "provenance": "ASSUMED"
+      },
+      "manual_assumed_baseline": {
+        "total_seconds": 1320.0,
+        "total_minutes": 22.0,
+        "formatted": "1320.0 s (22.0 min)",
+        "provenance": "ASSUMED"
+      },
+      "cycle_time_reduction": {
+        "machine_reduction_pct": 99.99,
+        "operator_paced_reduction_pct": 96.2,
+        "formatted": "96.20% (Operator-Paced) / 99.99% (Scripted REST)",
+        "provenance": "COMPUTED"
+      },
+      "per_step_breakdown": {
+        "1": {
+          "step_index": 1,
+          "description": "UAV Contact Ingestion (0 active drone alerts)",
+          "mean_ms": 19.45,
+          "std_ms": 10.0,
+          "mean_seconds": 0.0195,
+          "std_seconds": 0.01,
+          "provenance": "MEASURED"
+        },
+        "2": {
+          "step_index": 2,
+          "description": "Fused Kinematic Corridor Analysis (3 tracked vectors)",
+          "mean_ms": 17.35,
+          "std_ms": 8.81,
+          "mean_seconds": 0.0174,
+          "std_seconds": 0.0088,
+          "provenance": "MEASURED"
+        },
+        "3": {
+          "step_index": 3,
+          "description": "Ground RoE Doctrine Retrieval (2 doctrine citations)",
+          "mean_ms": 39.09,
+          "std_ms": 6.86,
+          "mean_seconds": 0.0391,
+          "std_seconds": 0.0069,
+          "provenance": "MEASURED"
+        },
+        "4": {
+          "step_index": 4,
+          "description": "Tactical Ground SITREP Compilation",
+          "mean_ms": 22.96,
+          "std_ms": 5.99,
+          "mean_seconds": 0.023,
+          "std_seconds": 0.006,
+          "provenance": "MEASURED"
+        },
+        "5": {
+          "step_index": 5,
+          "description": "QRF Tasking Dispatch (Dispatched mission msn-2985d5)",
+          "mean_ms": 40.83,
+          "std_ms": 8.45,
+          "mean_seconds": 0.0408,
+          "std_seconds": 0.0084,
+          "provenance": "MEASURED"
+        }
+      }
+    },
+    "scenario_c": {
+      "scenario_name": "Scenario C: UGS Seismic Alarm plus Drone Confirmation",
+      "domain": "Cross-Domain Sensor Fusion",
+      "repetitions": 10,
+      "rakshak_measured": {
+        "mean_seconds": 0.156,
+        "std_seconds": 0.0217,
+        "min_seconds": 0.1105,
+        "max_seconds": 0.1837,
+        "formatted": "0.1560 \u00b1 0.0217 s",
+        "provenance": "MEASURED"
+      },
+      "rakshak_operator_paced": {
+        "assumed_think_time_seconds": 50.0,
+        "total_seconds": 50.16,
+        "formatted": "50.16 s",
+        "provenance": "ASSUMED"
+      },
+      "manual_assumed_baseline": {
+        "total_seconds": 1320.0,
+        "total_minutes": 22.0,
+        "formatted": "1320.0 s (22.0 min)",
+        "provenance": "ASSUMED"
+      },
+      "cycle_time_reduction": {
+        "machine_reduction_pct": 99.99,
+        "operator_paced_reduction_pct": 96.2,
+        "formatted": "96.20% (Operator-Paced) / 99.99% (Scripted REST)",
+        "provenance": "COMPUTED"
+      },
+      "per_step_breakdown": {
+        "1": {
+          "step_index": 1,
+          "description": "UGS Seismic Tripwire Alarm (0 geophone alerts)",
+          "mean_ms": 25.2,
+          "std_ms": 9.78,
+          "mean_seconds": 0.0252,
+          "std_seconds": 0.0098,
+          "provenance": "MEASURED"
+        },
+        "2": {
+          "step_index": 2,
+          "description": "UGS C2 Acknowledgment & Cross-Sensor Vectoring",
+          "mean_ms": 19.99,
+          "std_ms": 6.54,
+          "mean_seconds": 0.02,
+          "std_seconds": 0.0065,
+          "provenance": "MEASURED"
+        },
+        "3": {
+          "step_index": 3,
+          "description": "Sensor Fusion RoE Doctrine Retrieval (2 doctrine citations)",
+          "mean_ms": 47.47,
+          "std_ms": 3.68,
+          "mean_seconds": 0.0475,
+          "std_seconds": 0.0037,
+          "provenance": "MEASURED"
+        },
+        "4": {
+          "step_index": 4,
+          "description": "Joint Incident SITREP Compilation",
+          "mean_ms": 21.29,
+          "std_ms": 8.28,
+          "mean_seconds": 0.0213,
+          "std_seconds": 0.0083,
+          "provenance": "MEASURED"
+        },
+        "5": {
+          "step_index": 5,
+          "description": "Joint Intercept Tasking Dispatch (Dispatched mission msn-1dc765)",
+          "mean_ms": 42.05,
+          "std_ms": 12.27,
+          "mean_seconds": 0.0421,
+          "std_seconds": 0.0123,
+          "provenance": "MEASURED"
+        }
+      }
+    }
+  }
+}

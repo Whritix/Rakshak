@@ -1,0 +1,120 @@
+# Project Rakshak 2.0 — Operational Assumptions & Baseline Time Models
+# Provenance: ALL VALUES IN THIS FILE ARE EXPLICITLY LABELED "ASSUMED".
+# Rationale: Physical human defense operations room user studies with active military staff
+# were not conducted on this standalone edge testbench. All manual comparison baselines
+# and operator think-times reflect standardized military operational staff doctrine models.
+
+provenance_tag: "ASSUMED"
+last_updated: "2026-10-10"
+
+# -----------------------------------------------------------------------------
+# 1. Manual Workflow Step Baseline Assumptions (Traditional Ops Room)
+# -----------------------------------------------------------------------------
+# Based on typical joint operations room staff procedures without automated C4ISR:
+# manual radio/radar log inspection, manual AIS spreadsheet / Lloyd's lookup,
+# physical document searching in RoE doctrine binders, manual typing of STANAG 2014
+# military SITREPs in standard text editors, and manual ruler/chart coordinate plotting.
+
+manual_workflow_baselines:
+  scenario_a_dark_vessel:
+    scenario_name: "Dark Vessel Approaching Restricted Zone (Mumbai ODA)"
+    domain: "Maritime / Naval"
+    steps:
+      - step_id: "A1_RADAR_LOG_CHECK"
+        step_name: "Radar return inspection & manual AIS table lookup"
+        duration_seconds: 300.0  # 5.0 minutes
+        rationale: "Operator cross-checks radar contact range/bearing against separate AIS transponder table or MarineTraffic log to confirm dark status."
+      - step_id: "A2_RESTRICTED_ZONE_VERIFICATION"
+        step_name: "Manual nautical chart plotting & buffer measurement"
+        duration_seconds: 180.0  # 3.0 minutes
+        rationale: "Operator plots radar coordinate on nautical chart and calculates distance to nearest restricted oil platform / naval buffer perimeter."
+      - step_id: "A3_ROE_DOCTRINE_LOOKUP"
+        step_name: "Physical lookup in Naval RoE manual (INBR 8 / UNCLOS)"
+        duration_seconds: 420.0  # 7.0 minutes
+        rationale: "Staff officer locates and reviews physical doctrine binder for Section 4.2 (Dark vessel interdiction) and UNCLOS Article 110 right of visit."
+      - step_id: "A4_SITREP_COMPILATION"
+        step_name: "Manual STANAG 2014 5-paragraph SITREP drafting"
+        duration_seconds: 480.0  # 8.0 minutes
+        rationale: "Operator drafts 5-paragraph tactical situation report in word processor including classification, coordinates, threat level, and intent."
+      - step_id: "A5_INTERCEPT_WAYPOINT_PLANNING"
+        step_name: "Manual intercept vector calculation & radio dispatch draft"
+        duration_seconds: 300.0  # 5.0 minutes
+        rationale: "Navigating officer calculates intercept course, speed, and intercept point (CPA) for Fast Interceptor Craft (FIC) and drafts message."
+    total_manual_seconds: 1680.0  # 28.0 minutes
+
+  scenario_b_convoy_border:
+    scenario_name: "Unidentified Convoy Approaching Border Post (Sector Alpha)"
+    domain: "Land / Army Ground"
+    steps:
+      - step_id: "B1_UAV_CONTACT_TRIAGE"
+        step_name: "Drone video feed review & vehicle count"
+        duration_seconds: 240.0  # 4.0 minutes
+        rationale: "Operator scrubs forward UAV optical video, counts vehicles in formation, and confirms secondary road axis."
+      - step_id: "B2_CORRIDOR_KINEMATICS"
+        step_name: "Manual speed/bearing dead-reckoning towards FOB"
+        duration_seconds: 180.0  # 3.0 minutes
+        rationale: "Watchstander measures distance over elapsed video frames to estimate convoy velocity and time-to-closest-approach to FOB Alpha."
+      - step_id: "B3_ROE_DOCTRINE_LOOKUP"
+        step_name: "Physical lookup in Army Border Defense SOP (Sector Alpha)"
+        duration_seconds: 300.0  # 5.0 minutes
+        rationale: "Staff officer reviews Sector Alpha SOP for Convoy Threat Penalty, authorized jamming thresholds, and QRT mobilization rules."
+      - step_id: "B4_SITREP_COMPILATION"
+        step_name: "Manual ground incident report compilation"
+        duration_seconds: 360.0  # 6.0 minutes
+        rationale: "Duty clerk types tactical incident log, detailing vehicle types, estimated personnel, weapons signature, and sector status."
+      - step_id: "B5_QRF_TASKING_PLANNING"
+        step_name: "Manual defile blocking waypoint tasking & order dispatch"
+        duration_seconds: 240.0  # 4.0 minutes
+        rationale: "Commander plots intercept choke point at Pass Kilo-4 defile and dictates tasking order to motorized Quick Reaction Team (QRT)."
+    total_manual_seconds: 1320.0  # 22.0 minutes
+
+  scenario_c_ugs_drone_fusion:
+    scenario_name: "UGS Seismic Alarm plus Drone Confirmation"
+    domain: "Joint Sensor Fusion (UGS + UAV)"
+    steps:
+      - step_id: "C1_UGS_ALARM_TRIAGE"
+        step_name: "Seismic geophone alarm log inspection & frequency check"
+        duration_seconds: 180.0  # 3.0 minutes
+        rationale: "Operator receives UGS tripwire acoustic/seismic spike, verifies sensor ID on paper grid map, and checks frequency band."
+      - step_id: "C2_DRONE_CROSS_CUEING"
+        step_name: "Manual drone gimbal retask & radio relay to UAV pilot"
+        duration_seconds: 300.0  # 5.0 minutes
+        rationale: "Operator radios drone ground control station (GCS) with sensor coordinates; pilot slews sensor gimbal to acquire contact."
+      - step_id: "C3_ROE_DOCTRINE_LOOKUP"
+        step_name: "Physical lookup in Joint UAV Verification & RoE SOP"
+        duration_seconds: 240.0  # 4.0 minutes
+        rationale: "Staff officer checks doctrine on verified contact criteria required before raising alert from unconfirmed acoustic tripwire."
+      - step_id: "C4_SITREP_COMPILATION"
+        step_name: "Manual multi-sensor correlation report composition"
+        duration_seconds: 360.0  # 6.0 minutes
+        rationale: "Operator writes multi-sensor contact report synthesizing UGS geophone time and drone thermal verification."
+      - step_id: "C5_TASKING_DISPATCH"
+        step_name: "Manual air-ground joint tasking dispatch"
+        duration_seconds: 240.0  # 4.0 minutes
+        rationale: "Commander drafts tactical directive tasking UAV continuous orbit and ground patrol intercept vector."
+    total_manual_seconds: 1320.0  # 22.0 minutes
+
+# -----------------------------------------------------------------------------
+# 2. Operator-Paced Rakshak Think-Time Model Assumptions
+# -----------------------------------------------------------------------------
+# Scripted clicks on REST endpoints execute in milliseconds (<0.2s). Real human operators
+# must visually inspect screens, read directives, and click buttons. The operator-paced model
+# adds realistic human inspection and decision pauses per UI step.
+
+operator_paced_think_times:
+  step_1_contact_review:
+    think_time_seconds: 10.0
+    rationale: "Operator visually spots highlighted high-priority contact on map reticle and reads threat breakdown badge."
+  step_2_verification_inspect:
+    think_time_seconds: 8.0
+    rationale: "Operator confirms zone buffer distance or cross-checks secondary sensor alert."
+  step_3_rag_doctrine_read:
+    think_time_seconds: 15.0
+    rationale: "Operator reads instant sovereign RoE legal directive and authorized action checklist."
+  step_4_sitrep_review:
+    think_time_seconds: 12.0
+    rationale: "Operator reviews pre-compiled STANAG 2014 Section 5 tactical SITREP before transmission."
+  step_5_dispatch_click:
+    think_time_seconds: 5.0
+    rationale: "Operator confirms mission codename and clicks 'Dispatch to C2 Mission'."
+  total_think_time_per_scenario: 50.0  # 50.0 seconds total operator inspection pacing

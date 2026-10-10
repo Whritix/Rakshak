@@ -79,20 +79,19 @@ export const INDIAN_EEZ_BOUNDARY: [number, number][] = [
 // Tactical Graticule Lines (MGRS / Geodetic Grid for Navigation)
 export const TACTICAL_GRATICULES: { id: string; name: string; points: [number, number][] }[] = [
   // Latitude parallels
-  { id: 'lat-25', name: '25°00\'N', points: [[25.0, 60.0], [25.0, 98.0]] },
-  { id: 'lat-20', name: '20°00\'N', points: [[20.0, 60.0], [20.0, 98.0]] },
-  { id: 'lat-15', name: '15°00\'N', points: [[15.0, 60.0], [15.0, 98.0]] },
-  { id: 'lat-10', name: '10°00\'N (Ten Degree Channel)', points: [[10.0, 60.0], [10.0, 98.0]] },
-  { id: 'lat-5',  name: '05°00\'N', points: [[5.0, 60.0], [5.0, 98.0]] },
+  { id: 'lat-25', name: '25°00\'N', points: [[25.0, 45.0], [25.0, 105.0]] },
+  { id: 'lat-20', name: '20°00\'N', points: [[20.0, 45.0], [20.0, 105.0]] },
+  { id: 'lat-15', name: '15°00\'N', points: [[15.0, 45.0], [15.0, 105.0]] },
+  { id: 'lat-10', name: '10°00\'N (Ten Degree Channel)', points: [[10.0, 45.0], [10.0, 105.0]] },
+  { id: 'lat-5',  name: '05°00\'N', points: [[5.0, 45.0], [5.0, 105.0]] },
 
   // Longitude meridians
-  { id: 'lon-65', name: '65°00\'E', points: [[4.0, 65.0], [26.0, 65.0]] },
-  { id: 'lon-70', name: '70°00\'E', points: [[4.0, 70.0], [26.0, 70.0]] },
-  { id: 'lon-75', name: '75°00\'E', points: [[4.0, 75.0], [26.0, 75.0]] },
-  { id: 'lon-80', name: '80°00\'E', points: [[4.0, 80.0], [26.0, 80.0]] },
-  { id: 'lon-85', name: '85°00\'E', points: [[4.0, 85.0], [26.0, 85.0]] },
-  { id: 'lon-90', name: '90°00\'E', points: [[4.0, 90.0], [26.0, 90.0]] },
-  { id: 'lon-95', name: '95°00\'E', points: [[4.0, 95.0], [26.0, 95.0]] }
+  { id: 'lon-50', name: '50°00\'E', points: [[0.0, 50.0], [32.0, 50.0]] },
+  { id: 'lon-60', name: '60°00\'E', points: [[0.0, 60.0], [32.0, 60.0]] },
+  { id: 'lon-70', name: '70°00\'E', points: [[0.0, 70.0], [32.0, 70.0]] },
+  { id: 'lon-80', name: '80°00\'E', points: [[0.0, 80.0], [32.0, 80.0]] },
+  { id: 'lon-90', name: '90°00\'E', points: [[0.0, 90.0], [32.0, 90.0]] },
+  { id: 'lon-100', name: '100°00\'E', points: [[0.0, 100.0], [32.0, 100.0]] }
 ];
 
 // Strategic Strategic Naval Commands, Operational FOBs & Chokepoints

@@ -150,6 +150,22 @@ INITIAL_DOCTRINE_CORPUS = [
             "3. COMBAT AIRCRAFT DISPERSAL: When hostile aerial contacts breach the 10 km inner buffer, all alert fighters are scrambled "
             "or relocated to hardened aircraft shelters (HAS)."
         )
+    },
+    {
+        'id': 'DOC-ROE-09',
+        'category': 'CROSS_DOMAIN_SOP',
+        'title': 'Unattended Ground Sensor (UGS) Perimeter Defense & UAV Cross-Cueing SOP',
+        'references_code': 'HQ-JOINT-C4ISR-UGS-UAV-2025',
+        'classification': 'SECRET // CROSS-DOMAIN SENSOR FUSION',
+        'tags': json.dumps(['ugs', 'seismic', 'geophone', 'acoustic', 'uav', 'cross-cueing', 'drone', 'tripwire', 'perimeter', 'tracked vehicle']),
+        'content': (
+            "1. SENSOR TRIPWIRE TRIGGER: Unattended Ground Sensors (UGS) utilizing 18 Hz seismic geophones and acoustic arrays "
+            "deployed along border defiles trigger Level-1 Alert upon detection of tracked/heavy vehicle acoustic signatures. "
+            "2. AUTOMATED UAV CROSS-CUEING: Forward UGS alarm automatically cross-cues tactical UAV (Garuda EO/IR) to gimbal "
+            "coordinates for visual target classification and battle damage assessment (BDA) confirmation within 90 seconds. "
+            "3. WEAPONS ENGAGEMENT ROE: Engagement authorized only after visual/thermal drone confirmation verifies military vehicle "
+            "column and rules out civilian farm machinery or livestock movements."
+        )
     }
 ]
 

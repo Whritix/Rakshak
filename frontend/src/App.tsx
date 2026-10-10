@@ -1,14 +1,15 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
-import { MapContainer, TileLayer, CircleMarker, Circle, Popup, Polyline, Rectangle, Polygon, useMap } from 'react-leaflet';
+import { MapContainer, TileLayer, CircleMarker, Circle, Popup, Polyline, Rectangle, Polygon, GeoJSON, useMap } from 'react-leaflet';
 import L from 'leaflet';
 import 'leaflet.heat';
 import {
   Activity, AlertTriangle, Anchor, ArrowUpRight, BarChart3, BookOpen, Bot, Check, CheckCheck, ChevronRight, CircleHelp,
-  CloudUpload, Compass, Copy, Cpu, Crosshair, Database, Eye, FileText, Filter, Flame, HardDrive, Key, Layers3,
+  CloudUpload, Compass, Copy, Cpu, Crosshair, Database, Eye, FileText, Filter, Flame, Globe, HardDrive, Key, Layers3,
   Lock, LogOut, Map as MapIcon, Menu, Navigation, Radar, Radio, RefreshCw, RotateCcw, Send, Shield, Ship,
   Sparkles, Target, Terminal, Trash2, TriangleAlert, Unlock, Upload, UserCheck, Volume2, VolumeX, Wifi, X, Zap
 } from 'lucide-react';
 import { Bar, BarChart, CartesianGrid, Cell, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts';
+import worldLandData from './world_land.json';
 import {
   INDIA_COASTLINE,
   SRI_LANKA_COASTLINE,
@@ -240,7 +241,7 @@ function TacticalMap({
   armyFeeds: ArmyFeed[];
   providerPoints: any[];
   zones: Zone[];
-  layers: { optical: boolean; sar: boolean; ais: boolean; army: boolean; zones: boolean; vectors: boolean; heat: boolean };
+  layers: { optical: boolean; sar: boolean; ais: boolean; army: boolean; zones: boolean; vectors: boolean; geoOverlay?: boolean; heat: boolean };
   sceneBounds?: number[] | null;
   routePoints?: [number, number][];
   flyTarget?: FlyTarget;
@@ -263,19 +264,131 @@ function TacticalMap({
   const BASEMAP_TILES: Record<string, { url: string; attr: string; maxZoom: number }> = {
     satellite: {
       url: '/api/tiles/satellite/{z}/{x}/{y}.png',
-      attr: 'Project Rakshak 2.0 Sovereign Tactical Satellite Graticule — 100% Air-Gapped',
+      attr: 'Project Rakshak 2.0 Offline Basemap (Synthetic) — 100% Air-Gapped',
       maxZoom: 19
     },
     dark: {
       url: '/api/tiles/dark/{z}/{x}/{y}.png',
-      attr: 'Project Rakshak 2.0 Tactical C4ISR Dark Graticule — Local Offline Service',
+      attr: 'Project Rakshak 2.0 Dark Tactical (Synthetic) — Local Offline Service',
       maxZoom: 16
     },
     terrain: {
       url: '/api/tiles/terrain/{z}/{x}/{y}.png',
-      attr: 'Project Rakshak 2.0 Littoral Bathymetry & Coastal Vector — Air-Gapped Node',
+      attr: 'Project Rakshak 2.0 Offline Terrain (Synthetic) — Air-Gapped Node',
       maxZoom: 19
     }
+  };
+
+  const tacticalGeoJsonData = useMemo<any>(() => {
+    const worldFeatures = ((worldLandData as any)?.features || []).map((f: any, idx: number) => ({
+      ...f,
+      id: f.id || `world-land-${idx}`,
+      properties: {
+        ...(f.properties || {}),
+        type: 'LANDMASS'
+      }
+    }));
+
+    const operationalFeatures = [
+      {
+        type: 'Feature',
+        properties: { name: 'Indian Sovereign Littoral Coastline', type: 'COASTLINE' },
+        geometry: {
+          type: 'LineString',
+          coordinates: INDIA_COASTLINE.map(([lat, lon]) => [lon, lat])
+        }
+      },
+      {
+        type: 'Feature',
+        properties: { name: 'Sri Lanka Coastline', type: 'COASTLINE' },
+        geometry: {
+          type: 'LineString',
+          coordinates: SRI_LANKA_COASTLINE.map(([lat, lon]) => [lon, lat])
+        }
+      },
+      {
+        type: 'Feature',
+        properties: { name: 'Andaman Archipelago', type: 'COASTLINE' },
+        geometry: {
+          type: 'LineString',
+          coordinates: ANDAMAN_CHAIN.map(([lat, lon]) => [lon, lat])
+        }
+      },
+      {
+        type: 'Feature',
+        properties: { name: 'Nicobar Archipelago', type: 'COASTLINE' },
+        geometry: {
+          type: 'LineString',
+          coordinates: NICOBAR_CHAIN.map(([lat, lon]) => [lon, lat])
+        }
+      },
+      {
+        type: 'Feature',
+        properties: { name: 'Lakshadweep Archipelago', type: 'COASTLINE' },
+        geometry: {
+          type: 'LineString',
+          coordinates: LAKSHADWEEP_ISLANDS.map(([lat, lon]) => [lon, lat])
+        }
+      },
+      {
+        type: 'Feature',
+        properties: { name: 'Indian Sovereign EEZ Boundary (200nm)', type: 'EEZ' },
+        geometry: {
+          type: 'LineString',
+          coordinates: INDIAN_EEZ_BOUNDARY.map(([lat, lon]) => [lon, lat])
+        }
+      },
+      ...TACTICAL_GRATICULES.map(g => ({
+        type: 'Feature',
+        properties: { name: g.name, type: 'GRATICULE' },
+        geometry: {
+          type: 'LineString',
+          coordinates: g.points.map(([lat, lon]) => [lon, lat])
+        }
+      }))
+    ];
+
+    return {
+      type: 'FeatureCollection',
+      features: [...worldFeatures, ...operationalFeatures]
+    };
+  }, []);
+
+  const tacticalGeoJsonStyle = (feature: any) => {
+    const fType = feature?.properties?.type;
+    if (fType === 'LANDMASS') {
+      return {
+        fillColor: '#122637',
+        fillOpacity: 0.95,
+        color: 'rgba(56, 189, 248, 0.45)',
+        weight: 1.0,
+        opacity: 0.8
+      };
+    }
+    if (fType === 'COASTLINE') {
+      return {
+        color: '#00f0ff',
+        weight: 3.0,
+        opacity: 1.0
+      };
+    }
+    if (fType === 'EEZ') {
+      return {
+        color: '#f59e0b',
+        weight: 2.2,
+        dashArray: '6 6',
+        opacity: 0.95
+      };
+    }
+    if (fType === 'GRATICULE') {
+      return {
+        color: 'rgba(56, 189, 248, 0.25)',
+        weight: 1,
+        dashArray: '3 6',
+        opacity: 0.6
+      };
+    }
+    return { color: '#00f0ff', weight: 1.5 };
   };
 
   const heatPoints: [number, number, number][] = useMemo(() => {
@@ -291,7 +404,7 @@ function TacticalMap({
 
   return (
     <div className="map-wrap" style={{ height: '560px' }}>
-      {/* Whole Earth Basemap Switcher (100% Free - Zero API Key Needed) */}
+      {/* Air-Gapped Synthetic Basemap Switcher */}
       <div style={{
         position: 'absolute',
         top: '12px',
@@ -316,9 +429,9 @@ function TacticalMap({
             alignItems: 'center',
             gap: '5px'
           }}
-          title="High-Resolution Whole Earth Satellite Imagery (Esri World Imagery - 0 API Key Needed)"
+          title="Air-Gapped Sovereign Synthetic Basemap (0 External Calls)"
         >
-          <Radar size={13} /> 🛰️ WHOLE EARTH SATELLITE
+          <Radar size={13} /> 🌐 Offline basemap (synthetic)
         </button>
         <button
           onClick={() => setBasemapMode('dark')}
@@ -336,9 +449,9 @@ function TacticalMap({
             alignItems: 'center',
             gap: '5px'
           }}
-          title="Tactical Dark Gray Whole Earth Map (C4ISR Style - 0 API Key Needed)"
+          title="Tactical Dark Gray Basemap (0 External Calls)"
         >
-          <Shield size={13} /> 🌐 TACTICAL DARK C4ISR
+          <Shield size={13} /> 🛡️ Dark tactical (synthetic)
         </button>
         <button
           onClick={() => setBasemapMode('terrain')}
@@ -356,9 +469,9 @@ function TacticalMap({
             alignItems: 'center',
             gap: '5px'
           }}
-          title="Global Terrain & Street Map (0 API Key Needed)"
+          title="Tactical Bathymetry & Terrain Basemap (0 External Calls)"
         >
-          <MapIcon size={13} /> 🗺️ GLOBAL TERRAIN
+          <MapIcon size={13} /> 🗺️ Offline terrain (synthetic)
         </button>
       </div>
 
@@ -371,29 +484,14 @@ function TacticalMap({
           maxZoom={BASEMAP_TILES[basemapMode].maxZoom}
         />
 
-        {/* Tactical Latitude/Longitude Graticule Lines (MGRS Military Grid) */}
-        {TACTICAL_GRATICULES.map(g => (
-          <Polyline
-            key={g.id}
-            positions={g.points}
-            pathOptions={{
-              color: 'rgba(80, 215, 199, 0.16)',
-              weight: 1,
-              dashArray: '3 6'
-            }}
+        {/* Toggleable Sovereign GeoJSON Overlay (Indian Coastline, EEZ, Graticules) */}
+        {layers.geoOverlay && (
+          <GeoJSON
+            key={`geo-overlay-${basemapMode}`}
+            data={tacticalGeoJsonData}
+            style={tacticalGeoJsonStyle}
           />
-        ))}
-
-        {/* 200 Nautical Mile Sovereign EEZ Boundary */}
-        <Polyline
-          positions={INDIAN_EEZ_BOUNDARY}
-          pathOptions={{
-            color: '#f59e0b',
-            weight: 1.8,
-            dashArray: '5 6',
-            opacity: 0.8
-          }}
-        />
+        )}
 
         {/* Strategic Naval Commands & Coastal Radar Surveillance Rings */}
         {STRATEGIC_HUBS.map(hub => (
@@ -668,7 +766,7 @@ function TacticalMap({
 
       <div className="map-legend">
         <span style={{ color: '#38bdf8', fontWeight: 600 }}>
-          <i className="dot" style={{ background: '#38bdf8' }} /> {basemapMode === 'satellite' ? 'Whole Earth High-Res Satellite' : basemapMode === 'dark' ? 'Tactical Dark Whole Earth' : 'Global Terrain'}
+          <i className="dot" style={{ background: '#38bdf8' }} /> {basemapMode === 'satellite' ? 'Offline basemap (synthetic)' : basemapMode === 'dark' ? 'Dark tactical (synthetic)' : 'Offline terrain (synthetic)'}
         </span>
         <span><i className="dot" style={{ background: '#00f0ff' }} /> Fused Track (Kalman Ellipse)</span>
         <span><i className="dot" style={{ background: '#f59e0b' }} /> 200nm Indian EEZ</span>
@@ -1046,7 +1144,8 @@ export function App() {
     army: true,
     zones: true,
     vectors: true,
-    heat: false
+    heat: false,
+    geoOverlay: true
   });
 
   const toggleLayer = (k: keyof typeof layers) => setLayers(l => ({ ...l, [k]: !l[k] }));
@@ -1785,8 +1884,8 @@ export function App() {
             </div>
             <p>
               Target Envelope: &le;60W (Unvalidated)<br />
-              Latency: [{telemetry?.jetson_edge_profiles?.jetson_agx_orin_64gb?.latency_range_ms?.[0] ?? 10.9} – {telemetry?.jetson_edge_profiles?.jetson_agx_orin_64gb?.latency_range_ms?.[1] ?? 23.8} ms]<br />
-              Rate: [{telemetry?.jetson_edge_profiles?.jetson_agx_orin_64gb?.throughput_range_fps?.[0] ?? 42.0} – {telemetry?.jetson_edge_profiles?.jetson_agx_orin_64gb?.throughput_range_fps?.[1] ?? 91.7} FPS]
+              Latency: unmeasured, rough estimate only<br />
+              Rate: unmeasured, rough estimate only
             </p>
             <div className="edge-foot">
               <span><Wifi size={13} /> 100% DDIL Ready</span>
@@ -2214,6 +2313,9 @@ export function App() {
                 </button>
                 <button className={`button ${layers.heat ? 'primary' : 'secondary'} compact`} onClick={() => toggleLayer('heat')}>
                   <Flame size={13} /> Threat Heatmap
+                </button>
+                <button className={`button ${layers.geoOverlay ? 'primary' : 'secondary'} compact`} onClick={() => toggleLayer('geoOverlay')}>
+                  <Globe size={13} /> Coastline & EEZ Overlay
                 </button>
                 <button
                   className="button secondary compact"
@@ -4295,8 +4397,8 @@ export function App() {
                       </span>
                     </div>
                     <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '8px', fontSize: '10px', color: '#9bb1ba' }}>
-                      <div>Wide Latency Range: <b style={{ color: '#fbbf24', fontSize: '12px' }}>[{telemetry?.jetson_edge_profiles?.jetson_agx_orin_64gb?.latency_range_ms?.[0] ?? 10.8} ms – {telemetry?.jetson_edge_profiles?.jetson_agx_orin_64gb?.latency_range_ms?.[1] ?? 23.8} ms]</b></div>
-                      <div>Wide Framerate Range: <b style={{ color: '#fbbf24', fontSize: '12px' }}>[{telemetry?.jetson_edge_profiles?.jetson_agx_orin_64gb?.throughput_range_fps?.[0] ?? 42.0} – {telemetry?.jetson_edge_profiles?.jetson_agx_orin_64gb?.throughput_range_fps?.[1] ?? 92.6} FPS]</b> <small style={{ color: '#ef4444', fontSize: '9px', fontWeight: 600 }}>(ROUGH ESTIMATE, UNVALIDATED)</small></div>
+                      <div>Wide Latency Range: <b style={{ color: '#fbbf24', fontSize: '12px' }}>unmeasured, rough estimate only</b></div>
+                      <div>Wide Framerate Range: <b style={{ color: '#fbbf24', fontSize: '12px' }}>unmeasured, rough estimate only</b></div>
                       <div>Measured Power: <b style={{ color: '#9bb1ba' }}>not estimated</b> <small>(requires Jetson tegrastats rail sampling)</small></div>
                       <div>Envelope Status: <b style={{ color: '#fbbf24' }}>target envelope &le;60W, not validated</b></div>
                       <div style={{ gridColumn: 'span 2', fontSize: '9px', color: '#819ba8', background: '#0e181f', padding: '6px', borderRadius: '4px' }}>
@@ -4321,8 +4423,8 @@ export function App() {
                       </span>
                     </div>
                     <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '8px', fontSize: '10px', color: '#9bb1ba' }}>
-                      <div>Wide Latency Range: <b style={{ color: '#f59e0b', fontSize: '12px' }}>[{telemetry?.jetson_edge_profiles?.jetson_orin_nano_8gb?.latency_range_ms?.[0] ?? 32.8} ms – {telemetry?.jetson_edge_profiles?.jetson_orin_nano_8gb?.latency_range_ms?.[1] ?? 98.8} ms]</b></div>
-                      <div>Wide Framerate Range: <b style={{ color: '#f59e0b', fontSize: '12px' }}>[{telemetry?.jetson_edge_profiles?.jetson_orin_nano_8gb?.throughput_range_fps?.[0] ?? 10.1} – {telemetry?.jetson_edge_profiles?.jetson_orin_nano_8gb?.throughput_range_fps?.[1] ?? 30.5} FPS]</b> <small style={{ color: '#ef4444', fontSize: '9px', fontWeight: 600 }}>(ROUGH ESTIMATE, UNVALIDATED)</small></div>
+                      <div>Wide Latency Range: <b style={{ color: '#f59e0b', fontSize: '12px' }}>unmeasured, rough estimate only</b></div>
+                      <div>Wide Framerate Range: <b style={{ color: '#f59e0b', fontSize: '12px' }}>unmeasured, rough estimate only</b></div>
                       <div>Measured Power: <b style={{ color: '#9bb1ba' }}>not estimated</b> <small>(requires Jetson tegrastats rail sampling)</small></div>
                       <div>Envelope Status: <b style={{ color: '#fbbf24' }}>target envelope &le;15W, not validated</b></div>
                       <div style={{ gridColumn: 'span 2', fontSize: '9px', color: '#819ba8', background: '#0e181f', padding: '6px', borderRadius: '4px' }}>

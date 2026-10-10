@@ -263,14 +263,36 @@ Every single metric below is copied strictly and verifiably from actual raw eval
 
 ### KPI 9: Mission-Planning Cycle Time & Tactical SITREP Compilation
 
-**Source:** Code implementations in [`backend/app/sitrep_generator.py`](file:///c:/Users/awhri\OneDrive\Desktop\DEF\backend\app\sitrep_generator.py) & [`backend/app/rag_engine.py`](file:///c:/Users/awhri\OneDrive\Desktop\DEF\backend\app\rag_engine.py).  
-**Context:** Target Problem Statement dimension evaluating operational decision cycle time reduction.
+**Source JSON:** [`evaluation/results/mission_planning_report.json`](file:///c:/Users/awhri/OneDrive/Desktop/DEF/evaluation/results/mission_planning_report.json) & [`evaluation/assumptions.yaml`](file:///c:/Users/awhri/OneDrive/Desktop/DEF/evaluation/assumptions.yaml)  
+**Status:** **Partial: system steps measured, manual baseline assumed, no human user study**  
+**Context:** Evaluates operational decision cycle time (OODA loop) across 3 reproducible tactical defense scenarios:
+- **Scenario A:** Dark Vessel approaching restricted zone (Mumbai ODA, Maritime Domain)
+- **Scenario B:** Unidentified convoy approaching border defense post (Sector Alpha, Army Ground Domain)
+- **Scenario C:** UGS seismic tripwire alarm plus drone EO/IR confirmation (Cross-Domain Sensor Fusion)
 
-| Capability / Metric | Value | Sample Size | Scenario | Method | Date | Source JSON Path | Provenance |
+Each scenario was evaluated over 10 repetitions (30 total runs) against local live REST microservices (`/api/sar/detections`, `/api/zones`, `/api/rag/query`, `/api/sitrep`, `/api/rag/dispatch-to-mission`, `/api/army/feeds`).
+
+| Scenario / Metric | Value | Sample Size | Dataset or Scenario | Method | Date | Source JSON Path | Provenance |
 | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
-| **STANAG 2014 SITREP Compilation Latency** | **< 50 ms** | 1 operational call | Active situational entities | Procedural Python text compiler | 2026-10-10 | `backend/app/sitrep_generator.py` | `MEASURED` |
-| **Sovereign RoE Doctrine RAG Retrieval** | **< 40 ms** | 12 sovereign military doctrine documents | Rules of Engagement query (INBR 8 / UNCLOS) | Local BM25 lexical index (0 cloud calls) | 2026-10-10 | `backend/app/rag_engine.py` | `MEASURED` |
-| **End-to-End Human Mission Planning Cycle** | **NOT DONE** | 0 operational military staff | Live brigade/fleet command staff exercise | Comparative military staff exercise | 2026-10-10 | `evaluation/results/analyst_workload_report.json` | `NOT DONE` |
+| **Scenario A: Rakshak Measured (REST)** | **0.2572 ± 0.1351 s** (Min: 0.1059s, Max: 0.4134s) | 10 repetitions | Scenario A: Dark Vessel (Mumbai ODA) | Local loopback REST timing (`time.perf_counter`) | 2026-10-10 | `evaluation/results/mission_planning_report.json` | `MEASURED` |
+| **Scenario A: Operator-Paced Estimate** | **50.26 s** | 10 runs + model | Scenario A: Dark Vessel (Mumbai ODA) | Machine time + 50.0s assumed think-time | 2026-10-10 | `evaluation/results/mission_planning_report.json` | `ASSUMED` |
+| **Scenario A: Manual Baseline** | **1680.0 s** (28.0 min) | Operations room staff model | Scenario A: Dark Vessel (Mumbai ODA) | 5-step manual ops room procedure model | 2026-10-10 | `evaluation/assumptions.yaml` | `ASSUMED` |
+| **Scenario A: Cycle Time Reduction** | **97.01%** (Operator-Paced) / **99.98%** (Scripted REST) | 10 runs vs baseline | Scenario A: Dark Vessel (Mumbai ODA) | Computed reduction from assumed baseline | 2026-10-10 | `evaluation/results/mission_planning_report.json` | `COMPUTED` |
+| **Scenario B: Rakshak Measured (REST)** | **0.1397 ± 0.0173 s** (Min: 0.1167s, Max: 0.1751s) | 10 repetitions | Scenario B: Army Convoy (Sector Alpha) | Local loopback REST timing (`time.perf_counter`) | 2026-10-10 | `evaluation/results/mission_planning_report.json` | `MEASURED` |
+| **Scenario B: Operator-Paced Estimate** | **50.14 s** | 10 runs + model | Scenario B: Army Convoy (Sector Alpha) | Machine time + 50.0s assumed think-time | 2026-10-10 | `evaluation/results/mission_planning_report.json` | `ASSUMED` |
+| **Scenario B: Manual Baseline** | **1320.0 s** (22.0 min) | Operations room staff model | Scenario B: Army Convoy (Sector Alpha) | 5-step manual ops room procedure model | 2026-10-10 | `evaluation/assumptions.yaml` | `ASSUMED` |
+| **Scenario B: Cycle Time Reduction** | **96.20%** (Operator-Paced) / **99.99%** (Scripted REST) | 10 runs vs baseline | Scenario B: Army Convoy (Sector Alpha) | Computed reduction from assumed baseline | 2026-10-10 | `evaluation/results/mission_planning_report.json` | `COMPUTED` |
+| **Scenario C: Rakshak Measured (REST)** | **0.1560 ± 0.0217 s** (Min: 0.1105s, Max: 0.1837s) | 10 repetitions | Scenario C: UGS Alarm + Drone (Cross-Domain) | Local loopback REST timing (`time.perf_counter`) | 2026-10-10 | `evaluation/results/mission_planning_report.json` | `MEASURED` |
+| **Scenario C: Operator-Paced Estimate** | **50.16 s** | 10 runs + model | Scenario C: UGS Alarm + Drone (Cross-Domain) | Machine time + 50.0s assumed think-time | 2026-10-10 | `evaluation/results/mission_planning_report.json` | `ASSUMED` |
+| **Scenario C: Manual Baseline** | **1320.0 s** (22.0 min) | Operations room staff model | Scenario C: UGS Alarm + Drone (Cross-Domain) | 5-step manual ops room procedure model | 2026-10-10 | `evaluation/assumptions.yaml` | `ASSUMED` |
+| **Scenario C: Cycle Time Reduction** | **96.20%** (Operator-Paced) / **99.99%** (Scripted REST) | 10 runs vs baseline | Scenario C: UGS Alarm + Drone (Cross-Domain) | Computed reduction from assumed baseline | 2026-10-10 | `evaluation/results/mission_planning_report.json` | `COMPUTED` |
+| **Cross-Scenario Average Machine Time** | **0.1843 s** | 30 runs total | 3 reproducible tactical scenarios | Mean across all 3 scenarios | 2026-10-10 | `evaluation/results/mission_planning_report.json` | `MEASURED` |
+| **Cross-Scenario Average Operator-Paced** | **50.19 s** | 30 runs + model | 3 reproducible tactical scenarios | Mean across all 3 scenarios | 2026-10-10 | `evaluation/results/mission_planning_report.json` | `ASSUMED` |
+| **Cross-Scenario Average Manual Baseline** | **1440.0 s** (24.0 min) | Operations room staff model | 3 reproducible tactical scenarios | Mean across all 3 scenarios | 2026-10-10 | `evaluation/assumptions.yaml` | `ASSUMED` |
+| **Cross-Scenario Average Reduction** | **96.51%** | 30 runs vs baseline | 3 reproducible tactical scenarios | Mean across all 3 scenarios | 2026-10-10 | `evaluation/results/mission_planning_report.json` | `COMPUTED` |
+| **STANAG 2014 SITREP Compilation Latency** | **< 50 ms** (16.74 ms in Scen A) | 10 operational calls | Active situational entities | Procedural Python text compiler | 2026-10-10 | `evaluation/results/mission_planning_report.json` | `MEASURED` |
+| **Sovereign RoE Doctrine RAG Retrieval** | **< 40 ms** (39.09 ms in Scen B) | 10 operational calls | Rules of Engagement query (INBR 8 / UNCLOS) | Local BM25 lexical index (0 cloud calls) | 2026-10-10 | `evaluation/results/mission_planning_report.json` | `MEASURED` |
+| **End-to-End Human Military Staff Exercise** | **NOT DONE** | 0 operational military staff | Live brigade/fleet command staff exercise | Comparative military staff exercise | 2026-10-10 | `evaluation/results/analyst_workload_report.json` | `NOT DONE` |
 | **Tactical Orders Field Dissemination Time** | **NOT DONE** | 0 forward tactical units | Real radio/data dispatch | Combat net radio transmission trial | 2026-10-10 | `evaluation/results/analyst_workload_report.json` | `NOT DONE` |
 
 ---
