@@ -1048,10 +1048,6 @@ export function App() {
     geoOverlay: true
   });
 
-  // Domain Specific Map vs Raster View Modes
-  const [navalViewMode, setNavalViewMode] = useState<'map' | 'raster'>('map');
-  const [armyViewMode, setArmyViewMode] = useState<'map' | 'uav'>('map');
-
   const toggleLayer = (k: keyof typeof layers) => setLayers(l => ({ ...l, [k]: !l[k] }));
 
   // Load baseline intelligence
@@ -2671,18 +2667,6 @@ export function App() {
                     <small>High-resolution optical (xView) & Sentinel-2 multispectral GeoTIFFs</small>
                   </div>
                   <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
-                    <button
-                      className={`button ${navalViewMode === 'map' ? 'primary' : 'secondary'} compact`}
-                      onClick={() => setNavalViewMode('map')}
-                    >
-                      <MapIcon size={13} /> Sector Map
-                    </button>
-                    <button
-                      className={`button ${navalViewMode === 'raster' ? 'primary' : 'secondary'} compact`}
-                      onClick={() => setNavalViewMode('raster')}
-                    >
-                      <Ship size={13} /> Optical Screening
-                    </button>
                     <select
                       value={modelType}
                       onChange={e => setModelType(e.target.value as any)}
@@ -2693,23 +2677,12 @@ export function App() {
                     </select>
                     <label className="button secondary compact">
                       <CloudUpload size={14} /> Upload Image
-                      <input type="file" hidden accept="image/*,.tif,.tiff" onChange={e => { handleUpload(e.target.files?.[0]); setNavalViewMode('raster'); }} />
+                      <input type="file" hidden accept="image/*,.tif,.tiff" onChange={e => handleUpload(e.target.files?.[0])} />
                     </label>
                   </div>
                 </div>
 
-                {navalViewMode === 'map' ? (
-                  <TacticalMap
-                    opticalItems={opticalItems}
-                    sarDetections={sarDetections}
-                    armyFeeds={[]}
-                    providerPoints={pipe}
-                    zones={zones}
-                    layers={{ optical: true, sar: true, ais: true, army: false, zones: true, vectors: true, geoOverlay: true, heat: false }}
-                    flyTarget={flyTarget}
-                    fusedTracks={fusedTracks}
-                  />
-                ) : preview ? (
+                {preview ? (
                   <div style={{ border: '1px solid #1a323d', borderRadius: '6px', overflow: 'hidden', background: '#061019' }}>
                     {/* Class Filter Bar for Clean Reading */}
                     <div style={{
@@ -3015,21 +2988,7 @@ export function App() {
                     <div className="panel-title"><Crosshair size={16} /> Army Tactical Multimodal Feeds</div>
                     <small>Tactical UAV FMV (VisDrone/VIRAT), Ground Seismic Sensors (UGS) & SIGINT</small>
                   </div>
-                  <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
-                    <button
-                      className={`button ${armyViewMode === 'map' ? 'primary' : 'secondary'} compact`}
-                      onClick={() => setArmyViewMode('map')}
-                    >
-                      <MapIcon size={13} /> Sector Map
-                    </button>
-                    <button
-                      className={`button ${armyViewMode === 'uav' ? 'primary' : 'secondary'} compact`}
-                      onClick={() => setArmyViewMode('uav')}
-                    >
-                      <Crosshair size={13} /> UAV Downlink
-                    </button>
-                    <span className="count-badge">{armyFeeds.length} active feeds</span>
-                  </div>
+                  <span className="count-badge">{armyFeeds.length} active feeds</span>
                 </div>
 
                 <div style={{ padding: '16px' }}>
@@ -3051,20 +3010,7 @@ export function App() {
                     </div>
                   </div>
 
-                  {armyViewMode === 'map' ? (
-                    <TacticalMap
-                      opticalItems={[]}
-                      sarDetections={[]}
-                      armyFeeds={armyFeeds}
-                      providerPoints={[]}
-                      zones={zones}
-                      layers={{ optical: false, sar: false, ais: false, army: true, zones: true, vectors: true, geoOverlay: true, heat: false }}
-                      flyTarget={flyTarget}
-                      fusedTracks={fusedTracks}
-                    />
-                  ) : (
-                    <>
-                      {/* Hidden file input for Army UAV Downlink */}
+                  {/* Hidden file input for Army UAV Downlink */}
                       <input
                         ref={armyInputRef}
                         type="file"
@@ -3457,8 +3403,6 @@ export function App() {
                       </div>
                     </div>
                   </div>
-                  </>
-                )}
                 </div>
               </section>
 
