@@ -58,3 +58,4 @@ frontend/*.log
 Thumbs.db
 .vscode/
 .idea/
+scratch/
