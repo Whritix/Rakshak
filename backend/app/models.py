@@ -193,3 +193,14 @@ class DdilChannelUpdateRequest(BaseModel):
     latency_ms: Optional[float] = Field(25.0, ge=0.0, le=10000.0)
     packet_loss_pct: Optional[float] = Field(0.0, ge=0.0, le=100.0)
     bandwidth_kbps: Optional[float] = Field(256.0, ge=1.0, le=100000.0)
+
+
+class ChangeDetectionRunRequest(BaseModel):
+    """Multi-temporal change detection run request."""
+    tile_path: Optional[str] = Field(None, description="Optional path to holdout val_report tile")
+    shift_x: float = Field(0.0, ge=-20.0, le=20.0, description="Injected horizontal shift in pixels")
+    shift_y: float = Field(0.0, ge=-20.0, le=20.0, description="Injected vertical shift in pixels")
+    seed: int = Field(42, ge=0, le=1000000, description="Deterministic pseudo-random seed for synthetic edits")
+    confidence: float = Field(0.25, ge=0.05, le=1.0, description="YOLO detection confidence threshold")
+    num_edits: int = Field(3, ge=1, le=10, description="Number of synthetic object edits to inject")
+

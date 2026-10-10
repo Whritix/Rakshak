@@ -23,7 +23,13 @@ from backend.app.models import (
     RagQueryRequest, RagDispatchMissionRequest,
     ArmyFeedStatusUpdate, ContactTrackRequest,
     TriageReopenRequest, FuseStepRequest,
-    DdilAlertItem, DdilSyncBatchRequest, DdilChannelUpdateRequest
+    DdilAlertItem, DdilSyncBatchRequest, DdilChannelUpdateRequest,
+    ChangeDetectionRunRequest
+)
+from backend.app.change_detection import (
+    run_change_detection_analysis,
+    get_last_change_detection_result,
+    get_val_report_tile_paths
 )
 from backend.app.tile_service import get_offline_tile
 from backend.app.ddil_sync import (
@@ -1529,6 +1535,57 @@ def get_ddil_report():
         except Exception as e:
             raise HTTPException(500, f"Error reading DDIL report: {e}")
     return {"message": "DDIL simulation report not yet generated. Run evaluation/ddil_sim.py."}
+
+# ── Multi-Temporal Satellite Change Detection (Air-Gapped) ───────────────────
+
+@app.post('/api/change-detection/run')
+def run_change_detection_endpoint(payload: ChangeDetectionRunRequest):
+    """Run bi-temporal change detection on synthetic before/after satellite pair.
+
+    Does NOT feed changes into tactical threat scores (strict operational separation).
+    """
+    try:
+        result = run_change_detection_analysis(
+            tile_path_str=payload.tile_path,
+            shift_x=payload.shift_x,
+            shift_y=payload.shift_y,
+            seed=payload.seed,
+            confidence=payload.confidence
+        )
+        return result
+    except Exception as e:
+        raise HTTPException(500, f"Change detection analysis failed: {str(e)}")
+
+@app.get('/api/change-detection/last')
+def get_last_change_detection_endpoint():
+    """Retrieve last analyzed change detection bi-temporal pair and results."""
+    try:
+        return get_last_change_detection_result()
+    except Exception as e:
+        raise HTTPException(500, f"Failed retrieving last change detection result: {str(e)}")
+
+@app.get('/api/change-detection/demo')
+def get_change_detection_demo_endpoint():
+    """Get standard seeded synthetic demo pair (Tile 1049_0_1536, seed=42, shift=3.2px)."""
+    try:
+        return run_change_detection_analysis(
+            shift_x=3.2,
+            shift_y=-2.4,
+            seed=42,
+            confidence=0.25
+        )
+    except Exception as e:
+        raise HTTPException(500, f"Failed generating change detection demo: {str(e)}")
+
+@app.get('/api/change-detection/tiles')
+def list_change_detection_tiles():
+    """List available holdout val_report partition tiles for change detection."""
+    tiles = get_val_report_tile_paths()
+    return {
+        "count": len(tiles),
+        "partition": "val_report",
+        "tiles": [t.name for t in tiles[:50]],
+    }
 
 @app.get('/')
 def index():

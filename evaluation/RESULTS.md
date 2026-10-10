@@ -305,3 +305,40 @@ Each scenario was evaluated over 10 repetitions (30 total runs) against local li
 | **Socket Guard Violation Intercept** | **1 blocked** | Active | Controlled trap validation | 2026-10-10 | `evaluation/results/egress_test_report.json` | `MEASURED` |
 | **Air-Gap Verification Verdict** | **NO_EGRESS_OBSERVED** | 0 outbound non-loopback calls | Socket trap & connection monitor | 2026-10-10 | `evaluation/results/egress_test_report.json` | `MEASURED` |
 | **Kernel eBPF / Hardware Network Tap Audit** | **NOT DONE** | Hardware isolation | User-space Python hook used; kernel eBPF / TAP uninstrumented | 2026-10-10 | `evaluation/results/egress_test_report.json` | `NOT DONE` |
+
+---
+
+## 12. Multi-Temporal Satellite Change Detection
+
+**Source JSON:** [`evaluation/results/change_detection_report.json`](file:///c:/Users/awhri/OneDrive/Desktop/DEF/evaluation/results/change_detection_report.json) & [`evaluation/results/change_detection_summary.md`](file:///c:/Users/awhri/OneDrive/Desktop/DEF/evaluation/results/change_detection_summary.md)  
+**Dataset / Scenario:** 20 seeded synthetic bi-temporal pairs (`seed=1` to `seed=20`) constructed from 100% held-out `val_report` partition (540 tiles). Injected misalignments 0.0 to 8.0 px; class-aware Hungarian bipartite matching with stationary distance $\le 28$ px and movement distance $\le 120$ px; secondary radiometric normalisation with channel gain & bias calibration.
+
+| Metric / Tactical Scenario | Value | Sample Size | Scenario Condition | Method | Date | Source JSON Path | Provenance |
+| :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
+| **Headline Change Precision** | **31.17 ± 30.86%** (0.3117) | 20 seeds (60 ground-truth edits) | `val_report` holdout | YOLO11m + Class-Aware Hungarian Matcher | 2026-10-10 | `evaluation/results/change_detection_report.json` | `SIMULATED` |
+| **Headline Change Recall** | **40.00 ± 24.95%** (0.4000) | 20 seeds (60 ground-truth edits) | `val_report` holdout | YOLO11m + Class-Aware Hungarian Matcher | 2026-10-10 | `evaluation/results/change_detection_report.json` | `SIMULATED` |
+| **Headline Change F1 Score** | **0.3005 ± 0.2142** (0.3005) | 20 seeds (60 ground-truth edits) | `val_report` holdout | Harmonic mean of change precision & recall | 2026-10-10 | `evaluation/results/change_detection_report.json` | `SIMULATED` |
+| **Aircraft Change Precision** | **75.00%** (0.7500) | 16 GT aircraft edits | 10 aircraft holdout tiles | YOLO11m + Class-Aware Matching | 2026-10-10 | `evaluation/results/change_detection_report.json` | `SIMULATED` |
+| **Aircraft Change Recall** | **37.50%** (0.3750) | 16 GT aircraft edits | 10 aircraft holdout tiles | YOLO11m + Class-Aware Matching | 2026-10-10 | `evaluation/results/change_detection_report.json` | `SIMULATED` |
+| **Aircraft Change F1 Score** | **0.5000 ± 0.3333** (0.5000) | 16 GT aircraft edits | 10 aircraft holdout tiles | Class-specific F1 | 2026-10-10 | `evaluation/results/change_detection_report.json` | `SIMULATED` |
+| **Vehicle Change Precision** | **21.95%** (0.2195) | 44 GT vehicle edits | 10 vehicle holdout tiles | YOLO11m + Class-Aware Matching | 2026-10-10 | `evaluation/results/change_detection_report.json` | `SIMULATED` |
+| **Vehicle Change Recall** | **40.91%** (0.4091) | 44 GT vehicle edits | 10 vehicle holdout tiles | YOLO11m + Class-Aware Matching | 2026-10-10 | `evaluation/results/change_detection_report.json` | `SIMULATED` |
+| **Vehicle Change F1 Score** | **0.2857 ± 0.1789** (0.2857) | 44 GT vehicle edits | 10 vehicle holdout tiles | Class-specific F1 | 2026-10-10 | `evaluation/results/change_detection_report.json` | `SIMULATED` |
+| **NEW Objects Precision** | **20.51%** (0.2051) | 20 GT additions | `val_report` holdout | Unmatched post-scene neural detections | 2026-10-10 | `evaluation/results/change_detection_report.json` | `SIMULATED` |
+| **NEW Objects Recall** | **40.00%** (0.4000) | 20 GT additions | `val_report` holdout | Unmatched post-scene neural detections | 2026-10-10 | `evaluation/results/change_detection_report.json` | `SIMULATED` |
+| **NEW Objects F1 Score** | **0.2712** | 20 GT additions | `val_report` holdout | Harmonic mean | 2026-10-10 | `evaluation/results/change_detection_report.json` | `SIMULATED` |
+| **REMOVED Objects Precision** | **19.15%** (0.1915) | 20 GT removals | `val_report` holdout | Inpainted post-scene missing detections | 2026-10-10 | `evaluation/results/change_detection_report.json` | `SIMULATED` |
+| **REMOVED Objects Recall** | **45.00%** (0.4500) | 20 GT removals | `val_report` holdout | Inpainted post-scene missing detections | 2026-10-10 | `evaluation/results/change_detection_report.json` | `SIMULATED` |
+| **REMOVED Objects F1 Score** | **0.2687** | 20 GT removals | `val_report` holdout | Harmonic mean | 2026-10-10 | `evaluation/results/change_detection_report.json` | `SIMULATED` |
+| **MOVED Objects Precision** | **46.67%** (0.4667) | 20 GT relocations | `val_report` holdout | Spatial relocation (18 < d $\le$ 120 px) | 2026-10-10 | `evaluation/results/change_detection_report.json` | `SIMULATED` |
+| **MOVED Objects Recall** | **35.00%** (0.3500) | 20 GT relocations | `val_report` holdout | Spatial relocation (18 < d $\le$ 120 px) | 2026-10-10 | `evaluation/results/change_detection_report.json` | `SIMULATED` |
+| **MOVED Objects F1 Score** | **0.4000** | 20 GT relocations | `val_report` holdout | Harmonic mean | 2026-10-10 | `evaluation/results/change_detection_report.json` | `SIMULATED` |
+| **Mean Co-Registration Error (0-8 px shift)** | **0.1887 ± 0.1350 px** | 20 seeds (shifts 0.0 to 8.0 px) | Sub-pixel co-registration | ORB (2500 kp) + RANSAC & Phase Correlation | 2026-10-10 | `evaluation/results/change_detection_report.json` | `SIMULATED` |
+| **Registration Error @ 0.0 px Shift** | **0.0017 ± 0.0010 px** (Max: **0.0034 px**) | 8 trials | Stationary baseline | ORB + RANSAC Affine | 2026-10-10 | `evaluation/results/change_detection_report.json` | `SIMULATED` |
+| **Registration Error @ 2.0 px Shift** | **0.0807 ± 0.0443 px** (Max: **0.1650 px**) | 8 trials | 2.0 px radial offset | ORB + RANSAC Affine | 2026-10-10 | `evaluation/results/change_detection_report.json` | `SIMULATED` |
+| **Registration Error @ 4.0 px Shift** | **0.1037 ± 0.0825 px** (Max: **0.3097 px**) | 8 trials | 4.0 px radial offset | ORB + RANSAC Affine | 2026-10-10 | `evaluation/results/change_detection_report.json` | `SIMULATED` |
+| **Registration Error @ 6.0 px Shift** | **0.1270 ± 0.1538 px** (Max: **0.4494 px**) | 8 trials | 6.0 px radial offset | ORB + RANSAC Affine | 2026-10-10 | `evaluation/results/change_detection_report.json` | `SIMULATED` |
+| **Registration Error @ 8.0 px Shift** | **0.1086 ± 0.0537 px** (Max: **0.2322 px**) | 8 trials | 8.0 px radial offset | ORB + RANSAC Affine | 2026-10-10 | `evaluation/results/change_detection_report.json` | `SIMULATED` |
+| **Structural Anomaly Capture Rate** | **70.00%** (0.7000) | 20 injected structural revetments | Secondary pixel diff signal | Radiometric gain/bias normalization & morphological filtering | 2026-10-10 | `evaluation/results/change_detection_report.json` | `SIMULATED` |
+| **Real-World Bi-Temporal Satellite Sea/Land Trials** | **NOT DONE** | 0 multi-pass satellite overflights | Operational satellite constellation passes | Requires multi-day satellite tasking | 2026-10-10 | `evaluation/results/change_detection_report.json` | `NOT DONE` |
+

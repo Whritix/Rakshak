@@ -21,7 +21,7 @@ import {
   STRATEGIC_HUBS
 } from './offlineGeoData';
 
-type Page = 'Joint COP' | 'Naval Domain' | 'Army Domain' | 'Tactical SITREP' | 'Tactical AI (RAG)' | 'Mission Planner' | 'Edge & KPIs';
+type Page = 'Joint COP' | 'Naval Domain' | 'Army Domain' | 'Change Detection' | 'Tactical SITREP' | 'Tactical AI (RAG)' | 'Mission Planner' | 'Edge & KPIs';
 type NavalMode = 'cv' | 'ops';
 
 type Item = {
@@ -822,6 +822,15 @@ export function App() {
   const [previewName, setPreviewName] = useState('');
   const [imageSize, setImageSize] = useState<[number, number]>([1, 1]);
   const [navalReviewTab, setNavalReviewTab] = useState<'image' | 'sar'>('image');
+  
+  // Multi-Temporal Change Detection State (Air-Gapped)
+  const [cdData, setCdData] = useState<any>(null);
+  const [cdLoading, setCdLoading] = useState(false);
+  const [cdSwipe, setCdSwipe] = useState(50);
+  const [cdShift, setCdShift] = useState(2.0);
+  const [cdSeed, setCdSeed] = useState(42);
+  const [cdFilter, setCdFilter] = useState<'ALL' | 'NEW' | 'REMOVED' | 'MOVED'>('ALL');
+  const [cdViewMode, setCdViewMode] = useState<'swipe' | 'diff'>('swipe');
 
   // Sovereign Air-Gapped RAG State
   const [ragQuery, setRagQuery] = useState('');
@@ -1202,6 +1211,13 @@ export function App() {
     return () => clearInterval(interval);
   }, []);
 
+  // Fetch initial change detection payload when page is accessed
+  useEffect(() => {
+    if (page === 'Change Detection' && !cdData && !cdLoading) {
+      loadChangeDetection(false);
+    }
+  }, [page]);
+
   const handleSetDdilChannel = async (status: 'CONNECTED' | 'DEGRADED' | 'DENIED') => {
     setDdilSimLoading(true);
     try {
@@ -1473,10 +1489,47 @@ export function App() {
     }
   };
 
+  const loadChangeDetection = async (runNow: boolean = false, customShift?: number) => {
+    setCdLoading(true);
+    try {
+      if (runNow) {
+        const targetShift = customShift !== undefined ? customShift : cdShift;
+        const resp = await fetch(`${api}/change-detection/run`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', ...getAuthHeaders() },
+          body: JSON.stringify({
+            shift_x: targetShift,
+            shift_y: -targetShift * 0.75,
+            seed: cdSeed,
+            confidence: 0.25,
+            num_edits: 3
+          })
+        });
+        if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
+        const data = await resp.json();
+        setCdData(data);
+        setToast(`Change detection completed: ${data.object_changes?.length || 0} tactical changes flagged.`);
+      } else {
+        const resp = await fetch(`${api}/change-detection/last`, {
+          headers: getAuthHeaders()
+        });
+        if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
+        const data = await resp.json();
+        setCdData(data);
+      }
+    } catch (err: any) {
+      console.error('Change detection error:', err);
+      setError('Failed running change detection analysis.');
+    } finally {
+      setCdLoading(false);
+    }
+  };
+
   const navItems: [Page, any][] = [
     ['Joint COP', MapIcon],
     ['Naval Domain', Ship],
     ['Army Domain', Crosshair],
+    ['Change Detection', Layers3],
     ['Tactical SITREP', FileText],
     ['Tactical AI (RAG)', Bot],
     ['Mission Planner', Compass],
@@ -5300,6 +5353,291 @@ export function App() {
                   </div>
                 </div>
               </section>
+            </div>
+          )}
+
+          {/* PAGE: MULTI-TEMPORAL SATELLITE CHANGE DETECTION */}
+          {page === 'Change Detection' && (
+            <div style={{ display: 'grid', gridTemplateColumns: 'minmax(0, 1.6fr) minmax(360px, 1fr)', gap: '14px', padding: '16px 20px', minHeight: 'calc(100vh - 120px)' }}>
+              {/* Left Column: Bi-Temporal Swipe Comparison Canvas */}
+              <section className="panel" style={{ display: 'flex', flexDirection: 'column' }}>
+                <div className="panel-head" style={{ flexWrap: 'wrap', gap: '10px' }}>
+                  <div>
+                    <div className="panel-title" style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                      <Layers3 size={17} /> Multi-Temporal Satellite Change Detection (0.3m GSD)
+                    </div>
+                    <small>Bi-temporal optical scene co-registration (ORB+RANSAC) & neural change discovery</small>
+                  </div>
+                  <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
+                    <span className="count-badge" style={{ background: '#092b34', color: '#57d6c8', border: '1px solid #144955' }}>
+                      [SYNTHETIC DEMO PAIR // HELD-OUT VAL_REPORT]
+                    </span>
+                    <button
+                      className="button secondary compact"
+                      onClick={() => loadChangeDetection(false)}
+                      disabled={cdLoading}
+                      title="Reload latest analyzed change detection pair"
+                    >
+                      <RotateCcw size={13} /> Last
+                    </button>
+                    <button
+                      className="button primary compact"
+                      onClick={() => loadChangeDetection(true)}
+                      disabled={cdLoading}
+                      title="Run change detection with current shift and seed"
+                    >
+                      <Zap size={13} /> {cdLoading ? 'Analyzing...' : 'Run Analysis'}
+                    </button>
+                  </div>
+                </div>
+
+                {/* Sub-toolbar: Controls & Parameter Sweep */}
+                <div style={{
+                  display: 'flex', justifyContent: 'space-between', alignItems: 'center',
+                  padding: '8px 14px', background: '#071520', borderBottom: '1px solid #172d38', flexWrap: 'wrap', gap: '8px', fontSize: '11px'
+                }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                    <span style={{ color: '#7994a3', fontWeight: 600 }}>INJECTED SHIFT:</span>
+                    {[0.0, 2.0, 4.0, 6.0, 8.0].map((s) => (
+                      <button
+                        key={s}
+                        className={`chip ${cdShift === s ? 'active' : ''}`}
+                        style={{
+                          padding: '2px 8px', fontSize: '10px', borderRadius: '4px', cursor: 'pointer',
+                          background: cdShift === s ? '#183b4e' : '#0b1b24',
+                          border: `1px solid ${cdShift === s ? '#57d6c8' : '#1c3442'}`,
+                          color: cdShift === s ? '#57d6c8' : '#8da4af'
+                        }}
+                        onClick={() => {
+                          setCdShift(s);
+                          loadChangeDetection(true, s);
+                        }}
+                      >
+                        {s.toFixed(1)} px
+                      </button>
+                    ))}
+                  </div>
+
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                    <span style={{ color: '#7994a3' }}>VIEW:</span>
+                    <button
+                      className={`button ${cdViewMode === 'swipe' ? 'primary' : 'secondary'} compact`}
+                      style={{ fontSize: '10px', padding: '2px 10px' }}
+                      onClick={() => setCdViewMode('swipe')}
+                    >
+                      Swipe Slider
+                    </button>
+                    <button
+                      className={`button ${cdViewMode === 'diff' ? 'primary' : 'secondary'} compact`}
+                      style={{ fontSize: '10px', padding: '2px 10px' }}
+                      onClick={() => setCdViewMode('diff')}
+                    >
+                      Pixel Diff Heatmap
+                    </button>
+                  </div>
+                </div>
+
+                {/* Canvas Area */}
+                <div style={{ position: 'relative', flex: 1, minHeight: '520px', background: '#030811', overflow: 'hidden', borderBottom: '1px solid #162c37' }}>
+                  {cdLoading ? (
+                    <div style={{ position: 'absolute', inset: 0, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: '12px', color: '#57d6c8' }}>
+                      <RefreshCw size={26} className="spin" />
+                      <span style={{ fontSize: '12px', letterSpacing: '0.05em' }}>CO-REGISTERING ORB FEATURES & EXECUTING YOLO INFERENCE...</span>
+                    </div>
+                  ) : cdData ? (
+                    cdViewMode === 'diff' ? (
+                      <div style={{ position: 'relative', width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                        <img
+                          src={cdData.diff_preview}
+                          alt="Radiometric Difference Heatmap"
+                          style={{ maxWidth: '100%', maxHeight: '540px', objectFit: 'contain' }}
+                        />
+                        <div style={{ position: 'absolute', top: 12, left: 12, background: 'rgba(3,8,17,0.85)', padding: '5px 10px', borderRadius: '4px', border: '1px solid #162c37', fontSize: '11px', color: '#f59e0b' }}>
+                          ● RADIOMETRIC DIFFERENCE HEATMAP (SECONDARY SIGNAL)
+                        </div>
+                      </div>
+                    ) : (
+                      <div style={{ position: 'relative', width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                        {/* Background: After Scene (T1) */}
+                        <div style={{ position: 'relative', width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                          <img
+                            src={cdData.after_preview || cdData.before_preview}
+                            alt="T1 Surveillance Scene"
+                            style={{ maxWidth: '100%', maxHeight: '540px', objectFit: 'contain', userSelect: 'none' }}
+                          />
+                          {/* Foreground Clipped: Before Scene (T0) */}
+                          <div style={{
+                            position: 'absolute', inset: 0, width: `${cdSwipe}%`, overflow: 'hidden',
+                            borderRight: '2px solid #57d6c8', boxShadow: '4px 0 16px rgba(87,214,200,0.4)',
+                            display: 'flex', alignItems: 'center', justifyContent: 'flex-start'
+                          }}>
+                            <img
+                              src={cdData.before_preview}
+                              alt="T0 Baseline Scene"
+                              style={{ width: '100%', height: '100%', objectFit: 'contain', userSelect: 'none', maxWidth: 'none' }}
+                            />
+                          </div>
+                        </div>
+
+                        {/* Tactical HUD Overlays */}
+                        <div style={{ position: 'absolute', top: 12, left: 12, background: 'rgba(3,8,17,0.85)', padding: '5px 10px', borderRadius: '4px', border: '1px solid #162c37', fontSize: '10px', color: '#57d6c8', fontWeight: 600 }}>
+                          ◀ T0 BASELINE ({cdSwipe}%)
+                        </div>
+                        <div style={{ position: 'absolute', top: 12, right: 12, background: 'rgba(3,8,17,0.85)', padding: '5px 10px', borderRadius: '4px', border: '1px solid #162c37', fontSize: '10px', color: '#ffb340', fontWeight: 600 }}>
+                          T1 SURVEILLANCE ({100 - cdSwipe}%) ▶
+                        </div>
+
+                        {/* Interactive Swipe Range Input */}
+                        <input
+                          type="range"
+                          min="0"
+                          max="100"
+                          value={cdSwipe}
+                          onChange={(e) => setCdSwipe(Number(e.target.value))}
+                          style={{
+                            position: 'absolute', bottom: '18px', left: '10%', width: '80%', zIndex: 20,
+                            cursor: 'ew-resize', accentColor: '#57d6c8'
+                          }}
+                        />
+                      </div>
+                    )
+                  ) : (
+                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100%', color: '#64748b', fontSize: '12px' }}>
+                      Click "Run Analysis" to execute bi-temporal change detection on a synthetic pair.
+                    </div>
+                  )}
+                </div>
+
+                {/* Co-Registration Telemetry Bar */}
+                {cdData && (
+                  <div style={{
+                    padding: '8px 14px', background: '#05101a', display: 'flex', justifyContent: 'space-between',
+                    alignItems: 'center', fontSize: '10px', color: '#7994a3', fontFamily: 'monospace', flexWrap: 'wrap', gap: '8px'
+                  }}>
+                    <span>ACTIVE SCENE: <b style={{ color: '#e2edf2' }}>{cdData.tile_name}</b> ({cdData.pair_label})</span>
+                    <span>CO-REG STATUS: <b style={{ color: '#57d6c8' }}>{cdData.registration?.status} ({cdData.registration?.method})</b></span>
+                    <span>RECOVERED SHIFT: dx={cdData.registration?.shift_recovered?.[0]?.toFixed(2)}px, dy={cdData.registration?.shift_recovered?.[1]?.toFixed(2)}px</span>
+                    <span>REG ERROR: <b style={{ color: cdData.registration?.registration_error_px < 0.5 ? '#57d6c8' : '#fbbf24' }}>{cdData.registration?.registration_error_px?.toFixed(3)} px</b></span>
+                  </div>
+                )}
+              </section>
+
+              {/* Right Column: Detected Changes & Secondary Signal */}
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
+                {/* Panel 2A: Object-Level Changes */}
+                <section className="panel" style={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
+                  <div className="panel-head" style={{ paddingBottom: '6px' }}>
+                    <div>
+                      <div className="panel-title" style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                        <Target size={15} /> Tactical Entity Changes ({cdData?.object_changes?.length || 0})
+                      </div>
+                      <small>Class-aware one-to-one matching (Hungarian / IoU &ge; 0.25, D &le; 28px)</small>
+                    </div>
+                  </div>
+
+                  {/* Filter Pills */}
+                  <div style={{ display: 'flex', gap: '6px', padding: '6px 12px', borderBottom: '1px solid #162c37', background: '#071520' }}>
+                    {(['ALL', 'NEW', 'REMOVED', 'MOVED'] as const).map((f) => (
+                      <button
+                        key={f}
+                        className={`chip ${cdFilter === f ? 'active' : ''}`}
+                        style={{
+                          padding: '2px 8px', fontSize: '9px', borderRadius: '4px', cursor: 'pointer',
+                          background: cdFilter === f ? '#183b4e' : '#0b1b24',
+                          border: `1px solid ${cdFilter === f ? '#57d6c8' : '#1c3442'}`,
+                          color: cdFilter === f ? '#57d6c8' : '#8da4af'
+                        }}
+                        onClick={() => setCdFilter(f)}
+                      >
+                        {f} ({f === 'ALL' ? (cdData?.object_changes?.length || 0) : (cdData?.object_changes?.filter((x: any) => x.change_type === f).length || 0)})
+                      </button>
+                    ))}
+                  </div>
+
+                  {/* Changes List */}
+                  <div style={{ flex: 1, overflowY: 'auto', maxHeight: '340px', padding: '10px', display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                    {!cdData || !cdData.object_changes?.length ? (
+                      <div style={{ textAlign: 'center', padding: '24px', color: '#64748b', fontSize: '11px' }}>
+                        No changes detected. Run analysis to identify additions, removals, and movements.
+                      </div>
+                    ) : (
+                      cdData.object_changes
+                        .filter((c: any) => cdFilter === 'ALL' || c.change_type === cdFilter)
+                        .map((chg: any) => {
+                          const isNew = chg.change_type === 'NEW';
+                          const isMov = chg.change_type === 'MOVED';
+                          const badgeColor = isNew ? '#57d6c8' : isMov ? '#fbbf24' : '#f87171';
+                          const badgeBg = isNew ? '#092b34' : isMov ? '#2a2209' : '#2b0909';
+                          return (
+                            <div key={chg.id} style={{
+                              padding: '10px 12px', borderRadius: '6px', background: '#091823',
+                              border: `1px solid ${isNew ? '#15414e' : isMov ? '#47360e' : '#471414'}`,
+                              display: 'flex', flexDirection: 'column', gap: '4px'
+                            }}>
+                              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                                <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                                  <span style={{ background: badgeBg, color: badgeColor, padding: '2px 6px', borderRadius: '3px', fontSize: '9px', fontWeight: 700, border: `1px solid ${badgeColor}33` }}>
+                                    {chg.change_type}
+                                  </span>
+                                  <b style={{ color: '#e2edf2', fontSize: '12px' }}>{chg.class_name}</b>
+                                </div>
+                                <span style={{ fontSize: '10px', color: '#64748b', fontFamily: 'monospace' }}>
+                                  {chg.confidence ? `Conf: ${(chg.confidence * 100).toFixed(0)}%` : (chg.displacement_px ? `Disp: ${chg.displacement_px}px` : '')}
+                                </span>
+                              </div>
+
+                              <div style={{ fontSize: '10px', color: '#7994a3', fontFamily: 'monospace', display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '4px', marginTop: '2px' }}>
+                                <span>PIXEL: [{Math.round(chg.x)}, {Math.round(chg.y)}, {Math.round(chg.w)}, {Math.round(chg.h)}]</span>
+                                <span style={{ color: '#57d6c8' }}>WGS84: {chg.lat != null ? `${chg.lat.toFixed(5)}°N, ${chg.lon.toFixed(5)}°E` : 'LOCAL GRID'}</span>
+                              </div>
+                              <small style={{ color: '#64748b', fontSize: '9px' }}>{chg.details}</small>
+                            </div>
+                          );
+                        })
+                    )}
+                  </div>
+                </section>
+
+                {/* Panel 2B: Secondary Radiometric Pixel Difference Signal */}
+                <section className="panel">
+                  <div className="panel-head" style={{ paddingBottom: '6px' }}>
+                    <div>
+                      <div className="panel-title" style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                        <Flame size={15} color="#fbbf24" /> Secondary Radiometric Difference
+                      </div>
+                      <small>Channel-wise gain & bias normalized | Flagging new structures independently</small>
+                    </div>
+                  </div>
+
+                  <div style={{ padding: '12px', display: 'flex', flexDirection: 'column', gap: '10px' }}>
+                    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '8px' }}>
+                      <div style={{ background: '#071520', padding: '8px 10px', borderRadius: '4px', border: '1px solid #142a35' }}>
+                        <span style={{ fontSize: '9px', color: '#7994a3' }}>CHANGED PIXELS</span>
+                        <div style={{ fontSize: '14px', fontWeight: 700, color: '#fbbf24' }}>
+                          {cdData?.pixel_difference?.changed_pixels_count?.toLocaleString() || '0'} px²
+                        </div>
+                      </div>
+                      <div style={{ background: '#071520', padding: '8px 10px', borderRadius: '4px', border: '1px solid #142a35' }}>
+                        <span style={{ fontSize: '9px', color: '#7994a3' }}>CHANGED AREA RATIO</span>
+                        <div style={{ fontSize: '14px', fontWeight: 700, color: '#57d6c8' }}>
+                          {cdData?.pixel_difference?.changed_area_pct?.toFixed(3) || '0.000'}%
+                        </div>
+                      </div>
+                    </div>
+
+                    <div style={{ background: '#06131c', padding: '8px 10px', borderRadius: '4px', border: '1px solid #132733', fontSize: '10px', color: '#8da4af' }}>
+                      <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '4px' }}>
+                        <span>STRUCTURAL ANOMALIES:</span>
+                        <b style={{ color: '#e2edf2' }}>{cdData?.pixel_difference?.structural_anomalies_count || 0} flagged</b>
+                      </div>
+                      <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                        <span>RADIOMETRIC NORM:</span>
+                        <span style={{ color: '#57d6c8' }}>ACTIVE (Channel Gain/Bias)</span>
+                      </div>
+                    </div>
+                  </div>
+                </section>
+              </div>
             </div>
           )}
 
