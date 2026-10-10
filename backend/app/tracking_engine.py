@@ -135,3 +135,139 @@ def compute_track_vector(
         'total_distance_km': total_distance_km,
         'trajectory': waypoints
     }
+
+
+# ── Multi-Target Track Fusion Integration ───────────────────────────────────
+from datetime import datetime, timezone
+from backend.app.track_fusion import (
+    MultiTargetTrackFusion,
+    Measurement,
+    SensorType,
+    enu_to_geodetic,
+    geodetic_to_enu
+)
+
+_GLOBAL_FUSION: Optional[MultiTargetTrackFusion] = None
+
+
+def get_fusion_engine(
+    ref_lat: float = 18.9220,
+    ref_lon: float = 72.8346,
+    association_method: str = "hungarian"
+) -> MultiTargetTrackFusion:
+    """Retrieve or initialize the singleton MultiTargetTrackFusion engine."""
+    global _GLOBAL_FUSION
+    if _GLOBAL_FUSION is None:
+        _GLOBAL_FUSION = MultiTargetTrackFusion(
+            ref_lat=ref_lat,
+            ref_lon=ref_lon,
+            association_method=association_method,
+            m_confirm_hits=3,
+            n_confirm_window=5,
+            max_misses_deletion=5
+        )
+        seed_default_tactical_tracks(_GLOBAL_FUSION)
+    return _GLOBAL_FUSION
+
+
+def reset_fusion_engine(association_method: str = "hungarian") -> MultiTargetTrackFusion:
+    """Reset the fusion engine state."""
+    global _GLOBAL_FUSION
+    _GLOBAL_FUSION = MultiTargetTrackFusion(
+        ref_lat=18.9220,
+        ref_lon=72.8346,
+        association_method=association_method
+    )
+    seed_default_tactical_tracks(_GLOBAL_FUSION)
+    return _GLOBAL_FUSION
+
+
+def seed_default_tactical_tracks(engine: MultiTargetTrackFusion) -> None:
+    """Seed initial tactical tracks from known SAR, AIS, and Army multimodal contacts."""
+    t0 = datetime.now(timezone.utc).timestamp() - 60.0
+    seeds = [
+        {
+            "id": "419001234",
+            "class": "Merchant / Corvette",
+            "lat": 18.9150, "lon": 72.8210,
+            "speed": 14.2, "heading": 210.0,
+            "sensor": SensorType.AIS
+        },
+        {
+            "id": None,  # Dark Vessel (SAR)
+            "class": "Vessel",
+            "lat": 18.8820, "lon": 72.7950,
+            "speed": 18.5, "heading": 175.0,
+            "sensor": SensorType.SAR
+        },
+        {
+            "id": "UAV-GARUDA-01",
+            "class": "Vehicle",
+            "lat": 18.9410, "lon": 72.8520,
+            "speed": 22.0, "heading": 45.0,
+            "sensor": SensorType.OPTICAL
+        }
+    ]
+
+    for step in range(4):
+        t_step = t0 + step * 15.0
+        step_measurements = []
+        for s in seeds:
+            dist_km = (s["speed"] * 1.852) * ((step * 15.0) / 3600.0)
+            hdg_rad = math.radians(s["heading"])
+            d_lat = (dist_km * math.cos(hdg_rad)) / 111.32
+            d_lon = (dist_km * math.sin(hdg_rad)) / (111.32 * math.cos(math.radians(s["lat"])))
+            step_measurements.append(Measurement(
+                timestamp=t_step,
+                sensor_type=s["sensor"],
+                lat=s["lat"] + d_lat,
+                lon=s["lon"] + d_lon,
+                identity=s["id"],
+                detected_class=s["class"],
+                speed_knots=s["speed"],
+                heading_deg=s["heading"],
+                confidence=0.92
+            ))
+        engine.process_cycle(t_step, step_measurements)
+
+
+def get_fused_tracks() -> List[Dict[str, Any]]:
+    """Return all active fused multi-target tracks with kinematic covariance ellipses."""
+    engine = get_fusion_engine()
+    return engine.get_active_tracks()
+
+
+def fuse_multimodal_step(
+    measurements_data: List[Dict[str, Any]],
+    timestamp: Optional[float] = None,
+    association_method: str = "hungarian"
+) -> List[Dict[str, Any]]:
+    """Ingest new sensor detections and step the track fusion engine forward."""
+    engine = get_fusion_engine(association_method=association_method)
+    if association_method and association_method.lower() != engine.association_method:
+        engine.association_method = association_method.lower()
+
+    t = timestamp or datetime.now(timezone.utc).timestamp()
+    meas_objs = []
+    for m in measurements_data:
+        st_enum = SensorType.DEFAULT
+        st_str = str(m.get("sensor_type", "DEFAULT")).upper()
+        if st_str in SensorType.__members__:
+            st_enum = SensorType[st_str]
+
+        meas_objs.append(Measurement(
+            timestamp=t,
+            sensor_type=st_enum,
+            lat=float(m["lat"]),
+            lon=float(m["lon"]),
+            alt=float(m.get("alt", 0.0)),
+            identity=m.get("identity"),
+            detected_class=m.get("detected_class", "Vessel"),
+            confidence=float(m.get("confidence", 1.0)),
+            speed_knots=float(m["speed_knots"]) if m.get("speed_knots") is not None else None,
+            heading_deg=float(m["heading_deg"]) if m.get("heading_deg") is not None else None,
+            raw_id=m.get("raw_id")
+        ))
+
+    return engine.process_cycle(t, meas_objs)
+

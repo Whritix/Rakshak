@@ -1,0 +1,73 @@
+{
+  "thresholds": {
+    "low_threat_max": 39,
+    "medium_threat_min": 40,
+    "medium_threat_max": 69,
+    "high_threat_min": 70
+  },
+  "rules": {
+    "auto_close_requires_ais_match_for_vessels": true,
+    "auto_close_requires_transponder_for_aircraft": true,
+    "allowed_auto_close_classes": [
+      "Vessel",
+      "Merchant / Corvette",
+      "Frigate / Bulk Carrier",
+      "Capital Ship / VLCC Tanker",
+      "Small Craft / Dhow",
+      "Patrol Vessel / Trawler",
+      "Vehicle"
+    ],
+    "disallowed_auto_close_classes": [
+      "TACTICAL_CONVOY",
+      "Military Vehicle Convoy",
+      "Aircraft"
+    ],
+    "non_vessel_auto_close_policies": {
+      "known_static_infrastructure": {
+        "enabled": true,
+        "require_known_static_baseline": true,
+        "max_threat_score": 39,
+        "require_outside_geofences": true,
+        "require_non_cluster": true,
+        "description": "Auto-close infrastructure ONLY when verified against multi-temporal historical baseline (is_known_static=true). Class-based static assumption on single-pass non-overlapping scenes is removed."
+      },
+      "transient_isolated_low_confidence": {
+        "enabled": true,
+        "max_threat_score": 35,
+        "max_confidence": 0.45,
+        "require_isolated_distance_m": 500.0,
+        "require_outside_geofences": true,
+        "description": "Single low-confidence transient observation outside geofences is auto-closed"
+      },
+      "routine_civilian_vehicle": {
+        "enabled": true,
+        "max_threat_score": 30,
+        "require_outside_geofences": true,
+        "require_non_cluster": true,
+        "description": "Single isolated civilian vehicle outside all geofences not part of convoy is auto-closed"
+      }
+    },
+    "safety_checks": {
+      "enforce_ais_position_plausibility": true,
+      "max_ais_spatial_deviation_m": 1500.0,
+      "subtle_spoof_review_deviation_m": 300.0,
+      "enforce_kinematic_speed_ceiling_knots": 45.0,
+      "commercial_cargo_speed_ceiling_knots": 28.0,
+      "max_ais_heartbeat_age_hours": 4.0,
+      "strictly_block_geofence_breaches": true,
+      "enable_dead_reckoning": true
+    }
+  },
+  "entity_consolidation": {
+    "convoy_cluster_radius_m": 500.0,
+    "temporal_dedup_radius_m": 35.0,
+    "static_infrastructure_baseline_radius_m": 50.0
+  },
+  "time_model_assumptions": {
+    "manual_screening_minutes_per_scene_baseline": 40.0,
+    "manual_review_seconds_per_item": 120.0,
+    "working_hours_per_shift": 8.0,
+    "scenes_per_hour_standard_rate": 12,
+    "methodology_note": "ASSUMPTION: Baseline manual screening is 40.0 min (2,400s) per scene. At 12 scenes/hr, baseline analyst workload is 8.0 hours per surveillance hour. Remaining workload is calculated as human-review items multiplied by review seconds per item."
+  }
+}

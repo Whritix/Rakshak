@@ -4,7 +4,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Optional, List, Dict, Any
 
-from fastapi import FastAPI, UploadFile, File, Form, HTTPException, Header
+from fastapi import FastAPI, UploadFile, File, Form, HTTPException, Header, Depends
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
@@ -20,7 +20,13 @@ from backend.app.models import (
     SarDetectionCreate, ArmyFeedCreate, TrajectoryProjectionRequest,
     SampleLoadRequest, LoginRequest, RegisterRequest,
     RagQueryRequest, RagDispatchMissionRequest,
-    ArmyFeedStatusUpdate, ContactTrackRequest
+    ArmyFeedStatusUpdate, ContactTrackRequest,
+    TriageReopenRequest, FuseStepRequest,
+    DdilAlertItem, DdilSyncBatchRequest, DdilChannelUpdateRequest
+)
+from backend.app.ddil_sync import (
+    get_live_ddil_status, set_live_channel_state,
+    _GLOBAL_EDGE_OUTBOX, _GLOBAL_COMMAND_INBOX, _GLOBAL_CHANNEL_STATE
 )
 from backend.app.sar_engine import (
     list_sar_detections, list_dark_vessels_only,
@@ -31,10 +37,15 @@ from backend.app.army_engine import (
     list_army_feeds, seed_army_feeds,
     acknowledge_feed, resolve_feed, get_feed_stats
 )
-from backend.app.tracking_engine import compute_track_vector
+from backend.app.tracking_engine import (
+    compute_track_vector,
+    get_fused_tracks,
+    fuse_multimodal_step,
+    reset_fusion_engine
+)
 from backend.app.sitrep_generator import generate_tactical_sitrep
 from backend.app.edge_benchmarks import get_edge_telemetry, export_model_to_onnx
-from backend.app.kpi_service import get_system_kpis
+from backend.app.kpi_service import get_system_kpis, get_false_alarm_kpis
 from backend.app.rag_engine import (
     run_air_gapped_rag_advisor, search_knowledge_base, init_rag_knowledge_base
 )
@@ -1087,6 +1098,40 @@ def get_trajectory_vector(req: TrajectoryProjectionRequest):
         target_class=req.target_class or 'default'
     )
 
+@app.get('/api/tracking/fused-tracks')
+def list_fused_tracks():
+    """Return all active multi-target fused tracks with covariance ellipses and trails."""
+    return get_fused_tracks()
+
+@app.post('/api/tracking/fuse-step')
+def execute_fuse_step(req: FuseStepRequest):
+    """Step the multi-target tracker forward with a batch of multimodal measurements."""
+    meas_dicts = [m.model_dump() for m in req.measurements]
+    return fuse_multimodal_step(
+        measurements_data=meas_dicts,
+        timestamp=req.timestamp,
+        association_method=req.association_method or "hungarian"
+    )
+
+@app.get('/api/tracking/benchmarks')
+def get_tracking_benchmarks():
+    """Return empirical MOTA, MOTP, IDF1, and ID-switch metrics from simulation evaluation."""
+    rep_path = ROOT / 'evaluation' / 'results' / 'tracking_report.json'
+    if rep_path.exists():
+        try:
+            with open(rep_path, 'r', encoding='utf-8') as f:
+                return json.load(f)
+        except Exception:
+            pass
+    from evaluation.track_sim import run_benchmark_and_save_report
+    return run_benchmark_and_save_report()
+
+@app.post('/api/tracking/reset')
+def reset_tracker(method: Optional[str] = "hungarian"):
+    """Reset the multi-target tracking engine state."""
+    reset_fusion_engine(association_method=method or "hungarian")
+    return {"success": True, "message": "Multi-target track fusion engine reset successfully"}
+
 # Tactical SITREP Generator
 @app.get('/api/sitrep')
 def get_sitrep():
@@ -1105,6 +1150,11 @@ def export_onnx():
 @app.get('/api/kpis')
 def get_kpis():
     return get_system_kpis()
+
+@app.get('/api/kpi/false-alarm')
+@app.get('/api/kpis/false-alarm')
+def get_false_alarm_kpi_endpoint():
+    return get_false_alarm_kpis()
 
 # PipeV4 and Sentinel-2 Catalog
 @app.get('/api/pipev4')
@@ -1272,6 +1322,112 @@ def save_mission(m: MissionCreate):
         c.execute('INSERT INTO missions VALUES (?,?,?,?)', (mid, m.title, m.notes, datetime.now(timezone.utc).isoformat()))
         c.commit()
     return {'id': mid, 'title': m.title, 'notes': m.notes}
+
+# ── 12. Automated Workload Triage & Human Override APIs ─────────────────────
+@app.get('/api/triage/kpis')
+def get_triage_kpis():
+    """Return measured auto-triage rates, queue distributions, and time savings."""
+    import json
+    report_file = ROOT / 'evaluation' / 'results' / 'analyst_workload_report.json'
+    if report_file.exists():
+        try:
+            with open(report_file, 'r', encoding='utf-8') as f:
+                return json.load(f)
+        except Exception:
+            pass
+    from backend.app.triage_service import execute_triage_cycle
+    return execute_triage_cycle(persist_audit=False)
+
+@app.get('/api/triage/audit')
+def get_triage_audit(limit: int = 50, status: Optional[str] = None):
+    """Retrieve auto-triage audit trail with human override status."""
+    from backend.app.triage_service import get_audit_trail
+    return get_audit_trail(limit=limit, status_filter=status)
+
+@app.post('/api/triage/reopen/{item_id}')
+def reopen_item_route(
+    item_id: str,
+    body: Optional[TriageReopenRequest] = None,
+    user: Optional[dict] = Depends(get_current_user_optional)
+):
+    """Human override action to undo/reopen an auto-closed contact."""
+    from backend.app.triage_service import reopen_triaged_item
+    op = body.operator if (body and body.operator and body.operator != 'OPERATOR') else (user.get('callsign') or user.get('username') if user else 'OPERATOR')
+    op_role = user.get('role') if user else (body.operator_role if body and body.operator_role else 'OPERATOR')
+    reason = body.reason if body and body.reason else 'Manual inspection override'
+    res = reopen_triaged_item(item_id=item_id, operator=op, reason=reason, operator_role=op_role)
+    if not res.get('success'):
+        status_code = res.get('status_code', 400)
+        raise HTTPException(status_code, res.get('error', 'Contact not found'))
+    return res
+
+@app.post('/api/triage/run')
+def run_triage_sweep():
+    """Trigger real-time auto-triage cycle across active contacts and persist audit log."""
+    from backend.app.triage_service import execute_triage_cycle
+    return execute_triage_cycle(persist_audit=True)
+
+# ── 13. DDIL Store-and-Forward Tactical Sync APIs ───────────────────────────
+@app.get('/api/ddil/status')
+def get_ddil_status():
+    """Retrieve live DDIL link condition, channel telemetry, and queue metrics."""
+    return get_live_ddil_status()
+
+@app.post('/api/ddil/sync')
+def sync_ddil_batch(req: DdilSyncBatchRequest):
+    """Receive ordered batch of alerts from edge node with deduplication."""
+    alerts_data = [item.dict() for item in req.alerts]
+    res = _GLOBAL_COMMAND_INBOX.receive_batch(alerts_data)
+    _GLOBAL_CHANNEL_STATE["last_sync_timestamp"] = datetime.now(timezone.utc).isoformat()
+    return {
+        "status": "success",
+        "node_id": req.node_id,
+        "acknowledged_seqs": res["acknowledged_seqs"],
+        "newly_inserted": res["newly_inserted"],
+        "duplicates": res["duplicates"]
+    }
+
+@app.post('/api/ddil/set-channel')
+def update_ddil_channel(req: DdilChannelUpdateRequest):
+    """Update simulated physical channel state (CONNECTED, DEGRADED, DENIED)."""
+    updated = set_live_channel_state(
+        status=req.status,
+        latency_ms=req.latency_ms or 25.0,
+        loss_pct=req.packet_loss_pct or 0.0,
+        bw_kbps=req.bandwidth_kbps or 256.0
+    )
+    return {"status": "success", "channel": updated}
+
+@app.post('/api/ddil/edge/inject-alert')
+def inject_edge_alert(payload: Dict[str, Any]):
+    """Inject an alert into edge outbox (for demonstration / testing)."""
+    aid = payload.get("alert_id")
+    score = payload.get("threat_score", 75)
+    level = payload.get("threat_level", "HIGH")
+    seq, alert_id = _GLOBAL_EDGE_OUTBOX.write_alert(
+        alert_id=aid,
+        payload=payload,
+        threat_score=score,
+        threat_level=level
+    )
+    return {
+        "status": "queued",
+        "seq_num": seq,
+        "alert_id": alert_id,
+        "outbox_stats": _GLOBAL_EDGE_OUTBOX.get_stats()
+    }
+
+@app.get('/api/ddil/report')
+def get_ddil_report():
+    """Retrieve the latest DDIL benchmark simulation report."""
+    report_file = ROOT / "evaluation" / "results" / "ddil_report.json"
+    if report_file.exists():
+        try:
+            with open(report_file, "r", encoding="utf-8") as f:
+                return json.load(f)
+        except Exception as e:
+            raise HTTPException(500, f"Error reading DDIL report: {e}")
+    return {"message": "DDIL simulation report not yet generated. Run evaluation/ddil_sim.py."}
 
 @app.get('/')
 def index():

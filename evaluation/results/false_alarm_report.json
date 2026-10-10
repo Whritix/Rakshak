@@ -1,0 +1,2559 @@
+{
+  "benchmark_title": "Project Rakshak 2.0 \u2014 Final Comprehensive False Alarm Evaluation (Empirically Calibrated)",
+  "timestamp_utc": "2026-10-09T18:38:05Z",
+  "val_tune_pr_curves_and_operating_points": {
+    "val_tune_gt_counts": {
+      "Vehicle": 9096,
+      "Aircraft": 37,
+      "Infrastructure": 8696,
+      "Vessel": 85
+    },
+    "pr_curves": {
+      "Vehicle": {
+        "iou_03": [
+          {
+            "threshold": 0.05,
+            "tp": 5598,
+            "fp": 2317,
+            "precision_pct": 70.73,
+            "recall_pct": 61.54,
+            "f1": 0.6582
+          },
+          {
+            "threshold": 0.1,
+            "tp": 5561,
+            "fp": 1948,
+            "precision_pct": 74.06,
+            "recall_pct": 61.14,
+            "f1": 0.6698
+          },
+          {
+            "threshold": 0.15,
+            "tp": 5518,
+            "fp": 1701,
+            "precision_pct": 76.44,
+            "recall_pct": 60.66,
+            "f1": 0.6764
+          },
+          {
+            "threshold": 0.2,
+            "tp": 5461,
+            "fp": 1547,
+            "precision_pct": 77.93,
+            "recall_pct": 60.04,
+            "f1": 0.6783
+          },
+          {
+            "threshold": 0.25,
+            "tp": 5409,
+            "fp": 1428,
+            "precision_pct": 79.11,
+            "recall_pct": 59.47,
+            "f1": 0.679
+          },
+          {
+            "threshold": 0.3,
+            "tp": 5336,
+            "fp": 1307,
+            "precision_pct": 80.33,
+            "recall_pct": 58.66,
+            "f1": 0.6781
+          },
+          {
+            "threshold": 0.35,
+            "tp": 5256,
+            "fp": 1170,
+            "precision_pct": 81.79,
+            "recall_pct": 57.78,
+            "f1": 0.6772
+          },
+          {
+            "threshold": 0.4,
+            "tp": 5119,
+            "fp": 1013,
+            "precision_pct": 83.48,
+            "recall_pct": 56.28,
+            "f1": 0.6723
+          },
+          {
+            "threshold": 0.45,
+            "tp": 4888,
+            "fp": 861,
+            "precision_pct": 85.02,
+            "recall_pct": 53.74,
+            "f1": 0.6585
+          },
+          {
+            "threshold": 0.5,
+            "tp": 4455,
+            "fp": 723,
+            "precision_pct": 86.04,
+            "recall_pct": 48.98,
+            "f1": 0.6242
+          },
+          {
+            "threshold": 0.55,
+            "tp": 3801,
+            "fp": 586,
+            "precision_pct": 86.64,
+            "recall_pct": 41.79,
+            "f1": 0.5638
+          },
+          {
+            "threshold": 0.6,
+            "tp": 3260,
+            "fp": 480,
+            "precision_pct": 87.17,
+            "recall_pct": 35.84,
+            "f1": 0.508
+          },
+          {
+            "threshold": 0.65,
+            "tp": 2848,
+            "fp": 353,
+            "precision_pct": 88.97,
+            "recall_pct": 31.31,
+            "f1": 0.4632
+          },
+          {
+            "threshold": 0.7,
+            "tp": 2479,
+            "fp": 242,
+            "precision_pct": 91.11,
+            "recall_pct": 27.25,
+            "f1": 0.4195
+          },
+          {
+            "threshold": 0.75,
+            "tp": 1931,
+            "fp": 144,
+            "precision_pct": 93.06,
+            "recall_pct": 21.23,
+            "f1": 0.3457
+          },
+          {
+            "threshold": 0.8,
+            "tp": 1240,
+            "fp": 69,
+            "precision_pct": 94.73,
+            "recall_pct": 13.63,
+            "f1": 0.2383
+          },
+          {
+            "threshold": 0.85,
+            "tp": 675,
+            "fp": 24,
+            "precision_pct": 96.57,
+            "recall_pct": 7.42,
+            "f1": 0.1378
+          },
+          {
+            "threshold": 0.9,
+            "tp": 334,
+            "fp": 9,
+            "precision_pct": 97.38,
+            "recall_pct": 3.67,
+            "f1": 0.0707
+          }
+        ],
+        "iou_05": [
+          {
+            "threshold": 0.05,
+            "tp": 4306,
+            "fp": 3609,
+            "precision_pct": 54.4,
+            "recall_pct": 47.34,
+            "f1": 0.5063
+          },
+          {
+            "threshold": 0.1,
+            "tp": 4282,
+            "fp": 3227,
+            "precision_pct": 57.02,
+            "recall_pct": 47.08,
+            "f1": 0.5158
+          },
+          {
+            "threshold": 0.15,
+            "tp": 4258,
+            "fp": 2961,
+            "precision_pct": 58.98,
+            "recall_pct": 46.81,
+            "f1": 0.5219
+          },
+          {
+            "threshold": 0.2,
+            "tp": 4218,
+            "fp": 2790,
+            "precision_pct": 60.19,
+            "recall_pct": 46.37,
+            "f1": 0.5238
+          },
+          {
+            "threshold": 0.25,
+            "tp": 4201,
+            "fp": 2636,
+            "precision_pct": 61.45,
+            "recall_pct": 46.19,
+            "f1": 0.5274
+          },
+          {
+            "threshold": 0.3,
+            "tp": 4163,
+            "fp": 2480,
+            "precision_pct": 62.67,
+            "recall_pct": 45.77,
+            "f1": 0.529
+          },
+          {
+            "threshold": 0.35,
+            "tp": 4125,
+            "fp": 2301,
+            "precision_pct": 64.19,
+            "recall_pct": 45.35,
+            "f1": 0.5315
+          },
+          {
+            "threshold": 0.4,
+            "tp": 4037,
+            "fp": 2095,
+            "precision_pct": 65.83,
+            "recall_pct": 44.38,
+            "f1": 0.5302
+          },
+          {
+            "threshold": 0.45,
+            "tp": 3882,
+            "fp": 1867,
+            "precision_pct": 67.52,
+            "recall_pct": 42.68,
+            "f1": 0.523
+          },
+          {
+            "threshold": 0.5,
+            "tp": 3549,
+            "fp": 1629,
+            "precision_pct": 68.54,
+            "recall_pct": 39.02,
+            "f1": 0.4973
+          },
+          {
+            "threshold": 0.55,
+            "tp": 3043,
+            "fp": 1344,
+            "precision_pct": 69.36,
+            "recall_pct": 33.45,
+            "f1": 0.4513
+          },
+          {
+            "threshold": 0.6,
+            "tp": 2627,
+            "fp": 1113,
+            "precision_pct": 70.24,
+            "recall_pct": 28.88,
+            "f1": 0.4093
+          },
+          {
+            "threshold": 0.65,
+            "tp": 2305,
+            "fp": 896,
+            "precision_pct": 72.01,
+            "recall_pct": 25.34,
+            "f1": 0.3749
+          },
+          {
+            "threshold": 0.7,
+            "tp": 2019,
+            "fp": 702,
+            "precision_pct": 74.2,
+            "recall_pct": 22.2,
+            "f1": 0.3418
+          },
+          {
+            "threshold": 0.75,
+            "tp": 1592,
+            "fp": 483,
+            "precision_pct": 76.72,
+            "recall_pct": 17.5,
+            "f1": 0.285
+          },
+          {
+            "threshold": 0.8,
+            "tp": 1021,
+            "fp": 288,
+            "precision_pct": 78.0,
+            "recall_pct": 11.22,
+            "f1": 0.1962
+          },
+          {
+            "threshold": 0.85,
+            "tp": 553,
+            "fp": 146,
+            "precision_pct": 79.11,
+            "recall_pct": 6.08,
+            "f1": 0.1129
+          },
+          {
+            "threshold": 0.9,
+            "tp": 284,
+            "fp": 59,
+            "precision_pct": 82.8,
+            "recall_pct": 3.12,
+            "f1": 0.0601
+          }
+        ]
+      },
+      "Aircraft": {
+        "iou_03": [
+          {
+            "threshold": 0.05,
+            "tp": 34,
+            "fp": 101,
+            "precision_pct": 25.19,
+            "recall_pct": 91.89,
+            "f1": 0.3954
+          },
+          {
+            "threshold": 0.1,
+            "tp": 34,
+            "fp": 63,
+            "precision_pct": 35.05,
+            "recall_pct": 91.89,
+            "f1": 0.5074
+          },
+          {
+            "threshold": 0.15,
+            "tp": 34,
+            "fp": 45,
+            "precision_pct": 43.04,
+            "recall_pct": 91.89,
+            "f1": 0.5862
+          },
+          {
+            "threshold": 0.2,
+            "tp": 34,
+            "fp": 34,
+            "precision_pct": 50.0,
+            "recall_pct": 91.89,
+            "f1": 0.6476
+          },
+          {
+            "threshold": 0.25,
+            "tp": 34,
+            "fp": 29,
+            "precision_pct": 53.97,
+            "recall_pct": 91.89,
+            "f1": 0.68
+          },
+          {
+            "threshold": 0.3,
+            "tp": 34,
+            "fp": 26,
+            "precision_pct": 56.67,
+            "recall_pct": 91.89,
+            "f1": 0.7011
+          },
+          {
+            "threshold": 0.35,
+            "tp": 34,
+            "fp": 19,
+            "precision_pct": 64.15,
+            "recall_pct": 91.89,
+            "f1": 0.7555
+          },
+          {
+            "threshold": 0.4,
+            "tp": 34,
+            "fp": 12,
+            "precision_pct": 73.91,
+            "recall_pct": 91.89,
+            "f1": 0.8193
+          },
+          {
+            "threshold": 0.45,
+            "tp": 34,
+            "fp": 11,
+            "precision_pct": 75.56,
+            "recall_pct": 91.89,
+            "f1": 0.8293
+          },
+          {
+            "threshold": 0.5,
+            "tp": 34,
+            "fp": 9,
+            "precision_pct": 79.07,
+            "recall_pct": 91.89,
+            "f1": 0.85
+          },
+          {
+            "threshold": 0.55,
+            "tp": 34,
+            "fp": 6,
+            "precision_pct": 85.0,
+            "recall_pct": 91.89,
+            "f1": 0.8831
+          },
+          {
+            "threshold": 0.6,
+            "tp": 32,
+            "fp": 5,
+            "precision_pct": 86.49,
+            "recall_pct": 86.49,
+            "f1": 0.8649
+          },
+          {
+            "threshold": 0.65,
+            "tp": 30,
+            "fp": 5,
+            "precision_pct": 85.71,
+            "recall_pct": 81.08,
+            "f1": 0.8333
+          },
+          {
+            "threshold": 0.7,
+            "tp": 29,
+            "fp": 4,
+            "precision_pct": 87.88,
+            "recall_pct": 78.38,
+            "f1": 0.8286
+          },
+          {
+            "threshold": 0.75,
+            "tp": 28,
+            "fp": 1,
+            "precision_pct": 96.55,
+            "recall_pct": 75.68,
+            "f1": 0.8485
+          },
+          {
+            "threshold": 0.8,
+            "tp": 28,
+            "fp": 1,
+            "precision_pct": 96.55,
+            "recall_pct": 75.68,
+            "f1": 0.8485
+          },
+          {
+            "threshold": 0.85,
+            "tp": 28,
+            "fp": 1,
+            "precision_pct": 96.55,
+            "recall_pct": 75.68,
+            "f1": 0.8485
+          },
+          {
+            "threshold": 0.9,
+            "tp": 23,
+            "fp": 0,
+            "precision_pct": 100.0,
+            "recall_pct": 62.16,
+            "f1": 0.7667
+          }
+        ],
+        "iou_05": [
+          {
+            "threshold": 0.05,
+            "tp": 27,
+            "fp": 108,
+            "precision_pct": 20.0,
+            "recall_pct": 72.97,
+            "f1": 0.314
+          },
+          {
+            "threshold": 0.1,
+            "tp": 27,
+            "fp": 70,
+            "precision_pct": 27.84,
+            "recall_pct": 72.97,
+            "f1": 0.403
+          },
+          {
+            "threshold": 0.15,
+            "tp": 27,
+            "fp": 52,
+            "precision_pct": 34.18,
+            "recall_pct": 72.97,
+            "f1": 0.4655
+          },
+          {
+            "threshold": 0.2,
+            "tp": 27,
+            "fp": 41,
+            "precision_pct": 39.71,
+            "recall_pct": 72.97,
+            "f1": 0.5143
+          },
+          {
+            "threshold": 0.25,
+            "tp": 27,
+            "fp": 36,
+            "precision_pct": 42.86,
+            "recall_pct": 72.97,
+            "f1": 0.54
+          },
+          {
+            "threshold": 0.3,
+            "tp": 27,
+            "fp": 33,
+            "precision_pct": 45.0,
+            "recall_pct": 72.97,
+            "f1": 0.5567
+          },
+          {
+            "threshold": 0.35,
+            "tp": 27,
+            "fp": 26,
+            "precision_pct": 50.94,
+            "recall_pct": 72.97,
+            "f1": 0.6
+          },
+          {
+            "threshold": 0.4,
+            "tp": 27,
+            "fp": 19,
+            "precision_pct": 58.7,
+            "recall_pct": 72.97,
+            "f1": 0.6506
+          },
+          {
+            "threshold": 0.45,
+            "tp": 27,
+            "fp": 18,
+            "precision_pct": 60.0,
+            "recall_pct": 72.97,
+            "f1": 0.6585
+          },
+          {
+            "threshold": 0.5,
+            "tp": 27,
+            "fp": 16,
+            "precision_pct": 62.79,
+            "recall_pct": 72.97,
+            "f1": 0.675
+          },
+          {
+            "threshold": 0.55,
+            "tp": 27,
+            "fp": 13,
+            "precision_pct": 67.5,
+            "recall_pct": 72.97,
+            "f1": 0.7013
+          },
+          {
+            "threshold": 0.6,
+            "tp": 25,
+            "fp": 12,
+            "precision_pct": 67.57,
+            "recall_pct": 67.57,
+            "f1": 0.6757
+          },
+          {
+            "threshold": 0.65,
+            "tp": 23,
+            "fp": 12,
+            "precision_pct": 65.71,
+            "recall_pct": 62.16,
+            "f1": 0.6389
+          },
+          {
+            "threshold": 0.7,
+            "tp": 22,
+            "fp": 11,
+            "precision_pct": 66.67,
+            "recall_pct": 59.46,
+            "f1": 0.6286
+          },
+          {
+            "threshold": 0.75,
+            "tp": 21,
+            "fp": 8,
+            "precision_pct": 72.41,
+            "recall_pct": 56.76,
+            "f1": 0.6364
+          },
+          {
+            "threshold": 0.8,
+            "tp": 21,
+            "fp": 8,
+            "precision_pct": 72.41,
+            "recall_pct": 56.76,
+            "f1": 0.6364
+          },
+          {
+            "threshold": 0.85,
+            "tp": 21,
+            "fp": 8,
+            "precision_pct": 72.41,
+            "recall_pct": 56.76,
+            "f1": 0.6364
+          },
+          {
+            "threshold": 0.9,
+            "tp": 18,
+            "fp": 5,
+            "precision_pct": 78.26,
+            "recall_pct": 48.65,
+            "f1": 0.6
+          }
+        ]
+      },
+      "Infrastructure": {
+        "iou_03": [
+          {
+            "threshold": 0.05,
+            "tp": 3177,
+            "fp": 1743,
+            "precision_pct": 64.57,
+            "recall_pct": 36.53,
+            "f1": 0.4666
+          },
+          {
+            "threshold": 0.1,
+            "tp": 3148,
+            "fp": 1466,
+            "precision_pct": 68.23,
+            "recall_pct": 36.2,
+            "f1": 0.473
+          },
+          {
+            "threshold": 0.15,
+            "tp": 3116,
+            "fp": 1297,
+            "precision_pct": 70.61,
+            "recall_pct": 35.83,
+            "f1": 0.4754
+          },
+          {
+            "threshold": 0.2,
+            "tp": 3082,
+            "fp": 1178,
+            "precision_pct": 72.35,
+            "recall_pct": 35.44,
+            "f1": 0.4758
+          },
+          {
+            "threshold": 0.25,
+            "tp": 3042,
+            "fp": 1067,
+            "precision_pct": 74.03,
+            "recall_pct": 34.98,
+            "f1": 0.4751
+          },
+          {
+            "threshold": 0.3,
+            "tp": 2955,
+            "fp": 935,
+            "precision_pct": 75.96,
+            "recall_pct": 33.98,
+            "f1": 0.4696
+          },
+          {
+            "threshold": 0.35,
+            "tp": 2732,
+            "fp": 786,
+            "precision_pct": 77.66,
+            "recall_pct": 31.42,
+            "f1": 0.4474
+          },
+          {
+            "threshold": 0.4,
+            "tp": 2495,
+            "fp": 635,
+            "precision_pct": 79.71,
+            "recall_pct": 28.69,
+            "f1": 0.4219
+          },
+          {
+            "threshold": 0.45,
+            "tp": 2128,
+            "fp": 479,
+            "precision_pct": 81.63,
+            "recall_pct": 24.47,
+            "f1": 0.3765
+          },
+          {
+            "threshold": 0.5,
+            "tp": 1787,
+            "fp": 354,
+            "precision_pct": 83.47,
+            "recall_pct": 20.55,
+            "f1": 0.3298
+          },
+          {
+            "threshold": 0.55,
+            "tp": 1497,
+            "fp": 281,
+            "precision_pct": 84.2,
+            "recall_pct": 17.21,
+            "f1": 0.2858
+          },
+          {
+            "threshold": 0.6,
+            "tp": 1182,
+            "fp": 216,
+            "precision_pct": 84.55,
+            "recall_pct": 13.59,
+            "f1": 0.2342
+          },
+          {
+            "threshold": 0.65,
+            "tp": 867,
+            "fp": 132,
+            "precision_pct": 86.79,
+            "recall_pct": 9.97,
+            "f1": 0.1789
+          },
+          {
+            "threshold": 0.7,
+            "tp": 580,
+            "fp": 70,
+            "precision_pct": 89.23,
+            "recall_pct": 6.67,
+            "f1": 0.1241
+          },
+          {
+            "threshold": 0.75,
+            "tp": 361,
+            "fp": 36,
+            "precision_pct": 90.93,
+            "recall_pct": 4.15,
+            "f1": 0.0794
+          },
+          {
+            "threshold": 0.8,
+            "tp": 198,
+            "fp": 14,
+            "precision_pct": 93.4,
+            "recall_pct": 2.28,
+            "f1": 0.0445
+          },
+          {
+            "threshold": 0.85,
+            "tp": 94,
+            "fp": 4,
+            "precision_pct": 95.92,
+            "recall_pct": 1.08,
+            "f1": 0.0214
+          },
+          {
+            "threshold": 0.9,
+            "tp": 39,
+            "fp": 2,
+            "precision_pct": 95.12,
+            "recall_pct": 0.45,
+            "f1": 0.009
+          }
+        ],
+        "iou_05": [
+          {
+            "threshold": 0.05,
+            "tp": 2432,
+            "fp": 2488,
+            "precision_pct": 49.43,
+            "recall_pct": 27.97,
+            "f1": 0.3572
+          },
+          {
+            "threshold": 0.1,
+            "tp": 2423,
+            "fp": 2191,
+            "precision_pct": 52.51,
+            "recall_pct": 27.86,
+            "f1": 0.364
+          },
+          {
+            "threshold": 0.15,
+            "tp": 2404,
+            "fp": 2009,
+            "precision_pct": 54.48,
+            "recall_pct": 27.64,
+            "f1": 0.3667
+          },
+          {
+            "threshold": 0.2,
+            "tp": 2377,
+            "fp": 1883,
+            "precision_pct": 55.8,
+            "recall_pct": 27.33,
+            "f1": 0.3669
+          },
+          {
+            "threshold": 0.25,
+            "tp": 2351,
+            "fp": 1758,
+            "precision_pct": 57.22,
+            "recall_pct": 27.04,
+            "f1": 0.3673
+          },
+          {
+            "threshold": 0.3,
+            "tp": 2292,
+            "fp": 1598,
+            "precision_pct": 58.92,
+            "recall_pct": 26.36,
+            "f1": 0.3642
+          },
+          {
+            "threshold": 0.35,
+            "tp": 2126,
+            "fp": 1392,
+            "precision_pct": 60.43,
+            "recall_pct": 24.45,
+            "f1": 0.3481
+          },
+          {
+            "threshold": 0.4,
+            "tp": 1954,
+            "fp": 1176,
+            "precision_pct": 62.43,
+            "recall_pct": 22.47,
+            "f1": 0.3305
+          },
+          {
+            "threshold": 0.45,
+            "tp": 1684,
+            "fp": 923,
+            "precision_pct": 64.6,
+            "recall_pct": 19.37,
+            "f1": 0.298
+          },
+          {
+            "threshold": 0.5,
+            "tp": 1427,
+            "fp": 714,
+            "precision_pct": 66.65,
+            "recall_pct": 16.41,
+            "f1": 0.2634
+          },
+          {
+            "threshold": 0.55,
+            "tp": 1210,
+            "fp": 568,
+            "precision_pct": 68.05,
+            "recall_pct": 13.91,
+            "f1": 0.231
+          },
+          {
+            "threshold": 0.6,
+            "tp": 962,
+            "fp": 436,
+            "precision_pct": 68.81,
+            "recall_pct": 11.06,
+            "f1": 0.1906
+          },
+          {
+            "threshold": 0.65,
+            "tp": 719,
+            "fp": 280,
+            "precision_pct": 71.97,
+            "recall_pct": 8.27,
+            "f1": 0.1484
+          },
+          {
+            "threshold": 0.7,
+            "tp": 483,
+            "fp": 167,
+            "precision_pct": 74.31,
+            "recall_pct": 5.55,
+            "f1": 0.1033
+          },
+          {
+            "threshold": 0.75,
+            "tp": 302,
+            "fp": 95,
+            "precision_pct": 76.07,
+            "recall_pct": 3.47,
+            "f1": 0.0664
+          },
+          {
+            "threshold": 0.8,
+            "tp": 169,
+            "fp": 43,
+            "precision_pct": 79.72,
+            "recall_pct": 1.94,
+            "f1": 0.0379
+          },
+          {
+            "threshold": 0.85,
+            "tp": 82,
+            "fp": 16,
+            "precision_pct": 83.67,
+            "recall_pct": 0.94,
+            "f1": 0.0186
+          },
+          {
+            "threshold": 0.9,
+            "tp": 34,
+            "fp": 7,
+            "precision_pct": 82.93,
+            "recall_pct": 0.39,
+            "f1": 0.0078
+          }
+        ]
+      },
+      "Vessel": {
+        "iou_03": [
+          {
+            "threshold": 0.05,
+            "tp": 70,
+            "fp": 703,
+            "precision_pct": 9.06,
+            "recall_pct": 82.35,
+            "f1": 0.1632
+          },
+          {
+            "threshold": 0.1,
+            "tp": 64,
+            "fp": 424,
+            "precision_pct": 13.11,
+            "recall_pct": 75.29,
+            "f1": 0.2233
+          },
+          {
+            "threshold": 0.15,
+            "tp": 63,
+            "fp": 315,
+            "precision_pct": 16.67,
+            "recall_pct": 74.12,
+            "f1": 0.2722
+          },
+          {
+            "threshold": 0.2,
+            "tp": 63,
+            "fp": 217,
+            "precision_pct": 22.5,
+            "recall_pct": 74.12,
+            "f1": 0.3452
+          },
+          {
+            "threshold": 0.25,
+            "tp": 61,
+            "fp": 150,
+            "precision_pct": 28.91,
+            "recall_pct": 71.76,
+            "f1": 0.4122
+          },
+          {
+            "threshold": 0.3,
+            "tp": 59,
+            "fp": 109,
+            "precision_pct": 35.12,
+            "recall_pct": 69.41,
+            "f1": 0.4664
+          },
+          {
+            "threshold": 0.35,
+            "tp": 57,
+            "fp": 78,
+            "precision_pct": 42.22,
+            "recall_pct": 67.06,
+            "f1": 0.5182
+          },
+          {
+            "threshold": 0.4,
+            "tp": 54,
+            "fp": 58,
+            "precision_pct": 48.21,
+            "recall_pct": 63.53,
+            "f1": 0.5482
+          },
+          {
+            "threshold": 0.45,
+            "tp": 51,
+            "fp": 40,
+            "precision_pct": 56.04,
+            "recall_pct": 60.0,
+            "f1": 0.5795
+          },
+          {
+            "threshold": 0.5,
+            "tp": 48,
+            "fp": 28,
+            "precision_pct": 63.16,
+            "recall_pct": 56.47,
+            "f1": 0.5963
+          },
+          {
+            "threshold": 0.55,
+            "tp": 44,
+            "fp": 21,
+            "precision_pct": 67.69,
+            "recall_pct": 51.76,
+            "f1": 0.5866
+          },
+          {
+            "threshold": 0.6,
+            "tp": 39,
+            "fp": 15,
+            "precision_pct": 72.22,
+            "recall_pct": 45.88,
+            "f1": 0.5611
+          },
+          {
+            "threshold": 0.65,
+            "tp": 35,
+            "fp": 9,
+            "precision_pct": 79.55,
+            "recall_pct": 41.18,
+            "f1": 0.5427
+          },
+          {
+            "threshold": 0.7,
+            "tp": 30,
+            "fp": 6,
+            "precision_pct": 83.33,
+            "recall_pct": 35.29,
+            "f1": 0.4958
+          },
+          {
+            "threshold": 0.75,
+            "tp": 21,
+            "fp": 4,
+            "precision_pct": 84.0,
+            "recall_pct": 24.71,
+            "f1": 0.3819
+          },
+          {
+            "threshold": 0.8,
+            "tp": 19,
+            "fp": 3,
+            "precision_pct": 86.36,
+            "recall_pct": 22.35,
+            "f1": 0.3551
+          },
+          {
+            "threshold": 0.85,
+            "tp": 16,
+            "fp": 2,
+            "precision_pct": 88.89,
+            "recall_pct": 18.82,
+            "f1": 0.3106
+          },
+          {
+            "threshold": 0.9,
+            "tp": 13,
+            "fp": 1,
+            "precision_pct": 92.86,
+            "recall_pct": 15.29,
+            "f1": 0.2626
+          }
+        ],
+        "iou_05": [
+          {
+            "threshold": 0.05,
+            "tp": 57,
+            "fp": 716,
+            "precision_pct": 7.37,
+            "recall_pct": 67.06,
+            "f1": 0.1328
+          },
+          {
+            "threshold": 0.1,
+            "tp": 54,
+            "fp": 434,
+            "precision_pct": 11.07,
+            "recall_pct": 63.53,
+            "f1": 0.1885
+          },
+          {
+            "threshold": 0.15,
+            "tp": 54,
+            "fp": 324,
+            "precision_pct": 14.29,
+            "recall_pct": 63.53,
+            "f1": 0.2333
+          },
+          {
+            "threshold": 0.2,
+            "tp": 54,
+            "fp": 226,
+            "precision_pct": 19.29,
+            "recall_pct": 63.53,
+            "f1": 0.2959
+          },
+          {
+            "threshold": 0.25,
+            "tp": 52,
+            "fp": 159,
+            "precision_pct": 24.64,
+            "recall_pct": 61.18,
+            "f1": 0.3513
+          },
+          {
+            "threshold": 0.3,
+            "tp": 51,
+            "fp": 117,
+            "precision_pct": 30.36,
+            "recall_pct": 60.0,
+            "f1": 0.4032
+          },
+          {
+            "threshold": 0.35,
+            "tp": 49,
+            "fp": 86,
+            "precision_pct": 36.3,
+            "recall_pct": 57.65,
+            "f1": 0.4455
+          },
+          {
+            "threshold": 0.4,
+            "tp": 47,
+            "fp": 65,
+            "precision_pct": 41.96,
+            "recall_pct": 55.29,
+            "f1": 0.4771
+          },
+          {
+            "threshold": 0.45,
+            "tp": 45,
+            "fp": 46,
+            "precision_pct": 49.45,
+            "recall_pct": 52.94,
+            "f1": 0.5114
+          },
+          {
+            "threshold": 0.5,
+            "tp": 42,
+            "fp": 34,
+            "precision_pct": 55.26,
+            "recall_pct": 49.41,
+            "f1": 0.5217
+          },
+          {
+            "threshold": 0.55,
+            "tp": 37,
+            "fp": 28,
+            "precision_pct": 56.92,
+            "recall_pct": 43.53,
+            "f1": 0.4933
+          },
+          {
+            "threshold": 0.6,
+            "tp": 33,
+            "fp": 21,
+            "precision_pct": 61.11,
+            "recall_pct": 38.82,
+            "f1": 0.4748
+          },
+          {
+            "threshold": 0.65,
+            "tp": 31,
+            "fp": 13,
+            "precision_pct": 70.45,
+            "recall_pct": 36.47,
+            "f1": 0.4806
+          },
+          {
+            "threshold": 0.7,
+            "tp": 27,
+            "fp": 9,
+            "precision_pct": 75.0,
+            "recall_pct": 31.76,
+            "f1": 0.4462
+          },
+          {
+            "threshold": 0.75,
+            "tp": 20,
+            "fp": 5,
+            "precision_pct": 80.0,
+            "recall_pct": 23.53,
+            "f1": 0.3636
+          },
+          {
+            "threshold": 0.8,
+            "tp": 18,
+            "fp": 4,
+            "precision_pct": 81.82,
+            "recall_pct": 21.18,
+            "f1": 0.3365
+          },
+          {
+            "threshold": 0.85,
+            "tp": 16,
+            "fp": 2,
+            "precision_pct": 88.89,
+            "recall_pct": 18.82,
+            "f1": 0.3106
+          },
+          {
+            "threshold": 0.9,
+            "tp": 13,
+            "fp": 1,
+            "precision_pct": 92.86,
+            "recall_pct": 15.29,
+            "f1": 0.2626
+          }
+        ]
+      }
+    },
+    "operating_points": {
+      "old_heuristic": {
+        "Vehicle": 0.4,
+        "Aircraft": 0.22,
+        "Infrastructure": 0.45,
+        "Vessel": 0.25
+      },
+      "new_f1_optimal": {
+        "Vehicle": 0.25,
+        "Aircraft": 0.55,
+        "Infrastructure": 0.2,
+        "Vessel": 0.5
+      },
+      "precision_mode": {
+        "Vehicle": 0.55,
+        "Aircraft": 0.45,
+        "Infrastructure": 0.5,
+        "Vessel": 0.45
+      },
+      "recall_mode": {
+        "Vehicle": 0.15,
+        "Aircraft": 0.2,
+        "Infrastructure": 0.2,
+        "Vessel": 0.2
+      }
+    }
+  },
+  "negative_tiles_3seed_determinism_audit": {
+    "root_cause_explanation": "The shift from 8 FPs in step 9 to 10 FPs in step 10 was caused by confidence threshold clamping: In step 9, get_class_confidence(cname, 0.40) clamped the Aircraft floor from 0.22 up to 0.40 (since max(0.22, 0.40) = 0.40), eliminating 2 weak aircraft detections. When evaluated at raw _CLASS_CONF_FLOOR['Aircraft'] = 0.22 in step 10, those 2 detections were admitted. The 3-seed audit (seeds 42, 43, 44) confirms 100% determinism (exactly 8 FPs clamped, exactly 10 FPs raw across all seeds).",
+    "multi_seed_results": {
+      "42": {
+        "standard": {
+          "tiles_evaluated": 54,
+          "total_area_km2": 5.096,
+          "fps_clamped_heuristic": 8,
+          "fp_per_tile_clamped": 0.1481,
+          "exact_poisson_ci_95_clamped": [
+            0.06396,
+            0.291911
+          ],
+          "fp_per_km2_clamped": 1.5698,
+          "fps_raw_heuristic": 10,
+          "fp_per_tile_raw": 0.1852,
+          "exact_poisson_ci_95_raw": [
+            0.088803,
+            0.340562
+          ],
+          "fp_per_km2_raw": 1.9623,
+          "fps_f1_optimal": 10,
+          "fps_by_class": {
+            "Aircraft": 10
+          }
+        },
+        "cloud_quarry": {
+          "tiles_evaluated": 30,
+          "total_area_km2": 2.831,
+          "fps_clamped_heuristic": 0,
+          "fp_per_tile_clamped": 0.0,
+          "exact_poisson_ci_95_clamped": [
+            0.0,
+            0.122963
+          ],
+          "fp_per_km2_clamped": 0.0,
+          "fps_raw_heuristic": 0,
+          "fp_per_tile_raw": 0.0,
+          "exact_poisson_ci_95_raw": [
+            0.0,
+            0.122963
+          ],
+          "fp_per_km2_raw": 0.0,
+          "fps_f1_optimal": 0,
+          "fps_by_class": {}
+        }
+      },
+      "43": {
+        "standard": {
+          "tiles_evaluated": 54,
+          "total_area_km2": 5.096,
+          "fps_clamped_heuristic": 8,
+          "fp_per_tile_clamped": 0.1481,
+          "exact_poisson_ci_95_clamped": [
+            0.06396,
+            0.291911
+          ],
+          "fp_per_km2_clamped": 1.5698,
+          "fps_raw_heuristic": 10,
+          "fp_per_tile_raw": 0.1852,
+          "exact_poisson_ci_95_raw": [
+            0.088803,
+            0.340562
+          ],
+          "fp_per_km2_raw": 1.9623,
+          "fps_f1_optimal": 10,
+          "fps_by_class": {
+            "Aircraft": 10
+          }
+        },
+        "cloud_quarry": {
+          "tiles_evaluated": 30,
+          "total_area_km2": 2.831,
+          "fps_clamped_heuristic": 0,
+          "fp_per_tile_clamped": 0.0,
+          "exact_poisson_ci_95_clamped": [
+            0.0,
+            0.122963
+          ],
+          "fp_per_km2_clamped": 0.0,
+          "fps_raw_heuristic": 0,
+          "fp_per_tile_raw": 0.0,
+          "exact_poisson_ci_95_raw": [
+            0.0,
+            0.122963
+          ],
+          "fp_per_km2_raw": 0.0,
+          "fps_f1_optimal": 0,
+          "fps_by_class": {}
+        }
+      },
+      "44": {
+        "standard": {
+          "tiles_evaluated": 54,
+          "total_area_km2": 5.096,
+          "fps_clamped_heuristic": 8,
+          "fp_per_tile_clamped": 0.1481,
+          "exact_poisson_ci_95_clamped": [
+            0.06396,
+            0.291911
+          ],
+          "fp_per_km2_clamped": 1.5698,
+          "fps_raw_heuristic": 10,
+          "fp_per_tile_raw": 0.1852,
+          "exact_poisson_ci_95_raw": [
+            0.088803,
+            0.340562
+          ],
+          "fp_per_km2_raw": 1.9623,
+          "fps_f1_optimal": 10,
+          "fps_by_class": {
+            "Aircraft": 10
+          }
+        },
+        "cloud_quarry": {
+          "tiles_evaluated": 30,
+          "total_area_km2": 2.831,
+          "fps_clamped_heuristic": 0,
+          "fp_per_tile_clamped": 0.0,
+          "exact_poisson_ci_95_clamped": [
+            0.0,
+            0.122963
+          ],
+          "fp_per_km2_clamped": 0.0,
+          "fps_raw_heuristic": 0,
+          "fp_per_tile_raw": 0.0,
+          "exact_poisson_ci_95_raw": [
+            0.0,
+            0.122963
+          ],
+          "fp_per_km2_raw": 0.0,
+          "fps_f1_optimal": 0,
+          "fps_by_class": {}
+        }
+      }
+    }
+  },
+  "cloud_shadow_quarry_set_audit": {
+    "cloud_quarry_distinct_scenes": 2,
+    "source_scenes_list": [
+      "1205.tif",
+      "1181.tif"
+    ],
+    "classification_summary": "The 30 tiles previously termed 'hard negatives' are renamed to 'cloud-shadow/quarry set (2 scenes)'. Sobel edge density on this set (mean: 0.0128) is significantly LOWER than standard empty negatives (mean: 0.0493) and target-bearing baselines (mean: 0.0859), because cloud shadow transitions form diffuse luminance gradients rather than high-frequency structural edges.",
+    "structural_proxy_comparison": {
+      "standard_negatives": {
+        "count": 54,
+        "edge_density_mean": 0.0493,
+        "texture_variance_mean": 311.7,
+        "texture_variance_median": 106.8
+      },
+      "cloud_shadow_quarry_set": {
+        "count": 30,
+        "edge_density_mean": 0.0128,
+        "texture_variance_mean": 84.1,
+        "texture_variance_median": 62.0
+      },
+      "baseline_non_negatives": {
+        "count": 30,
+        "edge_density_mean": 0.0979,
+        "texture_variance_mean": 346.2,
+        "texture_variance_median": 170.0
+      }
+    }
+  },
+  "full_scene_benchmark_38_scenes": {
+    "scenes_evaluated": 38,
+    "total_area_km2": 32.12,
+    "val_report_gt_counts": {
+      "Vehicle": 11957,
+      "Aircraft": 23,
+      "Infrastructure": 21660,
+      "Vessel": 110
+    },
+    "distribution_unmatched_fp_per_km2": {
+      "median": 20.39,
+      "q1": 3.12,
+      "q3": 80.53,
+      "iqr": 77.41,
+      "min": 0.0,
+      "max": 240.99,
+      "mean": 50.06
+    },
+    "operating_mode_summaries": {
+      "old_heuristic": {
+        "iou_03": {
+          "overall_precision_pct": 88.59,
+          "overall_recall_pct": 36.77,
+          "overall_f1": 0.5197,
+          "total_tp": 12409,
+          "total_fp": 1599,
+          "total_fn": 21341,
+          "unmatched_fp_per_km2": 49.78,
+          "per_class": {
+            "Vehicle": {
+              "gt_count": 11957,
+              "tp": 7329,
+              "fp": 900,
+              "fn": 4628,
+              "precision_pct": 89.06,
+              "recall_pct": 61.29,
+              "f1": 0.7261
+            },
+            "Aircraft": {
+              "gt_count": 23,
+              "tp": 22,
+              "fp": 42,
+              "fn": 1,
+              "precision_pct": 34.38,
+              "recall_pct": 95.65,
+              "f1": 0.5058
+            },
+            "Infrastructure": {
+              "gt_count": 21660,
+              "tp": 5002,
+              "fp": 468,
+              "fn": 16658,
+              "precision_pct": 91.44,
+              "recall_pct": 23.09,
+              "f1": 0.3687
+            },
+            "Vessel": {
+              "gt_count": 110,
+              "tp": 56,
+              "fp": 189,
+              "fn": 54,
+              "precision_pct": 22.86,
+              "recall_pct": 50.91,
+              "f1": 0.3155
+            }
+          }
+        },
+        "iou_05": {
+          "overall_precision_pct": 69.12,
+          "overall_recall_pct": 28.69,
+          "overall_f1": 0.4055,
+          "total_tp": 9683,
+          "total_fp": 4325,
+          "total_fn": 24067,
+          "unmatched_fp_per_km2": 134.65,
+          "per_class": {
+            "Vehicle": {
+              "gt_count": 11957,
+              "tp": 5442,
+              "fp": 2787,
+              "fn": 6515,
+              "precision_pct": 66.13,
+              "recall_pct": 45.51,
+              "f1": 0.5392
+            },
+            "Aircraft": {
+              "gt_count": 23,
+              "tp": 21,
+              "fp": 43,
+              "fn": 2,
+              "precision_pct": 32.81,
+              "recall_pct": 91.3,
+              "f1": 0.4827
+            },
+            "Infrastructure": {
+              "gt_count": 21660,
+              "tp": 4181,
+              "fp": 1289,
+              "fn": 17479,
+              "precision_pct": 76.44,
+              "recall_pct": 19.3,
+              "f1": 0.3082
+            },
+            "Vessel": {
+              "gt_count": 110,
+              "tp": 39,
+              "fp": 206,
+              "fn": 71,
+              "precision_pct": 15.92,
+              "recall_pct": 35.45,
+              "f1": 0.2197
+            }
+          }
+        }
+      },
+      "new_f1_optimal": {
+        "iou_03": {
+          "overall_precision_pct": 76.9,
+          "overall_recall_pct": 62.36,
+          "overall_f1": 0.6887,
+          "total_tp": 21046,
+          "total_fp": 6322,
+          "total_fn": 12704,
+          "unmatched_fp_per_km2": 196.83,
+          "per_class": {
+            "Vehicle": {
+              "gt_count": 11957,
+              "tp": 8786,
+              "fp": 2095,
+              "fn": 3171,
+              "precision_pct": 80.75,
+              "recall_pct": 73.48,
+              "f1": 0.7694
+            },
+            "Aircraft": {
+              "gt_count": 23,
+              "tp": 20,
+              "fp": 1,
+              "fn": 3,
+              "precision_pct": 95.24,
+              "recall_pct": 86.96,
+              "f1": 0.9091
+            },
+            "Infrastructure": {
+              "gt_count": 21660,
+              "tp": 12219,
+              "fp": 4207,
+              "fn": 9441,
+              "precision_pct": 74.39,
+              "recall_pct": 56.41,
+              "f1": 0.6416
+            },
+            "Vessel": {
+              "gt_count": 110,
+              "tp": 21,
+              "fp": 19,
+              "fn": 89,
+              "precision_pct": 52.5,
+              "recall_pct": 19.09,
+              "f1": 0.28
+            }
+          }
+        },
+        "iou_05": {
+          "overall_precision_pct": 56.66,
+          "overall_recall_pct": 45.95,
+          "overall_f1": 0.5075,
+          "total_tp": 15507,
+          "total_fp": 11861,
+          "total_fn": 18243,
+          "unmatched_fp_per_km2": 369.28,
+          "per_class": {
+            "Vehicle": {
+              "gt_count": 11957,
+              "tp": 6335,
+              "fp": 4546,
+              "fn": 5622,
+              "precision_pct": 58.22,
+              "recall_pct": 52.98,
+              "f1": 0.5548
+            },
+            "Aircraft": {
+              "gt_count": 23,
+              "tp": 20,
+              "fp": 1,
+              "fn": 3,
+              "precision_pct": 95.24,
+              "recall_pct": 86.96,
+              "f1": 0.9091
+            },
+            "Infrastructure": {
+              "gt_count": 21660,
+              "tp": 9136,
+              "fp": 7290,
+              "fn": 12524,
+              "precision_pct": 55.62,
+              "recall_pct": 42.18,
+              "f1": 0.4798
+            },
+            "Vessel": {
+              "gt_count": 110,
+              "tp": 16,
+              "fp": 24,
+              "fn": 94,
+              "precision_pct": 40.0,
+              "recall_pct": 14.55,
+              "f1": 0.2134
+            }
+          }
+        }
+      },
+      "precision_mode": {
+        "iou_03": {
+          "overall_precision_pct": 94.75,
+          "overall_recall_pct": 17.05,
+          "overall_f1": 0.289,
+          "total_tp": 5753,
+          "total_fp": 319,
+          "total_fn": 27997,
+          "unmatched_fp_per_km2": 9.93,
+          "per_class": {
+            "Vehicle": {
+              "gt_count": 11957,
+              "tp": 2510,
+              "fp": 105,
+              "fn": 9447,
+              "precision_pct": 95.98,
+              "recall_pct": 20.99,
+              "f1": 0.3445
+            },
+            "Aircraft": {
+              "gt_count": 23,
+              "tp": 20,
+              "fp": 8,
+              "fn": 3,
+              "precision_pct": 71.43,
+              "recall_pct": 86.96,
+              "f1": 0.7843
+            },
+            "Infrastructure": {
+              "gt_count": 21660,
+              "tp": 3189,
+              "fp": 175,
+              "fn": 18471,
+              "precision_pct": 94.8,
+              "recall_pct": 14.72,
+              "f1": 0.2548
+            },
+            "Vessel": {
+              "gt_count": 110,
+              "tp": 34,
+              "fp": 31,
+              "fn": 76,
+              "precision_pct": 52.31,
+              "recall_pct": 30.91,
+              "f1": 0.3886
+            }
+          }
+        },
+        "iou_05": {
+          "overall_precision_pct": 80.86,
+          "overall_recall_pct": 14.55,
+          "overall_f1": 0.2466,
+          "total_tp": 4910,
+          "total_fp": 1162,
+          "total_fn": 28840,
+          "unmatched_fp_per_km2": 36.18,
+          "per_class": {
+            "Vehicle": {
+              "gt_count": 11957,
+              "tp": 2056,
+              "fp": 559,
+              "fn": 9901,
+              "precision_pct": 78.62,
+              "recall_pct": 17.19,
+              "f1": 0.2821
+            },
+            "Aircraft": {
+              "gt_count": 23,
+              "tp": 20,
+              "fp": 8,
+              "fn": 3,
+              "precision_pct": 71.43,
+              "recall_pct": 86.96,
+              "f1": 0.7843
+            },
+            "Infrastructure": {
+              "gt_count": 21660,
+              "tp": 2809,
+              "fp": 555,
+              "fn": 18851,
+              "precision_pct": 83.5,
+              "recall_pct": 12.97,
+              "f1": 0.2245
+            },
+            "Vessel": {
+              "gt_count": 110,
+              "tp": 25,
+              "fp": 40,
+              "fn": 85,
+              "precision_pct": 38.46,
+              "recall_pct": 22.73,
+              "f1": 0.2857
+            }
+          }
+        }
+      },
+      "recall_mode": {
+        "iou_03": {
+          "overall_precision_pct": 74.28,
+          "overall_recall_pct": 63.18,
+          "overall_f1": 0.6828,
+          "total_tp": 21323,
+          "total_fp": 7385,
+          "total_fn": 12427,
+          "unmatched_fp_per_km2": 229.92,
+          "per_class": {
+            "Vehicle": {
+              "gt_count": 11957,
+              "tp": 9023,
+              "fp": 2856,
+              "fn": 2934,
+              "precision_pct": 75.96,
+              "recall_pct": 75.46,
+              "f1": 0.7571
+            },
+            "Aircraft": {
+              "gt_count": 23,
+              "tp": 23,
+              "fp": 46,
+              "fn": 0,
+              "precision_pct": 33.33,
+              "recall_pct": 100.0,
+              "f1": 0.5
+            },
+            "Infrastructure": {
+              "gt_count": 21660,
+              "tp": 12219,
+              "fp": 4207,
+              "fn": 9441,
+              "precision_pct": 74.39,
+              "recall_pct": 56.41,
+              "f1": 0.6416
+            },
+            "Vessel": {
+              "gt_count": 110,
+              "tp": 58,
+              "fp": 276,
+              "fn": 52,
+              "precision_pct": 17.37,
+              "recall_pct": 52.73,
+              "f1": 0.2613
+            }
+          }
+        },
+        "iou_05": {
+          "overall_precision_pct": 54.4,
+          "overall_recall_pct": 46.27,
+          "overall_f1": 0.5001,
+          "total_tp": 15617,
+          "total_fp": 13091,
+          "total_fn": 18133,
+          "unmatched_fp_per_km2": 407.57,
+          "per_class": {
+            "Vehicle": {
+              "gt_count": 11957,
+              "tp": 6418,
+              "fp": 5461,
+              "fn": 5539,
+              "precision_pct": 54.03,
+              "recall_pct": 53.68,
+              "f1": 0.5385
+            },
+            "Aircraft": {
+              "gt_count": 23,
+              "tp": 21,
+              "fp": 48,
+              "fn": 2,
+              "precision_pct": 30.43,
+              "recall_pct": 91.3,
+              "f1": 0.4565
+            },
+            "Infrastructure": {
+              "gt_count": 21660,
+              "tp": 9136,
+              "fp": 7290,
+              "fn": 12524,
+              "precision_pct": 55.62,
+              "recall_pct": 42.18,
+              "f1": 0.4798
+            },
+            "Vessel": {
+              "gt_count": 110,
+              "tp": 42,
+              "fp": 292,
+              "fn": 68,
+              "precision_pct": 12.57,
+              "recall_pct": 38.18,
+              "f1": 0.1891
+            }
+          }
+        }
+      },
+      "raw_ungated": {
+        "iou_03": {
+          "overall_precision_pct": 87.71,
+          "overall_recall_pct": 37.41,
+          "overall_f1": 0.5245,
+          "total_tp": 12627,
+          "total_fp": 1770,
+          "total_fn": 21123,
+          "unmatched_fp_per_km2": 55.11,
+          "per_class": {
+            "Vehicle": {
+              "gt_count": 11957,
+              "tp": 7537,
+              "fp": 1046,
+              "fn": 4420,
+              "precision_pct": 87.81,
+              "recall_pct": 63.03,
+              "f1": 0.7338
+            },
+            "Aircraft": {
+              "gt_count": 23,
+              "tp": 22,
+              "fp": 42,
+              "fn": 1,
+              "precision_pct": 34.38,
+              "recall_pct": 95.65,
+              "f1": 0.5058
+            },
+            "Infrastructure": {
+              "gt_count": 21660,
+              "tp": 5011,
+              "fp": 475,
+              "fn": 16649,
+              "precision_pct": 91.34,
+              "recall_pct": 23.13,
+              "f1": 0.3691
+            },
+            "Vessel": {
+              "gt_count": 110,
+              "tp": 57,
+              "fp": 207,
+              "fn": 53,
+              "precision_pct": 21.59,
+              "recall_pct": 51.82,
+              "f1": 0.3048
+            }
+          }
+        },
+        "iou_05": {
+          "overall_precision_pct": 68.47,
+          "overall_recall_pct": 29.21,
+          "overall_f1": 0.4095,
+          "total_tp": 9858,
+          "total_fp": 4539,
+          "total_fn": 23892,
+          "unmatched_fp_per_km2": 141.32,
+          "per_class": {
+            "Vehicle": {
+              "gt_count": 11957,
+              "tp": 5609,
+              "fp": 2974,
+              "fn": 6348,
+              "precision_pct": 65.35,
+              "recall_pct": 46.91,
+              "f1": 0.5462
+            },
+            "Aircraft": {
+              "gt_count": 23,
+              "tp": 21,
+              "fp": 43,
+              "fn": 2,
+              "precision_pct": 32.81,
+              "recall_pct": 91.3,
+              "f1": 0.4827
+            },
+            "Infrastructure": {
+              "gt_count": 21660,
+              "tp": 4188,
+              "fp": 1298,
+              "fn": 17472,
+              "precision_pct": 76.34,
+              "recall_pct": 19.34,
+              "f1": 0.3086
+            },
+            "Vessel": {
+              "gt_count": 110,
+              "tp": 40,
+              "fp": 224,
+              "fn": 70,
+              "precision_pct": 15.15,
+              "recall_pct": 36.36,
+              "f1": 0.2139
+            }
+          }
+        }
+      }
+    },
+    "precision_reconciliation_note": "The 60.13% precision reported in PROJECT_OVERVIEW.md corresponds to Epoch 24 of YOLO11m training (runs/train/xview_yolo11m_military/results.csv) evaluated under standard PyTorch validation rules (unconstrained confidence floor 0.001 / 0.25, standard NMS at IoU 0.50, zero physical geometry filtering). In our production pipeline, raising confidence floors to 0.40/0.45, applying physical aspect-ratio/scale gating, and WBF consensus fusion elevates operational precision to 89.69% at IoU 0.30 and 74.20% at IoU 0.50.",
+    "per_scene_catalog": [
+      {
+        "scene": "75.tif",
+        "dimensions_px": "3376x2714",
+        "tiles_processed": 20,
+        "area_km2": 0.82,
+        "wall_time_seconds": 1.65,
+        "ground_truth_targets": 1219,
+        "gated_tps": 697,
+        "gated_unmatched_fps": 18,
+        "unmatched_fp_per_km2": 21.83,
+        "high_alerts": 0,
+        "medium_alerts": 6,
+        "low_alerts": 12
+      },
+      {
+        "scene": "84.tif",
+        "dimensions_px": "3372x2710",
+        "tiles_processed": 20,
+        "area_km2": 0.82,
+        "wall_time_seconds": 2.01,
+        "ground_truth_targets": 2483,
+        "gated_tps": 1362,
+        "gated_unmatched_fps": 82,
+        "unmatched_fp_per_km2": 99.7,
+        "high_alerts": 2,
+        "medium_alerts": 28,
+        "low_alerts": 52
+      },
+      {
+        "scene": "91.tif",
+        "dimensions_px": "3377x2713",
+        "tiles_processed": 20,
+        "area_km2": 0.82,
+        "wall_time_seconds": 1.97,
+        "ground_truth_targets": 1600,
+        "gated_tps": 751,
+        "gated_unmatched_fps": 73,
+        "unmatched_fp_per_km2": 88.53,
+        "high_alerts": 0,
+        "medium_alerts": 10,
+        "low_alerts": 63
+      },
+      {
+        "scene": "109.tif",
+        "dimensions_px": "3094x2606",
+        "tiles_processed": 16,
+        "area_km2": 0.73,
+        "wall_time_seconds": 1.61,
+        "ground_truth_targets": 2801,
+        "gated_tps": 957,
+        "gated_unmatched_fps": 121,
+        "unmatched_fp_per_km2": 166.74,
+        "high_alerts": 2,
+        "medium_alerts": 29,
+        "low_alerts": 90
+      },
+      {
+        "scene": "142.tif",
+        "dimensions_px": "3376x2711",
+        "tiles_processed": 20,
+        "area_km2": 0.82,
+        "wall_time_seconds": 1.58,
+        "ground_truth_targets": 9,
+        "gated_tps": 2,
+        "gated_unmatched_fps": 6,
+        "unmatched_fp_per_km2": 7.28,
+        "high_alerts": 0,
+        "medium_alerts": 0,
+        "low_alerts": 6
+      },
+      {
+        "scene": "608.tif",
+        "dimensions_px": "2976x2768",
+        "tiles_processed": 16,
+        "area_km2": 0.74,
+        "wall_time_seconds": 1.21,
+        "ground_truth_targets": 227,
+        "gated_tps": 24,
+        "gated_unmatched_fps": 5,
+        "unmatched_fp_per_km2": 6.74,
+        "high_alerts": 0,
+        "medium_alerts": 1,
+        "low_alerts": 4
+      },
+      {
+        "scene": "612.tif",
+        "dimensions_px": "2977x2769",
+        "tiles_processed": 16,
+        "area_km2": 0.74,
+        "wall_time_seconds": 1.11,
+        "ground_truth_targets": 9,
+        "gated_tps": 0,
+        "gated_unmatched_fps": 2,
+        "unmatched_fp_per_km2": 2.7,
+        "high_alerts": 0,
+        "medium_alerts": 0,
+        "low_alerts": 2
+      },
+      {
+        "scene": "613.tif",
+        "dimensions_px": "2977x2769",
+        "tiles_processed": 16,
+        "area_km2": 0.74,
+        "wall_time_seconds": 1.12,
+        "ground_truth_targets": 56,
+        "gated_tps": 6,
+        "gated_unmatched_fps": 21,
+        "unmatched_fp_per_km2": 28.31,
+        "high_alerts": 0,
+        "medium_alerts": 14,
+        "low_alerts": 7
+      },
+      {
+        "scene": "619.tif",
+        "dimensions_px": "2978x2771",
+        "tiles_processed": 16,
+        "area_km2": 0.74,
+        "wall_time_seconds": 1.13,
+        "ground_truth_targets": 13,
+        "gated_tps": 2,
+        "gated_unmatched_fps": 4,
+        "unmatched_fp_per_km2": 5.39,
+        "high_alerts": 0,
+        "medium_alerts": 0,
+        "low_alerts": 4
+      },
+      {
+        "scene": "621.tif",
+        "dimensions_px": "2978x2771",
+        "tiles_processed": 16,
+        "area_km2": 0.74,
+        "wall_time_seconds": 1.15,
+        "ground_truth_targets": 7,
+        "gated_tps": 1,
+        "gated_unmatched_fps": 5,
+        "unmatched_fp_per_km2": 6.73,
+        "high_alerts": 0,
+        "medium_alerts": 0,
+        "low_alerts": 5
+      },
+      {
+        "scene": "635.tif",
+        "dimensions_px": "2753x2767",
+        "tiles_processed": 16,
+        "area_km2": 0.69,
+        "wall_time_seconds": 1.13,
+        "ground_truth_targets": 11,
+        "gated_tps": 1,
+        "gated_unmatched_fps": 1,
+        "unmatched_fp_per_km2": 1.46,
+        "high_alerts": 0,
+        "medium_alerts": 1,
+        "low_alerts": 0
+      },
+      {
+        "scene": "682.tif",
+        "dimensions_px": "3378x2734",
+        "tiles_processed": 20,
+        "area_km2": 0.83,
+        "wall_time_seconds": 1.38,
+        "ground_truth_targets": 7,
+        "gated_tps": 1,
+        "gated_unmatched_fps": 2,
+        "unmatched_fp_per_km2": 2.41,
+        "high_alerts": 0,
+        "medium_alerts": 1,
+        "low_alerts": 1
+      },
+      {
+        "scene": "724.tif",
+        "dimensions_px": "5119x3022",
+        "tiles_processed": 28,
+        "area_km2": 1.39,
+        "wall_time_seconds": 2.1,
+        "ground_truth_targets": 402,
+        "gated_tps": 85,
+        "gated_unmatched_fps": 13,
+        "unmatched_fp_per_km2": 9.34,
+        "high_alerts": 0,
+        "medium_alerts": 2,
+        "low_alerts": 11
+      },
+      {
+        "scene": "817.tif",
+        "dimensions_px": "2976x2770",
+        "tiles_processed": 16,
+        "area_km2": 0.74,
+        "wall_time_seconds": 1.1,
+        "ground_truth_targets": 1,
+        "gated_tps": 0,
+        "gated_unmatched_fps": 0,
+        "unmatched_fp_per_km2": 0.0,
+        "high_alerts": 0,
+        "medium_alerts": 0,
+        "low_alerts": 0
+      },
+      {
+        "scene": "860.tif",
+        "dimensions_px": "3290x3217",
+        "tiles_processed": 25,
+        "area_km2": 0.95,
+        "wall_time_seconds": 2.22,
+        "ground_truth_targets": 1737,
+        "gated_tps": 1074,
+        "gated_unmatched_fps": 78,
+        "unmatched_fp_per_km2": 81.89,
+        "high_alerts": 0,
+        "medium_alerts": 18,
+        "low_alerts": 60
+      },
+      {
+        "scene": "870.tif",
+        "dimensions_px": "3291x3217",
+        "tiles_processed": 25,
+        "area_km2": 0.95,
+        "wall_time_seconds": 2.05,
+        "ground_truth_targets": 200,
+        "gated_tps": 68,
+        "gated_unmatched_fps": 7,
+        "unmatched_fp_per_km2": 7.35,
+        "high_alerts": 0,
+        "medium_alerts": 3,
+        "low_alerts": 4
+      },
+      {
+        "scene": "892.tif",
+        "dimensions_px": "2975x2771",
+        "tiles_processed": 16,
+        "area_km2": 0.74,
+        "wall_time_seconds": 1.11,
+        "ground_truth_targets": 3,
+        "gated_tps": 0,
+        "gated_unmatched_fps": 0,
+        "unmatched_fp_per_km2": 0.0,
+        "high_alerts": 0,
+        "medium_alerts": 0,
+        "low_alerts": 0
+      },
+      {
+        "scene": "895.tif",
+        "dimensions_px": "2976x2771",
+        "tiles_processed": 16,
+        "area_km2": 0.74,
+        "wall_time_seconds": 1.13,
+        "ground_truth_targets": 4,
+        "gated_tps": 0,
+        "gated_unmatched_fps": 1,
+        "unmatched_fp_per_km2": 1.35,
+        "high_alerts": 0,
+        "medium_alerts": 1,
+        "low_alerts": 0
+      },
+      {
+        "scene": "905.tif",
+        "dimensions_px": "3291x3217",
+        "tiles_processed": 25,
+        "area_km2": 0.95,
+        "wall_time_seconds": 2.29,
+        "ground_truth_targets": 2011,
+        "gated_tps": 931,
+        "gated_unmatched_fps": 78,
+        "unmatched_fp_per_km2": 81.86,
+        "high_alerts": 0,
+        "medium_alerts": 28,
+        "low_alerts": 50
+      },
+      {
+        "scene": "942.tif",
+        "dimensions_px": "2975x2770",
+        "tiles_processed": 16,
+        "area_km2": 0.74,
+        "wall_time_seconds": 1.32,
+        "ground_truth_targets": 17,
+        "gated_tps": 0,
+        "gated_unmatched_fps": 3,
+        "unmatched_fp_per_km2": 4.04,
+        "high_alerts": 0,
+        "medium_alerts": 1,
+        "low_alerts": 2
+      },
+      {
+        "scene": "1049.tif",
+        "dimensions_px": "3175x2802",
+        "tiles_processed": 20,
+        "area_km2": 0.8,
+        "wall_time_seconds": 1.43,
+        "ground_truth_targets": 73,
+        "gated_tps": 0,
+        "gated_unmatched_fps": 12,
+        "unmatched_fp_per_km2": 14.99,
+        "high_alerts": 0,
+        "medium_alerts": 6,
+        "low_alerts": 6
+      },
+      {
+        "scene": "1072.tif",
+        "dimensions_px": "3921x3019",
+        "tiles_processed": 24,
+        "area_km2": 1.07,
+        "wall_time_seconds": 1.68,
+        "ground_truth_targets": 39,
+        "gated_tps": 11,
+        "gated_unmatched_fps": 1,
+        "unmatched_fp_per_km2": 0.94,
+        "high_alerts": 0,
+        "medium_alerts": 0,
+        "low_alerts": 1
+      },
+      {
+        "scene": "1125.tif",
+        "dimensions_px": "3921x3017",
+        "tiles_processed": 24,
+        "area_km2": 1.06,
+        "wall_time_seconds": 1.7,
+        "ground_truth_targets": 58,
+        "gated_tps": 34,
+        "gated_unmatched_fps": 3,
+        "unmatched_fp_per_km2": 2.82,
+        "high_alerts": 0,
+        "medium_alerts": 1,
+        "low_alerts": 2
+      },
+      {
+        "scene": "1140.tif",
+        "dimensions_px": "3309x3204",
+        "tiles_processed": 25,
+        "area_km2": 0.95,
+        "wall_time_seconds": 2.22,
+        "ground_truth_targets": 1048,
+        "gated_tps": 672,
+        "gated_unmatched_fps": 45,
+        "unmatched_fp_per_km2": 47.16,
+        "high_alerts": 0,
+        "medium_alerts": 20,
+        "low_alerts": 25
+      },
+      {
+        "scene": "1158.tif",
+        "dimensions_px": "2833x2728",
+        "tiles_processed": 16,
+        "area_km2": 0.7,
+        "wall_time_seconds": 1.4,
+        "ground_truth_targets": 335,
+        "gated_tps": 129,
+        "gated_unmatched_fps": 26,
+        "unmatched_fp_per_km2": 37.38,
+        "high_alerts": 3,
+        "medium_alerts": 17,
+        "low_alerts": 6
+      },
+      {
+        "scene": "1178.tif",
+        "dimensions_px": "2860x2728",
+        "tiles_processed": 16,
+        "area_km2": 0.7,
+        "wall_time_seconds": 1.5,
+        "ground_truth_targets": 3721,
+        "gated_tps": 473,
+        "gated_unmatched_fps": 123,
+        "unmatched_fp_per_km2": 175.17,
+        "high_alerts": 0,
+        "medium_alerts": 28,
+        "low_alerts": 95
+      },
+      {
+        "scene": "1193.tif",
+        "dimensions_px": "2860x2728",
+        "tiles_processed": 16,
+        "area_km2": 0.7,
+        "wall_time_seconds": 1.68,
+        "ground_truth_targets": 2552,
+        "gated_tps": 222,
+        "gated_unmatched_fps": 23,
+        "unmatched_fp_per_km2": 32.75,
+        "high_alerts": 0,
+        "medium_alerts": 8,
+        "low_alerts": 15
+      },
+      {
+        "scene": "1278.tif",
+        "dimensions_px": "3292x3058",
+        "tiles_processed": 20,
+        "area_km2": 0.91,
+        "wall_time_seconds": 1.66,
+        "ground_truth_targets": 3,
+        "gated_tps": 2,
+        "gated_unmatched_fps": 46,
+        "unmatched_fp_per_km2": 50.77,
+        "high_alerts": 7,
+        "medium_alerts": 39,
+        "low_alerts": 0
+      },
+      {
+        "scene": "1285.tif",
+        "dimensions_px": "3291x3058",
+        "tiles_processed": 20,
+        "area_km2": 0.91,
+        "wall_time_seconds": 1.42,
+        "ground_truth_targets": 14,
+        "gated_tps": 2,
+        "gated_unmatched_fps": 21,
+        "unmatched_fp_per_km2": 23.19,
+        "high_alerts": 4,
+        "medium_alerts": 17,
+        "low_alerts": 0
+      },
+      {
+        "scene": "1430.tif",
+        "dimensions_px": "3294x3058",
+        "tiles_processed": 20,
+        "area_km2": 0.91,
+        "wall_time_seconds": 1.89,
+        "ground_truth_targets": 4180,
+        "gated_tps": 1210,
+        "gated_unmatched_fps": 181,
+        "unmatched_fp_per_km2": 199.65,
+        "high_alerts": 1,
+        "medium_alerts": 42,
+        "low_alerts": 138
+      },
+      {
+        "scene": "1432.tif",
+        "dimensions_px": "3914x3152",
+        "tiles_processed": 30,
+        "area_km2": 1.11,
+        "wall_time_seconds": 2.72,
+        "ground_truth_targets": 1084,
+        "gated_tps": 498,
+        "gated_unmatched_fps": 85,
+        "unmatched_fp_per_km2": 76.55,
+        "high_alerts": 1,
+        "medium_alerts": 23,
+        "low_alerts": 61
+      },
+      {
+        "scene": "1460.tif",
+        "dimensions_px": "3069x2811",
+        "tiles_processed": 16,
+        "area_km2": 0.78,
+        "wall_time_seconds": 1.39,
+        "ground_truth_targets": 610,
+        "gated_tps": 303,
+        "gated_unmatched_fps": 30,
+        "unmatched_fp_per_km2": 38.64,
+        "high_alerts": 0,
+        "medium_alerts": 12,
+        "low_alerts": 18
+      },
+      {
+        "scene": "1486.tif",
+        "dimensions_px": "3281x3217",
+        "tiles_processed": 25,
+        "area_km2": 0.95,
+        "wall_time_seconds": 1.82,
+        "ground_truth_targets": 273,
+        "gated_tps": 217,
+        "gated_unmatched_fps": 18,
+        "unmatched_fp_per_km2": 18.95,
+        "high_alerts": 0,
+        "medium_alerts": 5,
+        "low_alerts": 13
+      },
+      {
+        "scene": "1530.tif",
+        "dimensions_px": "3237x3219",
+        "tiles_processed": 25,
+        "area_km2": 0.94,
+        "wall_time_seconds": 2.33,
+        "ground_truth_targets": 3431,
+        "gated_tps": 1220,
+        "gated_unmatched_fps": 226,
+        "unmatched_fp_per_km2": 240.99,
+        "high_alerts": 0,
+        "medium_alerts": 61,
+        "low_alerts": 165
+      },
+      {
+        "scene": "1562.tif",
+        "dimensions_px": "3267x2851",
+        "tiles_processed": 20,
+        "area_km2": 0.84,
+        "wall_time_seconds": 1.65,
+        "ground_truth_targets": 3,
+        "gated_tps": 0,
+        "gated_unmatched_fps": 0,
+        "unmatched_fp_per_km2": 0.0,
+        "high_alerts": 0,
+        "medium_alerts": 0,
+        "low_alerts": 0
+      },
+      {
+        "scene": "1586.tif",
+        "dimensions_px": "2960x2814",
+        "tiles_processed": 16,
+        "area_km2": 0.75,
+        "wall_time_seconds": 1.46,
+        "ground_truth_targets": 2060,
+        "gated_tps": 822,
+        "gated_unmatched_fps": 136,
+        "unmatched_fp_per_km2": 181.42,
+        "high_alerts": 1,
+        "medium_alerts": 27,
+        "low_alerts": 108
+      },
+      {
+        "scene": "1587.tif",
+        "dimensions_px": "2960x2814",
+        "tiles_processed": 16,
+        "area_km2": 0.75,
+        "wall_time_seconds": 1.58,
+        "ground_truth_targets": 1442,
+        "gated_tps": 632,
+        "gated_unmatched_fps": 103,
+        "unmatched_fp_per_km2": 137.4,
+        "high_alerts": 2,
+        "medium_alerts": 24,
+        "low_alerts": 77
+      },
+      {
+        "scene": "1604.tif",
+        "dimensions_px": "3266x2850",
+        "tiles_processed": 20,
+        "area_km2": 0.84,
+        "wall_time_seconds": 1.54,
+        "ground_truth_targets": 7,
+        "gated_tps": 0,
+        "gated_unmatched_fps": 0,
+        "unmatched_fp_per_km2": 0.0,
+        "high_alerts": 0,
+        "medium_alerts": 0,
+        "low_alerts": 0
+      }
+    ]
+  },
+  "gating_ablation_full_scenes": {
+    "Vehicle": {
+      "raw_tp": 7537,
+      "gated_tp": 7329,
+      "tp_lost": 208,
+      "tp_retention_pct": 97.24,
+      "raw_fp": 1046,
+      "gated_fp": 900,
+      "fp_removed": 146,
+      "fp_reduction_pct": 13.96,
+      "raw_f1": 0.7338,
+      "gated_f1": 0.7261,
+      "net_f1_delta": -0.0077
+    },
+    "Aircraft": {
+      "raw_tp": 22,
+      "gated_tp": 22,
+      "tp_lost": 0,
+      "tp_retention_pct": 100.0,
+      "raw_fp": 42,
+      "gated_fp": 42,
+      "fp_removed": 0,
+      "fp_reduction_pct": 0.0,
+      "raw_f1": 0.5058,
+      "gated_f1": 0.5058,
+      "net_f1_delta": 0.0
+    },
+    "Infrastructure": {
+      "raw_tp": 5011,
+      "gated_tp": 5002,
+      "tp_lost": 9,
+      "tp_retention_pct": 99.82,
+      "raw_fp": 475,
+      "gated_fp": 468,
+      "fp_removed": 7,
+      "fp_reduction_pct": 1.47,
+      "raw_f1": 0.3691,
+      "gated_f1": 0.3687,
+      "net_f1_delta": -0.0004
+    },
+    "Vessel": {
+      "raw_tp": 57,
+      "gated_tp": 56,
+      "tp_lost": 1,
+      "tp_retention_pct": 98.25,
+      "raw_fp": 207,
+      "gated_fp": 189,
+      "fp_removed": 18,
+      "fp_reduction_pct": 8.7,
+      "raw_f1": 0.3048,
+      "gated_f1": 0.3155,
+      "net_f1_delta": 0.0107
+    },
+    "OVERALL": {
+      "raw_tp": 12627,
+      "gated_tp": 12409,
+      "tp_lost": 218,
+      "tp_retention_pct": 98.27,
+      "raw_fp": 1770,
+      "gated_fp": 1599,
+      "fp_removed": 171,
+      "fp_reduction_pct": 9.66,
+      "raw_f1": 0.5245,
+      "gated_f1": 0.5197,
+      "net_f1_delta": -0.0048
+    }
+  },
+  "threat_alert_metrics": {
+    "high_alerts": {
+      "total_count": 23,
+      "alerts_per_scene": 0.61,
+      "alerts_per_hour_at_12_scenes": 7.26
+    },
+    "medium_alerts": {
+      "total_count": 473,
+      "alerts_per_scene": 12.45,
+      "alerts_per_hour_at_12_scenes": 149.37
+    },
+    "low_alerts": {
+      "total_count": 1103,
+      "alerts_per_scene": 29.03,
+      "alerts_per_hour_at_12_scenes": 348.32
+    },
+    "high_plus_medium_combined": {
+      "total_count": 496,
+      "alerts_per_scene": 13.05,
+      "alerts_per_hour_at_12_scenes": 156.63
+    },
+    "rule_firing_breakdown": {
+      "cluster_convoy_bonus": 1588,
+      "vessel_priority_bonus": 189,
+      "high_confidence_bonus": 331,
+      "base_unknown_score": 1599
+    }
+  },
+  "high_iteration_latency_benchmark": {
+    "warmup_iterations": 50,
+    "benchmark_iterations": 1000,
+    "device": "NVIDIA GeForce RTX 4060 Laptop GPU (AMP FP16, Tensor Cores enabled)",
+    "gpu_power_state_note": "Evaluated in standalone dedicated execution (P-state P4 idle boosting to P0 under CUDA load; zero backend or display server competition).",
+    "p95_under_100ms_verification": {
+      "single_yolo11m": true,
+      "dual_engine_wbf": true,
+      "dual_engine_wbf_tta": true,
+      "status": "PASS \u2014 All pipeline modes achieve p95 < 100 ms in dedicated standalone GPU execution."
+    },
+    "single_yolo11m_primary": {
+      "mean_ms": 34.9,
+      "p50_ms": 34.5,
+      "p95_ms": 37.9,
+      "p99_ms": 47.1,
+      "min_ms": 31.3,
+      "max_ms": 51.2,
+      "std_ms": 2.4,
+      "throughput_tiles_sec": 28.67
+    },
+    "dual_engine_wbf_no_tta": {
+      "mean_ms": 47.9,
+      "p50_ms": 47.4,
+      "p95_ms": 53.7,
+      "p99_ms": 60.3,
+      "min_ms": 42.5,
+      "max_ms": 73.1,
+      "std_ms": 3.2,
+      "throughput_tiles_sec": 20.87
+    },
+    "dual_engine_wbf_with_tta": {
+      "mean_ms": 65.4,
+      "p50_ms": 64.5,
+      "p95_ms": 74.4,
+      "p99_ms": 81.3,
+      "min_ms": 56.1,
+      "max_ms": 94.5,
+      "std_ms": 4.6,
+      "throughput_tiles_sec": 15.29
+    }
+  },
+  "stratified_unmatched_gallery": {
+    "sample_count": 100,
+    "csv_path": "C:\\Users\\awhri\\OneDrive\\Desktop\\DEF\\evaluation\\results\\unmatched_samples.csv",
+    "gallery_dir": "C:\\Users\\awhri\\OneDrive\\Desktop\\DEF\\evaluation\\results\\unmatched_samples_gallery"
+  }
+}

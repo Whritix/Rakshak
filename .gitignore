@@ -38,6 +38,10 @@ runs/detect/
 # Database temporary WAL locks
 backend/rakshak.db-shm
 backend/rakshak.db-wal
+backend/command_inbox.db*
+backend/edge_outbox.db*
+tests/test_dbs/*.db*
+evaluation/sim_dbs/
 
 # Environment & Secrets
 .env

@@ -1,0 +1,2115 @@
+{
+  "benchmark": "Project Rakshak 2.0 \u2014 Negative Satellite Tile Manifest",
+  "timestamp_utc": "2026-10-09T17:35:22Z",
+  "partition_guarantee": "100% val_report Scenes (Zero Threshold-Tuning / Training Leakage)",
+  "summary": {
+    "standard_tiles": 54,
+    "hard_tiles": 30,
+    "distinct_source_scenes_standard": 6,
+    "distinct_source_scenes_hard": 2
+  },
+  "standard_tiles": [
+    {
+      "tile_id": "NEG_TILE-001",
+      "filename": "neg_tile_001_empty_sea.jpg",
+      "path": "C:\\Users\\awhri\\OneDrive\\Desktop\\DEF\\evaluation\\negative_tiles\\neg_tile_001_empty_sea.jpg",
+      "source_scene": "1285.tif",
+      "val_half": "val_report",
+      "dataset_split": "pure_val_report",
+      "crop_box": [
+        0,
+        384,
+        1024,
+        1408
+      ],
+      "terrain_type": "empty_sea",
+      "structural_proxies": {
+        "edge_density": 0.0,
+        "texture_variance": 140.9,
+        "intensity_std": 2.9,
+        "is_plain_terrain": false
+      },
+      "selection_rule": "Certified 0 GT within 50px buffer in val_report scene 1285.tif; Edge density=0.0, Texture variance=140.9",
+      "verified_empty": true,
+      "gt_overlap_count": 0,
+      "buffer_margin_px": 50
+    },
+    {
+      "tile_id": "NEG_TILE-002",
+      "filename": "neg_tile_002_empty_sea.jpg",
+      "path": "C:\\Users\\awhri\\OneDrive\\Desktop\\DEF\\evaluation\\negative_tiles\\neg_tile_002_empty_sea.jpg",
+      "source_scene": "1285.tif",
+      "val_half": "val_report",
+      "dataset_split": "pure_val_report",
+      "crop_box": [
+        384,
+        384,
+        1408,
+        1408
+      ],
+      "terrain_type": "empty_sea",
+      "structural_proxies": {
+        "edge_density": 0.0,
+        "texture_variance": 145.7,
+        "intensity_std": 2.9,
+        "is_plain_terrain": false
+      },
+      "selection_rule": "Certified 0 GT within 50px buffer in val_report scene 1285.tif; Edge density=0.0, Texture variance=145.7",
+      "verified_empty": true,
+      "gt_overlap_count": 0,
+      "buffer_margin_px": 50
+    },
+    {
+      "tile_id": "NEG_TILE-003",
+      "filename": "neg_tile_003_empty_sea.jpg",
+      "path": "C:\\Users\\awhri\\OneDrive\\Desktop\\DEF\\evaluation\\negative_tiles\\neg_tile_003_empty_sea.jpg",
+      "source_scene": "1285.tif",
+      "val_half": "val_report",
+      "dataset_split": "pure_val_report",
+      "crop_box": [
+        768,
+        384,
+        1792,
+        1408
+      ],
+      "terrain_type": "empty_sea",
+      "structural_proxies": {
+        "edge_density": 0.0006,
+        "texture_variance": 159.5,
+        "intensity_std": 3.2,
+        "is_plain_terrain": false
+      },
+      "selection_rule": "Certified 0 GT within 50px buffer in val_report scene 1285.tif; Edge density=0.0006, Texture variance=159.5",
+      "verified_empty": true,
+      "gt_overlap_count": 0,
+      "buffer_margin_px": 50
+    },
+    {
+      "tile_id": "NEG_TILE-004",
+      "filename": "neg_tile_004_empty_sea.jpg",
+      "path": "C:\\Users\\awhri\\OneDrive\\Desktop\\DEF\\evaluation\\negative_tiles\\neg_tile_004_empty_sea.jpg",
+      "source_scene": "1285.tif",
+      "val_half": "val_report",
+      "dataset_split": "pure_val_report",
+      "crop_box": [
+        384,
+        768,
+        1408,
+        1792
+      ],
+      "terrain_type": "empty_sea",
+      "structural_proxies": {
+        "edge_density": 0.0,
+        "texture_variance": 142.2,
+        "intensity_std": 2.9,
+        "is_plain_terrain": false
+      },
+      "selection_rule": "Certified 0 GT within 50px buffer in val_report scene 1285.tif; Edge density=0.0, Texture variance=142.2",
+      "verified_empty": true,
+      "gt_overlap_count": 0,
+      "buffer_margin_px": 50
+    },
+    {
+      "tile_id": "NEG_TILE-005",
+      "filename": "neg_tile_005_empty_sea.jpg",
+      "path": "C:\\Users\\awhri\\OneDrive\\Desktop\\DEF\\evaluation\\negative_tiles\\neg_tile_005_empty_sea.jpg",
+      "source_scene": "1285.tif",
+      "val_half": "val_report",
+      "dataset_split": "pure_val_report",
+      "crop_box": [
+        768,
+        768,
+        1792,
+        1792
+      ],
+      "terrain_type": "empty_sea",
+      "structural_proxies": {
+        "edge_density": 0.0001,
+        "texture_variance": 156.1,
+        "intensity_std": 3.1,
+        "is_plain_terrain": false
+      },
+      "selection_rule": "Certified 0 GT within 50px buffer in val_report scene 1285.tif; Edge density=0.0001, Texture variance=156.1",
+      "verified_empty": true,
+      "gt_overlap_count": 0,
+      "buffer_margin_px": 50
+    },
+    {
+      "tile_id": "NEG_TILE-006",
+      "filename": "neg_tile_006_empty_sea.jpg",
+      "path": "C:\\Users\\awhri\\OneDrive\\Desktop\\DEF\\evaluation\\negative_tiles\\neg_tile_006_empty_sea.jpg",
+      "source_scene": "1285.tif",
+      "val_half": "val_report",
+      "dataset_split": "pure_val_report",
+      "crop_box": [
+        768,
+        1152,
+        1792,
+        2176
+      ],
+      "terrain_type": "empty_sea",
+      "structural_proxies": {
+        "edge_density": 0.0001,
+        "texture_variance": 151.0,
+        "intensity_std": 3.0,
+        "is_plain_terrain": false
+      },
+      "selection_rule": "Certified 0 GT within 50px buffer in val_report scene 1285.tif; Edge density=0.0001, Texture variance=151.0",
+      "verified_empty": true,
+      "gt_overlap_count": 0,
+      "buffer_margin_px": 50
+    },
+    {
+      "tile_id": "NEG_TILE-007",
+      "filename": "neg_tile_007_empty_sea.jpg",
+      "path": "C:\\Users\\awhri\\OneDrive\\Desktop\\DEF\\evaluation\\negative_tiles\\neg_tile_007_empty_sea.jpg",
+      "source_scene": "1285.tif",
+      "val_half": "val_report",
+      "dataset_split": "pure_val_report",
+      "crop_box": [
+        1152,
+        1152,
+        2176,
+        2176
+      ],
+      "terrain_type": "empty_sea",
+      "structural_proxies": {
+        "edge_density": 0.0001,
+        "texture_variance": 171.6,
+        "intensity_std": 3.1,
+        "is_plain_terrain": false
+      },
+      "selection_rule": "Certified 0 GT within 50px buffer in val_report scene 1285.tif; Edge density=0.0001, Texture variance=171.6",
+      "verified_empty": true,
+      "gt_overlap_count": 0,
+      "buffer_margin_px": 50
+    },
+    {
+      "tile_id": "NEG_TILE-008",
+      "filename": "neg_tile_008_empty_sea.jpg",
+      "path": "C:\\Users\\awhri\\OneDrive\\Desktop\\DEF\\evaluation\\negative_tiles\\neg_tile_008_empty_sea.jpg",
+      "source_scene": "1285.tif",
+      "val_half": "val_report",
+      "dataset_split": "pure_val_report",
+      "crop_box": [
+        1536,
+        1152,
+        2560,
+        2176
+      ],
+      "terrain_type": "empty_sea",
+      "structural_proxies": {
+        "edge_density": 0.0,
+        "texture_variance": 191.8,
+        "intensity_std": 3.3,
+        "is_plain_terrain": false
+      },
+      "selection_rule": "Certified 0 GT within 50px buffer in val_report scene 1285.tif; Edge density=0.0, Texture variance=191.8",
+      "verified_empty": true,
+      "gt_overlap_count": 0,
+      "buffer_margin_px": 50
+    },
+    {
+      "tile_id": "NEG_TILE-009",
+      "filename": "neg_tile_009_empty_sea.jpg",
+      "path": "C:\\Users\\awhri\\OneDrive\\Desktop\\DEF\\evaluation\\negative_tiles\\neg_tile_009_empty_sea.jpg",
+      "source_scene": "1285.tif",
+      "val_half": "val_report",
+      "dataset_split": "pure_val_report",
+      "crop_box": [
+        1920,
+        1152,
+        2944,
+        2176
+      ],
+      "terrain_type": "empty_sea",
+      "structural_proxies": {
+        "edge_density": 0.0,
+        "texture_variance": 197.3,
+        "intensity_std": 3.3,
+        "is_plain_terrain": false
+      },
+      "selection_rule": "Certified 0 GT within 50px buffer in val_report scene 1285.tif; Edge density=0.0, Texture variance=197.3",
+      "verified_empty": true,
+      "gt_overlap_count": 0,
+      "buffer_margin_px": 50
+    },
+    {
+      "tile_id": "NEG_TILE-010",
+      "filename": "neg_tile_010_empty_sea.jpg",
+      "path": "C:\\Users\\awhri\\OneDrive\\Desktop\\DEF\\evaluation\\negative_tiles\\neg_tile_010_empty_sea.jpg",
+      "source_scene": "1285.tif",
+      "val_half": "val_report",
+      "dataset_split": "pure_val_report",
+      "crop_box": [
+        768,
+        1536,
+        1792,
+        2560
+      ],
+      "terrain_type": "empty_sea",
+      "structural_proxies": {
+        "edge_density": 0.0,
+        "texture_variance": 139.1,
+        "intensity_std": 2.9,
+        "is_plain_terrain": false
+      },
+      "selection_rule": "Certified 0 GT within 50px buffer in val_report scene 1285.tif; Edge density=0.0, Texture variance=139.1",
+      "verified_empty": true,
+      "gt_overlap_count": 0,
+      "buffer_margin_px": 50
+    },
+    {
+      "tile_id": "NEG_TILE-011",
+      "filename": "neg_tile_011_empty_sea.jpg",
+      "path": "C:\\Users\\awhri\\OneDrive\\Desktop\\DEF\\evaluation\\negative_tiles\\neg_tile_011_empty_sea.jpg",
+      "source_scene": "1285.tif",
+      "val_half": "val_report",
+      "dataset_split": "pure_val_report",
+      "crop_box": [
+        1152,
+        1536,
+        2176,
+        2560
+      ],
+      "terrain_type": "empty_sea",
+      "structural_proxies": {
+        "edge_density": 0.0,
+        "texture_variance": 162.3,
+        "intensity_std": 3.0,
+        "is_plain_terrain": false
+      },
+      "selection_rule": "Certified 0 GT within 50px buffer in val_report scene 1285.tif; Edge density=0.0, Texture variance=162.3",
+      "verified_empty": true,
+      "gt_overlap_count": 0,
+      "buffer_margin_px": 50
+    },
+    {
+      "tile_id": "NEG_TILE-012",
+      "filename": "neg_tile_012_empty_sea.jpg",
+      "path": "C:\\Users\\awhri\\OneDrive\\Desktop\\DEF\\evaluation\\negative_tiles\\neg_tile_012_empty_sea.jpg",
+      "source_scene": "1285.tif",
+      "val_half": "val_report",
+      "dataset_split": "pure_val_report",
+      "crop_box": [
+        1536,
+        1536,
+        2560,
+        2560
+      ],
+      "terrain_type": "empty_sea",
+      "structural_proxies": {
+        "edge_density": 0.0001,
+        "texture_variance": 182.3,
+        "intensity_std": 3.2,
+        "is_plain_terrain": false
+      },
+      "selection_rule": "Certified 0 GT within 50px buffer in val_report scene 1285.tif; Edge density=0.0001, Texture variance=182.3",
+      "verified_empty": true,
+      "gt_overlap_count": 0,
+      "buffer_margin_px": 50
+    },
+    {
+      "tile_id": "NEG_TILE-013",
+      "filename": "neg_tile_013_empty_sea.jpg",
+      "path": "C:\\Users\\awhri\\OneDrive\\Desktop\\DEF\\evaluation\\negative_tiles\\neg_tile_013_empty_sea.jpg",
+      "source_scene": "1285.tif",
+      "val_half": "val_report",
+      "dataset_split": "pure_val_report",
+      "crop_box": [
+        1920,
+        1536,
+        2944,
+        2560
+      ],
+      "terrain_type": "empty_sea",
+      "structural_proxies": {
+        "edge_density": 0.0001,
+        "texture_variance": 189.1,
+        "intensity_std": 3.3,
+        "is_plain_terrain": false
+      },
+      "selection_rule": "Certified 0 GT within 50px buffer in val_report scene 1285.tif; Edge density=0.0001, Texture variance=189.1",
+      "verified_empty": true,
+      "gt_overlap_count": 0,
+      "buffer_margin_px": 50
+    },
+    {
+      "tile_id": "NEG_TILE-014",
+      "filename": "neg_tile_014_empty_sea.jpg",
+      "path": "C:\\Users\\awhri\\OneDrive\\Desktop\\DEF\\evaluation\\negative_tiles\\neg_tile_014_empty_sea.jpg",
+      "source_scene": "1285.tif",
+      "val_half": "val_report",
+      "dataset_split": "pure_val_report",
+      "crop_box": [
+        1152,
+        1920,
+        2176,
+        2944
+      ],
+      "terrain_type": "empty_sea",
+      "structural_proxies": {
+        "edge_density": 0.0,
+        "texture_variance": 148.4,
+        "intensity_std": 2.9,
+        "is_plain_terrain": false
+      },
+      "selection_rule": "Certified 0 GT within 50px buffer in val_report scene 1285.tif; Edge density=0.0, Texture variance=148.4",
+      "verified_empty": true,
+      "gt_overlap_count": 0,
+      "buffer_margin_px": 50
+    },
+    {
+      "tile_id": "NEG_TILE-015",
+      "filename": "neg_tile_015_empty_sea.jpg",
+      "path": "C:\\Users\\awhri\\OneDrive\\Desktop\\DEF\\evaluation\\negative_tiles\\neg_tile_015_empty_sea.jpg",
+      "source_scene": "1285.tif",
+      "val_half": "val_report",
+      "dataset_split": "pure_val_report",
+      "crop_box": [
+        1536,
+        1920,
+        2560,
+        2944
+      ],
+      "terrain_type": "empty_sea",
+      "structural_proxies": {
+        "edge_density": 0.0001,
+        "texture_variance": 168.5,
+        "intensity_std": 3.1,
+        "is_plain_terrain": false
+      },
+      "selection_rule": "Certified 0 GT within 50px buffer in val_report scene 1285.tif; Edge density=0.0001, Texture variance=168.5",
+      "verified_empty": true,
+      "gt_overlap_count": 0,
+      "buffer_margin_px": 50
+    },
+    {
+      "tile_id": "NEG_TILE-016",
+      "filename": "neg_tile_016_empty_sea.jpg",
+      "path": "C:\\Users\\awhri\\OneDrive\\Desktop\\DEF\\evaluation\\negative_tiles\\neg_tile_016_empty_sea.jpg",
+      "source_scene": "1285.tif",
+      "val_half": "val_report",
+      "dataset_split": "pure_val_report",
+      "crop_box": [
+        1920,
+        1920,
+        2944,
+        2944
+      ],
+      "terrain_type": "empty_sea",
+      "structural_proxies": {
+        "edge_density": 0.0001,
+        "texture_variance": 176.4,
+        "intensity_std": 3.1,
+        "is_plain_terrain": false
+      },
+      "selection_rule": "Certified 0 GT within 50px buffer in val_report scene 1285.tif; Edge density=0.0001, Texture variance=176.4",
+      "verified_empty": true,
+      "gt_overlap_count": 0,
+      "buffer_margin_px": 50
+    },
+    {
+      "tile_id": "NEG_TILE-017",
+      "filename": "neg_tile_017_empty_sea.jpg",
+      "path": "C:\\Users\\awhri\\OneDrive\\Desktop\\DEF\\evaluation\\negative_tiles\\neg_tile_017_empty_sea.jpg",
+      "source_scene": "724.tif",
+      "val_half": "val_report",
+      "dataset_split": "pure_val_report",
+      "crop_box": [
+        1920,
+        384,
+        2944,
+        1408
+      ],
+      "terrain_type": "empty_sea",
+      "structural_proxies": {
+        "edge_density": 0.0021,
+        "texture_variance": 32.9,
+        "intensity_std": 10.4,
+        "is_plain_terrain": true
+      },
+      "selection_rule": "Certified 0 GT within 50px buffer in val_report scene 724.tif; Edge density=0.0021, Texture variance=32.9",
+      "verified_empty": true,
+      "gt_overlap_count": 0,
+      "buffer_margin_px": 50
+    },
+    {
+      "tile_id": "NEG_TILE-018",
+      "filename": "neg_tile_018_empty_sea.jpg",
+      "path": "C:\\Users\\awhri\\OneDrive\\Desktop\\DEF\\evaluation\\negative_tiles\\neg_tile_018_empty_sea.jpg",
+      "source_scene": "724.tif",
+      "val_half": "val_report",
+      "dataset_split": "pure_val_report",
+      "crop_box": [
+        1920,
+        768,
+        2944,
+        1792
+      ],
+      "terrain_type": "empty_sea",
+      "structural_proxies": {
+        "edge_density": 0.0013,
+        "texture_variance": 31.7,
+        "intensity_std": 8.3,
+        "is_plain_terrain": true
+      },
+      "selection_rule": "Certified 0 GT within 50px buffer in val_report scene 724.tif; Edge density=0.0013, Texture variance=31.7",
+      "verified_empty": true,
+      "gt_overlap_count": 0,
+      "buffer_margin_px": 50
+    },
+    {
+      "tile_id": "NEG_TILE-001",
+      "filename": "neg_tile_001_empty_desert_arid.jpg",
+      "path": "C:\\Users\\awhri\\OneDrive\\Desktop\\DEF\\evaluation\\negative_tiles\\neg_tile_001_empty_desert_arid.jpg",
+      "source_scene": "1125.tif",
+      "val_half": "val_report",
+      "dataset_split": "pure_val_report",
+      "crop_box": [
+        2688,
+        768,
+        3712,
+        1792
+      ],
+      "terrain_type": "empty_desert_arid",
+      "structural_proxies": {
+        "edge_density": 0.0197,
+        "texture_variance": 113.0,
+        "intensity_std": 19.1,
+        "is_plain_terrain": false
+      },
+      "selection_rule": "Certified 0 GT within 50px buffer in val_report scene 1125.tif; Edge density=0.0197, Texture variance=113.0",
+      "verified_empty": true,
+      "gt_overlap_count": 0,
+      "buffer_margin_px": 50
+    },
+    {
+      "tile_id": "NEG_TILE-002",
+      "filename": "neg_tile_002_empty_desert_arid.jpg",
+      "path": "C:\\Users\\awhri\\OneDrive\\Desktop\\DEF\\evaluation\\negative_tiles\\neg_tile_002_empty_desert_arid.jpg",
+      "source_scene": "1125.tif",
+      "val_half": "val_report",
+      "dataset_split": "pure_val_report",
+      "crop_box": [
+        0,
+        1536,
+        1024,
+        2560
+      ],
+      "terrain_type": "empty_desert_arid",
+      "structural_proxies": {
+        "edge_density": 0.0103,
+        "texture_variance": 96.9,
+        "intensity_std": 8.5,
+        "is_plain_terrain": false
+      },
+      "selection_rule": "Certified 0 GT within 50px buffer in val_report scene 1125.tif; Edge density=0.0103, Texture variance=96.9",
+      "verified_empty": true,
+      "gt_overlap_count": 0,
+      "buffer_margin_px": 50
+    },
+    {
+      "tile_id": "NEG_TILE-003",
+      "filename": "neg_tile_003_empty_desert_arid.jpg",
+      "path": "C:\\Users\\awhri\\OneDrive\\Desktop\\DEF\\evaluation\\negative_tiles\\neg_tile_003_empty_desert_arid.jpg",
+      "source_scene": "1125.tif",
+      "val_half": "val_report",
+      "dataset_split": "pure_val_report",
+      "crop_box": [
+        384,
+        1536,
+        1408,
+        2560
+      ],
+      "terrain_type": "empty_desert_arid",
+      "structural_proxies": {
+        "edge_density": 0.0131,
+        "texture_variance": 110.0,
+        "intensity_std": 9.8,
+        "is_plain_terrain": false
+      },
+      "selection_rule": "Certified 0 GT within 50px buffer in val_report scene 1125.tif; Edge density=0.0131, Texture variance=110.0",
+      "verified_empty": true,
+      "gt_overlap_count": 0,
+      "buffer_margin_px": 50
+    },
+    {
+      "tile_id": "NEG_TILE-004",
+      "filename": "neg_tile_004_empty_desert_arid.jpg",
+      "path": "C:\\Users\\awhri\\OneDrive\\Desktop\\DEF\\evaluation\\negative_tiles\\neg_tile_004_empty_desert_arid.jpg",
+      "source_scene": "1125.tif",
+      "val_half": "val_report",
+      "dataset_split": "pure_val_report",
+      "crop_box": [
+        768,
+        1536,
+        1792,
+        2560
+      ],
+      "terrain_type": "empty_desert_arid",
+      "structural_proxies": {
+        "edge_density": 0.0098,
+        "texture_variance": 103.5,
+        "intensity_std": 9.8,
+        "is_plain_terrain": false
+      },
+      "selection_rule": "Certified 0 GT within 50px buffer in val_report scene 1125.tif; Edge density=0.0098, Texture variance=103.5",
+      "verified_empty": true,
+      "gt_overlap_count": 0,
+      "buffer_margin_px": 50
+    },
+    {
+      "tile_id": "NEG_TILE-005",
+      "filename": "neg_tile_005_empty_desert_arid.jpg",
+      "path": "C:\\Users\\awhri\\OneDrive\\Desktop\\DEF\\evaluation\\negative_tiles\\neg_tile_005_empty_desert_arid.jpg",
+      "source_scene": "1125.tif",
+      "val_half": "val_report",
+      "dataset_split": "pure_val_report",
+      "crop_box": [
+        1152,
+        1536,
+        2176,
+        2560
+      ],
+      "terrain_type": "empty_desert_arid",
+      "structural_proxies": {
+        "edge_density": 0.0075,
+        "texture_variance": 90.0,
+        "intensity_std": 9.8,
+        "is_plain_terrain": false
+      },
+      "selection_rule": "Certified 0 GT within 50px buffer in val_report scene 1125.tif; Edge density=0.0075, Texture variance=90.0",
+      "verified_empty": true,
+      "gt_overlap_count": 0,
+      "buffer_margin_px": 50
+    },
+    {
+      "tile_id": "NEG_TILE-006",
+      "filename": "neg_tile_006_empty_desert_arid.jpg",
+      "path": "C:\\Users\\awhri\\OneDrive\\Desktop\\DEF\\evaluation\\negative_tiles\\neg_tile_006_empty_desert_arid.jpg",
+      "source_scene": "1125.tif",
+      "val_half": "val_report",
+      "dataset_split": "pure_val_report",
+      "crop_box": [
+        1536,
+        1536,
+        2560,
+        2560
+      ],
+      "terrain_type": "empty_desert_arid",
+      "structural_proxies": {
+        "edge_density": 0.0145,
+        "texture_variance": 91.5,
+        "intensity_std": 12.6,
+        "is_plain_terrain": false
+      },
+      "selection_rule": "Certified 0 GT within 50px buffer in val_report scene 1125.tif; Edge density=0.0145, Texture variance=91.5",
+      "verified_empty": true,
+      "gt_overlap_count": 0,
+      "buffer_margin_px": 50
+    },
+    {
+      "tile_id": "NEG_TILE-007",
+      "filename": "neg_tile_007_empty_desert_arid.jpg",
+      "path": "C:\\Users\\awhri\\OneDrive\\Desktop\\DEF\\evaluation\\negative_tiles\\neg_tile_007_empty_desert_arid.jpg",
+      "source_scene": "1125.tif",
+      "val_half": "val_report",
+      "dataset_split": "pure_val_report",
+      "crop_box": [
+        1920,
+        1536,
+        2944,
+        2560
+      ],
+      "terrain_type": "empty_desert_arid",
+      "structural_proxies": {
+        "edge_density": 0.0253,
+        "texture_variance": 102.3,
+        "intensity_std": 14.6,
+        "is_plain_terrain": false
+      },
+      "selection_rule": "Certified 0 GT within 50px buffer in val_report scene 1125.tif; Edge density=0.0253, Texture variance=102.3",
+      "verified_empty": true,
+      "gt_overlap_count": 0,
+      "buffer_margin_px": 50
+    },
+    {
+      "tile_id": "NEG_TILE-008",
+      "filename": "neg_tile_008_empty_desert_arid.jpg",
+      "path": "C:\\Users\\awhri\\OneDrive\\Desktop\\DEF\\evaluation\\negative_tiles\\neg_tile_008_empty_desert_arid.jpg",
+      "source_scene": "1125.tif",
+      "val_half": "val_report",
+      "dataset_split": "pure_val_report",
+      "crop_box": [
+        0,
+        1920,
+        1024,
+        2944
+      ],
+      "terrain_type": "empty_desert_arid",
+      "structural_proxies": {
+        "edge_density": 0.0049,
+        "texture_variance": 71.9,
+        "intensity_std": 7.2,
+        "is_plain_terrain": false
+      },
+      "selection_rule": "Certified 0 GT within 50px buffer in val_report scene 1125.tif; Edge density=0.0049, Texture variance=71.9",
+      "verified_empty": true,
+      "gt_overlap_count": 0,
+      "buffer_margin_px": 50
+    },
+    {
+      "tile_id": "NEG_TILE-009",
+      "filename": "neg_tile_009_empty_desert_arid.jpg",
+      "path": "C:\\Users\\awhri\\OneDrive\\Desktop\\DEF\\evaluation\\negative_tiles\\neg_tile_009_empty_desert_arid.jpg",
+      "source_scene": "1125.tif",
+      "val_half": "val_report",
+      "dataset_split": "pure_val_report",
+      "crop_box": [
+        384,
+        1920,
+        1408,
+        2944
+      ],
+      "terrain_type": "empty_desert_arid",
+      "structural_proxies": {
+        "edge_density": 0.0084,
+        "texture_variance": 88.9,
+        "intensity_std": 8.4,
+        "is_plain_terrain": false
+      },
+      "selection_rule": "Certified 0 GT within 50px buffer in val_report scene 1125.tif; Edge density=0.0084, Texture variance=88.9",
+      "verified_empty": true,
+      "gt_overlap_count": 0,
+      "buffer_margin_px": 50
+    },
+    {
+      "tile_id": "NEG_TILE-010",
+      "filename": "neg_tile_010_empty_desert_arid.jpg",
+      "path": "C:\\Users\\awhri\\OneDrive\\Desktop\\DEF\\evaluation\\negative_tiles\\neg_tile_010_empty_desert_arid.jpg",
+      "source_scene": "1125.tif",
+      "val_half": "val_report",
+      "dataset_split": "pure_val_report",
+      "crop_box": [
+        768,
+        1920,
+        1792,
+        2944
+      ],
+      "terrain_type": "empty_desert_arid",
+      "structural_proxies": {
+        "edge_density": 0.0081,
+        "texture_variance": 88.4,
+        "intensity_std": 8.7,
+        "is_plain_terrain": false
+      },
+      "selection_rule": "Certified 0 GT within 50px buffer in val_report scene 1125.tif; Edge density=0.0081, Texture variance=88.4",
+      "verified_empty": true,
+      "gt_overlap_count": 0,
+      "buffer_margin_px": 50
+    },
+    {
+      "tile_id": "NEG_TILE-011",
+      "filename": "neg_tile_011_empty_desert_arid.jpg",
+      "path": "C:\\Users\\awhri\\OneDrive\\Desktop\\DEF\\evaluation\\negative_tiles\\neg_tile_011_empty_desert_arid.jpg",
+      "source_scene": "1125.tif",
+      "val_half": "val_report",
+      "dataset_split": "pure_val_report",
+      "crop_box": [
+        1152,
+        1920,
+        2176,
+        2944
+      ],
+      "terrain_type": "empty_desert_arid",
+      "structural_proxies": {
+        "edge_density": 0.0058,
+        "texture_variance": 76.1,
+        "intensity_std": 8.0,
+        "is_plain_terrain": false
+      },
+      "selection_rule": "Certified 0 GT within 50px buffer in val_report scene 1125.tif; Edge density=0.0058, Texture variance=76.1",
+      "verified_empty": true,
+      "gt_overlap_count": 0,
+      "buffer_margin_px": 50
+    },
+    {
+      "tile_id": "NEG_TILE-012",
+      "filename": "neg_tile_012_empty_desert_arid.jpg",
+      "path": "C:\\Users\\awhri\\OneDrive\\Desktop\\DEF\\evaluation\\negative_tiles\\neg_tile_012_empty_desert_arid.jpg",
+      "source_scene": "1125.tif",
+      "val_half": "val_report",
+      "dataset_split": "pure_val_report",
+      "crop_box": [
+        1536,
+        1920,
+        2560,
+        2944
+      ],
+      "terrain_type": "empty_desert_arid",
+      "structural_proxies": {
+        "edge_density": 0.0048,
+        "texture_variance": 69.4,
+        "intensity_std": 7.7,
+        "is_plain_terrain": false
+      },
+      "selection_rule": "Certified 0 GT within 50px buffer in val_report scene 1125.tif; Edge density=0.0048, Texture variance=69.4",
+      "verified_empty": true,
+      "gt_overlap_count": 0,
+      "buffer_margin_px": 50
+    },
+    {
+      "tile_id": "NEG_TILE-013",
+      "filename": "neg_tile_013_empty_desert_arid.jpg",
+      "path": "C:\\Users\\awhri\\OneDrive\\Desktop\\DEF\\evaluation\\negative_tiles\\neg_tile_013_empty_desert_arid.jpg",
+      "source_scene": "1125.tif",
+      "val_half": "val_report",
+      "dataset_split": "pure_val_report",
+      "crop_box": [
+        1920,
+        1920,
+        2944,
+        2944
+      ],
+      "terrain_type": "empty_desert_arid",
+      "structural_proxies": {
+        "edge_density": 0.0123,
+        "texture_variance": 82.7,
+        "intensity_std": 9.9,
+        "is_plain_terrain": false
+      },
+      "selection_rule": "Certified 0 GT within 50px buffer in val_report scene 1125.tif; Edge density=0.0123, Texture variance=82.7",
+      "verified_empty": true,
+      "gt_overlap_count": 0,
+      "buffer_margin_px": 50
+    },
+    {
+      "tile_id": "NEG_TILE-014",
+      "filename": "neg_tile_014_empty_desert_arid.jpg",
+      "path": "C:\\Users\\awhri\\OneDrive\\Desktop\\DEF\\evaluation\\negative_tiles\\neg_tile_014_empty_desert_arid.jpg",
+      "source_scene": "1158.tif",
+      "val_half": "val_report",
+      "dataset_split": "pure_val_report",
+      "crop_box": [
+        384,
+        0,
+        1408,
+        1024
+      ],
+      "terrain_type": "empty_desert_arid",
+      "structural_proxies": {
+        "edge_density": 0.5194,
+        "texture_variance": 2836.7,
+        "intensity_std": 20.3,
+        "is_plain_terrain": false
+      },
+      "selection_rule": "Certified 0 GT within 50px buffer in val_report scene 1158.tif; Edge density=0.5194, Texture variance=2836.7",
+      "verified_empty": true,
+      "gt_overlap_count": 0,
+      "buffer_margin_px": 50
+    },
+    {
+      "tile_id": "NEG_TILE-015",
+      "filename": "neg_tile_015_empty_desert_arid.jpg",
+      "path": "C:\\Users\\awhri\\OneDrive\\Desktop\\DEF\\evaluation\\negative_tiles\\neg_tile_015_empty_desert_arid.jpg",
+      "source_scene": "1158.tif",
+      "val_half": "val_report",
+      "dataset_split": "pure_val_report",
+      "crop_box": [
+        768,
+        0,
+        1792,
+        1024
+      ],
+      "terrain_type": "empty_desert_arid",
+      "structural_proxies": {
+        "edge_density": 0.4969,
+        "texture_variance": 2683.8,
+        "intensity_std": 19.9,
+        "is_plain_terrain": false
+      },
+      "selection_rule": "Certified 0 GT within 50px buffer in val_report scene 1158.tif; Edge density=0.4969, Texture variance=2683.8",
+      "verified_empty": true,
+      "gt_overlap_count": 0,
+      "buffer_margin_px": 50
+    },
+    {
+      "tile_id": "NEG_TILE-016",
+      "filename": "neg_tile_016_empty_desert_arid.jpg",
+      "path": "C:\\Users\\awhri\\OneDrive\\Desktop\\DEF\\evaluation\\negative_tiles\\neg_tile_016_empty_desert_arid.jpg",
+      "source_scene": "1158.tif",
+      "val_half": "val_report",
+      "dataset_split": "pure_val_report",
+      "crop_box": [
+        1152,
+        0,
+        2176,
+        1024
+      ],
+      "terrain_type": "empty_desert_arid",
+      "structural_proxies": {
+        "edge_density": 0.5141,
+        "texture_variance": 3442.7,
+        "intensity_std": 22.5,
+        "is_plain_terrain": false
+      },
+      "selection_rule": "Certified 0 GT within 50px buffer in val_report scene 1158.tif; Edge density=0.5141, Texture variance=3442.7",
+      "verified_empty": true,
+      "gt_overlap_count": 0,
+      "buffer_margin_px": 50
+    },
+    {
+      "tile_id": "NEG_TILE-017",
+      "filename": "neg_tile_017_empty_desert_arid.jpg",
+      "path": "C:\\Users\\awhri\\OneDrive\\Desktop\\DEF\\evaluation\\negative_tiles\\neg_tile_017_empty_desert_arid.jpg",
+      "source_scene": "1158.tif",
+      "val_half": "val_report",
+      "dataset_split": "pure_val_report",
+      "crop_box": [
+        384,
+        384,
+        1408,
+        1408
+      ],
+      "terrain_type": "empty_desert_arid",
+      "structural_proxies": {
+        "edge_density": 0.4289,
+        "texture_variance": 2110.3,
+        "intensity_std": 17.9,
+        "is_plain_terrain": false
+      },
+      "selection_rule": "Certified 0 GT within 50px buffer in val_report scene 1158.tif; Edge density=0.4289, Texture variance=2110.3",
+      "verified_empty": true,
+      "gt_overlap_count": 0,
+      "buffer_margin_px": 50
+    },
+    {
+      "tile_id": "NEG_TILE-001",
+      "filename": "neg_tile_001_empty_farmland_terrain.jpg",
+      "path": "C:\\Users\\awhri\\OneDrive\\Desktop\\DEF\\evaluation\\negative_tiles\\neg_tile_001_empty_farmland_terrain.jpg",
+      "source_scene": "142.tif",
+      "val_half": "val_report",
+      "dataset_split": "pure_val_report",
+      "crop_box": [
+        384,
+        0,
+        1408,
+        1024
+      ],
+      "terrain_type": "empty_farmland_terrain",
+      "structural_proxies": {
+        "edge_density": 0.011,
+        "texture_variance": 36.5,
+        "intensity_std": 13.1,
+        "is_plain_terrain": true
+      },
+      "selection_rule": "Certified 0 GT within 50px buffer in val_report scene 142.tif; Edge density=0.011, Texture variance=36.5",
+      "verified_empty": true,
+      "gt_overlap_count": 0,
+      "buffer_margin_px": 50
+    },
+    {
+      "tile_id": "NEG_TILE-002",
+      "filename": "neg_tile_002_empty_farmland_terrain.jpg",
+      "path": "C:\\Users\\awhri\\OneDrive\\Desktop\\DEF\\evaluation\\negative_tiles\\neg_tile_002_empty_farmland_terrain.jpg",
+      "source_scene": "142.tif",
+      "val_half": "val_report",
+      "dataset_split": "pure_val_report",
+      "crop_box": [
+        768,
+        0,
+        1792,
+        1024
+      ],
+      "terrain_type": "empty_farmland_terrain",
+      "structural_proxies": {
+        "edge_density": 0.0072,
+        "texture_variance": 32.5,
+        "intensity_std": 8.7,
+        "is_plain_terrain": true
+      },
+      "selection_rule": "Certified 0 GT within 50px buffer in val_report scene 142.tif; Edge density=0.0072, Texture variance=32.5",
+      "verified_empty": true,
+      "gt_overlap_count": 0,
+      "buffer_margin_px": 50
+    },
+    {
+      "tile_id": "NEG_TILE-003",
+      "filename": "neg_tile_003_empty_farmland_terrain.jpg",
+      "path": "C:\\Users\\awhri\\OneDrive\\Desktop\\DEF\\evaluation\\negative_tiles\\neg_tile_003_empty_farmland_terrain.jpg",
+      "source_scene": "142.tif",
+      "val_half": "val_report",
+      "dataset_split": "pure_val_report",
+      "crop_box": [
+        1152,
+        0,
+        2176,
+        1024
+      ],
+      "terrain_type": "empty_farmland_terrain",
+      "structural_proxies": {
+        "edge_density": 0.0074,
+        "texture_variance": 30.7,
+        "intensity_std": 6.6,
+        "is_plain_terrain": true
+      },
+      "selection_rule": "Certified 0 GT within 50px buffer in val_report scene 142.tif; Edge density=0.0074, Texture variance=30.7",
+      "verified_empty": true,
+      "gt_overlap_count": 0,
+      "buffer_margin_px": 50
+    },
+    {
+      "tile_id": "NEG_TILE-004",
+      "filename": "neg_tile_004_empty_farmland_terrain.jpg",
+      "path": "C:\\Users\\awhri\\OneDrive\\Desktop\\DEF\\evaluation\\negative_tiles\\neg_tile_004_empty_farmland_terrain.jpg",
+      "source_scene": "142.tif",
+      "val_half": "val_report",
+      "dataset_split": "pure_val_report",
+      "crop_box": [
+        384,
+        384,
+        1408,
+        1408
+      ],
+      "terrain_type": "empty_farmland_terrain",
+      "structural_proxies": {
+        "edge_density": 0.0201,
+        "texture_variance": 49.3,
+        "intensity_std": 18.2,
+        "is_plain_terrain": false
+      },
+      "selection_rule": "Certified 0 GT within 50px buffer in val_report scene 142.tif; Edge density=0.0201, Texture variance=49.3",
+      "verified_empty": true,
+      "gt_overlap_count": 0,
+      "buffer_margin_px": 50
+    },
+    {
+      "tile_id": "NEG_TILE-005",
+      "filename": "neg_tile_005_empty_farmland_terrain.jpg",
+      "path": "C:\\Users\\awhri\\OneDrive\\Desktop\\DEF\\evaluation\\negative_tiles\\neg_tile_005_empty_farmland_terrain.jpg",
+      "source_scene": "142.tif",
+      "val_half": "val_report",
+      "dataset_split": "pure_val_report",
+      "crop_box": [
+        768,
+        384,
+        1792,
+        1408
+      ],
+      "terrain_type": "empty_farmland_terrain",
+      "structural_proxies": {
+        "edge_density": 0.0187,
+        "texture_variance": 49.3,
+        "intensity_std": 17.3,
+        "is_plain_terrain": false
+      },
+      "selection_rule": "Certified 0 GT within 50px buffer in val_report scene 142.tif; Edge density=0.0187, Texture variance=49.3",
+      "verified_empty": true,
+      "gt_overlap_count": 0,
+      "buffer_margin_px": 50
+    },
+    {
+      "tile_id": "NEG_TILE-006",
+      "filename": "neg_tile_006_empty_farmland_terrain.jpg",
+      "path": "C:\\Users\\awhri\\OneDrive\\Desktop\\DEF\\evaluation\\negative_tiles\\neg_tile_006_empty_farmland_terrain.jpg",
+      "source_scene": "142.tif",
+      "val_half": "val_report",
+      "dataset_split": "pure_val_report",
+      "crop_box": [
+        1152,
+        384,
+        2176,
+        1408
+      ],
+      "terrain_type": "empty_farmland_terrain",
+      "structural_proxies": {
+        "edge_density": 0.0146,
+        "texture_variance": 44.7,
+        "intensity_std": 14.7,
+        "is_plain_terrain": false
+      },
+      "selection_rule": "Certified 0 GT within 50px buffer in val_report scene 142.tif; Edge density=0.0146, Texture variance=44.7",
+      "verified_empty": true,
+      "gt_overlap_count": 0,
+      "buffer_margin_px": 50
+    },
+    {
+      "tile_id": "NEG_TILE-007",
+      "filename": "neg_tile_007_empty_farmland_terrain.jpg",
+      "path": "C:\\Users\\awhri\\OneDrive\\Desktop\\DEF\\evaluation\\negative_tiles\\neg_tile_007_empty_farmland_terrain.jpg",
+      "source_scene": "142.tif",
+      "val_half": "val_report",
+      "dataset_split": "pure_val_report",
+      "crop_box": [
+        0,
+        768,
+        1024,
+        1792
+      ],
+      "terrain_type": "empty_farmland_terrain",
+      "structural_proxies": {
+        "edge_density": 0.0333,
+        "texture_variance": 70.1,
+        "intensity_std": 20.6,
+        "is_plain_terrain": false
+      },
+      "selection_rule": "Certified 0 GT within 50px buffer in val_report scene 142.tif; Edge density=0.0333, Texture variance=70.1",
+      "verified_empty": true,
+      "gt_overlap_count": 0,
+      "buffer_margin_px": 50
+    },
+    {
+      "tile_id": "NEG_TILE-008",
+      "filename": "neg_tile_008_empty_farmland_terrain.jpg",
+      "path": "C:\\Users\\awhri\\OneDrive\\Desktop\\DEF\\evaluation\\negative_tiles\\neg_tile_008_empty_farmland_terrain.jpg",
+      "source_scene": "142.tif",
+      "val_half": "val_report",
+      "dataset_split": "pure_val_report",
+      "crop_box": [
+        384,
+        768,
+        1408,
+        1792
+      ],
+      "terrain_type": "empty_farmland_terrain",
+      "structural_proxies": {
+        "edge_density": 0.0238,
+        "texture_variance": 56.0,
+        "intensity_std": 18.6,
+        "is_plain_terrain": false
+      },
+      "selection_rule": "Certified 0 GT within 50px buffer in val_report scene 142.tif; Edge density=0.0238, Texture variance=56.0",
+      "verified_empty": true,
+      "gt_overlap_count": 0,
+      "buffer_margin_px": 50
+    },
+    {
+      "tile_id": "NEG_TILE-009",
+      "filename": "neg_tile_009_empty_farmland_terrain.jpg",
+      "path": "C:\\Users\\awhri\\OneDrive\\Desktop\\DEF\\evaluation\\negative_tiles\\neg_tile_009_empty_farmland_terrain.jpg",
+      "source_scene": "142.tif",
+      "val_half": "val_report",
+      "dataset_split": "pure_val_report",
+      "crop_box": [
+        768,
+        768,
+        1792,
+        1792
+      ],
+      "terrain_type": "empty_farmland_terrain",
+      "structural_proxies": {
+        "edge_density": 0.0236,
+        "texture_variance": 59.5,
+        "intensity_std": 18.8,
+        "is_plain_terrain": false
+      },
+      "selection_rule": "Certified 0 GT within 50px buffer in val_report scene 142.tif; Edge density=0.0236, Texture variance=59.5",
+      "verified_empty": true,
+      "gt_overlap_count": 0,
+      "buffer_margin_px": 50
+    },
+    {
+      "tile_id": "NEG_TILE-010",
+      "filename": "neg_tile_010_empty_farmland_terrain.jpg",
+      "path": "C:\\Users\\awhri\\OneDrive\\Desktop\\DEF\\evaluation\\negative_tiles\\neg_tile_010_empty_farmland_terrain.jpg",
+      "source_scene": "142.tif",
+      "val_half": "val_report",
+      "dataset_split": "pure_val_report",
+      "crop_box": [
+        1152,
+        768,
+        2176,
+        1792
+      ],
+      "terrain_type": "empty_farmland_terrain",
+      "structural_proxies": {
+        "edge_density": 0.0294,
+        "texture_variance": 71.2,
+        "intensity_std": 20.4,
+        "is_plain_terrain": false
+      },
+      "selection_rule": "Certified 0 GT within 50px buffer in val_report scene 142.tif; Edge density=0.0294, Texture variance=71.2",
+      "verified_empty": true,
+      "gt_overlap_count": 0,
+      "buffer_margin_px": 50
+    },
+    {
+      "tile_id": "NEG_TILE-011",
+      "filename": "neg_tile_011_empty_farmland_terrain.jpg",
+      "path": "C:\\Users\\awhri\\OneDrive\\Desktop\\DEF\\evaluation\\negative_tiles\\neg_tile_011_empty_farmland_terrain.jpg",
+      "source_scene": "142.tif",
+      "val_half": "val_report",
+      "dataset_split": "pure_val_report",
+      "crop_box": [
+        0,
+        1152,
+        1024,
+        2176
+      ],
+      "terrain_type": "empty_farmland_terrain",
+      "structural_proxies": {
+        "edge_density": 0.0332,
+        "texture_variance": 74.4,
+        "intensity_std": 16.1,
+        "is_plain_terrain": false
+      },
+      "selection_rule": "Certified 0 GT within 50px buffer in val_report scene 142.tif; Edge density=0.0332, Texture variance=74.4",
+      "verified_empty": true,
+      "gt_overlap_count": 0,
+      "buffer_margin_px": 50
+    },
+    {
+      "tile_id": "NEG_TILE-012",
+      "filename": "neg_tile_012_empty_farmland_terrain.jpg",
+      "path": "C:\\Users\\awhri\\OneDrive\\Desktop\\DEF\\evaluation\\negative_tiles\\neg_tile_012_empty_farmland_terrain.jpg",
+      "source_scene": "142.tif",
+      "val_half": "val_report",
+      "dataset_split": "pure_val_report",
+      "crop_box": [
+        384,
+        1152,
+        1408,
+        2176
+      ],
+      "terrain_type": "empty_farmland_terrain",
+      "structural_proxies": {
+        "edge_density": 0.0185,
+        "texture_variance": 54.8,
+        "intensity_std": 14.4,
+        "is_plain_terrain": false
+      },
+      "selection_rule": "Certified 0 GT within 50px buffer in val_report scene 142.tif; Edge density=0.0185, Texture variance=54.8",
+      "verified_empty": true,
+      "gt_overlap_count": 0,
+      "buffer_margin_px": 50
+    },
+    {
+      "tile_id": "NEG_TILE-013",
+      "filename": "neg_tile_013_empty_farmland_terrain.jpg",
+      "path": "C:\\Users\\awhri\\OneDrive\\Desktop\\DEF\\evaluation\\negative_tiles\\neg_tile_013_empty_farmland_terrain.jpg",
+      "source_scene": "142.tif",
+      "val_half": "val_report",
+      "dataset_split": "pure_val_report",
+      "crop_box": [
+        768,
+        1152,
+        1792,
+        2176
+      ],
+      "terrain_type": "empty_farmland_terrain",
+      "structural_proxies": {
+        "edge_density": 0.0201,
+        "texture_variance": 61.7,
+        "intensity_std": 15.9,
+        "is_plain_terrain": false
+      },
+      "selection_rule": "Certified 0 GT within 50px buffer in val_report scene 142.tif; Edge density=0.0201, Texture variance=61.7",
+      "verified_empty": true,
+      "gt_overlap_count": 0,
+      "buffer_margin_px": 50
+    },
+    {
+      "tile_id": "NEG_TILE-014",
+      "filename": "neg_tile_014_empty_farmland_terrain.jpg",
+      "path": "C:\\Users\\awhri\\OneDrive\\Desktop\\DEF\\evaluation\\negative_tiles\\neg_tile_014_empty_farmland_terrain.jpg",
+      "source_scene": "142.tif",
+      "val_half": "val_report",
+      "dataset_split": "pure_val_report",
+      "crop_box": [
+        1152,
+        1152,
+        2176,
+        2176
+      ],
+      "terrain_type": "empty_farmland_terrain",
+      "structural_proxies": {
+        "edge_density": 0.0421,
+        "texture_variance": 96.5,
+        "intensity_std": 21.5,
+        "is_plain_terrain": false
+      },
+      "selection_rule": "Certified 0 GT within 50px buffer in val_report scene 142.tif; Edge density=0.0421, Texture variance=96.5",
+      "verified_empty": true,
+      "gt_overlap_count": 0,
+      "buffer_margin_px": 50
+    },
+    {
+      "tile_id": "NEG_TILE-015",
+      "filename": "neg_tile_015_empty_farmland_terrain.jpg",
+      "path": "C:\\Users\\awhri\\OneDrive\\Desktop\\DEF\\evaluation\\negative_tiles\\neg_tile_015_empty_farmland_terrain.jpg",
+      "source_scene": "142.tif",
+      "val_half": "val_report",
+      "dataset_split": "pure_val_report",
+      "crop_box": [
+        1536,
+        1152,
+        2560,
+        2176
+      ],
+      "terrain_type": "empty_farmland_terrain",
+      "structural_proxies": {
+        "edge_density": 0.0608,
+        "texture_variance": 130.6,
+        "intensity_std": 24.3,
+        "is_plain_terrain": false
+      },
+      "selection_rule": "Certified 0 GT within 50px buffer in val_report scene 142.tif; Edge density=0.0608, Texture variance=130.6",
+      "verified_empty": true,
+      "gt_overlap_count": 0,
+      "buffer_margin_px": 50
+    },
+    {
+      "tile_id": "NEG_TILE-016",
+      "filename": "neg_tile_016_empty_farmland_terrain.jpg",
+      "path": "C:\\Users\\awhri\\OneDrive\\Desktop\\DEF\\evaluation\\negative_tiles\\neg_tile_016_empty_farmland_terrain.jpg",
+      "source_scene": "619.tif",
+      "val_half": "val_report",
+      "dataset_split": "pure_val_report",
+      "crop_box": [
+        0,
+        0,
+        1024,
+        1024
+      ],
+      "terrain_type": "empty_farmland_terrain",
+      "structural_proxies": {
+        "edge_density": 0.0446,
+        "texture_variance": 237.4,
+        "intensity_std": 12.6,
+        "is_plain_terrain": false
+      },
+      "selection_rule": "Certified 0 GT within 50px buffer in val_report scene 619.tif; Edge density=0.0446, Texture variance=237.4",
+      "verified_empty": true,
+      "gt_overlap_count": 0,
+      "buffer_margin_px": 50
+    },
+    {
+      "tile_id": "NEG_TILE-017",
+      "filename": "neg_tile_017_empty_farmland_terrain.jpg",
+      "path": "C:\\Users\\awhri\\OneDrive\\Desktop\\DEF\\evaluation\\negative_tiles\\neg_tile_017_empty_farmland_terrain.jpg",
+      "source_scene": "619.tif",
+      "val_half": "val_report",
+      "dataset_split": "pure_val_report",
+      "crop_box": [
+        384,
+        0,
+        1408,
+        1024
+      ],
+      "terrain_type": "empty_farmland_terrain",
+      "structural_proxies": {
+        "edge_density": 0.049,
+        "texture_variance": 286.0,
+        "intensity_std": 13.3,
+        "is_plain_terrain": false
+      },
+      "selection_rule": "Certified 0 GT within 50px buffer in val_report scene 619.tif; Edge density=0.049, Texture variance=286.0",
+      "verified_empty": true,
+      "gt_overlap_count": 0,
+      "buffer_margin_px": 50
+    },
+    {
+      "tile_id": "NEG_TILE-018",
+      "filename": "neg_tile_018_empty_farmland_terrain.jpg",
+      "path": "C:\\Users\\awhri\\OneDrive\\Desktop\\DEF\\evaluation\\negative_tiles\\neg_tile_018_empty_farmland_terrain.jpg",
+      "source_scene": "619.tif",
+      "val_half": "val_report",
+      "dataset_split": "pure_val_report",
+      "crop_box": [
+        0,
+        384,
+        1024,
+        1408
+      ],
+      "terrain_type": "empty_farmland_terrain",
+      "structural_proxies": {
+        "edge_density": 0.0562,
+        "texture_variance": 301.4,
+        "intensity_std": 14.2,
+        "is_plain_terrain": false
+      },
+      "selection_rule": "Certified 0 GT within 50px buffer in val_report scene 619.tif; Edge density=0.0562, Texture variance=301.4",
+      "verified_empty": true,
+      "gt_overlap_count": 0,
+      "buffer_margin_px": 50
+    },
+    {
+      "tile_id": "NEG_TILE-019",
+      "filename": "neg_tile_019_empty_farmland_terrain.jpg",
+      "path": "C:\\Users\\awhri\\OneDrive\\Desktop\\DEF\\evaluation\\negative_tiles\\neg_tile_019_empty_farmland_terrain.jpg",
+      "source_scene": "619.tif",
+      "val_half": "val_report",
+      "dataset_split": "pure_val_report",
+      "crop_box": [
+        1920,
+        768,
+        2944,
+        1792
+      ],
+      "terrain_type": "empty_farmland_terrain",
+      "structural_proxies": {
+        "edge_density": 0.0389,
+        "texture_variance": 143.7,
+        "intensity_std": 20.1,
+        "is_plain_terrain": false
+      },
+      "selection_rule": "Certified 0 GT within 50px buffer in val_report scene 619.tif; Edge density=0.0389, Texture variance=143.7",
+      "verified_empty": true,
+      "gt_overlap_count": 0,
+      "buffer_margin_px": 50
+    }
+  ],
+  "hard_negative_tiles": [
+    {
+      "tile_id": "HARD_TILE-001",
+      "filename": "hard_tile_001_hard_negative_clutter.jpg",
+      "path": "C:\\Users\\awhri\\OneDrive\\Desktop\\DEF\\evaluation\\hard_negative_tiles\\hard_tile_001_hard_negative_clutter.jpg",
+      "source_scene": "870.tif",
+      "val_half": "val_report",
+      "dataset_split": "pure_val_report",
+      "crop_box": [
+        0,
+        0,
+        1024,
+        1024
+      ],
+      "terrain_type": "hard_negative_clutter",
+      "structural_proxies": {
+        "edge_density": 0.0,
+        "texture_variance": 58.1,
+        "intensity_std": 47.6,
+        "is_plain_terrain": false
+      },
+      "selection_rule": "Certified 0 GT within 50px buffer in val_report scene 870.tif; Edge density=0.0, Texture variance=58.1",
+      "verified_empty": true,
+      "gt_overlap_count": 0,
+      "buffer_margin_px": 50
+    },
+    {
+      "tile_id": "HARD_TILE-002",
+      "filename": "hard_tile_002_hard_negative_clutter.jpg",
+      "path": "C:\\Users\\awhri\\OneDrive\\Desktop\\DEF\\evaluation\\hard_negative_tiles\\hard_tile_002_hard_negative_clutter.jpg",
+      "source_scene": "870.tif",
+      "val_half": "val_report",
+      "dataset_split": "pure_val_report",
+      "crop_box": [
+        384,
+        0,
+        1408,
+        1024
+      ],
+      "terrain_type": "hard_negative_clutter",
+      "structural_proxies": {
+        "edge_density": 0.0007,
+        "texture_variance": 50.8,
+        "intensity_std": 39.6,
+        "is_plain_terrain": false
+      },
+      "selection_rule": "Certified 0 GT within 50px buffer in val_report scene 870.tif; Edge density=0.0007, Texture variance=50.8",
+      "verified_empty": true,
+      "gt_overlap_count": 0,
+      "buffer_margin_px": 50
+    },
+    {
+      "tile_id": "HARD_TILE-003",
+      "filename": "hard_tile_003_hard_negative_clutter.jpg",
+      "path": "C:\\Users\\awhri\\OneDrive\\Desktop\\DEF\\evaluation\\hard_negative_tiles\\hard_tile_003_hard_negative_clutter.jpg",
+      "source_scene": "870.tif",
+      "val_half": "val_report",
+      "dataset_split": "pure_val_report",
+      "crop_box": [
+        768,
+        0,
+        1792,
+        1024
+      ],
+      "terrain_type": "hard_negative_clutter",
+      "structural_proxies": {
+        "edge_density": 0.0007,
+        "texture_variance": 54.9,
+        "intensity_std": 43.4,
+        "is_plain_terrain": false
+      },
+      "selection_rule": "Certified 0 GT within 50px buffer in val_report scene 870.tif; Edge density=0.0007, Texture variance=54.9",
+      "verified_empty": true,
+      "gt_overlap_count": 0,
+      "buffer_margin_px": 50
+    },
+    {
+      "tile_id": "HARD_TILE-004",
+      "filename": "hard_tile_004_hard_negative_clutter.jpg",
+      "path": "C:\\Users\\awhri\\OneDrive\\Desktop\\DEF\\evaluation\\hard_negative_tiles\\hard_tile_004_hard_negative_clutter.jpg",
+      "source_scene": "870.tif",
+      "val_half": "val_report",
+      "dataset_split": "pure_val_report",
+      "crop_box": [
+        1152,
+        0,
+        2176,
+        1024
+      ],
+      "terrain_type": "hard_negative_clutter",
+      "structural_proxies": {
+        "edge_density": 0.0006,
+        "texture_variance": 67.4,
+        "intensity_std": 50.0,
+        "is_plain_terrain": false
+      },
+      "selection_rule": "Certified 0 GT within 50px buffer in val_report scene 870.tif; Edge density=0.0006, Texture variance=67.4",
+      "verified_empty": true,
+      "gt_overlap_count": 0,
+      "buffer_margin_px": 50
+    },
+    {
+      "tile_id": "HARD_TILE-005",
+      "filename": "hard_tile_005_hard_negative_clutter.jpg",
+      "path": "C:\\Users\\awhri\\OneDrive\\Desktop\\DEF\\evaluation\\hard_negative_tiles\\hard_tile_005_hard_negative_clutter.jpg",
+      "source_scene": "870.tif",
+      "val_half": "val_report",
+      "dataset_split": "pure_val_report",
+      "crop_box": [
+        1536,
+        0,
+        2560,
+        1024
+      ],
+      "terrain_type": "hard_negative_clutter",
+      "structural_proxies": {
+        "edge_density": 0.0,
+        "texture_variance": 73.7,
+        "intensity_std": 30.7,
+        "is_plain_terrain": false
+      },
+      "selection_rule": "Certified 0 GT within 50px buffer in val_report scene 870.tif; Edge density=0.0, Texture variance=73.7",
+      "verified_empty": true,
+      "gt_overlap_count": 0,
+      "buffer_margin_px": 50
+    },
+    {
+      "tile_id": "HARD_TILE-006",
+      "filename": "hard_tile_006_hard_negative_clutter.jpg",
+      "path": "C:\\Users\\awhri\\OneDrive\\Desktop\\DEF\\evaluation\\hard_negative_tiles\\hard_tile_006_hard_negative_clutter.jpg",
+      "source_scene": "870.tif",
+      "val_half": "val_report",
+      "dataset_split": "pure_val_report",
+      "crop_box": [
+        1920,
+        0,
+        2944,
+        1024
+      ],
+      "terrain_type": "hard_negative_clutter",
+      "structural_proxies": {
+        "edge_density": 0.0001,
+        "texture_variance": 64.7,
+        "intensity_std": 35.6,
+        "is_plain_terrain": false
+      },
+      "selection_rule": "Certified 0 GT within 50px buffer in val_report scene 870.tif; Edge density=0.0001, Texture variance=64.7",
+      "verified_empty": true,
+      "gt_overlap_count": 0,
+      "buffer_margin_px": 50
+    },
+    {
+      "tile_id": "HARD_TILE-007",
+      "filename": "hard_tile_007_hard_negative_clutter.jpg",
+      "path": "C:\\Users\\awhri\\OneDrive\\Desktop\\DEF\\evaluation\\hard_negative_tiles\\hard_tile_007_hard_negative_clutter.jpg",
+      "source_scene": "870.tif",
+      "val_half": "val_report",
+      "dataset_split": "pure_val_report",
+      "crop_box": [
+        0,
+        384,
+        1024,
+        1408
+      ],
+      "terrain_type": "hard_negative_clutter",
+      "structural_proxies": {
+        "edge_density": 0.0,
+        "texture_variance": 61.3,
+        "intensity_std": 61.0,
+        "is_plain_terrain": false
+      },
+      "selection_rule": "Certified 0 GT within 50px buffer in val_report scene 870.tif; Edge density=0.0, Texture variance=61.3",
+      "verified_empty": true,
+      "gt_overlap_count": 0,
+      "buffer_margin_px": 50
+    },
+    {
+      "tile_id": "HARD_TILE-008",
+      "filename": "hard_tile_008_hard_negative_clutter.jpg",
+      "path": "C:\\Users\\awhri\\OneDrive\\Desktop\\DEF\\evaluation\\hard_negative_tiles\\hard_tile_008_hard_negative_clutter.jpg",
+      "source_scene": "870.tif",
+      "val_half": "val_report",
+      "dataset_split": "pure_val_report",
+      "crop_box": [
+        384,
+        384,
+        1408,
+        1408
+      ],
+      "terrain_type": "hard_negative_clutter",
+      "structural_proxies": {
+        "edge_density": 0.0007,
+        "texture_variance": 55.7,
+        "intensity_std": 52.4,
+        "is_plain_terrain": false
+      },
+      "selection_rule": "Certified 0 GT within 50px buffer in val_report scene 870.tif; Edge density=0.0007, Texture variance=55.7",
+      "verified_empty": true,
+      "gt_overlap_count": 0,
+      "buffer_margin_px": 50
+    },
+    {
+      "tile_id": "HARD_TILE-009",
+      "filename": "hard_tile_009_hard_negative_clutter.jpg",
+      "path": "C:\\Users\\awhri\\OneDrive\\Desktop\\DEF\\evaluation\\hard_negative_tiles\\hard_tile_009_hard_negative_clutter.jpg",
+      "source_scene": "870.tif",
+      "val_half": "val_report",
+      "dataset_split": "pure_val_report",
+      "crop_box": [
+        768,
+        384,
+        1792,
+        1408
+      ],
+      "terrain_type": "hard_negative_clutter",
+      "structural_proxies": {
+        "edge_density": 0.0007,
+        "texture_variance": 55.2,
+        "intensity_std": 40.8,
+        "is_plain_terrain": false
+      },
+      "selection_rule": "Certified 0 GT within 50px buffer in val_report scene 870.tif; Edge density=0.0007, Texture variance=55.2",
+      "verified_empty": true,
+      "gt_overlap_count": 0,
+      "buffer_margin_px": 50
+    },
+    {
+      "tile_id": "HARD_TILE-010",
+      "filename": "hard_tile_010_hard_negative_clutter.jpg",
+      "path": "C:\\Users\\awhri\\OneDrive\\Desktop\\DEF\\evaluation\\hard_negative_tiles\\hard_tile_010_hard_negative_clutter.jpg",
+      "source_scene": "870.tif",
+      "val_half": "val_report",
+      "dataset_split": "pure_val_report",
+      "crop_box": [
+        1152,
+        384,
+        2176,
+        1408
+      ],
+      "terrain_type": "hard_negative_clutter",
+      "structural_proxies": {
+        "edge_density": 0.0006,
+        "texture_variance": 62.6,
+        "intensity_std": 47.2,
+        "is_plain_terrain": false
+      },
+      "selection_rule": "Certified 0 GT within 50px buffer in val_report scene 870.tif; Edge density=0.0006, Texture variance=62.6",
+      "verified_empty": true,
+      "gt_overlap_count": 0,
+      "buffer_margin_px": 50
+    },
+    {
+      "tile_id": "HARD_TILE-011",
+      "filename": "hard_tile_011_hard_negative_clutter.jpg",
+      "path": "C:\\Users\\awhri\\OneDrive\\Desktop\\DEF\\evaluation\\hard_negative_tiles\\hard_tile_011_hard_negative_clutter.jpg",
+      "source_scene": "870.tif",
+      "val_half": "val_report",
+      "dataset_split": "pure_val_report",
+      "crop_box": [
+        1536,
+        384,
+        2560,
+        1408
+      ],
+      "terrain_type": "hard_negative_clutter",
+      "structural_proxies": {
+        "edge_density": 0.0,
+        "texture_variance": 69.5,
+        "intensity_std": 28.7,
+        "is_plain_terrain": false
+      },
+      "selection_rule": "Certified 0 GT within 50px buffer in val_report scene 870.tif; Edge density=0.0, Texture variance=69.5",
+      "verified_empty": true,
+      "gt_overlap_count": 0,
+      "buffer_margin_px": 50
+    },
+    {
+      "tile_id": "HARD_TILE-012",
+      "filename": "hard_tile_012_hard_negative_clutter.jpg",
+      "path": "C:\\Users\\awhri\\OneDrive\\Desktop\\DEF\\evaluation\\hard_negative_tiles\\hard_tile_012_hard_negative_clutter.jpg",
+      "source_scene": "870.tif",
+      "val_half": "val_report",
+      "dataset_split": "pure_val_report",
+      "crop_box": [
+        0,
+        768,
+        1024,
+        1792
+      ],
+      "terrain_type": "hard_negative_clutter",
+      "structural_proxies": {
+        "edge_density": 0.0,
+        "texture_variance": 60.6,
+        "intensity_std": 65.4,
+        "is_plain_terrain": false
+      },
+      "selection_rule": "Certified 0 GT within 50px buffer in val_report scene 870.tif; Edge density=0.0, Texture variance=60.6",
+      "verified_empty": true,
+      "gt_overlap_count": 0,
+      "buffer_margin_px": 50
+    },
+    {
+      "tile_id": "HARD_TILE-013",
+      "filename": "hard_tile_013_hard_negative_clutter.jpg",
+      "path": "C:\\Users\\awhri\\OneDrive\\Desktop\\DEF\\evaluation\\hard_negative_tiles\\hard_tile_013_hard_negative_clutter.jpg",
+      "source_scene": "870.tif",
+      "val_half": "val_report",
+      "dataset_split": "pure_val_report",
+      "crop_box": [
+        384,
+        768,
+        1408,
+        1792
+      ],
+      "terrain_type": "hard_negative_clutter",
+      "structural_proxies": {
+        "edge_density": 0.0003,
+        "texture_variance": 53.8,
+        "intensity_std": 58.1,
+        "is_plain_terrain": false
+      },
+      "selection_rule": "Certified 0 GT within 50px buffer in val_report scene 870.tif; Edge density=0.0003, Texture variance=53.8",
+      "verified_empty": true,
+      "gt_overlap_count": 0,
+      "buffer_margin_px": 50
+    },
+    {
+      "tile_id": "HARD_TILE-014",
+      "filename": "hard_tile_014_hard_negative_clutter.jpg",
+      "path": "C:\\Users\\awhri\\OneDrive\\Desktop\\DEF\\evaluation\\hard_negative_tiles\\hard_tile_014_hard_negative_clutter.jpg",
+      "source_scene": "870.tif",
+      "val_half": "val_report",
+      "dataset_split": "pure_val_report",
+      "crop_box": [
+        768,
+        768,
+        1792,
+        1792
+      ],
+      "terrain_type": "hard_negative_clutter",
+      "structural_proxies": {
+        "edge_density": 0.0003,
+        "texture_variance": 53.0,
+        "intensity_std": 37.9,
+        "is_plain_terrain": false
+      },
+      "selection_rule": "Certified 0 GT within 50px buffer in val_report scene 870.tif; Edge density=0.0003, Texture variance=53.0",
+      "verified_empty": true,
+      "gt_overlap_count": 0,
+      "buffer_margin_px": 50
+    },
+    {
+      "tile_id": "HARD_TILE-015",
+      "filename": "hard_tile_015_hard_negative_clutter.jpg",
+      "path": "C:\\Users\\awhri\\OneDrive\\Desktop\\DEF\\evaluation\\hard_negative_tiles\\hard_tile_015_hard_negative_clutter.jpg",
+      "source_scene": "870.tif",
+      "val_half": "val_report",
+      "dataset_split": "pure_val_report",
+      "crop_box": [
+        0,
+        1152,
+        1024,
+        2176
+      ],
+      "terrain_type": "hard_negative_clutter",
+      "structural_proxies": {
+        "edge_density": 0.0,
+        "texture_variance": 63.3,
+        "intensity_std": 51.2,
+        "is_plain_terrain": false
+      },
+      "selection_rule": "Certified 0 GT within 50px buffer in val_report scene 870.tif; Edge density=0.0, Texture variance=63.3",
+      "verified_empty": true,
+      "gt_overlap_count": 0,
+      "buffer_margin_px": 50
+    },
+    {
+      "tile_id": "HARD_TILE-016",
+      "filename": "hard_tile_016_hard_negative_clutter.jpg",
+      "path": "C:\\Users\\awhri\\OneDrive\\Desktop\\DEF\\evaluation\\hard_negative_tiles\\hard_tile_016_hard_negative_clutter.jpg",
+      "source_scene": "870.tif",
+      "val_half": "val_report",
+      "dataset_split": "pure_val_report",
+      "crop_box": [
+        384,
+        1152,
+        1408,
+        2176
+      ],
+      "terrain_type": "hard_negative_clutter",
+      "structural_proxies": {
+        "edge_density": 0.0,
+        "texture_variance": 58.2,
+        "intensity_std": 61.8,
+        "is_plain_terrain": false
+      },
+      "selection_rule": "Certified 0 GT within 50px buffer in val_report scene 870.tif; Edge density=0.0, Texture variance=58.2",
+      "verified_empty": true,
+      "gt_overlap_count": 0,
+      "buffer_margin_px": 50
+    },
+    {
+      "tile_id": "HARD_TILE-017",
+      "filename": "hard_tile_017_hard_negative_clutter.jpg",
+      "path": "C:\\Users\\awhri\\OneDrive\\Desktop\\DEF\\evaluation\\hard_negative_tiles\\hard_tile_017_hard_negative_clutter.jpg",
+      "source_scene": "870.tif",
+      "val_half": "val_report",
+      "dataset_split": "pure_val_report",
+      "crop_box": [
+        768,
+        1152,
+        1792,
+        2176
+      ],
+      "terrain_type": "hard_negative_clutter",
+      "structural_proxies": {
+        "edge_density": 0.0,
+        "texture_variance": 50.2,
+        "intensity_std": 39.1,
+        "is_plain_terrain": false
+      },
+      "selection_rule": "Certified 0 GT within 50px buffer in val_report scene 870.tif; Edge density=0.0, Texture variance=50.2",
+      "verified_empty": true,
+      "gt_overlap_count": 0,
+      "buffer_margin_px": 50
+    },
+    {
+      "tile_id": "HARD_TILE-018",
+      "filename": "hard_tile_018_hard_negative_clutter.jpg",
+      "path": "C:\\Users\\awhri\\OneDrive\\Desktop\\DEF\\evaluation\\hard_negative_tiles\\hard_tile_018_hard_negative_clutter.jpg",
+      "source_scene": "870.tif",
+      "val_half": "val_report",
+      "dataset_split": "pure_val_report",
+      "crop_box": [
+        0,
+        1536,
+        1024,
+        2560
+      ],
+      "terrain_type": "hard_negative_clutter",
+      "structural_proxies": {
+        "edge_density": 0.0,
+        "texture_variance": 60.7,
+        "intensity_std": 38.6,
+        "is_plain_terrain": false
+      },
+      "selection_rule": "Certified 0 GT within 50px buffer in val_report scene 870.tif; Edge density=0.0, Texture variance=60.7",
+      "verified_empty": true,
+      "gt_overlap_count": 0,
+      "buffer_margin_px": 50
+    },
+    {
+      "tile_id": "HARD_TILE-019",
+      "filename": "hard_tile_019_hard_negative_clutter.jpg",
+      "path": "C:\\Users\\awhri\\OneDrive\\Desktop\\DEF\\evaluation\\hard_negative_tiles\\hard_tile_019_hard_negative_clutter.jpg",
+      "source_scene": "870.tif",
+      "val_half": "val_report",
+      "dataset_split": "pure_val_report",
+      "crop_box": [
+        384,
+        1536,
+        1408,
+        2560
+      ],
+      "terrain_type": "hard_negative_clutter",
+      "structural_proxies": {
+        "edge_density": 0.0,
+        "texture_variance": 58.1,
+        "intensity_std": 51.0,
+        "is_plain_terrain": false
+      },
+      "selection_rule": "Certified 0 GT within 50px buffer in val_report scene 870.tif; Edge density=0.0, Texture variance=58.1",
+      "verified_empty": true,
+      "gt_overlap_count": 0,
+      "buffer_margin_px": 50
+    },
+    {
+      "tile_id": "HARD_TILE-020",
+      "filename": "hard_tile_020_hard_negative_clutter.jpg",
+      "path": "C:\\Users\\awhri\\OneDrive\\Desktop\\DEF\\evaluation\\hard_negative_tiles\\hard_tile_020_hard_negative_clutter.jpg",
+      "source_scene": "870.tif",
+      "val_half": "val_report",
+      "dataset_split": "pure_val_report",
+      "crop_box": [
+        0,
+        1920,
+        1024,
+        2944
+      ],
+      "terrain_type": "hard_negative_clutter",
+      "structural_proxies": {
+        "edge_density": 0.0,
+        "texture_variance": 56.5,
+        "intensity_std": 53.6,
+        "is_plain_terrain": false
+      },
+      "selection_rule": "Certified 0 GT within 50px buffer in val_report scene 870.tif; Edge density=0.0, Texture variance=56.5",
+      "verified_empty": true,
+      "gt_overlap_count": 0,
+      "buffer_margin_px": 50
+    },
+    {
+      "tile_id": "HARD_TILE-021",
+      "filename": "hard_tile_021_hard_negative_clutter.jpg",
+      "path": "C:\\Users\\awhri\\OneDrive\\Desktop\\DEF\\evaluation\\hard_negative_tiles\\hard_tile_021_hard_negative_clutter.jpg",
+      "source_scene": "870.tif",
+      "val_half": "val_report",
+      "dataset_split": "pure_val_report",
+      "crop_box": [
+        384,
+        1920,
+        1408,
+        2944
+      ],
+      "terrain_type": "hard_negative_clutter",
+      "structural_proxies": {
+        "edge_density": 0.0,
+        "texture_variance": 60.1,
+        "intensity_std": 43.0,
+        "is_plain_terrain": false
+      },
+      "selection_rule": "Certified 0 GT within 50px buffer in val_report scene 870.tif; Edge density=0.0, Texture variance=60.1",
+      "verified_empty": true,
+      "gt_overlap_count": 0,
+      "buffer_margin_px": 50
+    },
+    {
+      "tile_id": "HARD_TILE-022",
+      "filename": "hard_tile_022_hard_negative_clutter.jpg",
+      "path": "C:\\Users\\awhri\\OneDrive\\Desktop\\DEF\\evaluation\\hard_negative_tiles\\hard_tile_022_hard_negative_clutter.jpg",
+      "source_scene": "1072.tif",
+      "val_half": "val_report",
+      "dataset_split": "pure_val_report",
+      "crop_box": [
+        1920,
+        768,
+        2944,
+        1792
+      ],
+      "terrain_type": "hard_negative_clutter",
+      "structural_proxies": {
+        "edge_density": 0.034,
+        "texture_variance": 120.9,
+        "intensity_std": 24.9,
+        "is_plain_terrain": false
+      },
+      "selection_rule": "Certified 0 GT within 50px buffer in val_report scene 1072.tif; Edge density=0.034, Texture variance=120.9",
+      "verified_empty": true,
+      "gt_overlap_count": 0,
+      "buffer_margin_px": 50
+    },
+    {
+      "tile_id": "HARD_TILE-023",
+      "filename": "hard_tile_023_hard_negative_clutter.jpg",
+      "path": "C:\\Users\\awhri\\OneDrive\\Desktop\\DEF\\evaluation\\hard_negative_tiles\\hard_tile_023_hard_negative_clutter.jpg",
+      "source_scene": "1072.tif",
+      "val_half": "val_report",
+      "dataset_split": "pure_val_report",
+      "crop_box": [
+        2304,
+        768,
+        3328,
+        1792
+      ],
+      "terrain_type": "hard_negative_clutter",
+      "structural_proxies": {
+        "edge_density": 0.033,
+        "texture_variance": 117.9,
+        "intensity_std": 22.6,
+        "is_plain_terrain": false
+      },
+      "selection_rule": "Certified 0 GT within 50px buffer in val_report scene 1072.tif; Edge density=0.033, Texture variance=117.9",
+      "verified_empty": true,
+      "gt_overlap_count": 0,
+      "buffer_margin_px": 50
+    },
+    {
+      "tile_id": "HARD_TILE-024",
+      "filename": "hard_tile_024_hard_negative_clutter.jpg",
+      "path": "C:\\Users\\awhri\\OneDrive\\Desktop\\DEF\\evaluation\\hard_negative_tiles\\hard_tile_024_hard_negative_clutter.jpg",
+      "source_scene": "1072.tif",
+      "val_half": "val_report",
+      "dataset_split": "pure_val_report",
+      "crop_box": [
+        2688,
+        768,
+        3712,
+        1792
+      ],
+      "terrain_type": "hard_negative_clutter",
+      "structural_proxies": {
+        "edge_density": 0.0375,
+        "texture_variance": 134.2,
+        "intensity_std": 18.0,
+        "is_plain_terrain": false
+      },
+      "selection_rule": "Certified 0 GT within 50px buffer in val_report scene 1072.tif; Edge density=0.0375, Texture variance=134.2",
+      "verified_empty": true,
+      "gt_overlap_count": 0,
+      "buffer_margin_px": 50
+    },
+    {
+      "tile_id": "HARD_TILE-025",
+      "filename": "hard_tile_025_hard_negative_clutter.jpg",
+      "path": "C:\\Users\\awhri\\OneDrive\\Desktop\\DEF\\evaluation\\hard_negative_tiles\\hard_tile_025_hard_negative_clutter.jpg",
+      "source_scene": "1072.tif",
+      "val_half": "val_report",
+      "dataset_split": "pure_val_report",
+      "crop_box": [
+        1920,
+        1152,
+        2944,
+        2176
+      ],
+      "terrain_type": "hard_negative_clutter",
+      "structural_proxies": {
+        "edge_density": 0.0487,
+        "texture_variance": 150.3,
+        "intensity_std": 26.8,
+        "is_plain_terrain": false
+      },
+      "selection_rule": "Certified 0 GT within 50px buffer in val_report scene 1072.tif; Edge density=0.0487, Texture variance=150.3",
+      "verified_empty": true,
+      "gt_overlap_count": 0,
+      "buffer_margin_px": 50
+    },
+    {
+      "tile_id": "HARD_TILE-026",
+      "filename": "hard_tile_026_hard_negative_clutter.jpg",
+      "path": "C:\\Users\\awhri\\OneDrive\\Desktop\\DEF\\evaluation\\hard_negative_tiles\\hard_tile_026_hard_negative_clutter.jpg",
+      "source_scene": "1072.tif",
+      "val_half": "val_report",
+      "dataset_split": "pure_val_report",
+      "crop_box": [
+        2304,
+        1152,
+        3328,
+        2176
+      ],
+      "terrain_type": "hard_negative_clutter",
+      "structural_proxies": {
+        "edge_density": 0.0506,
+        "texture_variance": 162.1,
+        "intensity_std": 27.1,
+        "is_plain_terrain": false
+      },
+      "selection_rule": "Certified 0 GT within 50px buffer in val_report scene 1072.tif; Edge density=0.0506, Texture variance=162.1",
+      "verified_empty": true,
+      "gt_overlap_count": 0,
+      "buffer_margin_px": 50
+    },
+    {
+      "tile_id": "HARD_TILE-027",
+      "filename": "hard_tile_027_hard_negative_clutter.jpg",
+      "path": "C:\\Users\\awhri\\OneDrive\\Desktop\\DEF\\evaluation\\hard_negative_tiles\\hard_tile_027_hard_negative_clutter.jpg",
+      "source_scene": "1072.tif",
+      "val_half": "val_report",
+      "dataset_split": "pure_val_report",
+      "crop_box": [
+        2688,
+        1152,
+        3712,
+        2176
+      ],
+      "terrain_type": "hard_negative_clutter",
+      "structural_proxies": {
+        "edge_density": 0.0532,
+        "texture_variance": 173.0,
+        "intensity_std": 22.4,
+        "is_plain_terrain": false
+      },
+      "selection_rule": "Certified 0 GT within 50px buffer in val_report scene 1072.tif; Edge density=0.0532, Texture variance=173.0",
+      "verified_empty": true,
+      "gt_overlap_count": 0,
+      "buffer_margin_px": 50
+    },
+    {
+      "tile_id": "HARD_TILE-028",
+      "filename": "hard_tile_028_hard_negative_clutter.jpg",
+      "path": "C:\\Users\\awhri\\OneDrive\\Desktop\\DEF\\evaluation\\hard_negative_tiles\\hard_tile_028_hard_negative_clutter.jpg",
+      "source_scene": "1072.tif",
+      "val_half": "val_report",
+      "dataset_split": "pure_val_report",
+      "crop_box": [
+        1920,
+        1536,
+        2944,
+        2560
+      ],
+      "terrain_type": "hard_negative_clutter",
+      "structural_proxies": {
+        "edge_density": 0.0407,
+        "texture_variance": 130.5,
+        "intensity_std": 28.0,
+        "is_plain_terrain": false
+      },
+      "selection_rule": "Certified 0 GT within 50px buffer in val_report scene 1072.tif; Edge density=0.0407, Texture variance=130.5",
+      "verified_empty": true,
+      "gt_overlap_count": 0,
+      "buffer_margin_px": 50
+    },
+    {
+      "tile_id": "HARD_TILE-029",
+      "filename": "hard_tile_029_hard_negative_clutter.jpg",
+      "path": "C:\\Users\\awhri\\OneDrive\\Desktop\\DEF\\evaluation\\hard_negative_tiles\\hard_tile_029_hard_negative_clutter.jpg",
+      "source_scene": "1072.tif",
+      "val_half": "val_report",
+      "dataset_split": "pure_val_report",
+      "crop_box": [
+        2304,
+        1536,
+        3328,
+        2560
+      ],
+      "terrain_type": "hard_negative_clutter",
+      "structural_proxies": {
+        "edge_density": 0.0377,
+        "texture_variance": 134.2,
+        "intensity_std": 27.5,
+        "is_plain_terrain": false
+      },
+      "selection_rule": "Certified 0 GT within 50px buffer in val_report scene 1072.tif; Edge density=0.0377, Texture variance=134.2",
+      "verified_empty": true,
+      "gt_overlap_count": 0,
+      "buffer_margin_px": 50
+    },
+    {
+      "tile_id": "HARD_TILE-030",
+      "filename": "hard_tile_030_hard_negative_clutter.jpg",
+      "path": "C:\\Users\\awhri\\OneDrive\\Desktop\\DEF\\evaluation\\hard_negative_tiles\\hard_tile_030_hard_negative_clutter.jpg",
+      "source_scene": "1072.tif",
+      "val_half": "val_report",
+      "dataset_split": "pure_val_report",
+      "crop_box": [
+        2688,
+        1536,
+        3712,
+        2560
+      ],
+      "terrain_type": "hard_negative_clutter",
+      "structural_proxies": {
+        "edge_density": 0.0436,
+        "texture_variance": 150.6,
+        "intensity_std": 22.2,
+        "is_plain_terrain": false
+      },
+      "selection_rule": "Certified 0 GT within 50px buffer in val_report scene 1072.tif; Edge density=0.0436, Texture variance=150.6",
+      "verified_empty": true,
+      "gt_overlap_count": 0,
+      "buffer_margin_px": 50
+    }
+  ]
+}

@@ -124,3 +124,66 @@ class RagDispatchMissionRequest(BaseModel):
     title: str = Field(..., min_length=3, max_length=150)
     directive_summary: str = Field(..., min_length=5)
     checklist: List[str] = Field(default_factory=list)
+
+
+class TriageReopenRequest(BaseModel):
+    """Operator manual override request to reopen an auto-closed contact."""
+    item_id: Optional[str] = Field(None, description="Optional target ID if not in URL path")
+    reason: Optional[str] = Field("Operator manual inspection override", max_length=250)
+    operator: Optional[str] = Field("OPERATOR", max_length=50)
+    operator_role: Optional[str] = Field("OPERATOR", max_length=50)
+
+
+class TriageConfigUpdate(BaseModel):
+    """Optional runtime configuration override for auto-triage thresholds."""
+    low_threat_max: Optional[int] = Field(None, ge=0, le=100)
+    medium_threat_min: Optional[int] = Field(None, ge=0, le=100)
+    medium_threat_max: Optional[int] = Field(None, ge=0, le=100)
+    high_threat_min: Optional[int] = Field(None, ge=0, le=100)
+    manual_review_seconds_per_item: Optional[float] = Field(None, ge=1.0, le=3600.0)
+
+
+class MeasurementInput(BaseModel):
+    """Input sensor measurement for kinematic track fusion."""
+    sensor_type: str = Field("AIS", description="AIS, SAR, OPTICAL, or RADAR")
+    lat: float = Field(..., ge=-90.0, le=90.0)
+    lon: float = Field(..., ge=-180.0, le=180.0)
+    alt: float = Field(0.0)
+    identity: Optional[str] = Field(None, description="MMSI, callsign, or null")
+    detected_class: Optional[str] = Field("Vessel", description="Vessel, Vehicle, Aircraft")
+    confidence: float = Field(1.0, ge=0.0, le=1.0)
+    speed_knots: Optional[float] = Field(None, ge=0.0, le=120.0)
+    heading_deg: Optional[float] = Field(None, ge=0.0, le=360.0)
+    timestamp: Optional[float] = Field(None, description="Epoch seconds or null for now")
+
+
+class FuseStepRequest(BaseModel):
+    """Batch sensor fusion step request."""
+    measurements: List[MeasurementInput] = Field(default_factory=list)
+    timestamp: Optional[float] = Field(None, description="Optional time step in epoch seconds")
+    association_method: Optional[str] = Field("hungarian", description="hungarian, jpda, or nn")
+
+
+class DdilAlertItem(BaseModel):
+    """Individual tactical alert item for store-and-forward synchronization."""
+    alert_id: str = Field(..., description="Globally unique alert ID")
+    seq_num: int = Field(..., description="Monotonic sequence number at edge node")
+    node_id: Optional[str] = Field("EDGE-JETSON-ORIN-01", description="Originating edge node identifier")
+    payload: Dict[str, Any] = Field(default_factory=dict, description="Arbitrary detection payload JSON")
+    threat_score: int = Field(0, ge=0, le=100)
+    threat_level: str = Field("LOW", pattern="^(LOW|MEDIUM|HIGH)$")
+    created_at: str = Field(..., description="ISO 8601 creation timestamp at edge node")
+
+
+class DdilSyncBatchRequest(BaseModel):
+    """Batch alert synchronization payload transmitted across tactical link."""
+    node_id: str = Field("EDGE-JETSON-ORIN-01", description="Edge node identifier")
+    alerts: List[DdilAlertItem] = Field(default_factory=list, description="Ordered batch of pending outbox alerts")
+
+
+class DdilChannelUpdateRequest(BaseModel):
+    """Runtime channel state override for DDIL testing and UI demonstration."""
+    status: str = Field(..., pattern="^(CONNECTED|DEGRADED|DENIED)$", description="Physical link condition")
+    latency_ms: Optional[float] = Field(25.0, ge=0.0, le=10000.0)
+    packet_loss_pct: Optional[float] = Field(0.0, ge=0.0, le=100.0)
+    bandwidth_kbps: Optional[float] = Field(256.0, ge=1.0, le=100000.0)

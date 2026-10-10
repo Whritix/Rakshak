@@ -39,7 +39,8 @@ def _ensure_column(c: sqlite3.Connection, table: str, col: str, col_def: str) ->
 
 def init_database() -> None:
     """Initialize database schemas, apply migrations, indexes, and initial seeds."""
-    with get_db() as c:
+    c = get_db()
+    try:
         # WAL mode configuration
         c.execute('PRAGMA journal_mode = WAL')
         c.execute('PRAGMA synchronous = NORMAL')
@@ -164,6 +165,25 @@ def init_database() -> None:
             created_at TEXT
         )''')
 
+        # ── 9. Automated Workload Triage Audit Trail & Human Override ───────
+        c.execute('''
+        CREATE TABLE IF NOT EXISTS auto_triage_audit(
+            id TEXT PRIMARY KEY,
+            item_id TEXT NOT NULL,
+            source_type TEXT NOT NULL,
+            scene_or_source TEXT,
+            kind TEXT,
+            threat_score INTEGER NOT NULL,
+            threat_level TEXT NOT NULL,
+            triage_action TEXT NOT NULL,
+            status TEXT NOT NULL DEFAULT 'CLOSED',
+            matched_identity TEXT,
+            reason TEXT NOT NULL,
+            triaged_at TEXT NOT NULL,
+            reopened_at TEXT,
+            reopened_by TEXT
+        )''')
+
         # ── Migrations (Clean, Idempotent Helpers) ──────────────────────────
         _ensure_column(c, 'zones', 'zone_type', "TEXT DEFAULT 'DEFENSE_BUFFER'")
         _ensure_column(c, 'zones', 'created_at', "TEXT")
@@ -180,6 +200,8 @@ def init_database() -> None:
         c.execute('CREATE INDEX IF NOT EXISTS idx_army_domain ON army_feeds(domain, threat_score DESC)')
         c.execute('CREATE INDEX IF NOT EXISTS idx_missions_created ON missions(created_at DESC)')
         c.execute('CREATE INDEX IF NOT EXISTS idx_rag_category ON rag_knowledge_base(category)')
+        c.execute('CREATE INDEX IF NOT EXISTS idx_auto_triage_status ON auto_triage_audit(status, triage_action)')
+        c.execute('CREATE INDEX IF NOT EXISTS idx_auto_triage_item ON auto_triage_audit(item_id)')
 
         # ── Seed Strategic Restricted Zones if Empty ────────────────────────
         cur_z = c.execute('SELECT COUNT(*) FROM zones')
@@ -210,6 +232,8 @@ def init_database() -> None:
             c.executemany('INSERT INTO users VALUES (?,?,?,?,?,?,?,?,?)', default_users)
 
         c.commit()
+    finally:
+        c.close()
 
 
 # Execute idempotent database schema initialization on module import
