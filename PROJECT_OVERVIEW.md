@@ -18,9 +18,10 @@ Modern military command networks across India's maritime Exclusive Economic Zone
 3. **Data Sovereignty & Electronic Warfare (EW) Constraints:** Frontline warships (operating under EMCON radio silence) and forward military outposts cannot stream tactical surveillance feeds or Rules of Engagement queries to commercial cloud APIs (AWS, Azure, OpenAI, Google Cloud) due to electronic jamming, signal interception, and strict national defense information security guidelines.
 
 ### The Solution: Project Rakshak 2.0
-Project Rakshak 2.0 is a sovereign, 100% air-gapped Common Operating Picture (COP) platform that operates with **zero cloud dependencies** and **zero bytes of external data egress** (0 non-loopback connections, 0 DNS queries, verified via [`evaluation/results/egress_test_report.json`](file:///c:/Users/awhri/OneDrive/Desktop/DEF/evaluation/results/egress_test_report.json)). It fuses five disparate sensor streams:
+Project Rakshak 2.0 is a sovereign, 100% air-gapped Common Operating Picture (COP) platform that operates with **zero cloud dependencies** and **zero bytes of external data egress** (0 non-loopback connections, 0 DNS queries, verified via [`evaluation/results/egress_test_report.json`](file:///c:/Users/awhri/OneDrive/Desktop/DEF/evaluation/results/egress_test_report.json)). It fuses multi-modal intelligence across:
 - Spaceborne Synthetic Aperture Radar (SAR C-Band from Sentinel-1)
 - Sub-meter Optical Satellite Imagery (0.3m Ground Sample Distance from xView)
+- Multi-Temporal Satellite Change Detection (ORB + RANSAC sub-pixel co-registration & Hungarian matching)
 - Tactical Drone UAV Electro-Optical / Infrared (EO/IR) downlinks (Garuda-04)
 - Unattended Ground Sensors (UGS 18 Hz seismic geophones)
 - Marine Automatic Identification System (AIS) transponder feeds
@@ -29,7 +30,7 @@ Project Rakshak 2.0 is a sovereign, 100% air-gapped Common Operating Picture (CO
 
 ## 2. Evaluation Results by Problem Statement KPI
 
-The following 10 sections present the definitive, audited evaluation benchmarks corresponding to each evaluation dimension of Problem Statement 1A, plus the zero-egress security verification. Every single number and table below is copied directly from [evaluation/RESULTS.md](file:///c:/Users/awhri/OneDrive/Desktop/DEF/evaluation/RESULTS.md) with an explicit provenance tag.
+The following 11 sections present the definitive, audited evaluation benchmarks corresponding to each evaluation dimension of Problem Statement 1A, plus the zero-egress security verification. Every single number and table below is copied directly from [evaluation/RESULTS.md](file:///c:/Users/awhri/OneDrive/Desktop/DEF/evaluation/RESULTS.md) with an explicit provenance tag.
 
 ---
 
@@ -348,6 +349,54 @@ Each scenario was evaluated over 10 repetitions (30 total runs) against local li
 | **Socket Guard Violation Intercept** | **1 blocked** | Active | Controlled trap validation | 2026-10-10 | `evaluation/results/egress_test_report.json` | `MEASURED` |
 | **Air-Gap Verification Verdict** | **NO_EGRESS_OBSERVED** | 0 outbound non-loopback calls | Socket trap & connection monitor | 2026-10-10 | `evaluation/results/egress_test_report.json` | `MEASURED` |
 | **Kernel eBPF / Hardware Network Tap Audit** | **NOT DONE** | Hardware isolation | User-space Python hook used; kernel eBPF / TAP uninstrumented | 2026-10-10 | `evaluation/results/egress_test_report.json` | `NOT DONE` |
+
+---
+
+### KPI 11: Multi-Temporal Satellite Change Detection
+
+**Source JSON:** [`evaluation/results/change_detection_report.json`](file:///c:/Users/awhri/OneDrive/Desktop/DEF/evaluation/results/change_detection_report.json) & [`evaluation/results/change_detection_summary.md`](file:///c:/Users/awhri/OneDrive/Desktop/DEF/evaluation/results/change_detection_summary.md)  
+**Dataset / Scenario:** 40 seeded synthetic bi-temporal pairs across held-out seeds (`seed=21` to `seed=60`) constructed from 100% held-out `val_report` partition (540 tiles). Each synthetic pair contains exactly 3 ground-truth object edits (1 NEW, 1 REMOVED, 1 MOVED) = 120 total edits across 40 pairs (+1 structural revetment per pair). Injected misalignments 0.0 to 8.0 px; class-aware Hungarian bipartite matching with stationary distance $\le 28$ px and movement distance $\le 120$ px; secondary radiometric normalisation with channel gain & bias calibration.
+
+| Metric / Tactical Scenario | Value | Sample Size | Scenario Condition | Method | Date | Source JSON Path | Provenance |
+| :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
+| **Headline Change Precision (Raw)** | **28.04 ± 31.57%** (0.2804) [Pooled: **20.93%** (0.2093)] | 40 seeds (120 ground-truth edits, 3 edits/pair) | `val_report` holdout seeds 21-60 | YOLO11m + Class-Aware Hungarian Matcher | 2026-10-10 | `evaluation/results/change_detection_report.json` | `SIMULATED` |
+| **Headline Change Recall (Raw)** | **37.50 ± 31.79%** (0.3750) [Pooled: **37.50%** (0.3750)] | 40 seeds (120 ground-truth edits, 3 edits/pair) | `val_report` holdout seeds 21-60 | YOLO11m + Class-Aware Hungarian Matcher | 2026-10-10 | `evaluation/results/change_detection_report.json` | `SIMULATED` |
+| **Headline Change F1 Score (Raw)** | **0.2812 ± 0.2610** (0.2812) [Pooled: **0.2687**] | 40 seeds (120 ground-truth edits, 3 edits/pair) | `val_report` holdout seeds 21-60 | Harmonic mean of change precision & recall | 2026-10-10 | `evaluation/results/change_detection_report.json` | `SIMULATED` |
+| **Stability-Filtered Change Precision** | **30.00 ± 45.83%** (0.3000) [Pooled: **80.95%** (0.8095)] | 40 seeds (120 ground-truth edits, 3 edits/pair) | `val_report` holdout seeds 21-60 | Conf $\ge 0.40$, Ghost check $< 0.15$ within 28px | 2026-10-10 | `evaluation/results/change_detection_report.json` | `SIMULATED` |
+| **Stability-Filtered Change Recall** | **14.17 ± 25.70%** (0.1417) [Pooled: **14.17%** (0.1417)] | 40 seeds (120 ground-truth edits, 3 edits/pair) | `val_report` holdout seeds 21-60 | Conf $\ge 0.40$, Ghost check $< 0.15$ within 28px | 2026-10-10 | `evaluation/results/change_detection_report.json` | `SIMULATED` |
+| **Stability-Filtered Change F1 Score** | **0.1825 ± 0.2982** (0.1825) [Pooled: **0.2411**] | 40 seeds (120 ground-truth edits, 3 edits/pair) | `val_report` holdout seeds 21-60 | Conf $\ge 0.40$, Ghost check $< 0.15$ within 28px | 2026-10-10 | `evaluation/results/change_detection_report.json` | `SIMULATED` |
+| **Aircraft Change Precision** | **75.00%** (0.7500) | 30 GT aircraft edits | 20 aircraft holdout scenes | YOLO11m + Class-Aware Matching | 2026-10-10 | `evaluation/results/change_detection_report.json` | `SIMULATED` |
+| **Aircraft Change Recall** | **40.00%** (0.4000) | 30 GT aircraft edits | 20 aircraft holdout scenes | YOLO11m + Class-Aware Matching | 2026-10-10 | `evaluation/results/change_detection_report.json` | `SIMULATED` |
+| **Aircraft Change F1 Score** | **0.5217 ± 0.4305** (0.5217) | 30 GT aircraft edits | 20 aircraft holdout scenes | Class-specific F1 | 2026-10-10 | `evaluation/results/change_detection_report.json` | `SIMULATED` |
+| **Vehicle Change Precision** | **19.41%** (0.1941) | 90 GT vehicle edits | 20 vehicle holdout scenes | YOLO11m + Class-Aware Matching | 2026-10-10 | `evaluation/results/change_detection_report.json` | `SIMULATED` |
+| **Vehicle Change Recall** | **36.67%** (0.3667) | 90 GT vehicle edits | 20 vehicle holdout scenes | YOLO11m + Class-Aware Matching | 2026-10-10 | `evaluation/results/change_detection_report.json` | `SIMULATED` |
+| **Vehicle Change F1 Score** | **0.2538 ± 0.2821** (0.2538) | 90 GT vehicle edits | 20 vehicle holdout scenes | Class-specific F1 | 2026-10-10 | `evaluation/results/change_detection_report.json` | `SIMULATED` |
+| **NEW Objects Precision** | **13.43%** (0.1343) | 40 GT additions | `val_report` holdout seeds 21-60 | Unmatched post-scene neural detections | 2026-10-10 | `evaluation/results/change_detection_report.json` | `SIMULATED` |
+| **NEW Objects Recall** | **22.50%** (0.2250) | 40 GT additions | `val_report` holdout seeds 21-60 | Unmatched post-scene neural detections | 2026-10-10 | `evaluation/results/change_detection_report.json` | `SIMULATED` |
+| **NEW Objects F1 Score** | **0.1682** | 40 GT additions | `val_report` holdout seeds 21-60 | Harmonic mean | 2026-10-10 | `evaluation/results/change_detection_report.json` | `SIMULATED` |
+| **REMOVED Objects Precision** | **20.34%** (0.2034) | 40 GT removals | `val_report` holdout seeds 21-60 | Inpainted post-scene missing detections | 2026-10-10 | `evaluation/results/change_detection_report.json` | `SIMULATED` |
+| **REMOVED Objects Recall** | **60.00%** (0.6000) | 40 GT removals | `val_report` holdout seeds 21-60 | Inpainted post-scene missing detections | 2026-10-10 | `evaluation/results/change_detection_report.json` | `SIMULATED` |
+| **REMOVED Objects F1 Score** | **0.3038** | 40 GT removals | `val_report` holdout seeds 21-60 | Harmonic mean | 2026-10-10 | `evaluation/results/change_detection_report.json` | `SIMULATED` |
+| **MOVED Objects Precision** | **40.00%** (0.4000) | 40 GT relocations | `val_report` holdout seeds 21-60 | Spatial relocation (18 < d $\le$ 120 px) | 2026-10-10 | `evaluation/results/change_detection_report.json` | `SIMULATED` |
+| **MOVED Objects Recall** | **30.00%** (0.3000) | 40 GT relocations | `val_report` holdout seeds 21-60 | Spatial relocation (18 < d $\le$ 120 px) | 2026-10-10 | `evaluation/results/change_detection_report.json` | `SIMULATED` |
+| **MOVED Objects F1 Score** | **0.3429** | 40 GT relocations | `val_report` holdout seeds 21-60 | Harmonic mean | 2026-10-10 | `evaluation/results/change_detection_report.json` | `SIMULATED` |
+| **Mean Co-Registration Error (0-8 px shift)** | **0.1449 ± 0.1034 px** | 40 seeds (shifts 0.0 to 8.0 px) | Sub-pixel co-registration | ORB (2500 kp) + RANSAC & Phase Correlation | 2026-10-10 | `evaluation/results/change_detection_report.json` | `SIMULATED` |
+| **Registration Error @ 0.0 px Shift** | **0.0017 ± 0.0010 px** (Max: **0.0034 px**) | 8 trials | Stationary baseline | ORB + RANSAC Affine | 2026-10-10 | `evaluation/results/change_detection_report.json` | `SIMULATED` |
+| **Registration Error @ 2.0 px Shift** | **0.0807 ± 0.0443 px** (Max: **0.1650 px**) | 8 trials | 2.0 px radial offset | ORB + RANSAC Affine | 2026-10-10 | `evaluation/results/change_detection_report.json` | `SIMULATED` |
+| **Registration Error @ 4.0 px Shift** | **0.1037 ± 0.0825 px** (Max: **0.3097 px**) | 8 trials | 4.0 px radial offset | ORB + RANSAC Affine | 2026-10-10 | `evaluation/results/change_detection_report.json` | `SIMULATED` |
+| **Registration Error @ 6.0 px Shift** | **0.1270 ± 0.1538 px** (Max: **0.4494 px**) | 8 trials | 6.0 px radial offset | ORB + RANSAC Affine | 2026-10-10 | `evaluation/results/change_detection_report.json` | `SIMULATED` |
+| **Registration Error @ 8.0 px Shift** | **0.1086 ± 0.0537 px** (Max: **0.2322 px**) | 8 trials | 8.0 px radial offset | ORB + RANSAC Affine | 2026-10-10 | `evaluation/results/change_detection_report.json` | `SIMULATED` |
+| **Structural Anomaly Capture Rate** | **65.00%** (0.6500) | 40 injected structural revetments | Secondary pixel diff signal | Radiometric gain/bias normalization & morphological filtering | 2026-10-10 | `evaluation/results/change_detection_report.json` | `SIMULATED` |
+| **Real-World Bi-Temporal Satellite Sea/Land Trials** | **NOT DONE** | 0 multi-pass satellite overflights | Operational satellite constellation passes | Requires multi-day satellite tasking | 2026-10-10 | `evaluation/results/change_detection_report.json` | `NOT DONE` |
+
+#### False-Positive Root Cause Breakdown (170 Total Raw FPs)
+
+| Root Cause Category | Count | Percentage | Physical / Algorithmic Mechanism | Mitigation |
+| :--- | :---: | :---: | :--- | :--- |
+| **(a) Detector flicker on unchanged objects** | **128** | **75.29%** | Unedited ground-truth objects present in both scenes hovering near 0.25 threshold in one scene but missed in partner scene | Pruned by partner-scene ghost filter ($< 0.15$ within 28px) |
+| **(b) Inpainting boundary artifacts** | **35** | **20.59%** | Telea inpainting on natural structured terrain leaves high-frequency texture steps that trigger false detections | Pruned by confidence elevation ($\ge 0.40$) |
+| **(c) Mis-registration / texture noise** | **7** | **4.12%** | Residual sub-pixel displacement noise and unassociated background clutter | Controlled by ORB+RANSAC sub-pixel co-registration |
+| **Total Baseline False Positives** | **170** | **100.00%** | Combined false alarms before stability filtration | Reduced to **4 FPs** (97.6% reduction) under stability filter |
 
 ---
 
