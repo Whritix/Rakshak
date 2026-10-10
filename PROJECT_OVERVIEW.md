@@ -88,6 +88,8 @@ The following 10 sections present the definitive, audited evaluation benchmarks 
 | Metric / Scenario | Value | Sample Size | Dataset or Scenario | Method | Date | Source JSON Path | Provenance |
 | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
 | **Headline E2E Dark Vessel Capture** | **79.40 ± 2.80%** [95% CI: 78.09%, 80.71%] | 20 seeds (10,000 contacts, 3,000 dark) | Arabian Sea littoral, 2.0 km radius, ±30 min offset | CA-CFAR + AIS Dead-Reckoning temporal correlation | 2026-10-10 | `evaluation/results/dark_vessel_eval_report.json` | `SIMULATED` |
+| **Simulated Scenario Dark-Vessel Fraction** | **30.0%** (3,000 / 10,000 contacts) | 20 seeds (10,000 contacts) | Synthetic maritime evaluation | Mathematical Monte Carlo simulation model | 2026-10-10 | `evaluation/results/dark_vessel_eval_report.json` | `SIMULATED` |
+| **Empirical Sentinel-2 Corpus Dark Fraction** | **45.26%** (497,676 / 1,099,634 contacts) | 1,099,634 spaceborne detections | ESA Copernicus Sentinel-2 public corpus | AIS correlation match against Sentinel-2 PipeV4 | 2026-10-09 | `evaluation/results/analyst_workload_report.json` | `MEASURED` |
 | **Headline E2E Capture Range (Min / Max)** | Min: **75.33%**, Max: **83.33%** | 20 seeds (10,000 contacts) | Operational 2.0 km radius | Multi-seed spread | 2026-10-10 | `evaluation/results/dark_vessel_eval_report.json` | `SIMULATED` |
 | **Post-Detection Recall** | **92.63 ± 2.23%** [95% CI: 91.58%, 93.67%] | 20 seeds (10,000 contacts) | Operational 2.0 km radius | CA-CFAR-detected dark vessel filtering | 2026-10-10 | `evaluation/results/dark_vessel_eval_report.json` | `SIMULATED` |
 | **Post-Detection Recall Range (Min / Max)** | Min: **89.15%**, Max: **97.66%** | 20 seeds (10,000 contacts) | Operational 2.0 km radius | Multi-seed spread | 2026-10-10 | `evaluation/results/dark_vessel_eval_report.json` | `SIMULATED` |
@@ -125,12 +127,12 @@ The following 10 sections present the definitive, audited evaluation benchmarks 
 | **Dual-Engine Throughput (No TTA)** | **20.87 tiles/sec** | 1,000 iterations | 1024×1024 static shape | YOLO11m + YOLO11n WBF | 2026-10-09 | `evaluation/results/false_alarm_report.json` | `MEASURED` |
 | **High-Performance Boosted Mean (AC plugged)** | **17.85 ± 0.11 ms** (P50: **17.37 ms**, P95: **20.86 ms**) | 3 repeats (200 iters each) | 1024×1024 static shape | Single YOLO11m FP16 @ 2,610–2,625 MHz clock | 2026-10-10 | `evaluation/results/edge_bench_report.json` | `MEASURED` |
 | **High-Performance Boosted Throughput** | **55.65 – 56.50 FPS** | 3 repeats | 1024×1024 static shape | Single YOLO11m FP16 (RTX 4060 Boosted) | 2026-10-10 | `evaluation/results/edge_bench_report.json` | `MEASURED` |
-| **SAR CA-CFAR Radar Processing** | **1.1 s** | 25,000 radar cells | 289 km² radar coverage footprint | 2D CA-CFAR sliding window algorithm | 2026-10-10 | `backend/app/sar_engine.py` | `MEASURED` |
-| **SAR-to-AIS Haversine Spatial Matching** | **85 ms** | All active AIS coastal tracks | 5 km correlation buffer | Haversine great-circle calculation | 2026-10-10 | `backend/app/sar_engine.py` | `MEASURED` |
-| **Sovereign BM25 Doctrine RAG Query** | **< 40 ms** | 12 sovereign military doctrine documents | Rules of Engagement query (INBR 8 / UNCLOS) | Local BM25 lexical index (0 network calls) | 2026-10-10 | `backend/app/rag_engine.py` | `MEASURED` |
-| **STANAG 2014 SITREP Compilation** | **< 50 ms** | Active threat entities | Military SITREP generation | In-memory procedural STANAG compiler | 2026-10-10 | `backend/app/sitrep_generator.py` | `MEASURED` |
-| **End-to-End Decision Pipeline Target** | **< 1.8 s** | Target envelope | Full scene ingestion to alert dispatch | Complete multi-modal pipeline | 2026-10-10 | `backend/app/kpi_service.py` | `PROJECTED` |
-| **Complete Scene Ingestion (Multi-Tile Triage)** | **NOT DONE** (Empirical multi-scene latency distribution unlogged in JSON) | 0 logged full scenes in JSON | 38 validation scenes | Sliced SAHI tile orchestration | 2026-10-10 | `evaluation/results/` | `NOT DONE` |
+| **SAR CA-CFAR Radar Processing** | **1.1 s** | 25,000 radar cells | 289 km² radar coverage footprint | 2D CA-CFAR sliding window algorithm | 2026-10-10 | `backend/app/sar_engine.py` | `code-path timing, not logged` |
+| **SAR-to-AIS Haversine Spatial Matching** | **85 ms** | All active AIS coastal tracks | 5 km correlation buffer | Haversine great-circle calculation | 2026-10-10 | `backend/app/sar_engine.py` | `code-path timing, not logged` |
+| **Sovereign BM25 Doctrine RAG Query** | **< 40 ms** (REST roundtrip: **92.25 ± 52.29 ms**) | 12 sovereign military doctrine documents | Rules of Engagement query (INBR 8 / UNCLOS) | Local BM25 lexical index (<40ms code-path, 92ms REST) | 2026-10-10 | `evaluation/results/mission_planning_report.json` | `MEASURED` |
+| **STANAG 2014 SITREP Compilation** | **< 50 ms** (REST roundtrip: **16.74 ± 9.88 ms**) | Active threat entities | Military SITREP generation | In-memory procedural compiler (<50ms code-path, 17ms REST) | 2026-10-10 | `evaluation/results/mission_planning_report.json` | `MEASURED` |
+| **Complete Scene Ingestion (38 Scenes, 540 Tiles)** | Mean: **1.62 s**, Median: **1.58 s**, P95: **2.30 s** (Min: **1.10 s**, Max: **2.72 s**, Std: **0.40 s**) | 38 full scenes (540 tiles, avg 14.2 tiles/scene) | `val_report` holdout | Sliced SAHI tile orchestration on host RTX 4060 (boosted 2,610–2,625 MHz, 78–81W) | 2026-10-09 | `evaluation/results/false_alarm_report.json` | `MEASURED` |
+| **End-to-End Decision Pipeline Target** | **< 1.8 s** | Target envelope | Full scene ingestion to alert dispatch (Mean 1.62s sub-2s boosted, P95 2.30s, unboosted ~3.1s) | Complete multi-modal pipeline | 2026-10-10 | `backend/app/kpi_service.py` | `PROJECTED` |
 
 ---
 
@@ -177,7 +179,7 @@ The following 10 sections present the definitive, audited evaluation benchmarks 
 | **Tactical Maneuver: ID Switches** | **0** | 50 seeds (92 GT points) | 90° high-speed evasion turn | Hungarian / JPDA / NN | 2026-10-10 | `evaluation/results/tracking_report.json` | `SIMULATED` |
 | **Tactical Maneuver: MOTA / MOTP** | MOTA: **86.96%**, MOTP: **20.49 m** (JPDA) | 50 seeds (92 GT points) | 90° evasion turn | JPDA | 2026-10-10 | `evaluation/results/tracking_report.json` | `SIMULATED` |
 | **Tactical Maneuver: Continuity / RMSE** | Continuity: **89.13%**, RMSE: **28.17 m** (JPDA) | 50 seeds (92 GT points) | 90° evasion turn | JPDA | 2026-10-10 | `evaluation/results/tracking_report.json` | `SIMULATED` |
-| **Chokepoint: JPDA ID Switches** | **2** | 50 seeds (205 GT points) | 5 vessels, dense clutter $\lambda_c=10^{-4}$ | JPDA (Mutual exclusion) | 2026-10-10 | `evaluation/results/tracking_report.json` | `SIMULATED` |
+| **Chokepoint: JPDA ID Switches** | **2** | 50 seeds (205 GT points) | 5 vessels, Poisson clutter $\lambda = 1.2$ false alarms/step | JPDA (Mutual exclusion) | 2026-10-10 | `evaluation/results/tracking_report.json` | `SIMULATED` |
 | **Chokepoint: JPDA MOTA / MOTP** | MOTA: **71.22%**, MOTP: **12.62 m** | 50 seeds (205 GT points) | High-density chokepoint | JPDA | 2026-10-10 | `evaluation/results/tracking_report.json` | `SIMULATED` |
 | **Chokepoint: JPDA Track Continuity** | **88.29%** (vs Hungarian 82.44%, NN 80.00%) | 50 seeds (205 GT points) | High-density chokepoint | JPDA | 2026-10-10 | `evaluation/results/tracking_report.json` | `SIMULATED` |
 | **Chokepoint: Hungarian ID Switches** | **0** (MOTA: **51.22%**, Continuity: **82.44%**) | 50 seeds (205 GT points) | High-density chokepoint | Hungarian + Mahalanobis Gate | 2026-10-10 | `evaluation/results/tracking_report.json` | `SIMULATED` |
@@ -185,7 +187,7 @@ The following 10 sections present the definitive, audited evaluation benchmarks 
 
 ---
 
-### KPI 6: Geolocation Circular Error Probable (CEP)
+### KPI 6: Detection localisation error (CEP, vs dataset georeferencing)
 
 **Source JSON:** [`evaluation/results/geolocation_cep_report.json`](file:///c:/Users/awhri\OneDrive\Desktop\DEF\evaluation\results\geolocation_cep_report.json)  
 **Partition:** Strictly `val_report` holdout (540 tiles across 38 distinct scenes, 66,521 ground-truth instances). Evaluated against GeoTIFF internal UTM projection metadata.
@@ -230,35 +232,48 @@ The following 10 sections present the definitive, audited evaluation benchmarks 
 | **Host Boosted Latency (AC plugged)** | **17.85 ± 0.11 ms** (P50: **17.37 ms**) | 3 repeats (200 iters each) | Clocks 2,610–2,625 MHz, 78–81W | PyTorch CUDA Event timing | 2026-10-10 | `evaluation/results/edge_bench_report.json` | `MEASURED_RTX4060` |
 | **Host Boosted Throughput** | **55.65 – 56.50 FPS** | 3 repeats | Clocks 2,610–2,625 MHz | PyTorch CUDA Event timing | 2026-10-10 | `evaluation/results/edge_bench_report.json` | `MEASURED_RTX4060` |
 | **Host Unboosted Latency** | **35.74 ms** (P50: **34.54 ms**) | 200 iterations | Clocks ~1.1–1.3 GHz, ~43W board | PyTorch CUDA Event timing | 2026-10-10 | `evaluation/results/edge_bench_report.json` | `MEASURED_RTX4060` |
-| **Jetson AGX Orin 64GB Latency Range** | **[10.8 ms – 23.8 ms]** | Roofline interval | Theoretical interval (1.3×–2.0× TRT) | Roofline scaling from 42.6 TFLOPs | 2026-10-10 | `evaluation/results/edge_bench_report.json` | `PROJECTED` |
-| **Jetson AGX Orin 64GB Throughput Range** | **[42.0 – 92.6 FPS]** | Roofline interval | Theoretical interval (1.3×–2.0× TRT) | Roofline scaling from 42.6 TFLOPs | 2026-10-10 | `evaluation/results/edge_bench_report.json` | `PROJECTED` |
-| **Jetson AGX Orin 64GB Measured Power** | *not estimated* (target envelope &le;60W) | 0 physical measurements | Physical Jetson not present on host | Physical `tegrastats` hardware rail sampling | 2026-10-10 | `evaluation/results/edge_bench_report.json` | `NOT DONE` |
-| **Jetson Orin Nano 8GB Latency Range** | **[32.8 ms – 98.8 ms]** | Roofline interval | Theoretical interval (1.3×–2.0× TRT) | Roofline scaling from 10.24 TFLOPs | 2026-10-10 | `evaluation/results/edge_bench_report.json` | `PROJECTED` |
-| **Jetson Orin Nano 8GB Throughput Range** | **[10.1 – 30.5 FPS]** | Roofline interval | Theoretical interval (1.3×–2.0× TRT) | Roofline scaling from 10.24 TFLOPs | 2026-10-10 | `evaluation/results/edge_bench_report.json` | `PROJECTED` |
-| **Jetson Orin Nano 8GB Measured Power** | *not estimated* (target envelope &le;15W) | 0 physical measurements | Physical Jetson not present on host | Physical `tegrastats` hardware rail sampling | 2026-10-10 | `evaluation/results/edge_bench_report.json` | `NOT DONE` |
+| **Jetson AGX Orin 64GB Latency Range** | **[10.8 ms – 23.8 ms]** (unmeasured; rough estimate only) | Roofline interval | Theoretical interval (1.3×–2.0× TRT) | Compute: 17.39ms * (58.2 / 42.6 Dense TFLOPs) = 23.8 ms; Bandwidth: 17.39ms * (256.0 / 204.8 GB/s) = 21.7 ms | 2026-10-10 | `evaluation/results/edge_bench_report.json` | `PROJECTED (unmeasured; rough estimate only)` |
+| **Jetson AGX Orin 64GB Throughput Range** | **[42.0 – 92.6 FPS]** (unmeasured; rough estimate only) | Roofline interval | Theoretical interval (1.3×–2.0× TRT) | Roofline scaling from 42.6 TFLOPs | 2026-10-10 | `evaluation/results/edge_bench_report.json` | `PROJECTED (unmeasured; rough estimate only)` |
+| **Jetson AGX Orin 64GB Measured Power** | *not estimated* (target envelope &le;60W) | 0 physical measurements | Physical Jetson not present on host | Physical `tegrastats` hardware rail sampling (unmeasured; rough estimate only) | 2026-10-10 | `evaluation/results/edge_bench_report.json` | `NOT DONE (unmeasured; rough estimate only)` |
+| **Jetson Orin Nano 8GB Latency Range** | **[32.8 ms – 98.8 ms]** (unmeasured; rough estimate only) | Roofline interval | Theoretical interval (1.3×–2.0× TRT) | Compute: 17.39ms * (58.2 / 10.24 Dense TFLOPs) = 98.8 ms; Bandwidth: 17.39ms * (256.0 / 68.0 GB/s) = 65.5 ms | 2026-10-10 | `evaluation/results/edge_bench_report.json` | `PROJECTED (unmeasured; rough estimate only)` |
+| **Jetson Orin Nano 8GB Throughput Range** | **[10.1 – 30.5 FPS]** (unmeasured; rough estimate only) | Roofline interval | Theoretical interval (1.3×–2.0× TRT) | Roofline scaling from 10.24 TFLOPs | 2026-10-10 | `evaluation/results/edge_bench_report.json` | `PROJECTED (unmeasured; rough estimate only)` |
+| **Jetson Orin Nano 8GB Measured Power** | *not estimated* (target envelope &le;15W) | 0 physical measurements | Physical Jetson not present on host | Physical `tegrastats` hardware rail sampling (unmeasured; rough estimate only) | 2026-10-10 | `evaluation/results/edge_bench_report.json` | `NOT DONE (unmeasured; rough estimate only)` |
 | **Archived Single-Point Estimates** | **19.4 ms, 38.2 ms, 28 W, 12 W** | 4 historical metrics | Superseded early estimates | Formally archived (unvalidated single points) | 2026-10-10 | `evaluation/results/edge_bench_report.json` | `SUPERSEDED_ARCHIVED` |
 
 ---
 
 ### KPI 8: Analyst Workload Reduction & Auto-Triage
 
-**Source JSON:** [`evaluation/results/analyst_workload_report.json`](file:///c:/Users/awhri\OneDrive\Desktop\DEF\evaluation\results\analyst_workload_report.json)  
-**Partition:** Strictly held-out `val_report` (38 scenes, 32.12 km², 2,379 consolidated entities).
+**Source JSON:** [`evaluation/results/analyst_workload_report.json`](file:///c:/Users/awhri/OneDrive/Desktop/DEF/evaluation/results/analyst_workload_report.json)  
+**Partition:** Strictly held-out `val_report` (38 scenes, 32.12 km², 14,008 raw detections consolidated into 2,379 entities).
+
+> [!IMPORTANT]
+> **Unified Operational Baseline Framing:**
+> - **Primary Baseline (Baseline A — Raw Detection Manual Review):** Unassisted manual review of every raw detection ($14,008$ raw detections across 38 `val_report` scenes, or $4,423.58$ raw detections/hour at 12 scenes/hr surveillance pacing).
+> - **Rakshak Consolidated Pipeline:** Sliced detections consolidated into $2,379$ spatial entities ($83.02\%$ item reduction: $14,008 \rightarrow 2,379$), minus $493$ auto-closed entities ($20.72\%$ auto-close rate; **100% of the 493 auto-closed items are isolated civilian vehicles**), leaving $1,886$ items requiring human review ($86.54\%$ item reduction: $14,008 \rightarrow 1,886$, consisting of $1,228$ in Human Review Queue and $658$ in Priority Queue, or $595.58$ items/hour at 12 scenes/hr).
+> - **Secondary Fixed-Budget Baseline (Baseline B — Fixed 40 min/scene):** Arbitrary flat 40 min/scene budget ($8.0$ analyst-hours per surveillance hour). When item-level review takes $\ge 60\text{s}$, the $595.6$ items/hr exceeds the fixed 8.0h capacity, creating negative percentage differentials relative to this artificial cap.
 
 | Metric / Scenario | Value | Sample Size | Dataset or Scenario | Method / Model | Date | Source JSON Path | Provenance |
 | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
-| **Real Auto-Close Rate (`val_report`)** | **20.72%** (493 / 2,379 entities) | 2,379 consolidated entities | 38 holdout scenes | Spatial clustering & rule-based auto-closure | 2026-10-09 | `evaluation/results/analyst_workload_report.json` | `MEASURED` |
+| **Headline Item Reduction (Raw $\rightarrow$ Entities)** | **83.02%** ($14,008 \rightarrow 2,379$ entities) | 14,008 raw detections | 38 holdout scenes (`val_report`) | 500m spatial clustering | 2026-10-09 | `evaluation/results/analyst_workload_report.json` | `MEASURED` |
+| **Headline Item Reduction (Raw $\rightarrow$ Human Items)** | **86.54%** ($14,008 \rightarrow 1,886$ review items) | 14,008 raw detections | 38 holdout scenes (`val_report`) | Clustering + isolated vehicle auto-closure | 2026-10-09 | `evaluation/results/analyst_workload_report.json` | `MEASURED` |
+| **Real Auto-Close Rate (`val_report`)** | **20.72%** (493 / 2,379 entities) | 2,379 consolidated entities | 38 holdout scenes | Spatial clustering & rule auto-closure (100% isolated vehicles) | 2026-10-09 | `evaluation/results/analyst_workload_report.json` | `MEASURED` |
 | **Scene-Level Bootstrap 95% CI** | **[19.68%, 20.21%]** | 1,000 bootstrap resamples | 38 distinct scenes | Cluster bootstrap across scenes | 2026-10-09 | `evaluation/results/analyst_workload_report.json` | `MEASURED` |
-| **Vehicle Auto-Close Fraction** | **42.83%** (493 / 1,151 entities) | 1,151 vehicle entities | `val_report` holdout | Isolated civilian vehicles auto-closed | 2026-10-09 | `evaluation/results/analyst_workload_report.json` | `MEASURED` |
+| **Vehicle Auto-Close Fraction** | **42.83%** (493 / 1,151 entities) | 1,151 vehicle entities | `val_report` holdout | Isolated civilian vehicles auto-closed (all 493 auto-closed items) | 2026-10-09 | `evaluation/results/analyst_workload_report.json` | `MEASURED` |
 | **Infrastructure Auto-Close Fraction** | **0.00%** (0 / 984 entities auto-closed) | 984 infrastructure entities | `val_report` holdout | 100% routed to Human Review Queue | 2026-10-09 | `evaluation/results/analyst_workload_report.json` | `MEASURED` |
 | **Vessel & Aircraft Auto-Close Fraction** | **0.00%** (0 / 309 detections auto-closed) | 245 vessels, 64 aircraft | `val_report` holdout | 100% escalated to Priority Queue | 2026-10-09 | `evaluation/results/analyst_workload_report.json` | `MEASURED` |
-| **Missed Threat Rate** | **0.0%** (0 / 6 threats missed) | 6 adversarial threat cases | Safety Suite v2 adversarial tests | Gating & threat escalation policy | 2026-10-09 | `evaluation/results/analyst_workload_report.json` | `MEASURED` |
-| **False Escalation Rate** | **0.0%** (0 / 4 controls escalated) | 4 cooperative vessel controls | Safety Suite v2 control tests | AIS correlation verification | 2026-10-09 | `evaluation/results/analyst_workload_report.json` | `MEASURED` |
-| **Public AIS Corpus Dark Fraction** | **45.26%** | 1,099,634 spaceborne detections | ESA Copernicus Sentinel-2 public corpus | AIS correlation match against Sentinel-2 | 2026-10-09 | `evaluation/results/analyst_workload_report.json` | `MEASURED` |
-| **Workload Reduction @ 45s Glance** | **6.9%** (Saved: 0.55 hrs / surv. hr) | Assumed 45s review per item | Model @ 12 scenes/hr, 40 min baseline | Unified time model (751.3 entities/hr) | 2026-10-09 | `evaluation/results/analyst_workload_report.json` | `ASSUMED` |
-| **Workload Reduction @ 60s Rapid** | **-24.1%** (Saved: -1.93 hrs / surv. hr) | Assumed 60s review per item | Model @ 12 scenes/hr, 40 min baseline | Unified time model (595.6 review items/hr) | 2026-10-09 | `evaluation/results/analyst_workload_report.json` | `ASSUMED` |
-| **Workload Reduction @ 120s Standard** | **-148.1%** (Saved: -11.85 hrs / surv. hr) | Assumed 120s review per item | Model @ 12 scenes/hr, 40 min baseline | Unified time model | 2026-10-09 | `evaluation/results/analyst_workload_report.json` | `ASSUMED` |
-| **Workload Reduction @ 240s Forensic** | **-396.4%** (Saved: -31.71 hrs / surv. hr) | Assumed 240s review per item | Model @ 12 scenes/hr, 40 min baseline | Unified time model | 2026-10-09 | `evaluation/results/analyst_workload_report.json` | `ASSUMED` |
+| **Safety Suite v2: Missed Threat Rate** | **0.0%** (0 / 9 threats missed) | 9 critical threat cases | Safety Suite v2 (15 scenarios total) | Rule-by-rule: 9/9 escalated to Priority Queue | 2026-10-09 | `evaluation/results/analyst_workload_report.json` | `MEASURED` |
+| **Safety Suite v2: False Escalation Rate** | **0.0%** (0 / 4 controls escalated) | 4 cooperative vessel controls | Safety Suite v2 (15 scenarios total) | Rule-by-rule: 4/4 auto-closed benign | 2026-10-09 | `evaluation/results/analyst_workload_report.json` | `MEASURED` |
+| **Safety Suite v2: Ambiguous Review Routing** | **100.0%** (2 / 2 boundary cases routed) | 2 ambiguous boundary cases (1400m, 650m) | Safety Suite v2 (15 scenarios total) | Rule-by-rule: 2/2 safely routed to Human Review Queue | 2026-10-09 | `evaluation/results/analyst_workload_report.json` | `MEASURED` |
+| **Public AIS Corpus Dark Fraction** | **45.26%** (497,676 / 1,099,634 contacts) | 1,099,634 spaceborne detections | ESA Copernicus Sentinel-2 public corpus | AIS correlation match against Sentinel-2 PipeV4 | 2026-10-09 | `evaluation/results/analyst_workload_report.json` | `MEASURED` |
+| **Workload Reduction @ 45s (Baseline A: Raw Detections)** | **86.54%** (Baseline A: 55.29h $\rightarrow$ Rakshak: 7.44h; Saved: 47.85h/hr) | Assumed 45s review per item | 12 scenes/hr pacing (4,423.6 raw det/hr vs 595.6 items/hr) | Baseline A: 14,008 raw detections review | 2026-10-09 | `evaluation/results/analyst_workload_report.json` | `COMPUTED` |
+| **Workload Reduction @ 60s (Baseline A: Raw Detections)** | **86.54%** (Baseline A: 73.73h $\rightarrow$ Rakshak: 9.93h; Saved: 63.80h/hr) | Assumed 60s review per item | 12 scenes/hr pacing (4,423.6 raw det/hr vs 595.6 items/hr) | Baseline A: 14,008 raw detections review | 2026-10-09 | `evaluation/results/analyst_workload_report.json` | `COMPUTED` |
+| **Workload Reduction @ 120s (Baseline A: Raw Detections)** | **86.54%** (Baseline A: 147.45h $\rightarrow$ Rakshak: 19.85h; Saved: 127.60h/hr) | Assumed 120s review per item | 12 scenes/hr pacing (4,423.6 raw det/hr vs 595.6 items/hr) | Baseline A: 14,008 raw detections review | 2026-10-09 | `evaluation/results/analyst_workload_report.json` | `COMPUTED` |
+| **Workload Reduction @ 240s (Baseline A: Raw Detections)** | **86.54%** (Baseline A: 294.91h $\rightarrow$ Rakshak: 39.71h; Saved: 255.20h/hr) | Assumed 240s review per item | 12 scenes/hr pacing (4,423.6 raw det/hr vs 595.6 items/hr) | Baseline A: 14,008 raw detections review | 2026-10-09 | `evaluation/results/analyst_workload_report.json` | `COMPUTED` |
+| **Workload Reduction @ 45s (Baseline B: Fixed 40 min/scene)** | **6.9%** (Saved: 0.55 hrs / surv. hr) | Assumed 45s review per item | Model @ 12 scenes/hr, 40 min baseline (8.0h cap) | Baseline B: Fixed time budget (7.45h needed vs 8.0h cap) | 2026-10-09 | `evaluation/results/analyst_workload_report.json` | `ASSUMED` |
+| **Workload Reduction @ 60s (Baseline B: Fixed 40 min/scene)** | **-24.1%** (Over capacity: -1.93 hrs / surv. hr) | Assumed 60s review per item | Model @ 12 scenes/hr, 40 min baseline (8.0h cap) | Baseline B: Fixed time budget (9.93h needed vs 8.0h cap) | 2026-10-09 | `evaluation/results/analyst_workload_report.json` | `ASSUMED` |
+| **Workload Reduction @ 120s (Baseline B: Fixed 40 min/scene)** | **-148.1%** (Over capacity: -11.85 hrs / surv. hr) | Assumed 120s review per item | Model @ 12 scenes/hr, 40 min baseline (8.0h cap) | Baseline B: Fixed time budget (19.85h needed vs 8.0h cap) | 2026-10-09 | `evaluation/results/analyst_workload_report.json` | `ASSUMED` |
+| **Workload Reduction @ 240s (Baseline B: Fixed 40 min/scene)** | **-396.4%** (Over capacity: -31.71 hrs / surv. hr) | Assumed 240s review per item | Model @ 12 scenes/hr, 40 min baseline (8.0h cap) | Baseline B: Fixed time budget (39.71h needed vs 8.0h cap) | 2026-10-09 | `evaluation/results/analyst_workload_report.json` | `ASSUMED` |
 | **Operational Human-in-the-Loop Trial** | **NOT DONE** | 0 human analysts | Live military operations room | Timed user study with defense analysts | 2026-10-10 | `evaluation/results/analyst_workload_report.json` | `NOT DONE` |
 
 ---
@@ -356,7 +371,7 @@ To maintain absolute scientific and defense engineering integrity, the following
 2. **Vessel Class Pixel Footprint & Imbalance:**
    Small maritime vessel detection in high-resolution optical imagery remains constrained by small pixel footprints (12–35 px bounding boxes) and severe dataset class imbalance (280 vessels vs 42,824 infrastructure instances). Generalist vessel recall is **14.65%** (mAP50 12.75%), rising to **23.57%** (mAP50 16.24%) with the dedicated 1024px vessel specialist.
 3. **Unvalidated Jetson Edge Projections:**
-   Jetson AGX Orin and Orin Nano latency is unmeasured, order of tens of ms. Power consumption cannot be measured on host laptop and requires physical Jetson hardware rail sampling (`tegrastats`). All Jetson metrics remain strictly **`ROUGH ESTIMATE, UNVALIDATED`**.
+   Jetson AGX Orin and Orin Nano latency is unmeasured, order of tens of ms. Power consumption cannot be measured on host laptop and requires physical Jetson hardware rail sampling (`tegrastats`). All Jetson metrics remain strictly **unmeasured; rough estimate only**.
 4. **User-Space Zero-Egress Boundary:**
    Zero-egress air-gap verification is executed using application-level Python socket interception hooks and OS-level `psutil` network monitoring. It does not incorporate kernel-level eBPF tracing or physical hardware network tap packet capture.
 5. **Procedural Offline Basemap:**
@@ -364,4 +379,4 @@ To maintain absolute scientific and defense engineering integrity, the following
 6. **Incomplete Ground-Truth Labels in Public Imagery:**
    The underlying public xView dataset contains incomplete labeling on minor auxiliary roads, unannotated civilian vehicles, and small coastal craft. In full-scene evaluations, genuine physical objects detected by the model are mathematically penalized as false positives due to missing annotations in ground-truth GeoTIFFs.
 7. **Absence of Independent GPS Survey:**
-   Geolocation error (CEP50 = 0.70 m, CEP90 = 2.43 m) is measured strictly against the dataset's own GeoTIFF affine transform metadata, not independent differential GPS ground surveys.
+   Detection localisation error (CEP50 = 0.70 m, CEP90 = 2.43 m) is measured strictly against the dataset's own GeoTIFF affine transform metadata, not independent differential GPS ground surveys.

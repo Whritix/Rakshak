@@ -4393,7 +4393,7 @@ export function App() {
                         <span style={{ marginLeft: '8px', color: '#ef4444', fontSize: '9px', fontWeight: 600 }}>[19.4 ms / 28 W SUPERSEDED ARCHIVED]</span>
                       </div>
                       <span style={{ background: '#2c2206', color: '#fbbf24', border: '1px solid #d97706', padding: '2px 8px', borderRadius: '4px', fontSize: '9px', fontWeight: 700 }}>
-                        {telemetry?.jetson_edge_profiles?.jetson_agx_orin_64gb?.provenance || 'ROUGH ESTIMATE, UNVALIDATED'}
+                        {telemetry?.jetson_edge_profiles?.jetson_agx_orin_64gb?.provenance || 'unmeasured; rough estimate only'}
                       </span>
                     </div>
                     <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '8px', fontSize: '10px', color: '#9bb1ba' }}>
@@ -4419,7 +4419,7 @@ export function App() {
                         <span style={{ marginLeft: '8px', color: '#ef4444', fontSize: '9px', fontWeight: 600 }}>[38.2 ms / 12 W SUPERSEDED ARCHIVED]</span>
                       </div>
                       <span style={{ background: '#261b04', color: '#f59e0b', border: '1px solid #78350f', padding: '2px 8px', borderRadius: '4px', fontSize: '9px', fontWeight: 700 }}>
-                        {telemetry?.jetson_edge_profiles?.jetson_orin_nano_8gb?.provenance || 'ROUGH ESTIMATE, UNVALIDATED'}
+                        {telemetry?.jetson_edge_profiles?.jetson_orin_nano_8gb?.provenance || 'unmeasured; rough estimate only'}
                       </span>
                     </div>
                     <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '8px', fontSize: '10px', color: '#9bb1ba' }}>
@@ -4588,7 +4588,7 @@ export function App() {
                 {/* Geolocation CEP Verification & Truth Disclosure Note */}
                 <div style={{ margin: '0 16px 16px 16px', padding: '10px 12px', background: '#0a1a24', border: '1px solid #1c3039', borderRadius: '6px', fontSize: '9px', color: '#9bb1ba' }}>
                   <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '6px' }}>
-                    <b style={{ color: '#38bdf8' }}>Geolocation Accuracy: Dual-IoU Benchmark (Local UTM Projection)</b>
+                    <b style={{ color: '#38bdf8' }}>Detection localisation error (CEP, vs dataset georeferencing)</b>
                     <span style={{ color: '#55e0d1', fontWeight: 700 }}>
                       MEASURED ({kpis?.kpi_categories?.geolocation_precision?.matched_targets_count?.toLocaleString() ?? '37,300'} / {kpis?.kpi_categories?.geolocation_precision?.total_gt_count?.toLocaleString() ?? '66,521'} GT MATCHED · 38 SCENES)
                     </span>

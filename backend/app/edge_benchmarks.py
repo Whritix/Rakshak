@@ -185,7 +185,7 @@ def get_edge_telemetry() -> Dict[str, Any]:
             "eval_partition": "Strictly val_report holdout (540 tiles)"
         },
         "jetson_edge_profiles": {
-            "status_label": "UNVALIDATED",
+            "status_label": "unmeasured; rough estimate only",
             "superseded_single_point_notice": {
                 "status": "SUPERSEDED_ARCHIVED",
                 "message": (
@@ -197,7 +197,7 @@ def get_edge_telemetry() -> Dict[str, Any]:
             "tensorrt_speedup_factor_assumed": "1.3x to 2.0x acceleration over eager PyTorch",
             "jetson_agx_orin_64gb": {
                 "target_platform": "NVIDIA Jetson AGX Orin 64GB (Shipboard C2 Workstation)",
-                "provenance": "MEASURED_JETSON" if jetson_data else "ROUGH ESTIMATE, UNVALIDATED",
+                "provenance": "MEASURED_JETSON" if jetson_data else "unmeasured; rough estimate only",
                 "tdp_budget_w": "target envelope <=60W, not validated",
                 "measured_power_draw": "not estimated (requires Jetson tegrastats rail sampling)",
                 "latency_range_ms": agx_lat_range,
@@ -214,7 +214,7 @@ def get_edge_telemetry() -> Dict[str, Any]:
             },
             "jetson_orin_nano_8gb": {
                 "target_platform": "NVIDIA Jetson Orin Nano 8GB (Tactical Drone UAV Payload)",
-                "provenance": "MEASURED_JETSON" if jetson_data else "ROUGH ESTIMATE, UNVALIDATED",
+                "provenance": "MEASURED_JETSON" if jetson_data else "unmeasured; rough estimate only",
                 "tdp_budget_w": "target envelope <=15W, not validated",
                 "measured_power_draw": "not estimated (requires Jetson tegrastats rail sampling)",
                 "latency_range_ms": nano_lat_range,
