@@ -1,0 +1,75 @@
+{
+  "timestamp": "2026-10-10T16:46:21.644847+00:00",
+  "backend_pid": 29500,
+  "eval_pid": 22444,
+  "tests": {
+    "health_check": {
+      "status": "PASS",
+      "http_code": 200,
+      "system": "Project Rakshak Tactical Watch",
+      "mode": "Sovereign Edge Deployment"
+    },
+    "local_tile_service": {
+      "status": "PASS",
+      "tested_styles": {
+        "satellite": {
+          "http_code": 200,
+          "bytes_len": 2308,
+          "valid_png_header": true
+        },
+        "dark": {
+          "http_code": 200,
+          "bytes_len": 2295,
+          "valid_png_header": true
+        },
+        "terrain": {
+          "http_code": 200,
+          "bytes_len": 2328,
+          "valid_png_header": true
+        }
+      },
+      "offline_rendering": true
+    },
+    "credential_hygiene": {
+      "status": "PASS",
+      "rate_limiting_enforced": true,
+      "rate_limit_http_status": 429,
+      "mandatory_rotation_flag": true,
+      "post_rotation_flag": false
+    },
+    "audit_logging": {
+      "status": "PASS",
+      "total_audit_events": 50,
+      "verified_event_types": [
+        "LOGIN_FAILED",
+        "LOGIN_SUCCESS",
+        "SITREP_GENERATED",
+        "WAYPOINT_DISPATCHED",
+        "PASSWORD_ROTATED"
+      ]
+    },
+    "smoke_tests": {
+      "status": "PASS",
+      "passed": 12,
+      "failed": 0
+    },
+    "static_scan": {
+      "files_scanned": 22,
+      "external_cdn_references_found": 0,
+      "details": []
+    },
+    "outbound_trap": {
+      "status": "PASS",
+      "guard_intercepted_attempts": 1
+    }
+  },
+  "egress_metrics": {
+    "outbound_non_loopback_connections": 0,
+    "loopback_connections_monitored": 17,
+    "total_connections_monitored": 18,
+    "dns_queries_external": 0,
+    "socket_guard_violations_blocked": 1,
+    "zero_egress_provenance": "MEASURED_SOCKET_AND_PSUTIL_MONITOR",
+    "verdict": "NO_EGRESS_OBSERVED"
+  }
+}

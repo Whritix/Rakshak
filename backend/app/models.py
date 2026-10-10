@@ -113,6 +113,12 @@ class RegisterRequest(BaseModel):
     clearance: Optional[str] = Field("SECRET", max_length=50)
 
 
+class ChangePasswordRequest(BaseModel):
+    """Tactical operator credential rotation request."""
+    old_password: str = Field(..., min_length=4, max_length=128)
+    new_password: str = Field(..., min_length=8, max_length=128)
+
+
 class RagQueryRequest(BaseModel):
     """Sovereign air-gapped doctrine retrieval query."""
     query: str = Field(..., min_length=2, description="Natural language defense doctrine query")

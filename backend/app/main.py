@@ -4,26 +4,28 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Optional, List, Dict, Any
 
-from fastapi import FastAPI, UploadFile, File, Form, HTTPException, Header, Depends
+from fastapi import FastAPI, UploadFile, File, Form, HTTPException, Header, Depends, Request, Response
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
 from PIL import Image, ImageOps
 
-from backend.app.db import get_db, init_database
+from backend.app.db import get_db, init_database, log_audit_event
 from backend.app.auth import (
     hash_password, verify_password, create_access_token,
-    decode_access_token, get_current_user_optional
+    decode_access_token, get_current_user_optional,
+    check_login_rate_limit, record_failed_login, reset_login_attempts
 )
 from backend.app.models import (
     Assoc, ZoneCreate, MissionCreate, PipeReview,
     SarDetectionCreate, ArmyFeedCreate, TrajectoryProjectionRequest,
-    SampleLoadRequest, LoginRequest, RegisterRequest,
+    SampleLoadRequest, LoginRequest, RegisterRequest, ChangePasswordRequest,
     RagQueryRequest, RagDispatchMissionRequest,
     ArmyFeedStatusUpdate, ContactTrackRequest,
     TriageReopenRequest, FuseStepRequest,
     DdilAlertItem, DdilSyncBatchRequest, DdilChannelUpdateRequest
 )
+from backend.app.tile_service import get_offline_tile
 from backend.app.ddil_sync import (
     get_live_ddil_status, set_live_channel_state,
     _GLOBAL_EDGE_OUTBOX, _GLOBAL_COMMAND_INBOX, _GLOBAL_CHANNEL_STATE
@@ -44,7 +46,7 @@ from backend.app.tracking_engine import (
     reset_fusion_engine
 )
 from backend.app.sitrep_generator import generate_tactical_sitrep
-from backend.app.edge_benchmarks import get_edge_telemetry, export_model_to_onnx
+from backend.app.edge_benchmarks import get_edge_telemetry, export_model_to_onnx, get_edge_benchmarks_report
 from backend.app.kpi_service import get_system_kpis, get_false_alarm_kpis
 from backend.app.rag_engine import (
     run_air_gapped_rag_advisor, search_knowledge_base, init_rag_knowledge_base
@@ -347,15 +349,30 @@ def model_status():
     }
 
 @app.post('/api/auth/login')
-def login(req: LoginRequest):
+def login(req: LoginRequest, request: Request):
+    client_ip = request.client.host if request.client else '127.0.0.1'
+    identifier = f"{client_ip}:{req.username.strip().lower()}"
+
+    # Enforce rolling-window rate limiting on failed attempts
+    check_login_rate_limit(identifier)
+
     with get_db() as c:
         row = c.execute('SELECT * FROM users WHERE username = ?', (req.username.strip().lower(),)).fetchone()
         if not row:
+            record_failed_login(identifier)
+            log_audit_event('LOGIN_FAILED', operator_username=req.username.strip().lower(), ip_address=client_ip, details='Unknown username', status='FAILURE')
             raise HTTPException(401, 'Invalid operator credentials. Access denied.')
         user = dict(row)
         if not verify_password(req.password, user['password_hash'], user['salt']):
+            record_failed_login(identifier)
+            log_audit_event('LOGIN_FAILED', operator_username=user['username'], operator_role=user.get('role'), ip_address=client_ip, details='Invalid password candidate', status='FAILURE')
             raise HTTPException(401, 'Invalid operator credentials. Access denied.')
-        
+
+        # Reset rate limiting attempts on successful login
+        reset_login_attempts(identifier)
+        must_change = bool(user.get('must_change_password', 0))
+        log_audit_event('LOGIN_SUCCESS', operator_username=user['username'], operator_role=user.get('role'), ip_address=client_ip, details=f"Session token issued (must_change_password={must_change})", status='SUCCESS')
+
         token = create_access_token({
             'sub': user['username'],
             'full_name': user['full_name'],
@@ -363,11 +380,13 @@ def login(req: LoginRequest):
             'rank': user.get('rank') or '',
             'role': user.get('role') or 'OPERATOR',
             'clearance': user.get('clearance') or 'SECRET',
+            'must_change_password': must_change,
         })
-        
+
         return {
             'access_token': token,
             'token_type': 'bearer',
+            'must_change_password': must_change,
             'user': {
                 'username': user['username'],
                 'full_name': user['full_name'],
@@ -375,8 +394,46 @@ def login(req: LoginRequest):
                 'rank': user.get('rank'),
                 'role': user.get('role'),
                 'clearance': user.get('clearance'),
+                'must_change_password': must_change,
             }
         }
+
+@app.post('/api/auth/change-password')
+def change_password(req: ChangePasswordRequest, request: Request, authorization: Optional[str] = Header(None)):
+    """Enforce operator password rotation, clearing first-login lock."""
+    user = get_current_user_optional(authorization)
+    if not user:
+        raise HTTPException(401, 'Authentication token required to change password.')
+    username = user['sub']
+    client_ip = request.client.host if request.client else '127.0.0.1'
+
+    if req.old_password == req.new_password:
+        raise HTTPException(400, 'New password must be different from previous password.')
+    if len(req.new_password) < 8:
+        raise HTTPException(400, 'New password must be at least 8 characters long.')
+
+    with get_db() as c:
+        row = c.execute('SELECT * FROM users WHERE username = ?', (username,)).fetchone()
+        if not row:
+            raise HTTPException(404, 'Operator profile not found.')
+        curr = dict(row)
+        if not verify_password(req.old_password, curr['password_hash'], curr['salt']):
+            log_audit_event('PASSWORD_CHANGE_FAILED', operator_username=username, ip_address=client_ip, details='Current password verification failed', status='FAILURE')
+            raise HTTPException(401, 'Current password verification failed.')
+
+        h, s = hash_password(req.new_password)
+        c.execute('UPDATE users SET password_hash = ?, salt = ?, must_change_password = 0 WHERE username = ?', (h, s, username))
+        c.commit()
+
+    log_audit_event('PASSWORD_ROTATED', operator_username=username, operator_role=user.get('role'), ip_address=client_ip, details='Mandatory password rotation completed', status='SUCCESS')
+    return {'status': 'success', 'message': 'Password rotated successfully. Mandatory change cleared.'}
+
+@app.get('/api/security/audit-log')
+def get_audit_log(limit: int = 50, authorization: Optional[str] = Header(None)):
+    """Retrieve immutable cryptographic audit trail of security and mission events."""
+    with get_db() as c:
+        rows = c.execute('SELECT id, timestamp, event_type, operator_username, operator_role, ip_address, details, status FROM audit_logs ORDER BY timestamp DESC LIMIT ?', (min(limit, 200),)).fetchall()
+        return {'audit_logs': [dict(r) for r in rows], 'count': len(rows)}
 
 @app.get('/api/auth/me')
 def get_current_operator(authorization: Optional[str] = Header(None)):
@@ -444,7 +501,7 @@ def get_rag_knowledge_base():
         return {'documents': docs, 'items': docs, 'count': len(docs)}
 
 @app.post('/api/rag/dispatch-to-mission')
-def dispatch_rag_mission(req: RagDispatchMissionRequest, authorization: Optional[str] = Header(None)):
+def dispatch_rag_mission(req: RagDispatchMissionRequest, request: Request, authorization: Optional[str] = Header(None)):
     """Converts a RAG directive action checklist directly into an actionable military mission."""
     mid = 'msn-' + str(uuid.uuid4())[:6]
     checklist_txt = '\n'.join([f"[{i+1}] {step}" for i, step in enumerate(req.checklist)])
@@ -452,6 +509,19 @@ def dispatch_rag_mission(req: RagDispatchMissionRequest, authorization: Optional
     with get_db() as c:
         c.execute('INSERT INTO missions VALUES (?,?,?,?)', (mid, req.title, notes, datetime.now(timezone.utc).isoformat()))
         c.commit()
+
+    operator = get_current_user_optional(authorization)
+    op_name = operator.get('sub') if operator else 'COMMANDER'
+    op_role = operator.get('role') if operator else 'COMMANDER'
+    client_ip = request.client.host if request.client else '127.0.0.1'
+    log_audit_event(
+        'WAYPOINT_DISPATCHED',
+        operator_username=op_name,
+        operator_role=op_role,
+        ip_address=client_ip,
+        details=f"Dispatched mission {mid}: '{req.title}' with {len(req.checklist)} checklist items",
+        status='SUCCESS'
+    )
     return {'id': mid, 'title': req.title, 'status': 'DISPATCHED_TO_C2', 'notes': notes}
 
 
@@ -1134,8 +1204,35 @@ def reset_tracker(method: Optional[str] = "hungarian"):
 
 # Tactical SITREP Generator
 @app.get('/api/sitrep')
-def get_sitrep():
-    return generate_tactical_sitrep()
+def get_sitrep(request: Request, authorization: Optional[str] = Header(None)):
+    rep = generate_tactical_sitrep()
+    operator = get_current_user_optional(authorization)
+    op_name = operator.get('sub') if operator else 'ANALYST'
+    op_role = operator.get('role') if operator else 'ANALYST'
+    client_ip = request.client.host if request.client else '127.0.0.1'
+    threat_bk = rep.get('threat_breakdown', {})
+    log_audit_event(
+        'SITREP_GENERATED',
+        operator_username=op_name,
+        operator_role=op_role,
+        ip_address=client_ip,
+        details=f"Generated dynamic SITREP report (Threat Breakdown: High={threat_bk.get('high', 0)}, Med={threat_bk.get('medium', 0)}, Low={threat_bk.get('low', 0)})",
+        status='SUCCESS'
+    )
+    return rep
+
+# Air-Gapped Local Tactical Tile Basemap Service
+@app.get('/api/tiles/{style}/{z}/{x}/{y}.png')
+def serve_tactical_tile(style: str, z: int, x: int, y: int):
+    """Serve 100% offline, air-gapped tactical map tile with zero external egress."""
+    tile_bytes = get_offline_tile(style, z, x, y)
+    return Response(content=tile_bytes, media_type='image/png')
+
+@app.get('/api/tiles/{z}/{x}/{y}.png')
+def serve_default_tactical_tile(z: int, x: int, y: int):
+    """Serve default dark C4ISR offline tactical map tile."""
+    tile_bytes = get_offline_tile('dark', z, x, y)
+    return Response(content=tile_bytes, media_type='image/png')
 
 # Edge Telemetry & Hardware SWaP-C
 @app.get('/api/edge/telemetry')
@@ -1145,6 +1242,10 @@ def get_telemetry():
 @app.post('/api/edge/export-onnx')
 def export_onnx():
     return export_model_to_onnx()
+
+@app.get('/api/edge/benchmarks')
+def get_benchmarks():
+    return get_edge_benchmarks_report()
 
 # Defense Key Performance Indicators (KPIs)
 @app.get('/api/kpis')

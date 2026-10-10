@@ -47,6 +47,44 @@ ACCESS_TOKEN_EXPIRE_MINUTES = 60 * 24  # 24-hour tactical shift
 PBKDF2_ITERATIONS = 200_000            # NIST 2024 recommendation
 LEGACY_PBKDF2_ITERATIONS = 100_000     # Backward compatibility fallback
 
+# ── Login Rate Limiting (Sliding Window) ───────────────────────────────────
+import time
+from collections import defaultdict
+
+_LOGIN_ATTEMPTS: dict[str, list[float]] = defaultdict(list)
+_MAX_FAILED_ATTEMPTS = 5
+_LOCKOUT_WINDOW_SECONDS = 60.0
+
+
+def check_login_rate_limit(identifier: str) -> None:
+    """Enforce rolling-window rate limiting on authentication attempts.
+
+    Raises:
+        HTTPException(429): If 5 or more failed attempts occurred in the past 60s.
+    """
+    now = time.time()
+    attempts = [t for t in _LOGIN_ATTEMPTS[identifier] if now - t < _LOCKOUT_WINDOW_SECONDS]
+    _LOGIN_ATTEMPTS[identifier] = attempts
+    if len(attempts) >= _MAX_FAILED_ATTEMPTS:
+        retry_after = int(_LOCKOUT_WINDOW_SECONDS - (now - attempts[0]))
+        raise HTTPException(
+            status_code=status.HTTP_429_TOO_MANY_REQUESTS,
+            detail=f"Security lockout: Too many failed authentication attempts. Locked for {max(1, retry_after)} seconds.",
+            headers={"Retry-After": str(max(1, retry_after))}
+        )
+
+
+def record_failed_login(identifier: str) -> None:
+    """Record timestamp of a failed login attempt."""
+    now = time.time()
+    _LOGIN_ATTEMPTS[identifier].append(now)
+
+
+def reset_login_attempts(identifier: str) -> None:
+    """Reset attempt counter upon successful authentication."""
+    if identifier in _LOGIN_ATTEMPTS:
+        del _LOGIN_ATTEMPTS[identifier]
+
 
 def hash_password(
     password: str,

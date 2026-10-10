@@ -1,0 +1,5 @@
+names:
+  0: Vessel
+path: C:/Users/awhri/OneDrive/Desktop/DEF
+train: runs/xview_vessel/images/train
+val: evaluation/val_report_tiles.txt

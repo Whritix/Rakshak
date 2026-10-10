@@ -1,0 +1,4228 @@
+{
+  "benchmark_title": "Project Rakshak 2.0 \u2014 Task A: Multi-Seed Dark-Vessel Rate & Statistical Sweeps",
+  "timestamp_utc": "2026-10-10T15:24:27.386094+00:00",
+  "evaluation_provenance": "SIMULATED",
+  "data_availability_note": "No local xView3-SAR dataset present in repository. Evaluated on 20 independent seeds of synthetic maritime contacts (N = 500 per cell, 10,000 contacts evaluated per sweep condition) with SOG/COG temporal kinematics and Gaussian GPS noise.",
+  "n_seeds": 20,
+  "sample_size_per_cell": 500,
+  "total_contacts_evaluated_per_cell": 10000,
+  "dark_fraction_pct": 30.0,
+  "headline_metrics": {
+    "end_to_end_dark_vessel_capture_pct": 79.4,
+    "end_to_end_capture_std": 2.8,
+    "end_to_end_capture_ci_95": [
+      78.09,
+      80.71
+    ],
+    "end_to_end_capture_formatted": "79.40 \u00b1 2.80 [78.09, 80.71]",
+    "post_detection_recall_pct": 92.63,
+    "post_detection_recall_std": 2.23,
+    "post_detection_recall_ci_95": [
+      91.58,
+      93.67
+    ],
+    "post_detection_recall_formatted": "92.63 \u00b1 2.23 [91.58, 93.67]",
+    "cfar_radar_detection_rate_pct": 85.73,
+    "precision_pct": 100.0,
+    "precision_std": 0.0,
+    "false_dark_rate_pct": 0.0,
+    "false_dark_rate_std": 0.0,
+    "f1_score": 0.9616,
+    "operational_matching_radius_km": 2.0,
+    "temporal_propagation_enabled": true,
+    "sample_size_n": 500,
+    "n_seeds": 20,
+    "status_label": "SIMULATED (20 seeds, N=500/cell, total 10000 contacts/cell)",
+    "stats": {
+      "n_seeds": 20,
+      "end_to_end_capture_rate_pct": {
+        "mean": 79.4,
+        "std": 2.8,
+        "ci_95_low": 78.09,
+        "ci_95_high": 80.71,
+        "min": 75.33,
+        "max": 83.33,
+        "formatted": "79.40 \u00b1 2.80 [78.09, 80.71]"
+      },
+      "post_detection_recall_pct": {
+        "mean": 92.63,
+        "std": 2.23,
+        "ci_95_low": 91.58,
+        "ci_95_high": 93.67,
+        "min": 89.15,
+        "max": 97.66,
+        "formatted": "92.63 \u00b1 2.23 [91.58, 93.67]"
+      },
+      "cfar_dark_detection_rate_pct": {
+        "mean": 85.73,
+        "std": 2.65,
+        "ci_95_low": 84.49,
+        "ci_95_high": 86.97,
+        "min": 81.33,
+        "max": 92.0,
+        "formatted": "85.73 \u00b1 2.65 [84.49, 86.97]"
+      },
+      "precision_pct": {
+        "mean": 100.0,
+        "std": 0.0,
+        "ci_95_low": 100.0,
+        "ci_95_high": 100.0,
+        "min": 100.0,
+        "max": 100.0,
+        "formatted": "100.00 \u00b1 0.00 [100.00, 100.00]"
+      },
+      "false_dark_rate_pct": {
+        "mean": 0.0,
+        "std": 0.0,
+        "ci_95_low": 0.0,
+        "ci_95_high": 0.0,
+        "min": 0.0,
+        "max": 0.0,
+        "formatted": "0.00 \u00b1 0.00 [0.00, 0.00]"
+      },
+      "f1_score": {
+        "mean": 0.9616,
+        "std": 0.012,
+        "ci_95_low": 0.956,
+        "ci_95_high": 0.9672,
+        "min": 0.9426,
+        "max": 0.9881,
+        "formatted": "0.9616 \u00b1 0.0120 [0.9560, 0.9672]"
+      },
+      "true_positives_tp": {
+        "mean": 119.1,
+        "std": 4.2,
+        "ci_95_low": 117.13,
+        "ci_95_high": 121.07,
+        "min": 113.0,
+        "max": 125.0,
+        "formatted": "119.10 \u00b1 4.20 [117.13, 121.07]"
+      },
+      "false_positives_fp": {
+        "mean": 0.0,
+        "std": 0.0,
+        "ci_95_low": 0.0,
+        "ci_95_high": 0.0,
+        "min": 0.0,
+        "max": 0.0,
+        "formatted": "0.00 \u00b1 0.00 [0.00, 0.00]"
+      },
+      "true_negatives_tn": {
+        "mean": 297.7,
+        "std": 5.72,
+        "ci_95_low": 295.02,
+        "ci_95_high": 300.38,
+        "min": 288.0,
+        "max": 309.0,
+        "formatted": "297.70 \u00b1 5.72 [295.02, 300.38]"
+      },
+      "false_negatives_fn": {
+        "mean": 9.5,
+        "std": 2.96,
+        "ci_95_low": 8.11,
+        "ci_95_high": 10.89,
+        "min": 3.0,
+        "max": 14.0,
+        "formatted": "9.50 \u00b1 2.96 [8.11, 10.89]"
+      },
+      "cfar_detected_dark": {
+        "mean": 128.6,
+        "std": 3.98,
+        "ci_95_low": 126.74,
+        "ci_95_high": 130.46,
+        "min": 122.0,
+        "max": 138.0,
+        "formatted": "128.60 \u00b1 3.98 [126.74, 130.46]"
+      },
+      "total_dark_gt": {
+        "mean": 150.0,
+        "std": 0.0,
+        "ci_95_low": 150.0,
+        "ci_95_high": 150.0,
+        "min": 150.0,
+        "max": 150.0,
+        "formatted": "150.00 \u00b1 0.00 [150.00, 150.00]"
+      }
+    }
+  },
+  "baseline_matching_radius_sweep": {
+    "with_temporal_propagation": {
+      "1.0_km": {
+        "n_seeds": 20,
+        "end_to_end_capture_rate_pct": {
+          "mean": 83.63,
+          "std": 3.14,
+          "ci_95_low": 82.17,
+          "ci_95_high": 85.1,
+          "min": 78.67,
+          "max": 90.0,
+          "formatted": "83.63 \u00b1 3.14 [82.17, 85.10]"
+        },
+        "post_detection_recall_pct": {
+          "mean": 97.54,
+          "std": 1.65,
+          "ci_95_low": 96.77,
+          "ci_95_high": 98.31,
+          "min": 93.75,
+          "max": 100.0,
+          "formatted": "97.54 \u00b1 1.65 [96.77, 98.31]"
+        },
+        "cfar_dark_detection_rate_pct": {
+          "mean": 85.73,
+          "std": 2.65,
+          "ci_95_low": 84.49,
+          "ci_95_high": 86.97,
+          "min": 81.33,
+          "max": 92.0,
+          "formatted": "85.73 \u00b1 2.65 [84.49, 86.97]"
+        },
+        "precision_pct": {
+          "mean": 100.0,
+          "std": 0.0,
+          "ci_95_low": 100.0,
+          "ci_95_high": 100.0,
+          "min": 100.0,
+          "max": 100.0,
+          "formatted": "100.00 \u00b1 0.00 [100.00, 100.00]"
+        },
+        "false_dark_rate_pct": {
+          "mean": 0.0,
+          "std": 0.0,
+          "ci_95_low": 0.0,
+          "ci_95_high": 0.0,
+          "min": 0.0,
+          "max": 0.0,
+          "formatted": "0.00 \u00b1 0.00 [0.00, 0.00]"
+        },
+        "f1_score": {
+          "mean": 0.9875,
+          "std": 0.0085,
+          "ci_95_low": 0.9835,
+          "ci_95_high": 0.9915,
+          "min": 0.9677,
+          "max": 1.0,
+          "formatted": "0.9875 \u00b1 0.0085 [0.9835, 0.9915]"
+        },
+        "true_positives_tp": {
+          "mean": 125.45,
+          "std": 4.71,
+          "ci_95_low": 123.25,
+          "ci_95_high": 127.65,
+          "min": 118.0,
+          "max": 135.0,
+          "formatted": "125.45 \u00b1 4.71 [123.25, 127.65]"
+        },
+        "false_positives_fp": {
+          "mean": 0.0,
+          "std": 0.0,
+          "ci_95_low": 0.0,
+          "ci_95_high": 0.0,
+          "min": 0.0,
+          "max": 0.0,
+          "formatted": "0.00 \u00b1 0.00 [0.00, 0.00]"
+        },
+        "true_negatives_tn": {
+          "mean": 297.7,
+          "std": 5.72,
+          "ci_95_low": 295.02,
+          "ci_95_high": 300.38,
+          "min": 288.0,
+          "max": 309.0,
+          "formatted": "297.70 \u00b1 5.72 [295.02, 300.38]"
+        },
+        "false_negatives_fn": {
+          "mean": 3.15,
+          "std": 2.11,
+          "ci_95_low": 2.16,
+          "ci_95_high": 4.14,
+          "min": 0.0,
+          "max": 8.0,
+          "formatted": "3.15 \u00b1 2.11 [2.16, 4.14]"
+        },
+        "cfar_detected_dark": {
+          "mean": 128.6,
+          "std": 3.98,
+          "ci_95_low": 126.74,
+          "ci_95_high": 130.46,
+          "min": 122.0,
+          "max": 138.0,
+          "formatted": "128.60 \u00b1 3.98 [126.74, 130.46]"
+        },
+        "total_dark_gt": {
+          "mean": 150.0,
+          "std": 0.0,
+          "ci_95_low": 150.0,
+          "ci_95_high": 150.0,
+          "min": 150.0,
+          "max": 150.0,
+          "formatted": "150.00 \u00b1 0.00 [150.00, 150.00]"
+        }
+      },
+      "2.0_km": {
+        "n_seeds": 20,
+        "end_to_end_capture_rate_pct": {
+          "mean": 79.4,
+          "std": 2.8,
+          "ci_95_low": 78.09,
+          "ci_95_high": 80.71,
+          "min": 75.33,
+          "max": 83.33,
+          "formatted": "79.40 \u00b1 2.80 [78.09, 80.71]"
+        },
+        "post_detection_recall_pct": {
+          "mean": 92.63,
+          "std": 2.23,
+          "ci_95_low": 91.58,
+          "ci_95_high": 93.67,
+          "min": 89.15,
+          "max": 97.66,
+          "formatted": "92.63 \u00b1 2.23 [91.58, 93.67]"
+        },
+        "cfar_dark_detection_rate_pct": {
+          "mean": 85.73,
+          "std": 2.65,
+          "ci_95_low": 84.49,
+          "ci_95_high": 86.97,
+          "min": 81.33,
+          "max": 92.0,
+          "formatted": "85.73 \u00b1 2.65 [84.49, 86.97]"
+        },
+        "precision_pct": {
+          "mean": 100.0,
+          "std": 0.0,
+          "ci_95_low": 100.0,
+          "ci_95_high": 100.0,
+          "min": 100.0,
+          "max": 100.0,
+          "formatted": "100.00 \u00b1 0.00 [100.00, 100.00]"
+        },
+        "false_dark_rate_pct": {
+          "mean": 0.0,
+          "std": 0.0,
+          "ci_95_low": 0.0,
+          "ci_95_high": 0.0,
+          "min": 0.0,
+          "max": 0.0,
+          "formatted": "0.00 \u00b1 0.00 [0.00, 0.00]"
+        },
+        "f1_score": {
+          "mean": 0.9616,
+          "std": 0.012,
+          "ci_95_low": 0.956,
+          "ci_95_high": 0.9672,
+          "min": 0.9426,
+          "max": 0.9881,
+          "formatted": "0.9616 \u00b1 0.0120 [0.9560, 0.9672]"
+        },
+        "true_positives_tp": {
+          "mean": 119.1,
+          "std": 4.2,
+          "ci_95_low": 117.13,
+          "ci_95_high": 121.07,
+          "min": 113.0,
+          "max": 125.0,
+          "formatted": "119.10 \u00b1 4.20 [117.13, 121.07]"
+        },
+        "false_positives_fp": {
+          "mean": 0.0,
+          "std": 0.0,
+          "ci_95_low": 0.0,
+          "ci_95_high": 0.0,
+          "min": 0.0,
+          "max": 0.0,
+          "formatted": "0.00 \u00b1 0.00 [0.00, 0.00]"
+        },
+        "true_negatives_tn": {
+          "mean": 297.7,
+          "std": 5.72,
+          "ci_95_low": 295.02,
+          "ci_95_high": 300.38,
+          "min": 288.0,
+          "max": 309.0,
+          "formatted": "297.70 \u00b1 5.72 [295.02, 300.38]"
+        },
+        "false_negatives_fn": {
+          "mean": 9.5,
+          "std": 2.96,
+          "ci_95_low": 8.11,
+          "ci_95_high": 10.89,
+          "min": 3.0,
+          "max": 14.0,
+          "formatted": "9.50 \u00b1 2.96 [8.11, 10.89]"
+        },
+        "cfar_detected_dark": {
+          "mean": 128.6,
+          "std": 3.98,
+          "ci_95_low": 126.74,
+          "ci_95_high": 130.46,
+          "min": 122.0,
+          "max": 138.0,
+          "formatted": "128.60 \u00b1 3.98 [126.74, 130.46]"
+        },
+        "total_dark_gt": {
+          "mean": 150.0,
+          "std": 0.0,
+          "ci_95_low": 150.0,
+          "ci_95_high": 150.0,
+          "min": 150.0,
+          "max": 150.0,
+          "formatted": "150.00 \u00b1 0.00 [150.00, 150.00]"
+        }
+      },
+      "5.0_km": {
+        "n_seeds": 20,
+        "end_to_end_capture_rate_pct": {
+          "mean": 55.43,
+          "std": 4.15,
+          "ci_95_low": 53.49,
+          "ci_95_high": 57.37,
+          "min": 47.33,
+          "max": 62.0,
+          "formatted": "55.43 \u00b1 4.15 [53.49, 57.37]"
+        },
+        "post_detection_recall_pct": {
+          "mean": 64.67,
+          "std": 4.7,
+          "ci_95_low": 62.47,
+          "ci_95_high": 66.87,
+          "min": 55.81,
+          "max": 72.66,
+          "formatted": "64.67 \u00b1 4.70 [62.47, 66.87]"
+        },
+        "cfar_dark_detection_rate_pct": {
+          "mean": 85.73,
+          "std": 2.65,
+          "ci_95_low": 84.49,
+          "ci_95_high": 86.97,
+          "min": 81.33,
+          "max": 92.0,
+          "formatted": "85.73 \u00b1 2.65 [84.49, 86.97]"
+        },
+        "precision_pct": {
+          "mean": 100.0,
+          "std": 0.0,
+          "ci_95_low": 100.0,
+          "ci_95_high": 100.0,
+          "min": 100.0,
+          "max": 100.0,
+          "formatted": "100.00 \u00b1 0.00 [100.00, 100.00]"
+        },
+        "false_dark_rate_pct": {
+          "mean": 0.0,
+          "std": 0.0,
+          "ci_95_low": 0.0,
+          "ci_95_high": 0.0,
+          "min": 0.0,
+          "max": 0.0,
+          "formatted": "0.00 \u00b1 0.00 [0.00, 0.00]"
+        },
+        "f1_score": {
+          "mean": 0.7845,
+          "std": 0.0348,
+          "ci_95_low": 0.7682,
+          "ci_95_high": 0.8008,
+          "min": 0.7164,
+          "max": 0.8416,
+          "formatted": "0.7845 \u00b1 0.0348 [0.7682, 0.8008]"
+        },
+        "true_positives_tp": {
+          "mean": 83.15,
+          "std": 6.22,
+          "ci_95_low": 80.24,
+          "ci_95_high": 86.06,
+          "min": 71.0,
+          "max": 93.0,
+          "formatted": "83.15 \u00b1 6.22 [80.24, 86.06]"
+        },
+        "false_positives_fp": {
+          "mean": 0.0,
+          "std": 0.0,
+          "ci_95_low": 0.0,
+          "ci_95_high": 0.0,
+          "min": 0.0,
+          "max": 0.0,
+          "formatted": "0.00 \u00b1 0.00 [0.00, 0.00]"
+        },
+        "true_negatives_tn": {
+          "mean": 297.7,
+          "std": 5.72,
+          "ci_95_low": 295.02,
+          "ci_95_high": 300.38,
+          "min": 288.0,
+          "max": 309.0,
+          "formatted": "297.70 \u00b1 5.72 [295.02, 300.38]"
+        },
+        "false_negatives_fn": {
+          "mean": 45.45,
+          "std": 6.34,
+          "ci_95_low": 42.48,
+          "ci_95_high": 48.42,
+          "min": 34.0,
+          "max": 57.0,
+          "formatted": "45.45 \u00b1 6.34 [42.48, 48.42]"
+        },
+        "cfar_detected_dark": {
+          "mean": 128.6,
+          "std": 3.98,
+          "ci_95_low": 126.74,
+          "ci_95_high": 130.46,
+          "min": 122.0,
+          "max": 138.0,
+          "formatted": "128.60 \u00b1 3.98 [126.74, 130.46]"
+        },
+        "total_dark_gt": {
+          "mean": 150.0,
+          "std": 0.0,
+          "ci_95_low": 150.0,
+          "ci_95_high": 150.0,
+          "min": 150.0,
+          "max": 150.0,
+          "formatted": "150.00 \u00b1 0.00 [150.00, 150.00]"
+        }
+      },
+      "10.0_km": {
+        "n_seeds": 20,
+        "end_to_end_capture_rate_pct": {
+          "mean": 15.3,
+          "std": 2.75,
+          "ci_95_low": 14.01,
+          "ci_95_high": 16.59,
+          "min": 9.33,
+          "max": 20.0,
+          "formatted": "15.30 \u00b1 2.75 [14.01, 16.59]"
+        },
+        "post_detection_recall_pct": {
+          "mean": 17.88,
+          "std": 3.37,
+          "ci_95_low": 16.31,
+          "ci_95_high": 19.46,
+          "min": 10.94,
+          "max": 24.39,
+          "formatted": "17.88 \u00b1 3.37 [16.31, 19.46]"
+        },
+        "cfar_dark_detection_rate_pct": {
+          "mean": 85.73,
+          "std": 2.65,
+          "ci_95_low": 84.49,
+          "ci_95_high": 86.97,
+          "min": 81.33,
+          "max": 92.0,
+          "formatted": "85.73 \u00b1 2.65 [84.49, 86.97]"
+        },
+        "precision_pct": {
+          "mean": 100.0,
+          "std": 0.0,
+          "ci_95_low": 100.0,
+          "ci_95_high": 100.0,
+          "min": 100.0,
+          "max": 100.0,
+          "formatted": "100.00 \u00b1 0.00 [100.00, 100.00]"
+        },
+        "false_dark_rate_pct": {
+          "mean": 0.0,
+          "std": 0.0,
+          "ci_95_low": 0.0,
+          "ci_95_high": 0.0,
+          "min": 0.0,
+          "max": 0.0,
+          "formatted": "0.00 \u00b1 0.00 [0.00, 0.00]"
+        },
+        "f1_score": {
+          "mean": 0.3021,
+          "std": 0.0488,
+          "ci_95_low": 0.2793,
+          "ci_95_high": 0.3249,
+          "min": 0.1972,
+          "max": 0.3922,
+          "formatted": "0.3021 \u00b1 0.0488 [0.2793, 0.3249]"
+        },
+        "true_positives_tp": {
+          "mean": 22.95,
+          "std": 4.12,
+          "ci_95_low": 21.02,
+          "ci_95_high": 24.88,
+          "min": 14.0,
+          "max": 30.0,
+          "formatted": "22.95 \u00b1 4.12 [21.02, 24.88]"
+        },
+        "false_positives_fp": {
+          "mean": 0.0,
+          "std": 0.0,
+          "ci_95_low": 0.0,
+          "ci_95_high": 0.0,
+          "min": 0.0,
+          "max": 0.0,
+          "formatted": "0.00 \u00b1 0.00 [0.00, 0.00]"
+        },
+        "true_negatives_tn": {
+          "mean": 297.7,
+          "std": 5.72,
+          "ci_95_low": 295.02,
+          "ci_95_high": 300.38,
+          "min": 288.0,
+          "max": 309.0,
+          "formatted": "297.70 \u00b1 5.72 [295.02, 300.38]"
+        },
+        "false_negatives_fn": {
+          "mean": 105.65,
+          "std": 6.4,
+          "ci_95_low": 102.65,
+          "ci_95_high": 108.65,
+          "min": 93.0,
+          "max": 119.0,
+          "formatted": "105.65 \u00b1 6.40 [102.65, 108.65]"
+        },
+        "cfar_detected_dark": {
+          "mean": 128.6,
+          "std": 3.98,
+          "ci_95_low": 126.74,
+          "ci_95_high": 130.46,
+          "min": 122.0,
+          "max": 138.0,
+          "formatted": "128.60 \u00b1 3.98 [126.74, 130.46]"
+        },
+        "total_dark_gt": {
+          "mean": 150.0,
+          "std": 0.0,
+          "ci_95_low": 150.0,
+          "ci_95_high": 150.0,
+          "min": 150.0,
+          "max": 150.0,
+          "formatted": "150.00 \u00b1 0.00 [150.00, 150.00]"
+        }
+      }
+    },
+    "without_temporal_propagation": {
+      "1.0_km": {
+        "n_seeds": 20,
+        "end_to_end_capture_rate_pct": {
+          "mean": 84.5,
+          "std": 2.72,
+          "ci_95_low": 83.23,
+          "ci_95_high": 85.77,
+          "min": 80.67,
+          "max": 90.67,
+          "formatted": "84.50 \u00b1 2.72 [83.23, 85.77]"
+        },
+        "post_detection_recall_pct": {
+          "mean": 98.56,
+          "std": 0.95,
+          "ci_95_low": 98.12,
+          "ci_95_high": 99.01,
+          "min": 96.88,
+          "max": 100.0,
+          "formatted": "98.56 \u00b1 0.95 [98.12, 99.01]"
+        },
+        "cfar_dark_detection_rate_pct": {
+          "mean": 85.73,
+          "std": 2.65,
+          "ci_95_low": 84.49,
+          "ci_95_high": 86.97,
+          "min": 81.33,
+          "max": 92.0,
+          "formatted": "85.73 \u00b1 2.65 [84.49, 86.97]"
+        },
+        "precision_pct": {
+          "mean": 32.31,
+          "std": 1.1,
+          "ci_95_low": 31.79,
+          "ci_95_high": 32.82,
+          "min": 30.1,
+          "max": 35.32,
+          "formatted": "32.31 \u00b1 1.10 [31.79, 32.82]"
+        },
+        "false_dark_rate_pct": {
+          "mean": 89.24,
+          "std": 2.06,
+          "ci_95_low": 88.28,
+          "ci_95_high": 90.21,
+          "min": 84.69,
+          "max": 94.3,
+          "formatted": "89.24 \u00b1 2.06 [88.28, 90.21]"
+        },
+        "f1_score": {
+          "mean": 0.4865,
+          "std": 0.0124,
+          "ci_95_low": 0.4807,
+          "ci_95_high": 0.4923,
+          "min": 0.4618,
+          "max": 0.5201,
+          "formatted": "0.4865 \u00b1 0.0124 [0.4807, 0.4923]"
+        },
+        "true_positives_tp": {
+          "mean": 126.75,
+          "std": 4.08,
+          "ci_95_low": 124.84,
+          "ci_95_high": 128.66,
+          "min": 121.0,
+          "max": 136.0,
+          "formatted": "126.75 \u00b1 4.08 [124.84, 128.66]"
+        },
+        "false_positives_fp": {
+          "mean": 265.7,
+          "std": 9.05,
+          "ci_95_low": 261.46,
+          "ci_95_high": 269.94,
+          "min": 248.0,
+          "max": 282.0,
+          "formatted": "265.70 \u00b1 9.05 [261.46, 269.94]"
+        },
+        "true_negatives_tn": {
+          "mean": 32.0,
+          "std": 5.96,
+          "ci_95_low": 29.21,
+          "ci_95_high": 34.79,
+          "min": 17.0,
+          "max": 45.0,
+          "formatted": "32.00 \u00b1 5.96 [29.21, 34.79]"
+        },
+        "false_negatives_fn": {
+          "mean": 1.85,
+          "std": 1.23,
+          "ci_95_low": 1.28,
+          "ci_95_high": 2.42,
+          "min": 0.0,
+          "max": 4.0,
+          "formatted": "1.85 \u00b1 1.23 [1.28, 2.42]"
+        },
+        "cfar_detected_dark": {
+          "mean": 128.6,
+          "std": 3.98,
+          "ci_95_low": 126.74,
+          "ci_95_high": 130.46,
+          "min": 122.0,
+          "max": 138.0,
+          "formatted": "128.60 \u00b1 3.98 [126.74, 130.46]"
+        },
+        "total_dark_gt": {
+          "mean": 150.0,
+          "std": 0.0,
+          "ci_95_low": 150.0,
+          "ci_95_high": 150.0,
+          "min": 150.0,
+          "max": 150.0,
+          "formatted": "150.00 \u00b1 0.00 [150.00, 150.00]"
+        }
+      },
+      "2.0_km": {
+        "n_seeds": 20,
+        "end_to_end_capture_rate_pct": {
+          "mean": 80.97,
+          "std": 3.26,
+          "ci_95_low": 79.44,
+          "ci_95_high": 82.49,
+          "min": 74.67,
+          "max": 88.0,
+          "formatted": "80.97 \u00b1 3.26 [79.44, 82.49]"
+        },
+        "post_detection_recall_pct": {
+          "mean": 94.43,
+          "std": 2.03,
+          "ci_95_low": 93.48,
+          "ci_95_high": 95.38,
+          "min": 90.32,
+          "max": 97.66,
+          "formatted": "94.43 \u00b1 2.03 [93.48, 95.38]"
+        },
+        "cfar_dark_detection_rate_pct": {
+          "mean": 85.73,
+          "std": 2.65,
+          "ci_95_low": 84.49,
+          "ci_95_high": 86.97,
+          "min": 81.33,
+          "max": 92.0,
+          "formatted": "85.73 \u00b1 2.65 [84.49, 86.97]"
+        },
+        "precision_pct": {
+          "mean": 34.66,
+          "std": 1.61,
+          "ci_95_low": 33.91,
+          "ci_95_high": 35.42,
+          "min": 31.45,
+          "max": 38.48,
+          "formatted": "34.66 \u00b1 1.61 [33.91, 35.42]"
+        },
+        "false_dark_rate_pct": {
+          "mean": 76.95,
+          "std": 2.79,
+          "ci_95_low": 75.65,
+          "ci_95_high": 78.26,
+          "min": 71.48,
+          "max": 82.52,
+          "formatted": "76.95 \u00b1 2.79 [75.65, 78.26]"
+        },
+        "f1_score": {
+          "mean": 0.507,
+          "std": 0.019,
+          "ci_95_low": 0.4981,
+          "ci_95_high": 0.5159,
+          "min": 0.4671,
+          "max": 0.5489,
+          "formatted": "0.5070 \u00b1 0.0190 [0.4981, 0.5159]"
+        },
+        "true_positives_tp": {
+          "mean": 121.45,
+          "std": 4.89,
+          "ci_95_low": 119.16,
+          "ci_95_high": 123.74,
+          "min": 112.0,
+          "max": 132.0,
+          "formatted": "121.45 \u00b1 4.89 [119.16, 123.74]"
+        },
+        "false_positives_fp": {
+          "mean": 229.15,
+          "std": 11.05,
+          "ci_95_low": 223.98,
+          "ci_95_high": 234.32,
+          "min": 211.0,
+          "max": 255.0,
+          "formatted": "229.15 \u00b1 11.05 [223.98, 234.32]"
+        },
+        "true_negatives_tn": {
+          "mean": 68.55,
+          "std": 7.85,
+          "ci_95_low": 64.88,
+          "ci_95_high": 72.22,
+          "min": 54.0,
+          "max": 85.0,
+          "formatted": "68.55 \u00b1 7.85 [64.88, 72.22]"
+        },
+        "false_negatives_fn": {
+          "mean": 7.15,
+          "std": 2.56,
+          "ci_95_low": 5.95,
+          "ci_95_high": 8.35,
+          "min": 3.0,
+          "max": 12.0,
+          "formatted": "7.15 \u00b1 2.56 [5.95, 8.35]"
+        },
+        "cfar_detected_dark": {
+          "mean": 128.6,
+          "std": 3.98,
+          "ci_95_low": 126.74,
+          "ci_95_high": 130.46,
+          "min": 122.0,
+          "max": 138.0,
+          "formatted": "128.60 \u00b1 3.98 [126.74, 130.46]"
+        },
+        "total_dark_gt": {
+          "mean": 150.0,
+          "std": 0.0,
+          "ci_95_low": 150.0,
+          "ci_95_high": 150.0,
+          "min": 150.0,
+          "max": 150.0,
+          "formatted": "150.00 \u00b1 0.00 [150.00, 150.00]"
+        }
+      },
+      "5.0_km": {
+        "n_seeds": 20,
+        "end_to_end_capture_rate_pct": {
+          "mean": 56.6,
+          "std": 3.91,
+          "ci_95_low": 54.77,
+          "ci_95_high": 58.43,
+          "min": 50.0,
+          "max": 64.67,
+          "formatted": "56.60 \u00b1 3.91 [54.77, 58.43]"
+        },
+        "post_detection_recall_pct": {
+          "mean": 66.09,
+          "std": 5.09,
+          "ci_95_low": 63.71,
+          "ci_95_high": 68.47,
+          "min": 54.35,
+          "max": 75.78,
+          "formatted": "66.09 \u00b1 5.09 [63.71, 68.47]"
+        },
+        "cfar_dark_detection_rate_pct": {
+          "mean": 85.73,
+          "std": 2.65,
+          "ci_95_low": 84.49,
+          "ci_95_high": 86.97,
+          "min": 81.33,
+          "max": 92.0,
+          "formatted": "85.73 \u00b1 2.65 [84.49, 86.97]"
+        },
+        "precision_pct": {
+          "mean": 44.68,
+          "std": 2.34,
+          "ci_95_low": 43.58,
+          "ci_95_high": 45.77,
+          "min": 40.61,
+          "max": 49.24,
+          "formatted": "44.68 \u00b1 2.34 [43.58, 45.77]"
+        },
+        "false_dark_rate_pct": {
+          "mean": 35.35,
+          "std": 2.56,
+          "ci_95_low": 34.15,
+          "ci_95_high": 36.55,
+          "min": 29.25,
+          "max": 40.14,
+          "formatted": "35.35 \u00b1 2.56 [34.15, 36.55]"
+        },
+        "f1_score": {
+          "mean": 0.5325,
+          "std": 0.0281,
+          "ci_95_low": 0.5193,
+          "ci_95_high": 0.5456,
+          "min": 0.4908,
+          "max": 0.5969,
+          "formatted": "0.5325 \u00b1 0.0281 [0.5193, 0.5456]"
+        },
+        "true_positives_tp": {
+          "mean": 84.9,
+          "std": 5.87,
+          "ci_95_low": 82.15,
+          "ci_95_high": 87.65,
+          "min": 75.0,
+          "max": 97.0,
+          "formatted": "84.90 \u00b1 5.87 [82.15, 87.65]"
+        },
+        "false_positives_fp": {
+          "mean": 105.3,
+          "std": 8.55,
+          "ci_95_low": 101.3,
+          "ci_95_high": 109.3,
+          "min": 86.0,
+          "max": 118.0,
+          "formatted": "105.30 \u00b1 8.55 [101.30, 109.30]"
+        },
+        "true_negatives_tn": {
+          "mean": 192.4,
+          "std": 6.94,
+          "ci_95_low": 189.15,
+          "ci_95_high": 195.65,
+          "min": 176.0,
+          "max": 208.0,
+          "formatted": "192.40 \u00b1 6.94 [189.15, 195.65]"
+        },
+        "false_negatives_fn": {
+          "mean": 43.7,
+          "std": 7.39,
+          "ci_95_low": 40.24,
+          "ci_95_high": 47.16,
+          "min": 31.0,
+          "max": 63.0,
+          "formatted": "43.70 \u00b1 7.39 [40.24, 47.16]"
+        },
+        "cfar_detected_dark": {
+          "mean": 128.6,
+          "std": 3.98,
+          "ci_95_low": 126.74,
+          "ci_95_high": 130.46,
+          "min": 122.0,
+          "max": 138.0,
+          "formatted": "128.60 \u00b1 3.98 [126.74, 130.46]"
+        },
+        "total_dark_gt": {
+          "mean": 150.0,
+          "std": 0.0,
+          "ci_95_low": 150.0,
+          "ci_95_high": 150.0,
+          "min": 150.0,
+          "max": 150.0,
+          "formatted": "150.00 \u00b1 0.00 [150.00, 150.00]"
+        }
+      },
+      "10.0_km": {
+        "n_seeds": 20,
+        "end_to_end_capture_rate_pct": {
+          "mean": 16.07,
+          "std": 3.45,
+          "ci_95_low": 14.45,
+          "ci_95_high": 17.68,
+          "min": 10.67,
+          "max": 22.0,
+          "formatted": "16.07 \u00b1 3.45 [14.45, 17.68]"
+        },
+        "post_detection_recall_pct": {
+          "mean": 18.8,
+          "std": 4.26,
+          "ci_95_low": 16.81,
+          "ci_95_high": 20.8,
+          "min": 11.59,
+          "max": 25.78,
+          "formatted": "18.80 \u00b1 4.26 [16.81, 20.80]"
+        },
+        "cfar_dark_detection_rate_pct": {
+          "mean": 85.73,
+          "std": 2.65,
+          "ci_95_low": 84.49,
+          "ci_95_high": 86.97,
+          "min": 81.33,
+          "max": 92.0,
+          "formatted": "85.73 \u00b1 2.65 [84.49, 86.97]"
+        },
+        "precision_pct": {
+          "mean": 65.23,
+          "std": 8.74,
+          "ci_95_low": 61.14,
+          "ci_95_high": 69.32,
+          "min": 48.57,
+          "max": 80.49,
+          "formatted": "65.23 \u00b1 8.74 [61.14, 69.32]"
+        },
+        "false_dark_rate_pct": {
+          "mean": 4.31,
+          "std": 1.2,
+          "ci_95_low": 3.75,
+          "ci_95_high": 4.87,
+          "min": 2.01,
+          "max": 5.98,
+          "formatted": "4.31 \u00b1 1.20 [3.75, 4.87]"
+        },
+        "f1_score": {
+          "mean": 0.2904,
+          "std": 0.0569,
+          "ci_95_low": 0.2637,
+          "ci_95_high": 0.317,
+          "min": 0.1916,
+          "max": 0.3905,
+          "formatted": "0.2904 \u00b1 0.0569 [0.2637, 0.3170]"
+        },
+        "true_positives_tp": {
+          "mean": 24.1,
+          "std": 5.18,
+          "ci_95_low": 21.68,
+          "ci_95_high": 26.52,
+          "min": 16.0,
+          "max": 33.0,
+          "formatted": "24.10 \u00b1 5.18 [21.68, 26.52]"
+        },
+        "false_positives_fp": {
+          "mean": 12.85,
+          "std": 3.67,
+          "ci_95_low": 11.13,
+          "ci_95_high": 14.57,
+          "min": 6.0,
+          "max": 18.0,
+          "formatted": "12.85 \u00b1 3.67 [11.13, 14.57]"
+        },
+        "true_negatives_tn": {
+          "mean": 284.85,
+          "std": 5.49,
+          "ci_95_low": 282.28,
+          "ci_95_high": 287.42,
+          "min": 273.0,
+          "max": 293.0,
+          "formatted": "284.85 \u00b1 5.49 [282.28, 287.42]"
+        },
+        "false_negatives_fn": {
+          "mean": 104.5,
+          "std": 7.61,
+          "ci_95_low": 100.94,
+          "ci_95_high": 108.06,
+          "min": 91.0,
+          "max": 122.0,
+          "formatted": "104.50 \u00b1 7.61 [100.94, 108.06]"
+        },
+        "cfar_detected_dark": {
+          "mean": 128.6,
+          "std": 3.98,
+          "ci_95_low": 126.74,
+          "ci_95_high": 130.46,
+          "min": 122.0,
+          "max": 138.0,
+          "formatted": "128.60 \u00b1 3.98 [126.74, 130.46]"
+        },
+        "total_dark_gt": {
+          "mean": 150.0,
+          "std": 0.0,
+          "ci_95_low": 150.0,
+          "ci_95_high": 150.0,
+          "min": 150.0,
+          "max": 150.0,
+          "formatted": "150.00 \u00b1 0.00 [150.00, 150.00]"
+        }
+      }
+    }
+  },
+  "density_sweep": {
+    "5_per_10k_km2": {
+      "n_seeds": 20,
+      "end_to_end_capture_rate_pct": {
+        "mean": 86.07,
+        "std": 2.43,
+        "ci_95_low": 84.93,
+        "ci_95_high": 87.2,
+        "min": 80.0,
+        "max": 90.67,
+        "formatted": "86.07 \u00b1 2.43 [84.93, 87.20]"
+      },
+      "post_detection_recall_pct": {
+        "mean": 99.62,
+        "std": 0.72,
+        "ci_95_low": 99.29,
+        "ci_95_high": 99.96,
+        "min": 97.71,
+        "max": 100.0,
+        "formatted": "99.62 \u00b1 0.72 [99.29, 99.96]"
+      },
+      "cfar_dark_detection_rate_pct": {
+        "mean": 86.4,
+        "std": 2.57,
+        "ci_95_low": 85.2,
+        "ci_95_high": 87.6,
+        "min": 80.0,
+        "max": 90.67,
+        "formatted": "86.40 \u00b1 2.57 [85.20, 87.60]"
+      },
+      "precision_pct": {
+        "mean": 100.0,
+        "std": 0.0,
+        "ci_95_low": 100.0,
+        "ci_95_high": 100.0,
+        "min": 100.0,
+        "max": 100.0,
+        "formatted": "100.00 \u00b1 0.00 [100.00, 100.00]"
+      },
+      "false_dark_rate_pct": {
+        "mean": 0.0,
+        "std": 0.0,
+        "ci_95_low": 0.0,
+        "ci_95_high": 0.0,
+        "min": 0.0,
+        "max": 0.0,
+        "formatted": "0.00 \u00b1 0.00 [0.00, 0.00]"
+      },
+      "f1_score": {
+        "mean": 0.9981,
+        "std": 0.0036,
+        "ci_95_low": 0.9964,
+        "ci_95_high": 0.9998,
+        "min": 0.9884,
+        "max": 1.0,
+        "formatted": "0.9981 \u00b1 0.0036 [0.9964, 0.9998]"
+      },
+      "true_positives_tp": {
+        "mean": 129.1,
+        "std": 3.64,
+        "ci_95_low": 127.4,
+        "ci_95_high": 130.8,
+        "min": 120.0,
+        "max": 136.0,
+        "formatted": "129.10 \u00b1 3.64 [127.40, 130.80]"
+      },
+      "false_positives_fp": {
+        "mean": 0.0,
+        "std": 0.0,
+        "ci_95_low": 0.0,
+        "ci_95_high": 0.0,
+        "min": 0.0,
+        "max": 0.0,
+        "formatted": "0.00 \u00b1 0.00 [0.00, 0.00]"
+      },
+      "true_negatives_tn": {
+        "mean": 297.95,
+        "std": 8.44,
+        "ci_95_low": 294.0,
+        "ci_95_high": 301.9,
+        "min": 287.0,
+        "max": 318.0,
+        "formatted": "297.95 \u00b1 8.44 [294.00, 301.90]"
+      },
+      "false_negatives_fn": {
+        "mean": 0.5,
+        "std": 0.95,
+        "ci_95_low": 0.06,
+        "ci_95_high": 0.94,
+        "min": 0.0,
+        "max": 3.0,
+        "formatted": "0.50 \u00b1 0.95 [0.06, 0.94]"
+      },
+      "cfar_detected_dark": {
+        "mean": 129.6,
+        "std": 3.86,
+        "ci_95_low": 127.79,
+        "ci_95_high": 131.41,
+        "min": 120.0,
+        "max": 136.0,
+        "formatted": "129.60 \u00b1 3.86 [127.79, 131.41]"
+      },
+      "total_dark_gt": {
+        "mean": 150.0,
+        "std": 0.0,
+        "ci_95_low": 150.0,
+        "ci_95_high": 150.0,
+        "min": 150.0,
+        "max": 150.0,
+        "formatted": "150.00 \u00b1 0.00 [150.00, 150.00]"
+      },
+      "density_per_10k_km2": 5,
+      "area_km2": 1000000.0,
+      "contacts_per_seed": 500,
+      "total_contacts_evaluated": 10000
+    },
+    "20_per_10k_km2": {
+      "n_seeds": 20,
+      "end_to_end_capture_rate_pct": {
+        "mean": 83.37,
+        "std": 2.39,
+        "ci_95_low": 82.25,
+        "ci_95_high": 84.49,
+        "min": 78.67,
+        "max": 88.0,
+        "formatted": "83.37 \u00b1 2.39 [82.25, 84.49]"
+      },
+      "post_detection_recall_pct": {
+        "mean": 97.6,
+        "std": 1.42,
+        "ci_95_low": 96.93,
+        "ci_95_high": 98.26,
+        "min": 95.35,
+        "max": 99.24,
+        "formatted": "97.60 \u00b1 1.42 [96.93, 98.26]"
+      },
+      "cfar_dark_detection_rate_pct": {
+        "mean": 85.43,
+        "std": 2.58,
+        "ci_95_low": 84.23,
+        "ci_95_high": 86.64,
+        "min": 79.33,
+        "max": 89.33,
+        "formatted": "85.43 \u00b1 2.58 [84.23, 86.64]"
+      },
+      "precision_pct": {
+        "mean": 100.0,
+        "std": 0.0,
+        "ci_95_low": 100.0,
+        "ci_95_high": 100.0,
+        "min": 100.0,
+        "max": 100.0,
+        "formatted": "100.00 \u00b1 0.00 [100.00, 100.00]"
+      },
+      "false_dark_rate_pct": {
+        "mean": 0.0,
+        "std": 0.0,
+        "ci_95_low": 0.0,
+        "ci_95_high": 0.0,
+        "min": 0.0,
+        "max": 0.0,
+        "formatted": "0.00 \u00b1 0.00 [0.00, 0.00]"
+      },
+      "f1_score": {
+        "mean": 0.9878,
+        "std": 0.0073,
+        "ci_95_low": 0.9844,
+        "ci_95_high": 0.9912,
+        "min": 0.9762,
+        "max": 0.9962,
+        "formatted": "0.9878 \u00b1 0.0073 [0.9844, 0.9912]"
+      },
+      "true_positives_tp": {
+        "mean": 125.05,
+        "std": 3.59,
+        "ci_95_low": 123.37,
+        "ci_95_high": 126.73,
+        "min": 118.0,
+        "max": 132.0,
+        "formatted": "125.05 \u00b1 3.59 [123.37, 126.73]"
+      },
+      "false_positives_fp": {
+        "mean": 0.0,
+        "std": 0.0,
+        "ci_95_low": 0.0,
+        "ci_95_high": 0.0,
+        "min": 0.0,
+        "max": 0.0,
+        "formatted": "0.00 \u00b1 0.00 [0.00, 0.00]"
+      },
+      "true_negatives_tn": {
+        "mean": 298.45,
+        "std": 6.78,
+        "ci_95_low": 295.28,
+        "ci_95_high": 301.62,
+        "min": 284.0,
+        "max": 308.0,
+        "formatted": "298.45 \u00b1 6.78 [295.28, 301.62]"
+      },
+      "false_negatives_fn": {
+        "mean": 3.1,
+        "std": 1.86,
+        "ci_95_low": 2.23,
+        "ci_95_high": 3.97,
+        "min": 1.0,
+        "max": 6.0,
+        "formatted": "3.10 \u00b1 1.86 [2.23, 3.97]"
+      },
+      "cfar_detected_dark": {
+        "mean": 128.15,
+        "std": 3.87,
+        "ci_95_low": 126.34,
+        "ci_95_high": 129.96,
+        "min": 119.0,
+        "max": 134.0,
+        "formatted": "128.15 \u00b1 3.87 [126.34, 129.96]"
+      },
+      "total_dark_gt": {
+        "mean": 150.0,
+        "std": 0.0,
+        "ci_95_low": 150.0,
+        "ci_95_high": 150.0,
+        "min": 150.0,
+        "max": 150.0,
+        "formatted": "150.00 \u00b1 0.00 [150.00, 150.00]"
+      },
+      "density_per_10k_km2": 20,
+      "area_km2": 250000.0,
+      "contacts_per_seed": 500,
+      "total_contacts_evaluated": 10000
+    },
+    "50_per_10k_km2": {
+      "n_seeds": 20,
+      "end_to_end_capture_rate_pct": {
+        "mean": 81.77,
+        "std": 3.18,
+        "ci_95_low": 80.28,
+        "ci_95_high": 83.26,
+        "min": 73.33,
+        "max": 86.67,
+        "formatted": "81.77 \u00b1 3.18 [80.28, 83.26]"
+      },
+      "post_detection_recall_pct": {
+        "mean": 95.51,
+        "std": 1.53,
+        "ci_95_low": 94.8,
+        "ci_95_high": 96.23,
+        "min": 92.91,
+        "max": 97.73,
+        "formatted": "95.51 \u00b1 1.53 [94.80, 96.23]"
+      },
+      "cfar_dark_detection_rate_pct": {
+        "mean": 85.6,
+        "std": 2.77,
+        "ci_95_low": 84.3,
+        "ci_95_high": 86.9,
+        "min": 77.33,
+        "max": 90.0,
+        "formatted": "85.60 \u00b1 2.77 [84.30, 86.90]"
+      },
+      "precision_pct": {
+        "mean": 100.0,
+        "std": 0.0,
+        "ci_95_low": 100.0,
+        "ci_95_high": 100.0,
+        "min": 100.0,
+        "max": 100.0,
+        "formatted": "100.00 \u00b1 0.00 [100.00, 100.00]"
+      },
+      "false_dark_rate_pct": {
+        "mean": 0.0,
+        "std": 0.0,
+        "ci_95_low": 0.0,
+        "ci_95_high": 0.0,
+        "min": 0.0,
+        "max": 0.0,
+        "formatted": "0.00 \u00b1 0.00 [0.00, 0.00]"
+      },
+      "f1_score": {
+        "mean": 0.977,
+        "std": 0.008,
+        "ci_95_low": 0.9732,
+        "ci_95_high": 0.9807,
+        "min": 0.9633,
+        "max": 0.9885,
+        "formatted": "0.9770 \u00b1 0.0080 [0.9732, 0.9807]"
+      },
+      "true_positives_tp": {
+        "mean": 122.65,
+        "std": 4.77,
+        "ci_95_low": 120.42,
+        "ci_95_high": 124.88,
+        "min": 110.0,
+        "max": 130.0,
+        "formatted": "122.65 \u00b1 4.77 [120.42, 124.88]"
+      },
+      "false_positives_fp": {
+        "mean": 0.0,
+        "std": 0.0,
+        "ci_95_low": 0.0,
+        "ci_95_high": 0.0,
+        "min": 0.0,
+        "max": 0.0,
+        "formatted": "0.00 \u00b1 0.00 [0.00, 0.00]"
+      },
+      "true_negatives_tn": {
+        "mean": 300.9,
+        "std": 6.7,
+        "ci_95_low": 297.77,
+        "ci_95_high": 304.03,
+        "min": 286.0,
+        "max": 312.0,
+        "formatted": "300.90 \u00b1 6.70 [297.77, 304.03]"
+      },
+      "false_negatives_fn": {
+        "mean": 5.75,
+        "std": 1.94,
+        "ci_95_low": 4.84,
+        "ci_95_high": 6.66,
+        "min": 3.0,
+        "max": 9.0,
+        "formatted": "5.75 \u00b1 1.94 [4.84, 6.66]"
+      },
+      "cfar_detected_dark": {
+        "mean": 128.4,
+        "std": 4.16,
+        "ci_95_low": 126.45,
+        "ci_95_high": 130.35,
+        "min": 116.0,
+        "max": 135.0,
+        "formatted": "128.40 \u00b1 4.16 [126.45, 130.35]"
+      },
+      "total_dark_gt": {
+        "mean": 150.0,
+        "std": 0.0,
+        "ci_95_low": 150.0,
+        "ci_95_high": 150.0,
+        "min": 150.0,
+        "max": 150.0,
+        "formatted": "150.00 \u00b1 0.00 [150.00, 150.00]"
+      },
+      "density_per_10k_km2": 50,
+      "area_km2": 100000.0,
+      "contacts_per_seed": 500,
+      "total_contacts_evaluated": 10000
+    },
+    "100_per_10k_km2": {
+      "n_seeds": 20,
+      "end_to_end_capture_rate_pct": {
+        "mean": 76.73,
+        "std": 3.24,
+        "ci_95_low": 75.22,
+        "ci_95_high": 78.25,
+        "min": 71.33,
+        "max": 84.0,
+        "formatted": "76.73 \u00b1 3.24 [75.22, 78.25]"
+      },
+      "post_detection_recall_pct": {
+        "mean": 89.36,
+        "std": 1.99,
+        "ci_95_low": 88.43,
+        "ci_95_high": 90.29,
+        "min": 85.5,
+        "max": 93.33,
+        "formatted": "89.36 \u00b1 1.99 [88.43, 90.29]"
+      },
+      "cfar_dark_detection_rate_pct": {
+        "mean": 85.87,
+        "std": 2.93,
+        "ci_95_low": 84.5,
+        "ci_95_high": 87.24,
+        "min": 80.0,
+        "max": 90.67,
+        "formatted": "85.87 \u00b1 2.93 [84.50, 87.24]"
+      },
+      "precision_pct": {
+        "mean": 100.0,
+        "std": 0.0,
+        "ci_95_low": 100.0,
+        "ci_95_high": 100.0,
+        "min": 100.0,
+        "max": 100.0,
+        "formatted": "100.00 \u00b1 0.00 [100.00, 100.00]"
+      },
+      "false_dark_rate_pct": {
+        "mean": 0.0,
+        "std": 0.0,
+        "ci_95_low": 0.0,
+        "ci_95_high": 0.0,
+        "min": 0.0,
+        "max": 0.0,
+        "formatted": "0.00 \u00b1 0.00 [0.00, 0.00]"
+      },
+      "f1_score": {
+        "mean": 0.9437,
+        "std": 0.0111,
+        "ci_95_low": 0.9385,
+        "ci_95_high": 0.9489,
+        "min": 0.9218,
+        "max": 0.9655,
+        "formatted": "0.9437 \u00b1 0.0111 [0.9385, 0.9489]"
+      },
+      "true_positives_tp": {
+        "mean": 115.1,
+        "std": 4.85,
+        "ci_95_low": 112.83,
+        "ci_95_high": 117.37,
+        "min": 107.0,
+        "max": 126.0,
+        "formatted": "115.10 \u00b1 4.85 [112.83, 117.37]"
+      },
+      "false_positives_fp": {
+        "mean": 0.0,
+        "std": 0.0,
+        "ci_95_low": 0.0,
+        "ci_95_high": 0.0,
+        "min": 0.0,
+        "max": 0.0,
+        "formatted": "0.00 \u00b1 0.00 [0.00, 0.00]"
+      },
+      "true_negatives_tn": {
+        "mean": 300.6,
+        "std": 5.8,
+        "ci_95_low": 297.89,
+        "ci_95_high": 303.31,
+        "min": 288.0,
+        "max": 310.0,
+        "formatted": "300.60 \u00b1 5.80 [297.89, 303.31]"
+      },
+      "false_negatives_fn": {
+        "mean": 13.7,
+        "std": 2.6,
+        "ci_95_low": 12.48,
+        "ci_95_high": 14.92,
+        "min": 9.0,
+        "max": 19.0,
+        "formatted": "13.70 \u00b1 2.60 [12.48, 14.92]"
+      },
+      "cfar_detected_dark": {
+        "mean": 128.8,
+        "std": 4.4,
+        "ci_95_low": 126.74,
+        "ci_95_high": 130.86,
+        "min": 120.0,
+        "max": 136.0,
+        "formatted": "128.80 \u00b1 4.40 [126.74, 130.86]"
+      },
+      "total_dark_gt": {
+        "mean": 150.0,
+        "std": 0.0,
+        "ci_95_low": 150.0,
+        "ci_95_high": 150.0,
+        "min": 150.0,
+        "max": 150.0,
+        "formatted": "150.00 \u00b1 0.00 [150.00, 150.00]"
+      },
+      "density_per_10k_km2": 100,
+      "area_km2": 50000.0,
+      "contacts_per_seed": 500,
+      "total_contacts_evaluated": 10000
+    },
+    "200_per_10k_km2": {
+      "n_seeds": 20,
+      "end_to_end_capture_rate_pct": {
+        "mean": 68.73,
+        "std": 3.41,
+        "ci_95_low": 67.14,
+        "ci_95_high": 70.33,
+        "min": 64.0,
+        "max": 78.0,
+        "formatted": "68.73 \u00b1 3.41 [67.14, 70.33]"
+      },
+      "post_detection_recall_pct": {
+        "mean": 80.18,
+        "std": 3.08,
+        "ci_95_low": 78.74,
+        "ci_95_high": 81.62,
+        "min": 74.81,
+        "max": 86.67,
+        "formatted": "80.18 \u00b1 3.08 [78.74, 81.62]"
+      },
+      "cfar_dark_detection_rate_pct": {
+        "mean": 85.73,
+        "std": 2.92,
+        "ci_95_low": 84.37,
+        "ci_95_high": 87.1,
+        "min": 80.0,
+        "max": 90.67,
+        "formatted": "85.73 \u00b1 2.92 [84.37, 87.10]"
+      },
+      "precision_pct": {
+        "mean": 100.0,
+        "std": 0.0,
+        "ci_95_low": 100.0,
+        "ci_95_high": 100.0,
+        "min": 100.0,
+        "max": 100.0,
+        "formatted": "100.00 \u00b1 0.00 [100.00, 100.00]"
+      },
+      "false_dark_rate_pct": {
+        "mean": 0.0,
+        "std": 0.0,
+        "ci_95_low": 0.0,
+        "ci_95_high": 0.0,
+        "min": 0.0,
+        "max": 0.0,
+        "formatted": "0.00 \u00b1 0.00 [0.00, 0.00]"
+      },
+      "f1_score": {
+        "mean": 0.8897,
+        "std": 0.0189,
+        "ci_95_low": 0.8808,
+        "ci_95_high": 0.8985,
+        "min": 0.8559,
+        "max": 0.9286,
+        "formatted": "0.8897 \u00b1 0.0189 [0.8808, 0.8985]"
+      },
+      "true_positives_tp": {
+        "mean": 103.1,
+        "std": 5.11,
+        "ci_95_low": 100.71,
+        "ci_95_high": 105.49,
+        "min": 96.0,
+        "max": 117.0,
+        "formatted": "103.10 \u00b1 5.11 [100.71, 105.49]"
+      },
+      "false_positives_fp": {
+        "mean": 0.0,
+        "std": 0.0,
+        "ci_95_low": 0.0,
+        "ci_95_high": 0.0,
+        "min": 0.0,
+        "max": 0.0,
+        "formatted": "0.00 \u00b1 0.00 [0.00, 0.00]"
+      },
+      "true_negatives_tn": {
+        "mean": 300.65,
+        "std": 5.72,
+        "ci_95_low": 297.97,
+        "ci_95_high": 303.33,
+        "min": 288.0,
+        "max": 310.0,
+        "formatted": "300.65 \u00b1 5.72 [297.97, 303.33]"
+      },
+      "false_negatives_fn": {
+        "mean": 25.5,
+        "std": 4.17,
+        "ci_95_low": 23.55,
+        "ci_95_high": 27.45,
+        "min": 18.0,
+        "max": 34.0,
+        "formatted": "25.50 \u00b1 4.17 [23.55, 27.45]"
+      },
+      "cfar_detected_dark": {
+        "mean": 128.6,
+        "std": 4.38,
+        "ci_95_low": 126.55,
+        "ci_95_high": 130.65,
+        "min": 120.0,
+        "max": 136.0,
+        "formatted": "128.60 \u00b1 4.38 [126.55, 130.65]"
+      },
+      "total_dark_gt": {
+        "mean": 150.0,
+        "std": 0.0,
+        "ci_95_low": 150.0,
+        "ci_95_high": 150.0,
+        "min": 150.0,
+        "max": 150.0,
+        "formatted": "150.00 \u00b1 0.00 [150.00, 150.00]"
+      },
+      "density_per_10k_km2": 200,
+      "area_km2": 25000.0,
+      "contacts_per_seed": 500,
+      "total_contacts_evaluated": 10000
+    }
+  },
+  "density_sweep_per_10k_km2": {
+    "5_per_10k_km2": {
+      "n_seeds": 20,
+      "end_to_end_capture_rate_pct": {
+        "mean": 86.07,
+        "std": 2.43,
+        "ci_95_low": 84.93,
+        "ci_95_high": 87.2,
+        "min": 80.0,
+        "max": 90.67,
+        "formatted": "86.07 \u00b1 2.43 [84.93, 87.20]"
+      },
+      "post_detection_recall_pct": {
+        "mean": 99.62,
+        "std": 0.72,
+        "ci_95_low": 99.29,
+        "ci_95_high": 99.96,
+        "min": 97.71,
+        "max": 100.0,
+        "formatted": "99.62 \u00b1 0.72 [99.29, 99.96]"
+      },
+      "cfar_dark_detection_rate_pct": {
+        "mean": 86.4,
+        "std": 2.57,
+        "ci_95_low": 85.2,
+        "ci_95_high": 87.6,
+        "min": 80.0,
+        "max": 90.67,
+        "formatted": "86.40 \u00b1 2.57 [85.20, 87.60]"
+      },
+      "precision_pct": {
+        "mean": 100.0,
+        "std": 0.0,
+        "ci_95_low": 100.0,
+        "ci_95_high": 100.0,
+        "min": 100.0,
+        "max": 100.0,
+        "formatted": "100.00 \u00b1 0.00 [100.00, 100.00]"
+      },
+      "false_dark_rate_pct": {
+        "mean": 0.0,
+        "std": 0.0,
+        "ci_95_low": 0.0,
+        "ci_95_high": 0.0,
+        "min": 0.0,
+        "max": 0.0,
+        "formatted": "0.00 \u00b1 0.00 [0.00, 0.00]"
+      },
+      "f1_score": {
+        "mean": 0.9981,
+        "std": 0.0036,
+        "ci_95_low": 0.9964,
+        "ci_95_high": 0.9998,
+        "min": 0.9884,
+        "max": 1.0,
+        "formatted": "0.9981 \u00b1 0.0036 [0.9964, 0.9998]"
+      },
+      "true_positives_tp": {
+        "mean": 129.1,
+        "std": 3.64,
+        "ci_95_low": 127.4,
+        "ci_95_high": 130.8,
+        "min": 120.0,
+        "max": 136.0,
+        "formatted": "129.10 \u00b1 3.64 [127.40, 130.80]"
+      },
+      "false_positives_fp": {
+        "mean": 0.0,
+        "std": 0.0,
+        "ci_95_low": 0.0,
+        "ci_95_high": 0.0,
+        "min": 0.0,
+        "max": 0.0,
+        "formatted": "0.00 \u00b1 0.00 [0.00, 0.00]"
+      },
+      "true_negatives_tn": {
+        "mean": 297.95,
+        "std": 8.44,
+        "ci_95_low": 294.0,
+        "ci_95_high": 301.9,
+        "min": 287.0,
+        "max": 318.0,
+        "formatted": "297.95 \u00b1 8.44 [294.00, 301.90]"
+      },
+      "false_negatives_fn": {
+        "mean": 0.5,
+        "std": 0.95,
+        "ci_95_low": 0.06,
+        "ci_95_high": 0.94,
+        "min": 0.0,
+        "max": 3.0,
+        "formatted": "0.50 \u00b1 0.95 [0.06, 0.94]"
+      },
+      "cfar_detected_dark": {
+        "mean": 129.6,
+        "std": 3.86,
+        "ci_95_low": 127.79,
+        "ci_95_high": 131.41,
+        "min": 120.0,
+        "max": 136.0,
+        "formatted": "129.60 \u00b1 3.86 [127.79, 131.41]"
+      },
+      "total_dark_gt": {
+        "mean": 150.0,
+        "std": 0.0,
+        "ci_95_low": 150.0,
+        "ci_95_high": 150.0,
+        "min": 150.0,
+        "max": 150.0,
+        "formatted": "150.00 \u00b1 0.00 [150.00, 150.00]"
+      },
+      "density_per_10k_km2": 5,
+      "area_km2": 1000000.0,
+      "contacts_per_seed": 500,
+      "total_contacts_evaluated": 10000
+    },
+    "20_per_10k_km2": {
+      "n_seeds": 20,
+      "end_to_end_capture_rate_pct": {
+        "mean": 83.37,
+        "std": 2.39,
+        "ci_95_low": 82.25,
+        "ci_95_high": 84.49,
+        "min": 78.67,
+        "max": 88.0,
+        "formatted": "83.37 \u00b1 2.39 [82.25, 84.49]"
+      },
+      "post_detection_recall_pct": {
+        "mean": 97.6,
+        "std": 1.42,
+        "ci_95_low": 96.93,
+        "ci_95_high": 98.26,
+        "min": 95.35,
+        "max": 99.24,
+        "formatted": "97.60 \u00b1 1.42 [96.93, 98.26]"
+      },
+      "cfar_dark_detection_rate_pct": {
+        "mean": 85.43,
+        "std": 2.58,
+        "ci_95_low": 84.23,
+        "ci_95_high": 86.64,
+        "min": 79.33,
+        "max": 89.33,
+        "formatted": "85.43 \u00b1 2.58 [84.23, 86.64]"
+      },
+      "precision_pct": {
+        "mean": 100.0,
+        "std": 0.0,
+        "ci_95_low": 100.0,
+        "ci_95_high": 100.0,
+        "min": 100.0,
+        "max": 100.0,
+        "formatted": "100.00 \u00b1 0.00 [100.00, 100.00]"
+      },
+      "false_dark_rate_pct": {
+        "mean": 0.0,
+        "std": 0.0,
+        "ci_95_low": 0.0,
+        "ci_95_high": 0.0,
+        "min": 0.0,
+        "max": 0.0,
+        "formatted": "0.00 \u00b1 0.00 [0.00, 0.00]"
+      },
+      "f1_score": {
+        "mean": 0.9878,
+        "std": 0.0073,
+        "ci_95_low": 0.9844,
+        "ci_95_high": 0.9912,
+        "min": 0.9762,
+        "max": 0.9962,
+        "formatted": "0.9878 \u00b1 0.0073 [0.9844, 0.9912]"
+      },
+      "true_positives_tp": {
+        "mean": 125.05,
+        "std": 3.59,
+        "ci_95_low": 123.37,
+        "ci_95_high": 126.73,
+        "min": 118.0,
+        "max": 132.0,
+        "formatted": "125.05 \u00b1 3.59 [123.37, 126.73]"
+      },
+      "false_positives_fp": {
+        "mean": 0.0,
+        "std": 0.0,
+        "ci_95_low": 0.0,
+        "ci_95_high": 0.0,
+        "min": 0.0,
+        "max": 0.0,
+        "formatted": "0.00 \u00b1 0.00 [0.00, 0.00]"
+      },
+      "true_negatives_tn": {
+        "mean": 298.45,
+        "std": 6.78,
+        "ci_95_low": 295.28,
+        "ci_95_high": 301.62,
+        "min": 284.0,
+        "max": 308.0,
+        "formatted": "298.45 \u00b1 6.78 [295.28, 301.62]"
+      },
+      "false_negatives_fn": {
+        "mean": 3.1,
+        "std": 1.86,
+        "ci_95_low": 2.23,
+        "ci_95_high": 3.97,
+        "min": 1.0,
+        "max": 6.0,
+        "formatted": "3.10 \u00b1 1.86 [2.23, 3.97]"
+      },
+      "cfar_detected_dark": {
+        "mean": 128.15,
+        "std": 3.87,
+        "ci_95_low": 126.34,
+        "ci_95_high": 129.96,
+        "min": 119.0,
+        "max": 134.0,
+        "formatted": "128.15 \u00b1 3.87 [126.34, 129.96]"
+      },
+      "total_dark_gt": {
+        "mean": 150.0,
+        "std": 0.0,
+        "ci_95_low": 150.0,
+        "ci_95_high": 150.0,
+        "min": 150.0,
+        "max": 150.0,
+        "formatted": "150.00 \u00b1 0.00 [150.00, 150.00]"
+      },
+      "density_per_10k_km2": 20,
+      "area_km2": 250000.0,
+      "contacts_per_seed": 500,
+      "total_contacts_evaluated": 10000
+    },
+    "50_per_10k_km2": {
+      "n_seeds": 20,
+      "end_to_end_capture_rate_pct": {
+        "mean": 81.77,
+        "std": 3.18,
+        "ci_95_low": 80.28,
+        "ci_95_high": 83.26,
+        "min": 73.33,
+        "max": 86.67,
+        "formatted": "81.77 \u00b1 3.18 [80.28, 83.26]"
+      },
+      "post_detection_recall_pct": {
+        "mean": 95.51,
+        "std": 1.53,
+        "ci_95_low": 94.8,
+        "ci_95_high": 96.23,
+        "min": 92.91,
+        "max": 97.73,
+        "formatted": "95.51 \u00b1 1.53 [94.80, 96.23]"
+      },
+      "cfar_dark_detection_rate_pct": {
+        "mean": 85.6,
+        "std": 2.77,
+        "ci_95_low": 84.3,
+        "ci_95_high": 86.9,
+        "min": 77.33,
+        "max": 90.0,
+        "formatted": "85.60 \u00b1 2.77 [84.30, 86.90]"
+      },
+      "precision_pct": {
+        "mean": 100.0,
+        "std": 0.0,
+        "ci_95_low": 100.0,
+        "ci_95_high": 100.0,
+        "min": 100.0,
+        "max": 100.0,
+        "formatted": "100.00 \u00b1 0.00 [100.00, 100.00]"
+      },
+      "false_dark_rate_pct": {
+        "mean": 0.0,
+        "std": 0.0,
+        "ci_95_low": 0.0,
+        "ci_95_high": 0.0,
+        "min": 0.0,
+        "max": 0.0,
+        "formatted": "0.00 \u00b1 0.00 [0.00, 0.00]"
+      },
+      "f1_score": {
+        "mean": 0.977,
+        "std": 0.008,
+        "ci_95_low": 0.9732,
+        "ci_95_high": 0.9807,
+        "min": 0.9633,
+        "max": 0.9885,
+        "formatted": "0.9770 \u00b1 0.0080 [0.9732, 0.9807]"
+      },
+      "true_positives_tp": {
+        "mean": 122.65,
+        "std": 4.77,
+        "ci_95_low": 120.42,
+        "ci_95_high": 124.88,
+        "min": 110.0,
+        "max": 130.0,
+        "formatted": "122.65 \u00b1 4.77 [120.42, 124.88]"
+      },
+      "false_positives_fp": {
+        "mean": 0.0,
+        "std": 0.0,
+        "ci_95_low": 0.0,
+        "ci_95_high": 0.0,
+        "min": 0.0,
+        "max": 0.0,
+        "formatted": "0.00 \u00b1 0.00 [0.00, 0.00]"
+      },
+      "true_negatives_tn": {
+        "mean": 300.9,
+        "std": 6.7,
+        "ci_95_low": 297.77,
+        "ci_95_high": 304.03,
+        "min": 286.0,
+        "max": 312.0,
+        "formatted": "300.90 \u00b1 6.70 [297.77, 304.03]"
+      },
+      "false_negatives_fn": {
+        "mean": 5.75,
+        "std": 1.94,
+        "ci_95_low": 4.84,
+        "ci_95_high": 6.66,
+        "min": 3.0,
+        "max": 9.0,
+        "formatted": "5.75 \u00b1 1.94 [4.84, 6.66]"
+      },
+      "cfar_detected_dark": {
+        "mean": 128.4,
+        "std": 4.16,
+        "ci_95_low": 126.45,
+        "ci_95_high": 130.35,
+        "min": 116.0,
+        "max": 135.0,
+        "formatted": "128.40 \u00b1 4.16 [126.45, 130.35]"
+      },
+      "total_dark_gt": {
+        "mean": 150.0,
+        "std": 0.0,
+        "ci_95_low": 150.0,
+        "ci_95_high": 150.0,
+        "min": 150.0,
+        "max": 150.0,
+        "formatted": "150.00 \u00b1 0.00 [150.00, 150.00]"
+      },
+      "density_per_10k_km2": 50,
+      "area_km2": 100000.0,
+      "contacts_per_seed": 500,
+      "total_contacts_evaluated": 10000
+    },
+    "100_per_10k_km2": {
+      "n_seeds": 20,
+      "end_to_end_capture_rate_pct": {
+        "mean": 76.73,
+        "std": 3.24,
+        "ci_95_low": 75.22,
+        "ci_95_high": 78.25,
+        "min": 71.33,
+        "max": 84.0,
+        "formatted": "76.73 \u00b1 3.24 [75.22, 78.25]"
+      },
+      "post_detection_recall_pct": {
+        "mean": 89.36,
+        "std": 1.99,
+        "ci_95_low": 88.43,
+        "ci_95_high": 90.29,
+        "min": 85.5,
+        "max": 93.33,
+        "formatted": "89.36 \u00b1 1.99 [88.43, 90.29]"
+      },
+      "cfar_dark_detection_rate_pct": {
+        "mean": 85.87,
+        "std": 2.93,
+        "ci_95_low": 84.5,
+        "ci_95_high": 87.24,
+        "min": 80.0,
+        "max": 90.67,
+        "formatted": "85.87 \u00b1 2.93 [84.50, 87.24]"
+      },
+      "precision_pct": {
+        "mean": 100.0,
+        "std": 0.0,
+        "ci_95_low": 100.0,
+        "ci_95_high": 100.0,
+        "min": 100.0,
+        "max": 100.0,
+        "formatted": "100.00 \u00b1 0.00 [100.00, 100.00]"
+      },
+      "false_dark_rate_pct": {
+        "mean": 0.0,
+        "std": 0.0,
+        "ci_95_low": 0.0,
+        "ci_95_high": 0.0,
+        "min": 0.0,
+        "max": 0.0,
+        "formatted": "0.00 \u00b1 0.00 [0.00, 0.00]"
+      },
+      "f1_score": {
+        "mean": 0.9437,
+        "std": 0.0111,
+        "ci_95_low": 0.9385,
+        "ci_95_high": 0.9489,
+        "min": 0.9218,
+        "max": 0.9655,
+        "formatted": "0.9437 \u00b1 0.0111 [0.9385, 0.9489]"
+      },
+      "true_positives_tp": {
+        "mean": 115.1,
+        "std": 4.85,
+        "ci_95_low": 112.83,
+        "ci_95_high": 117.37,
+        "min": 107.0,
+        "max": 126.0,
+        "formatted": "115.10 \u00b1 4.85 [112.83, 117.37]"
+      },
+      "false_positives_fp": {
+        "mean": 0.0,
+        "std": 0.0,
+        "ci_95_low": 0.0,
+        "ci_95_high": 0.0,
+        "min": 0.0,
+        "max": 0.0,
+        "formatted": "0.00 \u00b1 0.00 [0.00, 0.00]"
+      },
+      "true_negatives_tn": {
+        "mean": 300.6,
+        "std": 5.8,
+        "ci_95_low": 297.89,
+        "ci_95_high": 303.31,
+        "min": 288.0,
+        "max": 310.0,
+        "formatted": "300.60 \u00b1 5.80 [297.89, 303.31]"
+      },
+      "false_negatives_fn": {
+        "mean": 13.7,
+        "std": 2.6,
+        "ci_95_low": 12.48,
+        "ci_95_high": 14.92,
+        "min": 9.0,
+        "max": 19.0,
+        "formatted": "13.70 \u00b1 2.60 [12.48, 14.92]"
+      },
+      "cfar_detected_dark": {
+        "mean": 128.8,
+        "std": 4.4,
+        "ci_95_low": 126.74,
+        "ci_95_high": 130.86,
+        "min": 120.0,
+        "max": 136.0,
+        "formatted": "128.80 \u00b1 4.40 [126.74, 130.86]"
+      },
+      "total_dark_gt": {
+        "mean": 150.0,
+        "std": 0.0,
+        "ci_95_low": 150.0,
+        "ci_95_high": 150.0,
+        "min": 150.0,
+        "max": 150.0,
+        "formatted": "150.00 \u00b1 0.00 [150.00, 150.00]"
+      },
+      "density_per_10k_km2": 100,
+      "area_km2": 50000.0,
+      "contacts_per_seed": 500,
+      "total_contacts_evaluated": 10000
+    },
+    "200_per_10k_km2": {
+      "n_seeds": 20,
+      "end_to_end_capture_rate_pct": {
+        "mean": 68.73,
+        "std": 3.41,
+        "ci_95_low": 67.14,
+        "ci_95_high": 70.33,
+        "min": 64.0,
+        "max": 78.0,
+        "formatted": "68.73 \u00b1 3.41 [67.14, 70.33]"
+      },
+      "post_detection_recall_pct": {
+        "mean": 80.18,
+        "std": 3.08,
+        "ci_95_low": 78.74,
+        "ci_95_high": 81.62,
+        "min": 74.81,
+        "max": 86.67,
+        "formatted": "80.18 \u00b1 3.08 [78.74, 81.62]"
+      },
+      "cfar_dark_detection_rate_pct": {
+        "mean": 85.73,
+        "std": 2.92,
+        "ci_95_low": 84.37,
+        "ci_95_high": 87.1,
+        "min": 80.0,
+        "max": 90.67,
+        "formatted": "85.73 \u00b1 2.92 [84.37, 87.10]"
+      },
+      "precision_pct": {
+        "mean": 100.0,
+        "std": 0.0,
+        "ci_95_low": 100.0,
+        "ci_95_high": 100.0,
+        "min": 100.0,
+        "max": 100.0,
+        "formatted": "100.00 \u00b1 0.00 [100.00, 100.00]"
+      },
+      "false_dark_rate_pct": {
+        "mean": 0.0,
+        "std": 0.0,
+        "ci_95_low": 0.0,
+        "ci_95_high": 0.0,
+        "min": 0.0,
+        "max": 0.0,
+        "formatted": "0.00 \u00b1 0.00 [0.00, 0.00]"
+      },
+      "f1_score": {
+        "mean": 0.8897,
+        "std": 0.0189,
+        "ci_95_low": 0.8808,
+        "ci_95_high": 0.8985,
+        "min": 0.8559,
+        "max": 0.9286,
+        "formatted": "0.8897 \u00b1 0.0189 [0.8808, 0.8985]"
+      },
+      "true_positives_tp": {
+        "mean": 103.1,
+        "std": 5.11,
+        "ci_95_low": 100.71,
+        "ci_95_high": 105.49,
+        "min": 96.0,
+        "max": 117.0,
+        "formatted": "103.10 \u00b1 5.11 [100.71, 105.49]"
+      },
+      "false_positives_fp": {
+        "mean": 0.0,
+        "std": 0.0,
+        "ci_95_low": 0.0,
+        "ci_95_high": 0.0,
+        "min": 0.0,
+        "max": 0.0,
+        "formatted": "0.00 \u00b1 0.00 [0.00, 0.00]"
+      },
+      "true_negatives_tn": {
+        "mean": 300.65,
+        "std": 5.72,
+        "ci_95_low": 297.97,
+        "ci_95_high": 303.33,
+        "min": 288.0,
+        "max": 310.0,
+        "formatted": "300.65 \u00b1 5.72 [297.97, 303.33]"
+      },
+      "false_negatives_fn": {
+        "mean": 25.5,
+        "std": 4.17,
+        "ci_95_low": 23.55,
+        "ci_95_high": 27.45,
+        "min": 18.0,
+        "max": 34.0,
+        "formatted": "25.50 \u00b1 4.17 [23.55, 27.45]"
+      },
+      "cfar_detected_dark": {
+        "mean": 128.6,
+        "std": 4.38,
+        "ci_95_low": 126.55,
+        "ci_95_high": 130.65,
+        "min": 120.0,
+        "max": 136.0,
+        "formatted": "128.60 \u00b1 4.38 [126.55, 130.65]"
+      },
+      "total_dark_gt": {
+        "mean": 150.0,
+        "std": 0.0,
+        "ci_95_low": 150.0,
+        "ci_95_high": 150.0,
+        "min": 150.0,
+        "max": 150.0,
+        "formatted": "150.00 \u00b1 0.00 [150.00, 150.00]"
+      },
+      "density_per_10k_km2": 200,
+      "area_km2": 25000.0,
+      "contacts_per_seed": 500,
+      "total_contacts_evaluated": 10000
+    }
+  },
+  "time_offset_sweep": {
+    "with_temporal_propagation": {
+      "pm_5_min": {
+        "n_seeds": 20,
+        "end_to_end_capture_rate_pct": {
+          "mean": 79.13,
+          "std": 3.8,
+          "ci_95_low": 77.36,
+          "ci_95_high": 80.91,
+          "min": 71.33,
+          "max": 86.0,
+          "formatted": "79.13 \u00b1 3.80 [77.36, 80.91]"
+        },
+        "post_detection_recall_pct": {
+          "mean": 93.04,
+          "std": 2.02,
+          "ci_95_low": 92.1,
+          "ci_95_high": 93.99,
+          "min": 89.76,
+          "max": 96.06,
+          "formatted": "93.04 \u00b1 2.02 [92.10, 93.99]"
+        },
+        "cfar_dark_detection_rate_pct": {
+          "mean": 85.03,
+          "std": 3.13,
+          "ci_95_low": 83.57,
+          "ci_95_high": 86.5,
+          "min": 78.67,
+          "max": 90.0,
+          "formatted": "85.03 \u00b1 3.13 [83.57, 86.50]"
+        },
+        "precision_pct": {
+          "mean": 100.0,
+          "std": 0.0,
+          "ci_95_low": 100.0,
+          "ci_95_high": 100.0,
+          "min": 100.0,
+          "max": 100.0,
+          "formatted": "100.00 \u00b1 0.00 [100.00, 100.00]"
+        },
+        "false_dark_rate_pct": {
+          "mean": 0.0,
+          "std": 0.0,
+          "ci_95_low": 0.0,
+          "ci_95_high": 0.0,
+          "min": 0.0,
+          "max": 0.0,
+          "formatted": "0.00 \u00b1 0.00 [0.00, 0.00]"
+        },
+        "f1_score": {
+          "mean": 0.9639,
+          "std": 0.0109,
+          "ci_95_low": 0.9588,
+          "ci_95_high": 0.9689,
+          "min": 0.9461,
+          "max": 0.9799,
+          "formatted": "0.9639 \u00b1 0.0109 [0.9588, 0.9689]"
+        },
+        "true_positives_tp": {
+          "mean": 118.7,
+          "std": 5.69,
+          "ci_95_low": 116.03,
+          "ci_95_high": 121.37,
+          "min": 107.0,
+          "max": 129.0,
+          "formatted": "118.70 \u00b1 5.69 [116.03, 121.37]"
+        },
+        "false_positives_fp": {
+          "mean": 0.0,
+          "std": 0.0,
+          "ci_95_low": 0.0,
+          "ci_95_high": 0.0,
+          "min": 0.0,
+          "max": 0.0,
+          "formatted": "0.00 \u00b1 0.00 [0.00, 0.00]"
+        },
+        "true_negatives_tn": {
+          "mean": 298.9,
+          "std": 7.41,
+          "ci_95_low": 295.43,
+          "ci_95_high": 302.37,
+          "min": 286.0,
+          "max": 313.0,
+          "formatted": "298.90 \u00b1 7.41 [295.43, 302.37]"
+        },
+        "false_negatives_fn": {
+          "mean": 8.85,
+          "std": 2.5,
+          "ci_95_low": 7.68,
+          "ci_95_high": 10.02,
+          "min": 5.0,
+          "max": 13.0,
+          "formatted": "8.85 \u00b1 2.50 [7.68, 10.02]"
+        },
+        "cfar_detected_dark": {
+          "mean": 127.55,
+          "std": 4.7,
+          "ci_95_low": 125.35,
+          "ci_95_high": 129.75,
+          "min": 118.0,
+          "max": 135.0,
+          "formatted": "127.55 \u00b1 4.70 [125.35, 129.75]"
+        },
+        "total_dark_gt": {
+          "mean": 150.0,
+          "std": 0.0,
+          "ci_95_low": 150.0,
+          "ci_95_high": 150.0,
+          "min": 150.0,
+          "max": 150.0,
+          "formatted": "150.00 \u00b1 0.00 [150.00, 150.00]"
+        },
+        "window_min": 5.0,
+        "contacts_per_seed": 500
+      },
+      "pm_15_min": {
+        "n_seeds": 20,
+        "end_to_end_capture_rate_pct": {
+          "mean": 80.4,
+          "std": 2.76,
+          "ci_95_low": 79.11,
+          "ci_95_high": 81.69,
+          "min": 74.67,
+          "max": 84.67,
+          "formatted": "80.40 \u00b1 2.76 [79.11, 81.69]"
+        },
+        "post_detection_recall_pct": {
+          "mean": 93.19,
+          "std": 2.58,
+          "ci_95_low": 91.98,
+          "ci_95_high": 94.39,
+          "min": 89.23,
+          "max": 97.67,
+          "formatted": "93.19 \u00b1 2.58 [91.98, 94.39]"
+        },
+        "cfar_dark_detection_rate_pct": {
+          "mean": 86.3,
+          "std": 2.66,
+          "ci_95_low": 85.05,
+          "ci_95_high": 87.55,
+          "min": 82.0,
+          "max": 90.67,
+          "formatted": "86.30 \u00b1 2.66 [85.05, 87.55]"
+        },
+        "precision_pct": {
+          "mean": 100.0,
+          "std": 0.0,
+          "ci_95_low": 100.0,
+          "ci_95_high": 100.0,
+          "min": 100.0,
+          "max": 100.0,
+          "formatted": "100.00 \u00b1 0.00 [100.00, 100.00]"
+        },
+        "false_dark_rate_pct": {
+          "mean": 0.0,
+          "std": 0.0,
+          "ci_95_low": 0.0,
+          "ci_95_high": 0.0,
+          "min": 0.0,
+          "max": 0.0,
+          "formatted": "0.00 \u00b1 0.00 [0.00, 0.00]"
+        },
+        "f1_score": {
+          "mean": 0.9645,
+          "std": 0.0138,
+          "ci_95_low": 0.9581,
+          "ci_95_high": 0.971,
+          "min": 0.9431,
+          "max": 0.9882,
+          "formatted": "0.9645 \u00b1 0.0138 [0.9581, 0.9710]"
+        },
+        "true_positives_tp": {
+          "mean": 120.6,
+          "std": 4.13,
+          "ci_95_low": 118.66,
+          "ci_95_high": 122.54,
+          "min": 112.0,
+          "max": 127.0,
+          "formatted": "120.60 \u00b1 4.13 [118.66, 122.54]"
+        },
+        "false_positives_fp": {
+          "mean": 0.0,
+          "std": 0.0,
+          "ci_95_low": 0.0,
+          "ci_95_high": 0.0,
+          "min": 0.0,
+          "max": 0.0,
+          "formatted": "0.00 \u00b1 0.00 [0.00, 0.00]"
+        },
+        "true_negatives_tn": {
+          "mean": 299.7,
+          "std": 5.49,
+          "ci_95_low": 297.13,
+          "ci_95_high": 302.27,
+          "min": 291.0,
+          "max": 311.0,
+          "formatted": "299.70 \u00b1 5.49 [297.13, 302.27]"
+        },
+        "false_negatives_fn": {
+          "mean": 8.85,
+          "std": 3.44,
+          "ci_95_low": 7.24,
+          "ci_95_high": 10.46,
+          "min": 3.0,
+          "max": 14.0,
+          "formatted": "8.85 \u00b1 3.44 [7.24, 10.46]"
+        },
+        "cfar_detected_dark": {
+          "mean": 129.45,
+          "std": 3.99,
+          "ci_95_low": 127.58,
+          "ci_95_high": 131.32,
+          "min": 123.0,
+          "max": 136.0,
+          "formatted": "129.45 \u00b1 3.99 [127.58, 131.32]"
+        },
+        "total_dark_gt": {
+          "mean": 150.0,
+          "std": 0.0,
+          "ci_95_low": 150.0,
+          "ci_95_high": 150.0,
+          "min": 150.0,
+          "max": 150.0,
+          "formatted": "150.00 \u00b1 0.00 [150.00, 150.00]"
+        },
+        "window_min": 15.0,
+        "contacts_per_seed": 500
+      },
+      "pm_30_min": {
+        "n_seeds": 20,
+        "end_to_end_capture_rate_pct": {
+          "mean": 80.03,
+          "std": 3.6,
+          "ci_95_low": 78.35,
+          "ci_95_high": 81.72,
+          "min": 74.0,
+          "max": 86.67,
+          "formatted": "80.03 \u00b1 3.60 [78.35, 81.72]"
+        },
+        "post_detection_recall_pct": {
+          "mean": 93.07,
+          "std": 2.49,
+          "ci_95_low": 91.9,
+          "ci_95_high": 94.24,
+          "min": 86.92,
+          "max": 97.48,
+          "formatted": "93.07 \u00b1 2.49 [91.90, 94.24]"
+        },
+        "cfar_dark_detection_rate_pct": {
+          "mean": 86.0,
+          "std": 3.26,
+          "ci_95_low": 84.47,
+          "ci_95_high": 87.52,
+          "min": 79.33,
+          "max": 92.0,
+          "formatted": "86.00 \u00b1 3.26 [84.47, 87.52]"
+        },
+        "precision_pct": {
+          "mean": 100.0,
+          "std": 0.0,
+          "ci_95_low": 100.0,
+          "ci_95_high": 100.0,
+          "min": 100.0,
+          "max": 100.0,
+          "formatted": "100.00 \u00b1 0.00 [100.00, 100.00]"
+        },
+        "false_dark_rate_pct": {
+          "mean": 0.0,
+          "std": 0.0,
+          "ci_95_low": 0.0,
+          "ci_95_high": 0.0,
+          "min": 0.0,
+          "max": 0.0,
+          "formatted": "0.00 \u00b1 0.00 [0.00, 0.00]"
+        },
+        "f1_score": {
+          "mean": 0.9639,
+          "std": 0.0135,
+          "ci_95_low": 0.9576,
+          "ci_95_high": 0.9702,
+          "min": 0.93,
+          "max": 0.9872,
+          "formatted": "0.9639 \u00b1 0.0135 [0.9576, 0.9702]"
+        },
+        "true_positives_tp": {
+          "mean": 120.05,
+          "std": 5.4,
+          "ci_95_low": 117.52,
+          "ci_95_high": 122.58,
+          "min": 111.0,
+          "max": 130.0,
+          "formatted": "120.05 \u00b1 5.40 [117.52, 122.58]"
+        },
+        "false_positives_fp": {
+          "mean": 0.0,
+          "std": 0.0,
+          "ci_95_low": 0.0,
+          "ci_95_high": 0.0,
+          "min": 0.0,
+          "max": 0.0,
+          "formatted": "0.00 \u00b1 0.00 [0.00, 0.00]"
+        },
+        "true_negatives_tn": {
+          "mean": 300.65,
+          "std": 6.94,
+          "ci_95_low": 297.4,
+          "ci_95_high": 303.9,
+          "min": 288.0,
+          "max": 312.0,
+          "formatted": "300.65 \u00b1 6.94 [297.40, 303.90]"
+        },
+        "false_negatives_fn": {
+          "mean": 8.95,
+          "std": 3.24,
+          "ci_95_low": 7.44,
+          "ci_95_high": 10.46,
+          "min": 3.0,
+          "max": 17.0,
+          "formatted": "8.95 \u00b1 3.24 [7.44, 10.46]"
+        },
+        "cfar_detected_dark": {
+          "mean": 129.0,
+          "std": 4.89,
+          "ci_95_low": 126.71,
+          "ci_95_high": 131.29,
+          "min": 119.0,
+          "max": 138.0,
+          "formatted": "129.00 \u00b1 4.89 [126.71, 131.29]"
+        },
+        "total_dark_gt": {
+          "mean": 150.0,
+          "std": 0.0,
+          "ci_95_low": 150.0,
+          "ci_95_high": 150.0,
+          "min": 150.0,
+          "max": 150.0,
+          "formatted": "150.00 \u00b1 0.00 [150.00, 150.00]"
+        },
+        "window_min": 30.0,
+        "contacts_per_seed": 500
+      }
+    },
+    "without_temporal_propagation": {
+      "pm_5_min": {
+        "n_seeds": 20,
+        "end_to_end_capture_rate_pct": {
+          "mean": 79.3,
+          "std": 3.34,
+          "ci_95_low": 77.74,
+          "ci_95_high": 80.86,
+          "min": 71.33,
+          "max": 84.67,
+          "formatted": "79.30 \u00b1 3.34 [77.74, 80.86]"
+        },
+        "post_detection_recall_pct": {
+          "mean": 93.25,
+          "std": 1.82,
+          "ci_95_low": 92.4,
+          "ci_95_high": 94.1,
+          "min": 90.15,
+          "max": 96.67,
+          "formatted": "93.25 \u00b1 1.82 [92.40, 94.10]"
+        },
+        "cfar_dark_detection_rate_pct": {
+          "mean": 85.03,
+          "std": 3.13,
+          "ci_95_low": 83.57,
+          "ci_95_high": 86.5,
+          "min": 78.67,
+          "max": 90.0,
+          "formatted": "85.03 \u00b1 3.13 [83.57, 86.50]"
+        },
+        "precision_pct": {
+          "mean": 72.41,
+          "std": 2.54,
+          "ci_95_low": 71.22,
+          "ci_95_high": 73.6,
+          "min": 67.72,
+          "max": 76.13,
+          "formatted": "72.41 \u00b1 2.54 [71.22, 73.60]"
+        },
+        "false_dark_rate_pct": {
+          "mean": 15.2,
+          "std": 1.76,
+          "ci_95_low": 14.38,
+          "ci_95_high": 16.03,
+          "min": 12.25,
+          "max": 18.98,
+          "formatted": "15.20 \u00b1 1.76 [14.38, 16.03]"
+        },
+        "f1_score": {
+          "mean": 0.815,
+          "std": 0.0205,
+          "ci_95_low": 0.8054,
+          "ci_95_high": 0.8246,
+          "min": 0.7752,
+          "max": 0.8414,
+          "formatted": "0.8150 \u00b1 0.0205 [0.8054, 0.8246]"
+        },
+        "true_positives_tp": {
+          "mean": 118.95,
+          "std": 5.01,
+          "ci_95_low": 116.61,
+          "ci_95_high": 121.29,
+          "min": 107.0,
+          "max": 127.0,
+          "formatted": "118.95 \u00b1 5.01 [116.61, 121.29]"
+        },
+        "false_positives_fp": {
+          "mean": 45.4,
+          "std": 5.04,
+          "ci_95_low": 43.04,
+          "ci_95_high": 47.76,
+          "min": 37.0,
+          "max": 56.0,
+          "formatted": "45.40 \u00b1 5.04 [43.04, 47.76]"
+        },
+        "true_negatives_tn": {
+          "mean": 253.5,
+          "std": 9.3,
+          "ci_95_low": 249.15,
+          "ci_95_high": 257.85,
+          "min": 235.0,
+          "max": 269.0,
+          "formatted": "253.50 \u00b1 9.30 [249.15, 257.85]"
+        },
+        "false_negatives_fn": {
+          "mean": 8.6,
+          "std": 2.3,
+          "ci_95_low": 7.52,
+          "ci_95_high": 9.68,
+          "min": 4.0,
+          "max": 13.0,
+          "formatted": "8.60 \u00b1 2.30 [7.52, 9.68]"
+        },
+        "cfar_detected_dark": {
+          "mean": 127.55,
+          "std": 4.7,
+          "ci_95_low": 125.35,
+          "ci_95_high": 129.75,
+          "min": 118.0,
+          "max": 135.0,
+          "formatted": "127.55 \u00b1 4.70 [125.35, 129.75]"
+        },
+        "total_dark_gt": {
+          "mean": 150.0,
+          "std": 0.0,
+          "ci_95_low": 150.0,
+          "ci_95_high": 150.0,
+          "min": 150.0,
+          "max": 150.0,
+          "formatted": "150.00 \u00b1 0.00 [150.00, 150.00]"
+        },
+        "window_min": 5.0,
+        "contacts_per_seed": 500
+      },
+      "pm_15_min": {
+        "n_seeds": 20,
+        "end_to_end_capture_rate_pct": {
+          "mean": 79.93,
+          "std": 2.44,
+          "ci_95_low": 78.79,
+          "ci_95_high": 81.07,
+          "min": 76.67,
+          "max": 86.0,
+          "formatted": "79.93 \u00b1 2.44 [78.79, 81.07]"
+        },
+        "post_detection_recall_pct": {
+          "mean": 92.66,
+          "std": 2.67,
+          "ci_95_low": 91.41,
+          "ci_95_high": 93.91,
+          "min": 87.41,
+          "max": 98.47,
+          "formatted": "92.66 \u00b1 2.67 [91.41, 93.91]"
+        },
+        "cfar_dark_detection_rate_pct": {
+          "mean": 86.3,
+          "std": 2.66,
+          "ci_95_low": 85.05,
+          "ci_95_high": 87.55,
+          "min": 82.0,
+          "max": 90.67,
+          "formatted": "86.30 \u00b1 2.66 [85.05, 87.55]"
+        },
+        "precision_pct": {
+          "mean": 39.59,
+          "std": 1.17,
+          "ci_95_low": 39.04,
+          "ci_95_high": 40.14,
+          "min": 36.94,
+          "max": 41.75,
+          "formatted": "39.59 \u00b1 1.17 [39.04, 40.14]"
+        },
+        "false_dark_rate_pct": {
+          "mean": 61.08,
+          "std": 2.08,
+          "ci_95_low": 60.1,
+          "ci_95_high": 62.05,
+          "min": 58.67,
+          "max": 65.12,
+          "formatted": "61.08 \u00b1 2.08 [60.10, 62.05]"
+        },
+        "f1_score": {
+          "mean": 0.5546,
+          "std": 0.0137,
+          "ci_95_low": 0.5482,
+          "ci_95_high": 0.5611,
+          "min": 0.5213,
+          "max": 0.5864,
+          "formatted": "0.5546 \u00b1 0.0137 [0.5482, 0.5611]"
+        },
+        "true_positives_tp": {
+          "mean": 119.9,
+          "std": 3.65,
+          "ci_95_low": 118.19,
+          "ci_95_high": 121.61,
+          "min": 115.0,
+          "max": 129.0,
+          "formatted": "119.90 \u00b1 3.65 [118.19, 121.61]"
+        },
+        "false_positives_fp": {
+          "mean": 183.05,
+          "std": 7.22,
+          "ci_95_low": 179.67,
+          "ci_95_high": 186.43,
+          "min": 174.0,
+          "max": 198.0,
+          "formatted": "183.05 \u00b1 7.22 [179.67, 186.43]"
+        },
+        "true_negatives_tn": {
+          "mean": 116.65,
+          "std": 6.54,
+          "ci_95_low": 113.59,
+          "ci_95_high": 119.71,
+          "min": 105.0,
+          "max": 127.0,
+          "formatted": "116.65 \u00b1 6.54 [113.59, 119.71]"
+        },
+        "false_negatives_fn": {
+          "mean": 9.55,
+          "std": 3.65,
+          "ci_95_low": 7.84,
+          "ci_95_high": 11.26,
+          "min": 2.0,
+          "max": 17.0,
+          "formatted": "9.55 \u00b1 3.65 [7.84, 11.26]"
+        },
+        "cfar_detected_dark": {
+          "mean": 129.45,
+          "std": 3.99,
+          "ci_95_low": 127.58,
+          "ci_95_high": 131.32,
+          "min": 123.0,
+          "max": 136.0,
+          "formatted": "129.45 \u00b1 3.99 [127.58, 131.32]"
+        },
+        "total_dark_gt": {
+          "mean": 150.0,
+          "std": 0.0,
+          "ci_95_low": 150.0,
+          "ci_95_high": 150.0,
+          "min": 150.0,
+          "max": 150.0,
+          "formatted": "150.00 \u00b1 0.00 [150.00, 150.00]"
+        },
+        "window_min": 15.0,
+        "contacts_per_seed": 500
+      },
+      "pm_30_min": {
+        "n_seeds": 20,
+        "end_to_end_capture_rate_pct": {
+          "mean": 80.03,
+          "std": 4.39,
+          "ci_95_low": 77.98,
+          "ci_95_high": 82.09,
+          "min": 70.67,
+          "max": 88.67,
+          "formatted": "80.03 \u00b1 4.39 [77.98, 82.09]"
+        },
+        "post_detection_recall_pct": {
+          "mean": 93.03,
+          "std": 2.84,
+          "ci_95_low": 91.7,
+          "ci_95_high": 94.36,
+          "min": 87.6,
+          "max": 99.25,
+          "formatted": "93.03 \u00b1 2.84 [91.70, 94.36]"
+        },
+        "cfar_dark_detection_rate_pct": {
+          "mean": 86.0,
+          "std": 3.26,
+          "ci_95_low": 84.47,
+          "ci_95_high": 87.52,
+          "min": 79.33,
+          "max": 92.0,
+          "formatted": "86.00 \u00b1 3.26 [84.47, 87.52]"
+        },
+        "precision_pct": {
+          "mean": 34.01,
+          "std": 1.39,
+          "ci_95_low": 33.36,
+          "ci_95_high": 34.66,
+          "min": 30.99,
+          "max": 36.14,
+          "formatted": "34.01 \u00b1 1.39 [33.36, 34.66]"
+        },
+        "false_dark_rate_pct": {
+          "mean": 77.45,
+          "std": 1.85,
+          "ci_95_low": 76.58,
+          "ci_95_high": 78.32,
+          "min": 74.09,
+          "max": 81.4,
+          "formatted": "77.45 \u00b1 1.85 [76.58, 78.32]"
+        },
+        "f1_score": {
+          "mean": 0.498,
+          "std": 0.0181,
+          "ci_95_low": 0.4896,
+          "ci_95_high": 0.5065,
+          "min": 0.4579,
+          "max": 0.5299,
+          "formatted": "0.4980 \u00b1 0.0181 [0.4896, 0.5065]"
+        },
+        "true_positives_tp": {
+          "mean": 120.05,
+          "std": 6.58,
+          "ci_95_low": 116.97,
+          "ci_95_high": 123.13,
+          "min": 106.0,
+          "max": 133.0,
+          "formatted": "120.05 \u00b1 6.58 [116.97, 123.13]"
+        },
+        "false_positives_fp": {
+          "mean": 232.85,
+          "std": 7.58,
+          "ci_95_low": 229.3,
+          "ci_95_high": 236.4,
+          "min": 214.0,
+          "max": 245.0,
+          "formatted": "232.85 \u00b1 7.58 [229.30, 236.40]"
+        },
+        "true_negatives_tn": {
+          "mean": 67.8,
+          "std": 5.8,
+          "ci_95_low": 65.09,
+          "ci_95_high": 70.51,
+          "min": 56.0,
+          "max": 78.0,
+          "formatted": "67.80 \u00b1 5.80 [65.09, 70.51]"
+        },
+        "false_negatives_fn": {
+          "mean": 8.95,
+          "std": 3.59,
+          "ci_95_low": 7.27,
+          "ci_95_high": 10.63,
+          "min": 1.0,
+          "max": 15.0,
+          "formatted": "8.95 \u00b1 3.59 [7.27, 10.63]"
+        },
+        "cfar_detected_dark": {
+          "mean": 129.0,
+          "std": 4.89,
+          "ci_95_low": 126.71,
+          "ci_95_high": 131.29,
+          "min": 119.0,
+          "max": 138.0,
+          "formatted": "129.00 \u00b1 4.89 [126.71, 131.29]"
+        },
+        "total_dark_gt": {
+          "mean": 150.0,
+          "std": 0.0,
+          "ci_95_low": 150.0,
+          "ci_95_high": 150.0,
+          "min": 150.0,
+          "max": 150.0,
+          "formatted": "150.00 \u00b1 0.00 [150.00, 150.00]"
+        },
+        "window_min": 30.0,
+        "contacts_per_seed": 500
+      }
+    }
+  },
+  "temporal_offset_drift_sweep": {
+    "with_temporal_propagation": {
+      "pm_5_min": {
+        "n_seeds": 20,
+        "end_to_end_capture_rate_pct": {
+          "mean": 79.13,
+          "std": 3.8,
+          "ci_95_low": 77.36,
+          "ci_95_high": 80.91,
+          "min": 71.33,
+          "max": 86.0,
+          "formatted": "79.13 \u00b1 3.80 [77.36, 80.91]"
+        },
+        "post_detection_recall_pct": {
+          "mean": 93.04,
+          "std": 2.02,
+          "ci_95_low": 92.1,
+          "ci_95_high": 93.99,
+          "min": 89.76,
+          "max": 96.06,
+          "formatted": "93.04 \u00b1 2.02 [92.10, 93.99]"
+        },
+        "cfar_dark_detection_rate_pct": {
+          "mean": 85.03,
+          "std": 3.13,
+          "ci_95_low": 83.57,
+          "ci_95_high": 86.5,
+          "min": 78.67,
+          "max": 90.0,
+          "formatted": "85.03 \u00b1 3.13 [83.57, 86.50]"
+        },
+        "precision_pct": {
+          "mean": 100.0,
+          "std": 0.0,
+          "ci_95_low": 100.0,
+          "ci_95_high": 100.0,
+          "min": 100.0,
+          "max": 100.0,
+          "formatted": "100.00 \u00b1 0.00 [100.00, 100.00]"
+        },
+        "false_dark_rate_pct": {
+          "mean": 0.0,
+          "std": 0.0,
+          "ci_95_low": 0.0,
+          "ci_95_high": 0.0,
+          "min": 0.0,
+          "max": 0.0,
+          "formatted": "0.00 \u00b1 0.00 [0.00, 0.00]"
+        },
+        "f1_score": {
+          "mean": 0.9639,
+          "std": 0.0109,
+          "ci_95_low": 0.9588,
+          "ci_95_high": 0.9689,
+          "min": 0.9461,
+          "max": 0.9799,
+          "formatted": "0.9639 \u00b1 0.0109 [0.9588, 0.9689]"
+        },
+        "true_positives_tp": {
+          "mean": 118.7,
+          "std": 5.69,
+          "ci_95_low": 116.03,
+          "ci_95_high": 121.37,
+          "min": 107.0,
+          "max": 129.0,
+          "formatted": "118.70 \u00b1 5.69 [116.03, 121.37]"
+        },
+        "false_positives_fp": {
+          "mean": 0.0,
+          "std": 0.0,
+          "ci_95_low": 0.0,
+          "ci_95_high": 0.0,
+          "min": 0.0,
+          "max": 0.0,
+          "formatted": "0.00 \u00b1 0.00 [0.00, 0.00]"
+        },
+        "true_negatives_tn": {
+          "mean": 298.9,
+          "std": 7.41,
+          "ci_95_low": 295.43,
+          "ci_95_high": 302.37,
+          "min": 286.0,
+          "max": 313.0,
+          "formatted": "298.90 \u00b1 7.41 [295.43, 302.37]"
+        },
+        "false_negatives_fn": {
+          "mean": 8.85,
+          "std": 2.5,
+          "ci_95_low": 7.68,
+          "ci_95_high": 10.02,
+          "min": 5.0,
+          "max": 13.0,
+          "formatted": "8.85 \u00b1 2.50 [7.68, 10.02]"
+        },
+        "cfar_detected_dark": {
+          "mean": 127.55,
+          "std": 4.7,
+          "ci_95_low": 125.35,
+          "ci_95_high": 129.75,
+          "min": 118.0,
+          "max": 135.0,
+          "formatted": "127.55 \u00b1 4.70 [125.35, 129.75]"
+        },
+        "total_dark_gt": {
+          "mean": 150.0,
+          "std": 0.0,
+          "ci_95_low": 150.0,
+          "ci_95_high": 150.0,
+          "min": 150.0,
+          "max": 150.0,
+          "formatted": "150.00 \u00b1 0.00 [150.00, 150.00]"
+        },
+        "window_min": 5.0,
+        "contacts_per_seed": 500
+      },
+      "pm_15_min": {
+        "n_seeds": 20,
+        "end_to_end_capture_rate_pct": {
+          "mean": 80.4,
+          "std": 2.76,
+          "ci_95_low": 79.11,
+          "ci_95_high": 81.69,
+          "min": 74.67,
+          "max": 84.67,
+          "formatted": "80.40 \u00b1 2.76 [79.11, 81.69]"
+        },
+        "post_detection_recall_pct": {
+          "mean": 93.19,
+          "std": 2.58,
+          "ci_95_low": 91.98,
+          "ci_95_high": 94.39,
+          "min": 89.23,
+          "max": 97.67,
+          "formatted": "93.19 \u00b1 2.58 [91.98, 94.39]"
+        },
+        "cfar_dark_detection_rate_pct": {
+          "mean": 86.3,
+          "std": 2.66,
+          "ci_95_low": 85.05,
+          "ci_95_high": 87.55,
+          "min": 82.0,
+          "max": 90.67,
+          "formatted": "86.30 \u00b1 2.66 [85.05, 87.55]"
+        },
+        "precision_pct": {
+          "mean": 100.0,
+          "std": 0.0,
+          "ci_95_low": 100.0,
+          "ci_95_high": 100.0,
+          "min": 100.0,
+          "max": 100.0,
+          "formatted": "100.00 \u00b1 0.00 [100.00, 100.00]"
+        },
+        "false_dark_rate_pct": {
+          "mean": 0.0,
+          "std": 0.0,
+          "ci_95_low": 0.0,
+          "ci_95_high": 0.0,
+          "min": 0.0,
+          "max": 0.0,
+          "formatted": "0.00 \u00b1 0.00 [0.00, 0.00]"
+        },
+        "f1_score": {
+          "mean": 0.9645,
+          "std": 0.0138,
+          "ci_95_low": 0.9581,
+          "ci_95_high": 0.971,
+          "min": 0.9431,
+          "max": 0.9882,
+          "formatted": "0.9645 \u00b1 0.0138 [0.9581, 0.9710]"
+        },
+        "true_positives_tp": {
+          "mean": 120.6,
+          "std": 4.13,
+          "ci_95_low": 118.66,
+          "ci_95_high": 122.54,
+          "min": 112.0,
+          "max": 127.0,
+          "formatted": "120.60 \u00b1 4.13 [118.66, 122.54]"
+        },
+        "false_positives_fp": {
+          "mean": 0.0,
+          "std": 0.0,
+          "ci_95_low": 0.0,
+          "ci_95_high": 0.0,
+          "min": 0.0,
+          "max": 0.0,
+          "formatted": "0.00 \u00b1 0.00 [0.00, 0.00]"
+        },
+        "true_negatives_tn": {
+          "mean": 299.7,
+          "std": 5.49,
+          "ci_95_low": 297.13,
+          "ci_95_high": 302.27,
+          "min": 291.0,
+          "max": 311.0,
+          "formatted": "299.70 \u00b1 5.49 [297.13, 302.27]"
+        },
+        "false_negatives_fn": {
+          "mean": 8.85,
+          "std": 3.44,
+          "ci_95_low": 7.24,
+          "ci_95_high": 10.46,
+          "min": 3.0,
+          "max": 14.0,
+          "formatted": "8.85 \u00b1 3.44 [7.24, 10.46]"
+        },
+        "cfar_detected_dark": {
+          "mean": 129.45,
+          "std": 3.99,
+          "ci_95_low": 127.58,
+          "ci_95_high": 131.32,
+          "min": 123.0,
+          "max": 136.0,
+          "formatted": "129.45 \u00b1 3.99 [127.58, 131.32]"
+        },
+        "total_dark_gt": {
+          "mean": 150.0,
+          "std": 0.0,
+          "ci_95_low": 150.0,
+          "ci_95_high": 150.0,
+          "min": 150.0,
+          "max": 150.0,
+          "formatted": "150.00 \u00b1 0.00 [150.00, 150.00]"
+        },
+        "window_min": 15.0,
+        "contacts_per_seed": 500
+      },
+      "pm_30_min": {
+        "n_seeds": 20,
+        "end_to_end_capture_rate_pct": {
+          "mean": 80.03,
+          "std": 3.6,
+          "ci_95_low": 78.35,
+          "ci_95_high": 81.72,
+          "min": 74.0,
+          "max": 86.67,
+          "formatted": "80.03 \u00b1 3.60 [78.35, 81.72]"
+        },
+        "post_detection_recall_pct": {
+          "mean": 93.07,
+          "std": 2.49,
+          "ci_95_low": 91.9,
+          "ci_95_high": 94.24,
+          "min": 86.92,
+          "max": 97.48,
+          "formatted": "93.07 \u00b1 2.49 [91.90, 94.24]"
+        },
+        "cfar_dark_detection_rate_pct": {
+          "mean": 86.0,
+          "std": 3.26,
+          "ci_95_low": 84.47,
+          "ci_95_high": 87.52,
+          "min": 79.33,
+          "max": 92.0,
+          "formatted": "86.00 \u00b1 3.26 [84.47, 87.52]"
+        },
+        "precision_pct": {
+          "mean": 100.0,
+          "std": 0.0,
+          "ci_95_low": 100.0,
+          "ci_95_high": 100.0,
+          "min": 100.0,
+          "max": 100.0,
+          "formatted": "100.00 \u00b1 0.00 [100.00, 100.00]"
+        },
+        "false_dark_rate_pct": {
+          "mean": 0.0,
+          "std": 0.0,
+          "ci_95_low": 0.0,
+          "ci_95_high": 0.0,
+          "min": 0.0,
+          "max": 0.0,
+          "formatted": "0.00 \u00b1 0.00 [0.00, 0.00]"
+        },
+        "f1_score": {
+          "mean": 0.9639,
+          "std": 0.0135,
+          "ci_95_low": 0.9576,
+          "ci_95_high": 0.9702,
+          "min": 0.93,
+          "max": 0.9872,
+          "formatted": "0.9639 \u00b1 0.0135 [0.9576, 0.9702]"
+        },
+        "true_positives_tp": {
+          "mean": 120.05,
+          "std": 5.4,
+          "ci_95_low": 117.52,
+          "ci_95_high": 122.58,
+          "min": 111.0,
+          "max": 130.0,
+          "formatted": "120.05 \u00b1 5.40 [117.52, 122.58]"
+        },
+        "false_positives_fp": {
+          "mean": 0.0,
+          "std": 0.0,
+          "ci_95_low": 0.0,
+          "ci_95_high": 0.0,
+          "min": 0.0,
+          "max": 0.0,
+          "formatted": "0.00 \u00b1 0.00 [0.00, 0.00]"
+        },
+        "true_negatives_tn": {
+          "mean": 300.65,
+          "std": 6.94,
+          "ci_95_low": 297.4,
+          "ci_95_high": 303.9,
+          "min": 288.0,
+          "max": 312.0,
+          "formatted": "300.65 \u00b1 6.94 [297.40, 303.90]"
+        },
+        "false_negatives_fn": {
+          "mean": 8.95,
+          "std": 3.24,
+          "ci_95_low": 7.44,
+          "ci_95_high": 10.46,
+          "min": 3.0,
+          "max": 17.0,
+          "formatted": "8.95 \u00b1 3.24 [7.44, 10.46]"
+        },
+        "cfar_detected_dark": {
+          "mean": 129.0,
+          "std": 4.89,
+          "ci_95_low": 126.71,
+          "ci_95_high": 131.29,
+          "min": 119.0,
+          "max": 138.0,
+          "formatted": "129.00 \u00b1 4.89 [126.71, 131.29]"
+        },
+        "total_dark_gt": {
+          "mean": 150.0,
+          "std": 0.0,
+          "ci_95_low": 150.0,
+          "ci_95_high": 150.0,
+          "min": 150.0,
+          "max": 150.0,
+          "formatted": "150.00 \u00b1 0.00 [150.00, 150.00]"
+        },
+        "window_min": 30.0,
+        "contacts_per_seed": 500
+      }
+    },
+    "without_temporal_propagation": {
+      "pm_5_min": {
+        "n_seeds": 20,
+        "end_to_end_capture_rate_pct": {
+          "mean": 79.3,
+          "std": 3.34,
+          "ci_95_low": 77.74,
+          "ci_95_high": 80.86,
+          "min": 71.33,
+          "max": 84.67,
+          "formatted": "79.30 \u00b1 3.34 [77.74, 80.86]"
+        },
+        "post_detection_recall_pct": {
+          "mean": 93.25,
+          "std": 1.82,
+          "ci_95_low": 92.4,
+          "ci_95_high": 94.1,
+          "min": 90.15,
+          "max": 96.67,
+          "formatted": "93.25 \u00b1 1.82 [92.40, 94.10]"
+        },
+        "cfar_dark_detection_rate_pct": {
+          "mean": 85.03,
+          "std": 3.13,
+          "ci_95_low": 83.57,
+          "ci_95_high": 86.5,
+          "min": 78.67,
+          "max": 90.0,
+          "formatted": "85.03 \u00b1 3.13 [83.57, 86.50]"
+        },
+        "precision_pct": {
+          "mean": 72.41,
+          "std": 2.54,
+          "ci_95_low": 71.22,
+          "ci_95_high": 73.6,
+          "min": 67.72,
+          "max": 76.13,
+          "formatted": "72.41 \u00b1 2.54 [71.22, 73.60]"
+        },
+        "false_dark_rate_pct": {
+          "mean": 15.2,
+          "std": 1.76,
+          "ci_95_low": 14.38,
+          "ci_95_high": 16.03,
+          "min": 12.25,
+          "max": 18.98,
+          "formatted": "15.20 \u00b1 1.76 [14.38, 16.03]"
+        },
+        "f1_score": {
+          "mean": 0.815,
+          "std": 0.0205,
+          "ci_95_low": 0.8054,
+          "ci_95_high": 0.8246,
+          "min": 0.7752,
+          "max": 0.8414,
+          "formatted": "0.8150 \u00b1 0.0205 [0.8054, 0.8246]"
+        },
+        "true_positives_tp": {
+          "mean": 118.95,
+          "std": 5.01,
+          "ci_95_low": 116.61,
+          "ci_95_high": 121.29,
+          "min": 107.0,
+          "max": 127.0,
+          "formatted": "118.95 \u00b1 5.01 [116.61, 121.29]"
+        },
+        "false_positives_fp": {
+          "mean": 45.4,
+          "std": 5.04,
+          "ci_95_low": 43.04,
+          "ci_95_high": 47.76,
+          "min": 37.0,
+          "max": 56.0,
+          "formatted": "45.40 \u00b1 5.04 [43.04, 47.76]"
+        },
+        "true_negatives_tn": {
+          "mean": 253.5,
+          "std": 9.3,
+          "ci_95_low": 249.15,
+          "ci_95_high": 257.85,
+          "min": 235.0,
+          "max": 269.0,
+          "formatted": "253.50 \u00b1 9.30 [249.15, 257.85]"
+        },
+        "false_negatives_fn": {
+          "mean": 8.6,
+          "std": 2.3,
+          "ci_95_low": 7.52,
+          "ci_95_high": 9.68,
+          "min": 4.0,
+          "max": 13.0,
+          "formatted": "8.60 \u00b1 2.30 [7.52, 9.68]"
+        },
+        "cfar_detected_dark": {
+          "mean": 127.55,
+          "std": 4.7,
+          "ci_95_low": 125.35,
+          "ci_95_high": 129.75,
+          "min": 118.0,
+          "max": 135.0,
+          "formatted": "127.55 \u00b1 4.70 [125.35, 129.75]"
+        },
+        "total_dark_gt": {
+          "mean": 150.0,
+          "std": 0.0,
+          "ci_95_low": 150.0,
+          "ci_95_high": 150.0,
+          "min": 150.0,
+          "max": 150.0,
+          "formatted": "150.00 \u00b1 0.00 [150.00, 150.00]"
+        },
+        "window_min": 5.0,
+        "contacts_per_seed": 500
+      },
+      "pm_15_min": {
+        "n_seeds": 20,
+        "end_to_end_capture_rate_pct": {
+          "mean": 79.93,
+          "std": 2.44,
+          "ci_95_low": 78.79,
+          "ci_95_high": 81.07,
+          "min": 76.67,
+          "max": 86.0,
+          "formatted": "79.93 \u00b1 2.44 [78.79, 81.07]"
+        },
+        "post_detection_recall_pct": {
+          "mean": 92.66,
+          "std": 2.67,
+          "ci_95_low": 91.41,
+          "ci_95_high": 93.91,
+          "min": 87.41,
+          "max": 98.47,
+          "formatted": "92.66 \u00b1 2.67 [91.41, 93.91]"
+        },
+        "cfar_dark_detection_rate_pct": {
+          "mean": 86.3,
+          "std": 2.66,
+          "ci_95_low": 85.05,
+          "ci_95_high": 87.55,
+          "min": 82.0,
+          "max": 90.67,
+          "formatted": "86.30 \u00b1 2.66 [85.05, 87.55]"
+        },
+        "precision_pct": {
+          "mean": 39.59,
+          "std": 1.17,
+          "ci_95_low": 39.04,
+          "ci_95_high": 40.14,
+          "min": 36.94,
+          "max": 41.75,
+          "formatted": "39.59 \u00b1 1.17 [39.04, 40.14]"
+        },
+        "false_dark_rate_pct": {
+          "mean": 61.08,
+          "std": 2.08,
+          "ci_95_low": 60.1,
+          "ci_95_high": 62.05,
+          "min": 58.67,
+          "max": 65.12,
+          "formatted": "61.08 \u00b1 2.08 [60.10, 62.05]"
+        },
+        "f1_score": {
+          "mean": 0.5546,
+          "std": 0.0137,
+          "ci_95_low": 0.5482,
+          "ci_95_high": 0.5611,
+          "min": 0.5213,
+          "max": 0.5864,
+          "formatted": "0.5546 \u00b1 0.0137 [0.5482, 0.5611]"
+        },
+        "true_positives_tp": {
+          "mean": 119.9,
+          "std": 3.65,
+          "ci_95_low": 118.19,
+          "ci_95_high": 121.61,
+          "min": 115.0,
+          "max": 129.0,
+          "formatted": "119.90 \u00b1 3.65 [118.19, 121.61]"
+        },
+        "false_positives_fp": {
+          "mean": 183.05,
+          "std": 7.22,
+          "ci_95_low": 179.67,
+          "ci_95_high": 186.43,
+          "min": 174.0,
+          "max": 198.0,
+          "formatted": "183.05 \u00b1 7.22 [179.67, 186.43]"
+        },
+        "true_negatives_tn": {
+          "mean": 116.65,
+          "std": 6.54,
+          "ci_95_low": 113.59,
+          "ci_95_high": 119.71,
+          "min": 105.0,
+          "max": 127.0,
+          "formatted": "116.65 \u00b1 6.54 [113.59, 119.71]"
+        },
+        "false_negatives_fn": {
+          "mean": 9.55,
+          "std": 3.65,
+          "ci_95_low": 7.84,
+          "ci_95_high": 11.26,
+          "min": 2.0,
+          "max": 17.0,
+          "formatted": "9.55 \u00b1 3.65 [7.84, 11.26]"
+        },
+        "cfar_detected_dark": {
+          "mean": 129.45,
+          "std": 3.99,
+          "ci_95_low": 127.58,
+          "ci_95_high": 131.32,
+          "min": 123.0,
+          "max": 136.0,
+          "formatted": "129.45 \u00b1 3.99 [127.58, 131.32]"
+        },
+        "total_dark_gt": {
+          "mean": 150.0,
+          "std": 0.0,
+          "ci_95_low": 150.0,
+          "ci_95_high": 150.0,
+          "min": 150.0,
+          "max": 150.0,
+          "formatted": "150.00 \u00b1 0.00 [150.00, 150.00]"
+        },
+        "window_min": 15.0,
+        "contacts_per_seed": 500
+      },
+      "pm_30_min": {
+        "n_seeds": 20,
+        "end_to_end_capture_rate_pct": {
+          "mean": 80.03,
+          "std": 4.39,
+          "ci_95_low": 77.98,
+          "ci_95_high": 82.09,
+          "min": 70.67,
+          "max": 88.67,
+          "formatted": "80.03 \u00b1 4.39 [77.98, 82.09]"
+        },
+        "post_detection_recall_pct": {
+          "mean": 93.03,
+          "std": 2.84,
+          "ci_95_low": 91.7,
+          "ci_95_high": 94.36,
+          "min": 87.6,
+          "max": 99.25,
+          "formatted": "93.03 \u00b1 2.84 [91.70, 94.36]"
+        },
+        "cfar_dark_detection_rate_pct": {
+          "mean": 86.0,
+          "std": 3.26,
+          "ci_95_low": 84.47,
+          "ci_95_high": 87.52,
+          "min": 79.33,
+          "max": 92.0,
+          "formatted": "86.00 \u00b1 3.26 [84.47, 87.52]"
+        },
+        "precision_pct": {
+          "mean": 34.01,
+          "std": 1.39,
+          "ci_95_low": 33.36,
+          "ci_95_high": 34.66,
+          "min": 30.99,
+          "max": 36.14,
+          "formatted": "34.01 \u00b1 1.39 [33.36, 34.66]"
+        },
+        "false_dark_rate_pct": {
+          "mean": 77.45,
+          "std": 1.85,
+          "ci_95_low": 76.58,
+          "ci_95_high": 78.32,
+          "min": 74.09,
+          "max": 81.4,
+          "formatted": "77.45 \u00b1 1.85 [76.58, 78.32]"
+        },
+        "f1_score": {
+          "mean": 0.498,
+          "std": 0.0181,
+          "ci_95_low": 0.4896,
+          "ci_95_high": 0.5065,
+          "min": 0.4579,
+          "max": 0.5299,
+          "formatted": "0.4980 \u00b1 0.0181 [0.4896, 0.5065]"
+        },
+        "true_positives_tp": {
+          "mean": 120.05,
+          "std": 6.58,
+          "ci_95_low": 116.97,
+          "ci_95_high": 123.13,
+          "min": 106.0,
+          "max": 133.0,
+          "formatted": "120.05 \u00b1 6.58 [116.97, 123.13]"
+        },
+        "false_positives_fp": {
+          "mean": 232.85,
+          "std": 7.58,
+          "ci_95_low": 229.3,
+          "ci_95_high": 236.4,
+          "min": 214.0,
+          "max": 245.0,
+          "formatted": "232.85 \u00b1 7.58 [229.30, 236.40]"
+        },
+        "true_negatives_tn": {
+          "mean": 67.8,
+          "std": 5.8,
+          "ci_95_low": 65.09,
+          "ci_95_high": 70.51,
+          "min": 56.0,
+          "max": 78.0,
+          "formatted": "67.80 \u00b1 5.80 [65.09, 70.51]"
+        },
+        "false_negatives_fn": {
+          "mean": 8.95,
+          "std": 3.59,
+          "ci_95_low": 7.27,
+          "ci_95_high": 10.63,
+          "min": 1.0,
+          "max": 15.0,
+          "formatted": "8.95 \u00b1 3.59 [7.27, 10.63]"
+        },
+        "cfar_detected_dark": {
+          "mean": 129.0,
+          "std": 4.89,
+          "ci_95_low": 126.71,
+          "ci_95_high": 131.29,
+          "min": 119.0,
+          "max": 138.0,
+          "formatted": "129.00 \u00b1 4.89 [126.71, 131.29]"
+        },
+        "total_dark_gt": {
+          "mean": 150.0,
+          "std": 0.0,
+          "ci_95_low": 150.0,
+          "ci_95_high": 150.0,
+          "min": 150.0,
+          "max": 150.0,
+          "formatted": "150.00 \u00b1 0.00 [150.00, 150.00]"
+        },
+        "window_min": 30.0,
+        "contacts_per_seed": 500
+      }
+    }
+  },
+  "stress_case_evaluations": {
+    "ais_gaps_10_pct_missing": {
+      "description": "10% of cooperative vessels suffer RF packet loss / no AIS ping received (N=500 x 20 seeds)",
+      "end_to_end_capture_rate_pct": 81.03,
+      "post_detection_recall_pct": 94.46,
+      "precision_pct": 81.33,
+      "false_dark_rate_pct": 9.34,
+      "stats": {
+        "n_seeds": 20,
+        "end_to_end_capture_rate_pct": {
+          "mean": 81.03,
+          "std": 3.67,
+          "ci_95_low": 79.32,
+          "ci_95_high": 82.75,
+          "min": 71.33,
+          "max": 86.67,
+          "formatted": "81.03 \u00b1 3.67 [79.32, 82.75]"
+        },
+        "post_detection_recall_pct": {
+          "mean": 94.46,
+          "std": 1.89,
+          "ci_95_low": 93.58,
+          "ci_95_high": 95.34,
+          "min": 89.17,
+          "max": 97.66,
+          "formatted": "94.46 \u00b1 1.89 [93.58, 95.34]"
+        },
+        "cfar_dark_detection_rate_pct": {
+          "mean": 85.77,
+          "std": 3.05,
+          "ci_95_low": 84.34,
+          "ci_95_high": 87.19,
+          "min": 80.0,
+          "max": 92.0,
+          "formatted": "85.77 \u00b1 3.05 [84.34, 87.19]"
+        },
+        "precision_pct": {
+          "mean": 81.33,
+          "std": 2.02,
+          "ci_95_low": 80.39,
+          "ci_95_high": 82.27,
+          "min": 77.42,
+          "max": 85.21,
+          "formatted": "81.33 \u00b1 2.02 [80.39, 82.27]"
+        },
+        "false_dark_rate_pct": {
+          "mean": 9.34,
+          "std": 1.14,
+          "ci_95_low": 8.81,
+          "ci_95_high": 9.88,
+          "min": 7.14,
+          "max": 11.74,
+          "formatted": "9.34 \u00b1 1.14 [8.81, 9.88]"
+        },
+        "f1_score": {
+          "mean": 0.8739,
+          "std": 0.0159,
+          "ci_95_low": 0.8665,
+          "ci_95_high": 0.8813,
+          "min": 0.8481,
+          "max": 0.9042,
+          "formatted": "0.8739 \u00b1 0.0159 [0.8665, 0.8813]"
+        },
+        "true_positives_tp": {
+          "mean": 121.55,
+          "std": 5.5,
+          "ci_95_low": 118.98,
+          "ci_95_high": 124.12,
+          "min": 107.0,
+          "max": 130.0,
+          "formatted": "121.55 \u00b1 5.50 [118.98, 124.12]"
+        },
+        "false_positives_fp": {
+          "mean": 27.95,
+          "std": 3.58,
+          "ci_95_low": 26.28,
+          "ci_95_high": 29.62,
+          "min": 21.0,
+          "max": 35.0,
+          "formatted": "27.95 \u00b1 3.58 [26.28, 29.62]"
+        },
+        "true_negatives_tn": {
+          "mean": 271.05,
+          "std": 6.51,
+          "ci_95_low": 268.0,
+          "ci_95_high": 274.1,
+          "min": 256.0,
+          "max": 282.0,
+          "formatted": "271.05 \u00b1 6.51 [268.00, 274.10]"
+        },
+        "false_negatives_fn": {
+          "mean": 7.1,
+          "std": 2.29,
+          "ci_95_low": 6.03,
+          "ci_95_high": 8.17,
+          "min": 3.0,
+          "max": 13.0,
+          "formatted": "7.10 \u00b1 2.29 [6.03, 8.17]"
+        },
+        "cfar_detected_dark": {
+          "mean": 128.65,
+          "std": 4.57,
+          "ci_95_low": 126.51,
+          "ci_95_high": 130.79,
+          "min": 120.0,
+          "max": 138.0,
+          "formatted": "128.65 \u00b1 4.57 [126.51, 130.79]"
+        },
+        "total_dark_gt": {
+          "mean": 150.0,
+          "std": 0.0,
+          "ci_95_low": 150.0,
+          "ci_95_high": 150.0,
+          "min": 150.0,
+          "max": 150.0,
+          "formatted": "150.00 \u00b1 0.00 [150.00, 150.00]"
+        }
+      }
+    },
+    "kinematic_corruption_10_pct_wrong_sog_cog": {
+      "description": "10% of cooperative vessels report corrupted SOG/COG (spoofing / degraded GPS) (N=500 x 20 seeds)",
+      "end_to_end_capture_rate_pct": 79.93,
+      "post_detection_recall_pct": 94.13,
+      "precision_pct": 82.98,
+      "false_dark_rate_pct": 8.19,
+      "stats": {
+        "n_seeds": 20,
+        "end_to_end_capture_rate_pct": {
+          "mean": 79.93,
+          "std": 2.6,
+          "ci_95_low": 78.72,
+          "ci_95_high": 81.15,
+          "min": 76.0,
+          "max": 84.67,
+          "formatted": "79.93 \u00b1 2.60 [78.72, 81.15]"
+        },
+        "post_detection_recall_pct": {
+          "mean": 94.13,
+          "std": 2.32,
+          "ci_95_low": 93.05,
+          "ci_95_high": 95.22,
+          "min": 90.3,
+          "max": 99.22,
+          "formatted": "94.13 \u00b1 2.32 [93.05, 95.22]"
+        },
+        "cfar_dark_detection_rate_pct": {
+          "mean": 84.93,
+          "std": 2.62,
+          "ci_95_low": 83.71,
+          "ci_95_high": 86.16,
+          "min": 81.33,
+          "max": 90.67,
+          "formatted": "84.93 \u00b1 2.62 [83.71, 86.16]"
+        },
+        "precision_pct": {
+          "mean": 82.98,
+          "std": 2.7,
+          "ci_95_low": 81.71,
+          "ci_95_high": 84.24,
+          "min": 77.5,
+          "max": 87.79,
+          "formatted": "82.98 \u00b1 2.70 [81.71, 84.24]"
+        },
+        "false_dark_rate_pct": {
+          "mean": 8.19,
+          "std": 1.55,
+          "ci_95_low": 7.46,
+          "ci_95_high": 8.92,
+          "min": 5.23,
+          "max": 11.88,
+          "formatted": "8.19 \u00b1 1.55 [7.46, 8.92]"
+        },
+        "f1_score": {
+          "mean": 0.8817,
+          "std": 0.019,
+          "ci_95_low": 0.8728,
+          "ci_95_high": 0.8906,
+          "min": 0.8539,
+          "max": 0.9077,
+          "formatted": "0.8817 \u00b1 0.0190 [0.8728, 0.8906]"
+        },
+        "true_positives_tp": {
+          "mean": 119.9,
+          "std": 3.91,
+          "ci_95_low": 118.07,
+          "ci_95_high": 121.73,
+          "min": 114.0,
+          "max": 127.0,
+          "formatted": "119.90 \u00b1 3.91 [118.07, 121.73]"
+        },
+        "false_positives_fp": {
+          "mean": 24.75,
+          "std": 4.87,
+          "ci_95_low": 22.47,
+          "ci_95_high": 27.03,
+          "min": 16.0,
+          "max": 36.0,
+          "formatted": "24.75 \u00b1 4.87 [22.47, 27.03]"
+        },
+        "true_negatives_tn": {
+          "mean": 277.15,
+          "std": 6.93,
+          "ci_95_low": 273.91,
+          "ci_95_high": 280.39,
+          "min": 266.0,
+          "max": 290.0,
+          "formatted": "277.15 \u00b1 6.93 [273.91, 280.39]"
+        },
+        "false_negatives_fn": {
+          "mean": 7.5,
+          "std": 3.05,
+          "ci_95_low": 6.07,
+          "ci_95_high": 8.93,
+          "min": 1.0,
+          "max": 13.0,
+          "formatted": "7.50 \u00b1 3.05 [6.07, 8.93]"
+        },
+        "cfar_detected_dark": {
+          "mean": 127.4,
+          "std": 3.93,
+          "ci_95_low": 125.56,
+          "ci_95_high": 129.24,
+          "min": 122.0,
+          "max": 136.0,
+          "formatted": "127.40 \u00b1 3.93 [125.56, 129.24]"
+        },
+        "total_dark_gt": {
+          "mean": 150.0,
+          "std": 0.0,
+          "ci_95_low": 150.0,
+          "ci_95_high": 150.0,
+          "min": 150.0,
+          "max": 150.0,
+          "formatted": "150.00 \u00b1 0.00 [150.00, 150.00]"
+        }
+      }
+    }
+  },
+  "stress_cases": {
+    "ais_gaps_10_pct_missing": {
+      "n_seeds": 20,
+      "end_to_end_capture_rate_pct": {
+        "mean": 81.03,
+        "std": 3.67,
+        "ci_95_low": 79.32,
+        "ci_95_high": 82.75,
+        "min": 71.33,
+        "max": 86.67,
+        "formatted": "81.03 \u00b1 3.67 [79.32, 82.75]"
+      },
+      "post_detection_recall_pct": {
+        "mean": 94.46,
+        "std": 1.89,
+        "ci_95_low": 93.58,
+        "ci_95_high": 95.34,
+        "min": 89.17,
+        "max": 97.66,
+        "formatted": "94.46 \u00b1 1.89 [93.58, 95.34]"
+      },
+      "cfar_dark_detection_rate_pct": {
+        "mean": 85.77,
+        "std": 3.05,
+        "ci_95_low": 84.34,
+        "ci_95_high": 87.19,
+        "min": 80.0,
+        "max": 92.0,
+        "formatted": "85.77 \u00b1 3.05 [84.34, 87.19]"
+      },
+      "precision_pct": {
+        "mean": 81.33,
+        "std": 2.02,
+        "ci_95_low": 80.39,
+        "ci_95_high": 82.27,
+        "min": 77.42,
+        "max": 85.21,
+        "formatted": "81.33 \u00b1 2.02 [80.39, 82.27]"
+      },
+      "false_dark_rate_pct": {
+        "mean": 9.34,
+        "std": 1.14,
+        "ci_95_low": 8.81,
+        "ci_95_high": 9.88,
+        "min": 7.14,
+        "max": 11.74,
+        "formatted": "9.34 \u00b1 1.14 [8.81, 9.88]"
+      },
+      "f1_score": {
+        "mean": 0.8739,
+        "std": 0.0159,
+        "ci_95_low": 0.8665,
+        "ci_95_high": 0.8813,
+        "min": 0.8481,
+        "max": 0.9042,
+        "formatted": "0.8739 \u00b1 0.0159 [0.8665, 0.8813]"
+      },
+      "true_positives_tp": {
+        "mean": 121.55,
+        "std": 5.5,
+        "ci_95_low": 118.98,
+        "ci_95_high": 124.12,
+        "min": 107.0,
+        "max": 130.0,
+        "formatted": "121.55 \u00b1 5.50 [118.98, 124.12]"
+      },
+      "false_positives_fp": {
+        "mean": 27.95,
+        "std": 3.58,
+        "ci_95_low": 26.28,
+        "ci_95_high": 29.62,
+        "min": 21.0,
+        "max": 35.0,
+        "formatted": "27.95 \u00b1 3.58 [26.28, 29.62]"
+      },
+      "true_negatives_tn": {
+        "mean": 271.05,
+        "std": 6.51,
+        "ci_95_low": 268.0,
+        "ci_95_high": 274.1,
+        "min": 256.0,
+        "max": 282.0,
+        "formatted": "271.05 \u00b1 6.51 [268.00, 274.10]"
+      },
+      "false_negatives_fn": {
+        "mean": 7.1,
+        "std": 2.29,
+        "ci_95_low": 6.03,
+        "ci_95_high": 8.17,
+        "min": 3.0,
+        "max": 13.0,
+        "formatted": "7.10 \u00b1 2.29 [6.03, 8.17]"
+      },
+      "cfar_detected_dark": {
+        "mean": 128.65,
+        "std": 4.57,
+        "ci_95_low": 126.51,
+        "ci_95_high": 130.79,
+        "min": 120.0,
+        "max": 138.0,
+        "formatted": "128.65 \u00b1 4.57 [126.51, 130.79]"
+      },
+      "total_dark_gt": {
+        "mean": 150.0,
+        "std": 0.0,
+        "ci_95_low": 150.0,
+        "ci_95_high": 150.0,
+        "min": 150.0,
+        "max": 150.0,
+        "formatted": "150.00 \u00b1 0.00 [150.00, 150.00]"
+      }
+    },
+    "kinematic_corruption_10_pct_wrong_sog_cog": {
+      "n_seeds": 20,
+      "end_to_end_capture_rate_pct": {
+        "mean": 79.93,
+        "std": 2.6,
+        "ci_95_low": 78.72,
+        "ci_95_high": 81.15,
+        "min": 76.0,
+        "max": 84.67,
+        "formatted": "79.93 \u00b1 2.60 [78.72, 81.15]"
+      },
+      "post_detection_recall_pct": {
+        "mean": 94.13,
+        "std": 2.32,
+        "ci_95_low": 93.05,
+        "ci_95_high": 95.22,
+        "min": 90.3,
+        "max": 99.22,
+        "formatted": "94.13 \u00b1 2.32 [93.05, 95.22]"
+      },
+      "cfar_dark_detection_rate_pct": {
+        "mean": 84.93,
+        "std": 2.62,
+        "ci_95_low": 83.71,
+        "ci_95_high": 86.16,
+        "min": 81.33,
+        "max": 90.67,
+        "formatted": "84.93 \u00b1 2.62 [83.71, 86.16]"
+      },
+      "precision_pct": {
+        "mean": 82.98,
+        "std": 2.7,
+        "ci_95_low": 81.71,
+        "ci_95_high": 84.24,
+        "min": 77.5,
+        "max": 87.79,
+        "formatted": "82.98 \u00b1 2.70 [81.71, 84.24]"
+      },
+      "false_dark_rate_pct": {
+        "mean": 8.19,
+        "std": 1.55,
+        "ci_95_low": 7.46,
+        "ci_95_high": 8.92,
+        "min": 5.23,
+        "max": 11.88,
+        "formatted": "8.19 \u00b1 1.55 [7.46, 8.92]"
+      },
+      "f1_score": {
+        "mean": 0.8817,
+        "std": 0.019,
+        "ci_95_low": 0.8728,
+        "ci_95_high": 0.8906,
+        "min": 0.8539,
+        "max": 0.9077,
+        "formatted": "0.8817 \u00b1 0.0190 [0.8728, 0.8906]"
+      },
+      "true_positives_tp": {
+        "mean": 119.9,
+        "std": 3.91,
+        "ci_95_low": 118.07,
+        "ci_95_high": 121.73,
+        "min": 114.0,
+        "max": 127.0,
+        "formatted": "119.90 \u00b1 3.91 [118.07, 121.73]"
+      },
+      "false_positives_fp": {
+        "mean": 24.75,
+        "std": 4.87,
+        "ci_95_low": 22.47,
+        "ci_95_high": 27.03,
+        "min": 16.0,
+        "max": 36.0,
+        "formatted": "24.75 \u00b1 4.87 [22.47, 27.03]"
+      },
+      "true_negatives_tn": {
+        "mean": 277.15,
+        "std": 6.93,
+        "ci_95_low": 273.91,
+        "ci_95_high": 280.39,
+        "min": 266.0,
+        "max": 290.0,
+        "formatted": "277.15 \u00b1 6.93 [273.91, 280.39]"
+      },
+      "false_negatives_fn": {
+        "mean": 7.5,
+        "std": 3.05,
+        "ci_95_low": 6.07,
+        "ci_95_high": 8.93,
+        "min": 1.0,
+        "max": 13.0,
+        "formatted": "7.50 \u00b1 3.05 [6.07, 8.93]"
+      },
+      "cfar_detected_dark": {
+        "mean": 127.4,
+        "std": 3.93,
+        "ci_95_low": 125.56,
+        "ci_95_high": 129.24,
+        "min": 122.0,
+        "max": 136.0,
+        "formatted": "127.40 \u00b1 3.93 [125.56, 129.24]"
+      },
+      "total_dark_gt": {
+        "mean": 150.0,
+        "std": 0.0,
+        "ci_95_low": 150.0,
+        "ci_95_high": 150.0,
+        "min": 150.0,
+        "max": 150.0,
+        "formatted": "150.00 \u00b1 0.00 [150.00, 150.00]"
+      }
+    }
+  },
+  "seed_runs_baseline_2km": [
+    {
+      "seed": 1,
+      "end_to_end_capture_rate_pct": 82.67,
+      "post_detection_recall_pct": 93.94,
+      "precision_pct": 100.0,
+      "false_dark_rate_pct": 0.0,
+      "tp": 124,
+      "fp": 0,
+      "total_dark_gt": 150
+    },
+    {
+      "seed": 2,
+      "end_to_end_capture_rate_pct": 76.0,
+      "post_detection_recall_pct": 91.94,
+      "precision_pct": 100.0,
+      "false_dark_rate_pct": 0.0,
+      "tp": 114,
+      "fp": 0,
+      "total_dark_gt": 150
+    },
+    {
+      "seed": 3,
+      "end_to_end_capture_rate_pct": 75.33,
+      "post_detection_recall_pct": 91.13,
+      "precision_pct": 100.0,
+      "false_dark_rate_pct": 0.0,
+      "tp": 113,
+      "fp": 0,
+      "total_dark_gt": 150
+    },
+    {
+      "seed": 4,
+      "end_to_end_capture_rate_pct": 80.67,
+      "post_detection_recall_pct": 94.53,
+      "precision_pct": 100.0,
+      "false_dark_rate_pct": 0.0,
+      "tp": 121,
+      "fp": 0,
+      "total_dark_gt": 150
+    },
+    {
+      "seed": 5,
+      "end_to_end_capture_rate_pct": 77.33,
+      "post_detection_recall_pct": 89.92,
+      "precision_pct": 100.0,
+      "false_dark_rate_pct": 0.0,
+      "tp": 116,
+      "fp": 0,
+      "total_dark_gt": 150
+    },
+    {
+      "seed": 6,
+      "end_to_end_capture_rate_pct": 78.0,
+      "post_detection_recall_pct": 91.41,
+      "precision_pct": 100.0,
+      "false_dark_rate_pct": 0.0,
+      "tp": 117,
+      "fp": 0,
+      "total_dark_gt": 150
+    },
+    {
+      "seed": 7,
+      "end_to_end_capture_rate_pct": 80.0,
+      "post_detection_recall_pct": 93.75,
+      "precision_pct": 100.0,
+      "false_dark_rate_pct": 0.0,
+      "tp": 120,
+      "fp": 0,
+      "total_dark_gt": 150
+    },
+    {
+      "seed": 8,
+      "end_to_end_capture_rate_pct": 83.33,
+      "post_detection_recall_pct": 96.15,
+      "precision_pct": 100.0,
+      "false_dark_rate_pct": 0.0,
+      "tp": 125,
+      "fp": 0,
+      "total_dark_gt": 150
+    },
+    {
+      "seed": 9,
+      "end_to_end_capture_rate_pct": 76.67,
+      "post_detection_recall_pct": 93.5,
+      "precision_pct": 100.0,
+      "false_dark_rate_pct": 0.0,
+      "tp": 115,
+      "fp": 0,
+      "total_dark_gt": 150
+    },
+    {
+      "seed": 10,
+      "end_to_end_capture_rate_pct": 78.0,
+      "post_detection_recall_pct": 89.31,
+      "precision_pct": 100.0,
+      "false_dark_rate_pct": 0.0,
+      "tp": 117,
+      "fp": 0,
+      "total_dark_gt": 150
+    },
+    {
+      "seed": 11,
+      "end_to_end_capture_rate_pct": 82.67,
+      "post_detection_recall_pct": 89.86,
+      "precision_pct": 100.0,
+      "false_dark_rate_pct": 0.0,
+      "tp": 124,
+      "fp": 0,
+      "total_dark_gt": 150
+    },
+    {
+      "seed": 12,
+      "end_to_end_capture_rate_pct": 78.0,
+      "post_detection_recall_pct": 91.41,
+      "precision_pct": 100.0,
+      "false_dark_rate_pct": 0.0,
+      "tp": 117,
+      "fp": 0,
+      "total_dark_gt": 150
+    },
+    {
+      "seed": 13,
+      "end_to_end_capture_rate_pct": 82.67,
+      "post_detection_recall_pct": 91.85,
+      "precision_pct": 100.0,
+      "false_dark_rate_pct": 0.0,
+      "tp": 124,
+      "fp": 0,
+      "total_dark_gt": 150
+    },
+    {
+      "seed": 14,
+      "end_to_end_capture_rate_pct": 80.67,
+      "post_detection_recall_pct": 94.53,
+      "precision_pct": 100.0,
+      "false_dark_rate_pct": 0.0,
+      "tp": 121,
+      "fp": 0,
+      "total_dark_gt": 150
+    },
+    {
+      "seed": 15,
+      "end_to_end_capture_rate_pct": 78.0,
+      "post_detection_recall_pct": 93.6,
+      "precision_pct": 100.0,
+      "false_dark_rate_pct": 0.0,
+      "tp": 117,
+      "fp": 0,
+      "total_dark_gt": 150
+    },
+    {
+      "seed": 16,
+      "end_to_end_capture_rate_pct": 75.33,
+      "post_detection_recall_pct": 92.62,
+      "precision_pct": 100.0,
+      "false_dark_rate_pct": 0.0,
+      "tp": 113,
+      "fp": 0,
+      "total_dark_gt": 150
+    },
+    {
+      "seed": 17,
+      "end_to_end_capture_rate_pct": 82.67,
+      "post_detection_recall_pct": 93.23,
+      "precision_pct": 100.0,
+      "false_dark_rate_pct": 0.0,
+      "tp": 124,
+      "fp": 0,
+      "total_dark_gt": 150
+    },
+    {
+      "seed": 18,
+      "end_to_end_capture_rate_pct": 83.33,
+      "post_detection_recall_pct": 97.66,
+      "precision_pct": 100.0,
+      "false_dark_rate_pct": 0.0,
+      "tp": 125,
+      "fp": 0,
+      "total_dark_gt": 150
+    },
+    {
+      "seed": 19,
+      "end_to_end_capture_rate_pct": 76.67,
+      "post_detection_recall_pct": 89.15,
+      "precision_pct": 100.0,
+      "false_dark_rate_pct": 0.0,
+      "tp": 115,
+      "fp": 0,
+      "total_dark_gt": 150
+    },
+    {
+      "seed": 20,
+      "end_to_end_capture_rate_pct": 80.0,
+      "post_detection_recall_pct": 93.02,
+      "precision_pct": 100.0,
+      "false_dark_rate_pct": 0.0,
+      "tp": 120,
+      "fp": 0,
+      "total_dark_gt": 150
+    }
+  ]
+}

@@ -1,0 +1,8 @@
+names:
+  0: Vessel
+  1: Aircraft
+  2: Vehicle
+  3: Infrastructure
+path: C:/Users/awhri/OneDrive/Desktop/DEF
+train: runs/xview_yolo/images/train
+val: evaluation/val_report_tiles.txt

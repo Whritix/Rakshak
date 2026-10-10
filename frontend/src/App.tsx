@@ -262,18 +262,18 @@ function TacticalMap({
 
   const BASEMAP_TILES: Record<string, { url: string; attr: string; maxZoom: number }> = {
     satellite: {
-      url: 'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
-      attr: '&copy; Esri World Imagery &mdash; Whole Earth Satellite Surveillance',
+      url: '/api/tiles/satellite/{z}/{x}/{y}.png',
+      attr: 'Project Rakshak 2.0 Sovereign Tactical Satellite Graticule — 100% Air-Gapped',
       maxZoom: 19
     },
     dark: {
-      url: 'https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}',
-      attr: '&copy; Esri World Dark Gray Base &mdash; C4ISR Tactical',
+      url: '/api/tiles/dark/{z}/{x}/{y}.png',
+      attr: 'Project Rakshak 2.0 Tactical C4ISR Dark Graticule — Local Offline Service',
       maxZoom: 16
     },
     terrain: {
-      url: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
-      attr: '&copy; OpenStreetMap contributors &mdash; Global Basemap',
+      url: '/api/tiles/terrain/{z}/{x}/{y}.png',
+      attr: 'Project Rakshak 2.0 Littoral Bathymetry & Coastal Vector — Air-Gapped Node',
       maxZoom: 19
     }
   };
@@ -841,6 +841,13 @@ export function App() {
   const [authLoading, setAuthLoading] = useState<boolean>(false);
   const [authError, setAuthError] = useState<string | null>(null);
 
+  const [mustChangePasswordModal, setMustChangePasswordModal] = useState<{ token: string; user: any } | null>(null);
+  const [newPassword, setNewPassword] = useState<string>('');
+  const [confirmPassword, setConfirmPassword] = useState<string>('');
+  const [rotationOldPassword, setRotationOldPassword] = useState<string>('');
+  const [rotationLoading, setRotationLoading] = useState<boolean>(false);
+  const [rotationError, setRotationError] = useState<string | null>(null);
+
   const handleLogin = async (e?: React.FormEvent) => {
     if (e) e.preventDefault();
     if (!authUsername.trim() || !authPassword) {
@@ -864,6 +871,13 @@ export function App() {
         throw new Error(errMsg);
       }
       const data = await r.json();
+      if (data.must_change_password) {
+        setMustChangePasswordModal({ token: data.access_token, user: data.user });
+        setRotationOldPassword(authPassword);
+        setAuthPassword('');
+        setToast('Mandatory first-login credential rotation required.');
+        return;
+      }
       sessionStorage.setItem('rakshak_token', data.access_token);
       sessionStorage.setItem('rakshak_user', JSON.stringify(data.user));
       setUser(data.user);
@@ -873,6 +887,52 @@ export function App() {
       setAuthError(err.message || 'Authentication error');
     } finally {
       setAuthLoading(false);
+    }
+  };
+
+  const handleChangePassword = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!mustChangePasswordModal) return;
+    if (newPassword.length < 8) {
+      setRotationError('New password must be at least 8 characters long.');
+      return;
+    }
+    if (newPassword !== confirmPassword) {
+      setRotationError('New password and confirmation do not match.');
+      return;
+    }
+    if (rotationOldPassword === newPassword) {
+      setRotationError('New password must be different from the bootstrap password.');
+      return;
+    }
+    setRotationLoading(true);
+    setRotationError(null);
+    try {
+      const r = await fetch(api + '/auth/change-password', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${mustChangePasswordModal.token}`
+        },
+        body: JSON.stringify({ old_password: rotationOldPassword, new_password: newPassword })
+      });
+      if (!r.ok) {
+        let msg = 'Failed to rotate credentials.';
+        try { const err = await r.json(); msg = err.detail || msg; } catch {}
+        throw new Error(msg);
+      }
+      sessionStorage.setItem('rakshak_token', mustChangePasswordModal.token);
+      sessionStorage.setItem('rakshak_user', JSON.stringify(mustChangePasswordModal.user));
+      setUser(mustChangePasswordModal.user);
+      setMustChangePasswordModal(null);
+      setNewPassword('');
+      setConfirmPassword('');
+      setRotationOldPassword('');
+      setToast(`Credentials successfully rotated! Welcome, ${mustChangePasswordModal.user.full_name}.`);
+    } catch (err: any) {
+      setRotationError(err.message || 'Error updating password.');
+    } finally {
+      setRotationLoading(false);
     }
   };
 
@@ -1325,6 +1385,135 @@ export function App() {
   ];
 
   // Sovereign Defense Terminal Authentication Gate (Zero Leakage)
+  if (mustChangePasswordModal) {
+    return (
+      <div
+        style={{
+          minHeight: '100vh',
+          width: '100vw',
+          background: 'radial-gradient(ellipse at center, #0b1c2e 0%, #030811 100%)',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          padding: '20px',
+          fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, monospace'
+        }}
+      >
+        <div
+          style={{
+            width: '100%',
+            maxWidth: '440px',
+            background: '#07121e',
+            border: '1px solid #d97706',
+            boxShadow: '0 25px 60px rgba(0, 0, 0, 0.85), 0 0 40px rgba(217, 119, 6, 0.2)',
+            borderRadius: '10px',
+            overflow: 'hidden'
+          }}
+        >
+          <div
+            style={{
+              padding: '24px 22px 18px',
+              background: 'linear-gradient(180deg, #2a1b04 0%, #0d1520 100%)',
+              borderBottom: '1px solid #78350f',
+              textAlign: 'center'
+            }}
+          >
+            <div
+              style={{
+                width: '44px',
+                height: '44px',
+                margin: '0 auto 12px',
+                borderRadius: '50%',
+                background: 'rgba(245, 158, 11, 0.15)',
+                border: '1px solid #f59e0b',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center'
+              }}
+            >
+              <Key size={22} style={{ color: '#f59e0b' }} />
+            </div>
+            <div style={{ fontSize: '10px', letterSpacing: '2px', color: '#f59e0b', fontWeight: 800 }}>
+              FIRST-LOGIN CREDENTIAL ROTATION
+            </div>
+            <h2 style={{ fontSize: '16px', fontWeight: 800, color: '#f8fafc', margin: '4px 0', letterSpacing: '0.5px' }}>
+              MANDATORY PASSWORD CHANGE REQUIRED
+            </h2>
+            <div style={{ fontSize: '11px', color: '#94a3b8' }}>
+              Operator: <b style={{ color: '#38bdf8' }}>{mustChangePasswordModal.user.full_name}</b> ({mustChangePasswordModal.user.username})
+            </div>
+          </div>
+
+          <div style={{ padding: '22px 24px 26px' }}>
+            <div style={{ background: 'rgba(245, 158, 11, 0.1)', border: '1px solid rgba(245, 158, 11, 0.3)', padding: '10px 12px', borderRadius: '6px', fontSize: '11px', color: '#fcd34d', marginBottom: '16px', lineHeight: '1.4' }}>
+              ⚠️ In accordance with defense air-gap security policy, temporary bootstrap credentials must be replaced with a personal security key (minimum 8 characters).
+            </div>
+
+            <form onSubmit={handleChangePassword}>
+              <div style={{ marginBottom: '14px' }}>
+                <label style={{ display: 'block', fontSize: '11px', fontWeight: 700, color: '#94a3b8', marginBottom: '6px' }}>
+                  CURRENT BOOTSTRAP KEY
+                </label>
+                <input
+                  type="password"
+                  value={rotationOldPassword}
+                  onChange={(e) => setRotationOldPassword(e.target.value)}
+                  placeholder="Enter current password"
+                  required
+                  style={{ width: '100%', background: '#030a12', border: '1px solid #1a3550', borderRadius: '6px', padding: '10px 12px', color: '#f8fafc', fontSize: '13px', fontFamily: 'monospace', boxSizing: 'border-box' }}
+                />
+              </div>
+
+              <div style={{ marginBottom: '14px' }}>
+                <label style={{ display: 'block', fontSize: '11px', fontWeight: 700, color: '#94a3b8', marginBottom: '6px' }}>
+                  NEW DEFENSE SECURITY KEY (MIN 8 CHARACTERS)
+                </label>
+                <input
+                  type="password"
+                  value={newPassword}
+                  onChange={(e) => setNewPassword(e.target.value)}
+                  placeholder="Enter new strong password"
+                  required
+                  minLength={8}
+                  style={{ width: '100%', background: '#030a12', border: '1px solid #1a3550', borderRadius: '6px', padding: '10px 12px', color: '#f8fafc', fontSize: '13px', fontFamily: 'monospace', boxSizing: 'border-box' }}
+                />
+              </div>
+
+              <div style={{ marginBottom: '18px' }}>
+                <label style={{ display: 'block', fontSize: '11px', fontWeight: 700, color: '#94a3b8', marginBottom: '6px' }}>
+                  CONFIRM NEW DEFENSE SECURITY KEY
+                </label>
+                <input
+                  type="password"
+                  value={confirmPassword}
+                  onChange={(e) => setConfirmPassword(e.target.value)}
+                  placeholder="Re-enter new strong password"
+                  required
+                  minLength={8}
+                  style={{ width: '100%', background: '#030a12', border: '1px solid #1a3550', borderRadius: '6px', padding: '10px 12px', color: '#f8fafc', fontSize: '13px', fontFamily: 'monospace', boxSizing: 'border-box' }}
+                />
+              </div>
+
+              {rotationError && (
+                <div style={{ background: 'rgba(239, 68, 68, 0.15)', border: '1px solid #ef4444', color: '#fca5a5', padding: '9px 12px', borderRadius: '6px', fontSize: '11px', marginBottom: '16px' }}>
+                  {rotationError}
+                </div>
+              )}
+
+              <button
+                type="submit"
+                disabled={rotationLoading}
+                style={{ width: '100%', background: 'linear-gradient(135deg, #d97706 0%, #b45309 100%)', color: '#ffffff', border: '1px solid #f59e0b', borderRadius: '6px', padding: '12px', fontWeight: 700, fontSize: '12px', cursor: rotationLoading ? 'wait' : 'pointer', letterSpacing: '0.8px' }}
+              >
+                {rotationLoading ? 'ROTATING CREDENTIALS...' : 'CONFIRM ROTATION & ACTIVATE SESSION'}
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   if (!user) {
     return (
       <div
@@ -1504,52 +1693,13 @@ export function App() {
               </button>
             </form>
 
-            {/* Quick 1-Click Authorized Operator Logins */}
+            {/* Zero Default Credentials & Provisioning Policy */}
             <div style={{ marginTop: '16px', paddingTop: '14px', borderTop: '1px dashed #1a3550' }}>
-              <div style={{ fontSize: '10px', color: '#94a3b8', textTransform: 'uppercase', letterSpacing: '0.8px', marginBottom: '8px', textAlign: 'center', fontWeight: 600 }}>
-                1-Click Quick Operator Sign-In
+              <div style={{ fontSize: '10px', color: '#94a3b8', textTransform: 'uppercase', letterSpacing: '0.8px', marginBottom: '6px', textAlign: 'center', fontWeight: 600 }}>
+                Zero Default Credentials Security Policy
               </div>
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '8px' }}>
-                <button
-                  type="button"
-                  onClick={() => {
-                    setAuthUsername('commander');
-                    setAuthPassword('rakshak2026');
-                  }}
-                  style={{
-                    background: '#0a1d2e',
-                    border: '1px solid #14b8a6',
-                    borderRadius: '5px',
-                    padding: '8px 10px',
-                    textAlign: 'left',
-                    cursor: 'pointer'
-                  }}
-                  title="Click to fill Commander credentials"
-                >
-                  <b style={{ display: 'block', fontSize: '11px', color: '#2dd4bf' }}>⚓ Commander</b>
-                  <span style={{ fontSize: '9px', color: '#94a3b8', display: 'block', fontFamily: 'monospace' }}>ID: commander</span>
-                  <span style={{ fontSize: '9px', color: '#64748b', display: 'block', fontFamily: 'monospace' }}>Key: rakshak2026</span>
-                </button>
-                <button
-                  type="button"
-                  onClick={() => {
-                    setAuthUsername('analyst');
-                    setAuthPassword('tactical123');
-                  }}
-                  style={{
-                    background: '#0a1d2e',
-                    border: '1px solid #0284c7',
-                    borderRadius: '5px',
-                    padding: '8px 10px',
-                    textAlign: 'left',
-                    cursor: 'pointer'
-                  }}
-                  title="Click to fill Analyst credentials"
-                >
-                  <b style={{ display: 'block', fontSize: '11px', color: '#38bdf8' }}>🎯 Analyst</b>
-                  <span style={{ fontSize: '9px', color: '#94a3b8', display: 'block', fontFamily: 'monospace' }}>ID: analyst</span>
-                  <span style={{ fontSize: '9px', color: '#64748b', display: 'block', fontFamily: 'monospace' }}>Key: tactical123</span>
-                </button>
+              <div style={{ fontSize: '10px', color: '#64748b', textAlign: 'center', lineHeight: '1.4' }}>
+                Default hardcoded credentials have been removed. Operator accounts are provisioned via <code>.env</code> or secure database seeding. First-time login requires mandatory password rotation.
               </div>
             </div>
 
@@ -1634,9 +1784,9 @@ export function App() {
               <span>{telemetry?.jetson_edge_profiles?.jetson_agx_orin_64gb?.inference_engine?.split(' ')[0] || 'TRT'}</span>
             </div>
             <p>
-              TDP: 28W (Shipboard Budget: 60W)<br />
-              Latency: 19.4 ms · 51.5 FPS<br />
-              Coverage: 148 km²/min
+              Target Envelope: &le;60W (Unvalidated)<br />
+              Latency: [{telemetry?.jetson_edge_profiles?.jetson_agx_orin_64gb?.latency_range_ms?.[0] ?? 10.9} – {telemetry?.jetson_edge_profiles?.jetson_agx_orin_64gb?.latency_range_ms?.[1] ?? 23.8} ms]<br />
+              Rate: [{telemetry?.jetson_edge_profiles?.jetson_agx_orin_64gb?.throughput_range_fps?.[0] ?? 42.0} – {telemetry?.jetson_edge_profiles?.jetson_agx_orin_64gb?.throughput_range_fps?.[1] ?? 91.7} FPS]
             </p>
             <div className="edge-foot">
               <span><Wifi size={13} /> 100% DDIL Ready</span>
@@ -1695,7 +1845,7 @@ export function App() {
             <span className="crypto-state">● AES-256-GCM SOVEREIGN LOCAL</span>
           </div>
           <div style={{ display: 'flex', alignItems: 'center', gap: '14px' }}>
-            <span className="active-node">HOST: 127.0.0.1 [STANDALONE MIL-STD NODE]</span>
+            <span className="active-node">HOST: 127.0.0.1 [STANDALONE SOVEREIGN NODE (TARGET ENVELOPE, NOT VALIDATED)]</span>
             <span className="mil-mono" style={{ color: '#38bdf8' }}>
               ZULU DTG: <b>{liveDtg || '010000Z OCT 2026'}</b>
             </span>
@@ -4039,7 +4189,13 @@ export function App() {
                     <div className="panel-title"><BarChart3 size={16} /> Domain 1A Detection Accuracy per Class</div>
                     <small>Measured on xView 0.3m GSD validation split (5,838 train / 1,068 val tiles) — Validated YOLO11m Military Surveillance Engine</small>
                   </div>
-                  <span className="count-badge" style={{ background: '#0e2b26', color: '#55e0d1' }}>91.7% DARK VESSEL RATE</span>
+                  <span className="count-badge" style={{ background: '#0e2b26', color: '#55e0d1' }}>
+                    {kpis?.kpi_categories?.detection_accuracy?.headline_end_to_end_capture_pct != null
+                      ? `${kpis.kpi_categories.detection_accuracy.headline_end_to_end_capture_pct}%`
+                      : (kpis?.kpi_categories?.detection_accuracy?.dark_vessel_capture_rate_pct != null
+                          ? `${kpis.kpi_categories.detection_accuracy.dark_vessel_capture_rate_pct}%`
+                          : 'n/a')} END-TO-END CAPTURE (SIMULATED)
+                  </span>
                 </div>
 
                 <div className="chart">
@@ -4065,8 +4221,16 @@ export function App() {
 
                 <div className="report-kpis">
                   <div>
-                    <b>{kpis?.kpi_categories?.detection_accuracy?.dark_vessel_capture_rate_pct || 91.7}%</b>
-                    <small>Dark Vessel Capture Rate</small>
+                    <b>
+                      {kpis?.kpi_categories?.detection_accuracy?.headline_end_to_end_capture_pct != null
+                        ? `${kpis.kpi_categories.detection_accuracy.headline_end_to_end_capture_pct}%`
+                        : (kpis?.kpi_categories?.detection_accuracy?.dark_vessel_capture_rate_pct != null
+                            ? `${kpis.kpi_categories.detection_accuracy.dark_vessel_capture_rate_pct}%`
+                            : 'n/a')}
+                    </b>
+                    <small>
+                      End-to-End Dark Vessel Capture (Post-Det Recall: {kpis?.kpi_categories?.detection_accuracy?.post_detection_recall_pct != null ? `${kpis.kpi_categories.detection_accuracy.post_detection_recall_pct}%` : 'n/a'}, SIMULATED, 20 seeds, N={kpis?.kpi_categories?.detection_accuracy?.dark_vessel_sample_size || 500}/cell)
+                    </small>
                   </div>
                   <div>
                     <b>{kpis?.kpi_categories?.operational_latency?.sensor_to_alert_latency_seconds || 1.8} s</b>
@@ -4097,26 +4261,177 @@ export function App() {
                   </button>
                 </div>
 
-                <div style={{ padding: '16px', display: 'grid', gap: '12px' }}>
-                  <div style={{ border: '1px solid #213f38', background: '#0a1d1b', padding: '12px', borderRadius: '6px' }}>
-                    <b style={{ color: '#55e0d1', fontSize: '11px' }}>NVIDIA Jetson AGX Orin 64GB (Shipboard Profile)</b>
-                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '8px', marginTop: '8px', fontSize: '9px', color: '#9bb1ba' }}>
-                      <div>Throughput: <b>148.3 km²/min</b></div>
-                      <div>Inference Latency: <b>19.4 ms / tile</b></div>
-                      <div>Framerate: <b>51.5 FPS</b></div>
-                      <div>Operating Power: <b style={{ color: '#55e0d1' }}>28W</b> (Budget: 60W)</div>
-                      <div>Model Footprint: <b>5.3 MB (FP16)</b></div>
-                      <div>Compliance: <b style={{ color: '#10b981' }}>MIL-STD / SWaP-C Pass</b></div>
+                <div style={{ padding: '16px', display: 'grid', gap: '14px' }}>
+                  {/* Card 1: Measured Host Performance */}
+                  <div style={{ border: '1px solid #14b8a6', background: '#071b1d', padding: '14px', borderRadius: '6px' }}>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
+                      <b style={{ color: '#55e0d1', fontSize: '12px' }}>Host Edge Inference Engine (RTX 4060 Laptop GPU)</b>
+                      <span style={{ background: '#0e2b26', color: '#55e0d1', border: '1px solid #14b8a6', padding: '2px 8px', borderRadius: '4px', fontSize: '9px', fontWeight: 700 }}>
+                        MEASURED_RTX4060
+                      </span>
+                    </div>
+                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '10px', fontSize: '10px', color: '#9bb1ba' }}>
+                      <div>Device: <b style={{ color: '#e2edf2' }}>{telemetry?.host_hardware?.device || 'RTX 4060'}</b></div>
+                      <div>Input Format: <b style={{ color: '#55e0d1' }}>PyTorch FP16 (.half()) 1024×1024</b></div>
+                      <div>Inference P50: <b style={{ color: '#55e0d1', fontSize: '12px' }}>{telemetry?.measured_host_performance?.latency_p50_ms ?? 34.54} ms</b></div>
+                      <div>Framerate: <b style={{ color: '#55e0d1', fontSize: '12px' }}>{telemetry?.measured_host_performance?.framerate_fps ?? 27.98} FPS</b></div>
+                      <div>Net Board Power: <b style={{ color: '#f59e0b', fontSize: '12px' }}>+{telemetry?.measured_host_performance?.power_board_w?.net_active_w ?? 29.42} W</b> <small>(Gross {telemetry?.measured_host_performance?.power_board_w?.mean_gross_w ?? 43.07} ± 0.2W, 3 repeats)</small></div>
+                      <div>Peak VRAM: <b style={{ color: '#e2edf2' }}>{telemetry?.measured_host_performance?.vram_mb ?? 294.1} MB</b> <small>(Model: 38.7 MB)</small></div>
+                      <div>Latency P95 / P99: <b>{telemetry?.measured_host_performance?.latency_p95_ms ?? 51.74} ms / {telemetry?.measured_host_performance?.latency_p99_ms ?? 64.17} ms</b></div>
+                      <div>Holdout Accuracy: <b style={{ color: '#38bdf8' }}>48.37% mAP50</b> <small>(val_report: 540 tiles)</small></div>
+                      <div>Power Protocol: <small style={{ color: '#7994a3' }}>nvidia-smi 12.5 Hz (Idle: 13.65W subtracted)</small></div>
                     </div>
                   </div>
 
-                  <div style={{ border: '1px solid #243b49', background: '#0c1a24', padding: '12px', borderRadius: '6px' }}>
-                    <b style={{ color: '#38bdf8', fontSize: '11px' }}>Host Edge Engine Status</b>
-                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '8px', marginTop: '8px', fontSize: '9px', color: '#9bb1ba' }}>
-                      <div>Device: <b>{telemetry?.host_hardware?.device || 'RTX GPU'}</b></div>
-                      <div>CPU Load: <b>{telemetry?.host_hardware?.cpu_utilization_pct || 14}%</b></div>
-                      <div>RAM Used: <b>{telemetry?.host_hardware?.ram_used_gb || 8} / {telemetry?.host_hardware?.ram_total_gb || 16} GB</b></div>
-                      <div>Air-Gapped: <b style={{ color: '#10b981' }}>100% Isolated</b></div>
+                  {/* Card 2: Jetson AGX Orin 64GB Projection Interval */}
+                  <div style={{ border: '1px solid #d97706', background: '#181206', padding: '14px', borderRadius: '6px' }}>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
+                      <div>
+                        <b style={{ color: '#fbbf24', fontSize: '12px' }}>NVIDIA Jetson AGX Orin 64GB (Shipboard C2 Profile)</b>
+                        <span style={{ marginLeft: '8px', color: '#ef4444', fontSize: '9px', fontWeight: 600 }}>[19.4 ms / 28 W SUPERSEDED ARCHIVED]</span>
+                      </div>
+                      <span style={{ background: '#2c2206', color: '#fbbf24', border: '1px solid #d97706', padding: '2px 8px', borderRadius: '4px', fontSize: '9px', fontWeight: 700 }}>
+                        {telemetry?.jetson_edge_profiles?.jetson_agx_orin_64gb?.provenance || 'ROUGH ESTIMATE, UNVALIDATED'}
+                      </span>
+                    </div>
+                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '8px', fontSize: '10px', color: '#9bb1ba' }}>
+                      <div>Wide Latency Range: <b style={{ color: '#fbbf24', fontSize: '12px' }}>[{telemetry?.jetson_edge_profiles?.jetson_agx_orin_64gb?.latency_range_ms?.[0] ?? 10.8} ms – {telemetry?.jetson_edge_profiles?.jetson_agx_orin_64gb?.latency_range_ms?.[1] ?? 23.8} ms]</b></div>
+                      <div>Wide Framerate Range: <b style={{ color: '#fbbf24', fontSize: '12px' }}>[{telemetry?.jetson_edge_profiles?.jetson_agx_orin_64gb?.throughput_range_fps?.[0] ?? 42.0} – {telemetry?.jetson_edge_profiles?.jetson_agx_orin_64gb?.throughput_range_fps?.[1] ?? 92.6} FPS]</b> <small style={{ color: '#ef4444', fontSize: '9px', fontWeight: 600 }}>(ROUGH ESTIMATE, UNVALIDATED)</small></div>
+                      <div>Measured Power: <b style={{ color: '#9bb1ba' }}>not estimated</b> <small>(requires Jetson tegrastats rail sampling)</small></div>
+                      <div>Envelope Status: <b style={{ color: '#fbbf24' }}>target envelope &le;60W, not validated</b></div>
+                      <div style={{ gridColumn: 'span 2', fontSize: '9px', color: '#819ba8', background: '#0e181f', padding: '6px', borderRadius: '4px' }}>
+                        <div>📐 <b>Compute-Bound:</b> {telemetry?.jetson_edge_profiles?.jetson_agx_orin_64gb?.compute_bound_formula || '17.39ms * (58.2 / 42.6 Dense TFLOPs) = 23.8 ms'}</div>
+                        <div>📊 <b>Bandwidth-Bound:</b> {telemetry?.jetson_edge_profiles?.jetson_agx_orin_64gb?.bandwidth_bound_formula || '17.39ms * (256.0 / 204.8 GB/s) = 21.7 ms'}</div>
+                        <div>⚡ <b>TRT Acceleration Factor:</b> 1.3× to 2.0× speedup (Lower: 21.7ms / 2.0x = 10.8 ms [92.6 FPS]; Upper: 23.8 ms unaccelerated [42.0 FPS])</div>
+                        <div>🔧 <b>Accumulate Mode:</b> FP16 Tensor Core arithmetic with FP32 accumulation</div>
+                        <div><b>Source:</b> NVIDIA Jetson AGX Orin Series Data Sheet DS-10654-001_v1.7 Table 1 (42.6 Dense FP16 TFLOPs, 204.8 GB/s) · Host: NVIDIA Ada Whitepaper (58.2 Dense FP16 TFLOPs)</div>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Card 3: Jetson Orin Nano 8GB Projection Interval */}
+                  <div style={{ border: '1px solid #78350f', background: '#140e05', padding: '14px', borderRadius: '6px' }}>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
+                      <div>
+                        <b style={{ color: '#f59e0b', fontSize: '12px' }}>NVIDIA Jetson Orin Nano 8GB (Tactical Drone UAV Payload)</b>
+                        <span style={{ marginLeft: '8px', color: '#ef4444', fontSize: '9px', fontWeight: 600 }}>[38.2 ms / 12 W SUPERSEDED ARCHIVED]</span>
+                      </div>
+                      <span style={{ background: '#261b04', color: '#f59e0b', border: '1px solid #78350f', padding: '2px 8px', borderRadius: '4px', fontSize: '9px', fontWeight: 700 }}>
+                        {telemetry?.jetson_edge_profiles?.jetson_orin_nano_8gb?.provenance || 'ROUGH ESTIMATE, UNVALIDATED'}
+                      </span>
+                    </div>
+                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '8px', fontSize: '10px', color: '#9bb1ba' }}>
+                      <div>Wide Latency Range: <b style={{ color: '#f59e0b', fontSize: '12px' }}>[{telemetry?.jetson_edge_profiles?.jetson_orin_nano_8gb?.latency_range_ms?.[0] ?? 32.8} ms – {telemetry?.jetson_edge_profiles?.jetson_orin_nano_8gb?.latency_range_ms?.[1] ?? 98.8} ms]</b></div>
+                      <div>Wide Framerate Range: <b style={{ color: '#f59e0b', fontSize: '12px' }}>[{telemetry?.jetson_edge_profiles?.jetson_orin_nano_8gb?.throughput_range_fps?.[0] ?? 10.1} – {telemetry?.jetson_edge_profiles?.jetson_orin_nano_8gb?.throughput_range_fps?.[1] ?? 30.5} FPS]</b> <small style={{ color: '#ef4444', fontSize: '9px', fontWeight: 600 }}>(ROUGH ESTIMATE, UNVALIDATED)</small></div>
+                      <div>Measured Power: <b style={{ color: '#9bb1ba' }}>not estimated</b> <small>(requires Jetson tegrastats rail sampling)</small></div>
+                      <div>Envelope Status: <b style={{ color: '#fbbf24' }}>target envelope &le;15W, not validated</b></div>
+                      <div style={{ gridColumn: 'span 2', fontSize: '9px', color: '#819ba8', background: '#0e181f', padding: '6px', borderRadius: '4px' }}>
+                        <div>📐 <b>Compute-Bound:</b> {telemetry?.jetson_edge_profiles?.jetson_orin_nano_8gb?.compute_bound_formula || '17.39ms * (58.2 / 10.24 Dense TFLOPs) = 98.8 ms'}</div>
+                        <div>📊 <b>Bandwidth-Bound:</b> {telemetry?.jetson_edge_profiles?.jetson_orin_nano_8gb?.bandwidth_bound_formula || '17.39ms * (256.0 / 68.0 GB/s) = 65.5 ms'}</div>
+                        <div>⚡ <b>TRT Acceleration Factor:</b> 1.3× to 2.0× speedup (Lower: 65.5ms / 2.0x = 32.8 ms [30.5 FPS]; Upper: 98.8 ms unaccelerated [10.1 FPS])</div>
+                        <div>🔧 <b>Accumulate Mode:</b> FP16 Tensor Core arithmetic with FP32 accumulation</div>
+                        <div><b>Source:</b> NVIDIA Jetson Orin Nano Series Data Sheet DS-11105-001_v1.3 Table 1 (10.24 Dense FP16 TFLOPs, 68.0 GB/s) · Host: NVIDIA Ada Whitepaper</div>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Card 4: Multi-Format Comparison Table */}
+                  <div style={{ border: '1px solid #1c3039', background: '#08131a', padding: '14px', borderRadius: '6px' }}>
+                    <b style={{ color: '#38bdf8', fontSize: '11px', display: 'block', marginBottom: '8px' }}>
+                      Multi-Format Benchmark Comparison (1024×1024 Static Shape, Steady n=200 Runs)
+                    </b>
+                    <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '9px', color: '#9bb1ba' }}>
+                      <thead>
+                        <tr style={{ borderBottom: '1px solid #1c3039', textAlign: 'left', color: '#55e0d1' }}>
+                          <th style={{ padding: '4px 6px' }}>Format / Model</th>
+                          <th style={{ padding: '4px 6px' }}>Provenance</th>
+                          <th style={{ padding: '4px 6px' }}>P50 Latency</th>
+                          <th style={{ padding: '4px 6px' }}>P95 / P99</th>
+                          <th style={{ padding: '4px 6px' }}>FPS</th>
+                          <th style={{ padding: '4px 6px' }}>Peak VRAM</th>
+                          <th style={{ padding: '4px 6px' }}>Net Board Power</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr style={{ borderBottom: '1px solid #11222b' }}>
+                          <td style={{ padding: '4px 6px', color: '#e2edf2', fontWeight: 600 }}>YOLO11m PyTorch FP16 (.half())</td>
+                          <td style={{ padding: '4px 6px' }}><span style={{ color: '#55e0d1' }}>MEASURED_RTX4060</span></td>
+                          <td style={{ padding: '4px 6px', color: '#55e0d1', fontWeight: 700 }}>34.54 ms</td>
+                          <td style={{ padding: '4px 6px' }}>51.74 / 64.17 ms</td>
+                          <td style={{ padding: '4px 6px', color: '#55e0d1' }}>28.0 FPS</td>
+                          <td style={{ padding: '4px 6px' }}>294.1 MB</td>
+                          <td style={{ padding: '4px 6px', color: '#f59e0b' }}>+29.42 &plusmn; 0.2W (gross 43.1W)</td>
+                        </tr>
+                        <tr style={{ borderBottom: '1px solid #11222b' }}>
+                          <td style={{ padding: '4px 6px', color: '#e2edf2' }}>YOLO11m PyTorch FP16 (AMP)</td>
+                          <td style={{ padding: '4px 6px' }}><span style={{ color: '#55e0d1' }}>MEASURED_RTX4060</span></td>
+                          <td style={{ padding: '4px 6px' }}>37.92 ms</td>
+                          <td style={{ padding: '4px 6px' }}>55.21 / 70.69 ms</td>
+                          <td style={{ padding: '4px 6px' }}>25.6 FPS</td>
+                          <td style={{ padding: '4px 6px' }}>296.6 MB</td>
+                          <td style={{ padding: '4px 6px', color: '#f59e0b' }}>+29.77 &plusmn; 0.3W (gross 43.4W)</td>
+                        </tr>
+                        <tr style={{ borderBottom: '1px solid #11222b' }}>
+                          <td style={{ padding: '4px 6px', color: '#e2edf2' }}>YOLO11m PyTorch FP32</td>
+                          <td style={{ padding: '4px 6px' }}><span style={{ color: '#55e0d1' }}>MEASURED_RTX4060</span></td>
+                          <td style={{ padding: '4px 6px' }}>55.13 ms</td>
+                          <td style={{ padding: '4px 6px' }}>90.73 / 101.81 ms</td>
+                          <td style={{ padding: '4px 6px' }}>17.1 FPS</td>
+                          <td style={{ padding: '4px 6px' }}>377.3 MB</td>
+                          <td style={{ padding: '4px 6px', color: '#f59e0b' }}>+28.59 W (gross 42.2W)</td>
+                        </tr>
+                        <tr style={{ borderBottom: '1px solid #11222b' }}>
+                          <td style={{ padding: '4px 6px', color: '#9bb1ba' }}>YOLO11m ONNX Runtime (CPU baseline)</td>
+                          <td style={{ padding: '4px 6px' }}><span style={{ color: '#9bb1ba' }}>MEASURED_RTX4060</span></td>
+                          <td style={{ padding: '4px 6px' }}>310.68 ms</td>
+                          <td style={{ padding: '4px 6px' }}>322.8 / 324.3 ms</td>
+                          <td style={{ padding: '4px 6px' }}>3.2 FPS</td>
+                          <td style={{ padding: '4px 6px' }}>0.0 MB</td>
+                          <td style={{ padding: '4px 6px' }}>CPU Baseline (GPU Idle)</td>
+                        </tr>
+                        <tr style={{ borderBottom: '1px solid #11222b' }}>
+                          <td style={{ padding: '4px 6px', color: '#e2edf2', fontWeight: 600 }}>Vessel Specialist FP16 (.half())</td>
+                          <td style={{ padding: '4px 6px' }}><span style={{ color: '#55e0d1' }}>MEASURED_RTX4060</span></td>
+                          <td style={{ padding: '4px 6px', color: '#55e0d1', fontWeight: 700 }}>13.33 ms</td>
+                          <td style={{ padding: '4px 6px' }}>17.66 / 23.55 ms</td>
+                          <td style={{ padding: '4px 6px', color: '#55e0d1' }}>71.8 FPS</td>
+                          <td style={{ padding: '4px 6px' }}>204.4 MB</td>
+                          <td style={{ padding: '4px 6px', color: '#f59e0b' }}>+8.52 W (gross 22.2W)</td>
+                        </tr>
+                        <tr>
+                          <td style={{ padding: '4px 6px', color: '#e2edf2', fontWeight: 600 }}>Full Pipeline (Dual WBF + TTA)</td>
+                          <td style={{ padding: '4px 6px' }}><span style={{ color: '#55e0d1' }}>MEASURED_RTX4060</span></td>
+                          <td style={{ padding: '4px 6px', color: '#38bdf8', fontWeight: 700 }}>81.58 ms</td>
+                          <td style={{ padding: '4px 6px' }}>120.0 / 125.5 ms</td>
+                          <td style={{ padding: '4px 6px', color: '#38bdf8' }}>11.9 FPS</td>
+                          <td style={{ padding: '4px 6px' }}>323.3 MB</td>
+                          <td style={{ padding: '4px 6px', color: '#f59e0b' }}>+30.08 W (gross 43.7W)</td>
+                        </tr>
+                      </tbody>
+                    </table>
+
+                    {/* Maritime Head-to-Head & Format Accuracy on Same 21 Tiles */}
+                    <div style={{ marginTop: '12px', borderTop: '1px solid #1c3039', paddingTop: '10px', display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '10px' }}>
+                      <div style={{ background: '#0a1a24', padding: '8px', borderRadius: '4px' }}>
+                        <b style={{ color: '#38bdf8', fontSize: '10px' }}>Maritime Head-to-Head (Exact Same 21 Holdout Tiles, 280 GT Vessels)</b>
+                        <div style={{ fontSize: '9px', marginTop: '4px', color: '#9bb1ba' }}>
+                          <div>• <b>Dataset Scope:</b> 5 scenes / 21 tiles / 280 vessels (0 training scene overlap verified across 276 scenes)</div>
+                          <div>• <b>Primary YOLO11m:</b> 12.07% mAP50 | 23.4% P | 20.4% R</div>
+                          <div>• <b>Specialist YOLO11n:</b> <span style={{ color: '#55e0d1', fontWeight: 700 }}>16.24% mAP50</span> | 35.2% P | 23.6% R (<span style={{ color: '#38bdf8' }}>+34.5% rel gain</span>)</div>
+                          <div>• <b>Matching Rule:</b> IoU 0.50 matching on exact same ground truth annotations</div>
+                        </div>
+                      </div>
+                      <div style={{ background: '#0a1a24', padding: '8px', borderRadius: '4px' }}>
+                        <b style={{ color: '#38bdf8', fontSize: '10px' }}>Multi-Format Accuracy (ALL 540 val_report Tiles, 66,521 GT Targets)</b>
+                        <div style={{ fontSize: '9px', marginTop: '4px', color: '#9bb1ba' }}>
+                          <div>• <b>PyTorch FP32:</b> 48.37% mAP50 (V: 12.38%, A: 89.77%, V: 46.89%, I: 44.45%)</div>
+                          <div>• <b>PyTorch FP16 (.half()):</b> <span style={{ color: '#55e0d1', fontWeight: 700 }}>48.46% mAP50</span> (V: 12.75%, A: 89.85%, V: 46.83%, I: 44.41%) [Zero degradation: +0.09%]</div>
+                          <div>• <b>ONNX Runtime (CPU baseline):</b> 47.80% mAP50 (V: 12.49%, A: 89.32%, V: 46.04%, I: 43.37%)</div>
+                          <div>• <b>TensorRT INT8:</b> Not built on host (calibration: 500 val_tune tiles ready)</div>
+                          <div>• <b>Power Protocol (3 Repeats):</b> .half() (43.07 &plusmn; 0.20W) vs AMP (43.42 &plusmn; 0.29W) delta is +0.35W (statistically negligible).</div>
+                          <div>• <b>ONNX GPU Provider:</b> ort-gpu 1.31.0 installed; cublasLt64_13.dll mismatch with CUDA 12.8 host &rarr; CPU reported as baseline</div>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -4139,8 +4454,18 @@ export function App() {
                   </div>
                   <div className="metric">
                     <div className="metric-top"><span>GEOLOCATION ACCURACY</span><Crosshair size={14} /></div>
-                    <strong style={{ fontSize: '20px' }}>8.4 m</strong>
-                    <small>Circular Error Probable (CEP50)</small>
+                    <strong style={{ fontSize: '20px' }}>
+                      {kpis?.kpi_categories?.geolocation_precision?.cep50_meters != null
+                        ? `${kpis.kpi_categories.geolocation_precision.cep50_meters} m`
+                        : 'n/a'}
+                    </strong>
+                    <small>
+                      CEP50 (CEP90: {kpis?.kpi_categories?.geolocation_precision?.cep90_meters != null
+                        ? `${kpis.kpi_categories.geolocation_precision.cep90_meters} m`
+                        : 'n/a'}, N={kpis?.kpi_categories?.geolocation_precision?.matched_targets_count != null
+                        ? `${(kpis.kpi_categories.geolocation_precision.matched_targets_count / 1000).toFixed(1)}k`
+                        : 'n/a'})
+                    </small>
                   </div>
                   <div className="metric">
                     <div className="metric-top"><span>AUTO-TRIAGE RATIO</span><Check size={14} /></div>
@@ -4155,6 +4480,47 @@ export function App() {
                     <div className="metric-top"><span>DDIL AVAILABILITY</span><Wifi size={14} /></div>
                     <strong className="cyan" style={{ fontSize: '20px' }}>100%</strong>
                     <small>Zero cloud callouts required</small>
+                  </div>
+                </div>
+
+                {/* Geolocation CEP Verification & Truth Disclosure Note */}
+                <div style={{ margin: '0 16px 16px 16px', padding: '10px 12px', background: '#0a1a24', border: '1px solid #1c3039', borderRadius: '6px', fontSize: '9px', color: '#9bb1ba' }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '6px' }}>
+                    <b style={{ color: '#38bdf8' }}>Geolocation Accuracy: Dual-IoU Benchmark (Local UTM Projection)</b>
+                    <span style={{ color: '#55e0d1', fontWeight: 700 }}>
+                      MEASURED ({kpis?.kpi_categories?.geolocation_precision?.matched_targets_count?.toLocaleString() ?? '37,300'} / {kpis?.kpi_categories?.geolocation_precision?.total_gt_count?.toLocaleString() ?? '66,521'} GT MATCHED · 38 SCENES)
+                    </span>
+                  </div>
+
+                  {/* IoU >= 0.3 Row */}
+                  <div style={{ marginBottom: '6px' }}>
+                    <div style={{ color: '#38bdf8', fontWeight: 600, marginBottom: '2px' }}>
+                      Standard Candidate Match (IoU &ge; 0.3) — Overall: CEP50 <b>{kpis?.kpi_categories?.geolocation_precision?.iou_0_3?.overall?.cep50_m != null ? `${kpis.kpi_categories.geolocation_precision.iou_0_3.overall.cep50_m} m` : 'n/a'}</b> | CEP90 {kpis?.kpi_categories?.geolocation_precision?.iou_0_3?.overall?.cep90_m != null ? `${kpis.kpi_categories.geolocation_precision.iou_0_3.overall.cep90_m} m` : 'n/a'} (Matched: {kpis?.kpi_categories?.geolocation_precision?.iou_0_3?.overall?.matched_count?.toLocaleString() ?? 'n/a'} / {kpis?.kpi_categories?.geolocation_precision?.total_gt_count?.toLocaleString() ?? 'n/a'}, {kpis?.kpi_categories?.geolocation_precision?.iou_0_3?.overall?.gt_matched_pct != null ? `${kpis.kpi_categories.geolocation_precision.iou_0_3.overall.gt_matched_pct}%` : 'n/a'}):
+                    </div>
+                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '8px' }}>
+                      <div>• <b>Vessels (78 / 280, 27.9%):</b> CEP50 <b>0.92 m</b> | CEP90 6.54 m</div>
+                      <div>• <b>Aircraft (39 / 45, 86.7%):</b> CEP50 <b>1.46 m</b> | CEP90 5.22 m</div>
+                      <div>• <b>Vehicles (16,009 / 23.4k, 68.5%):</b> CEP50 <b>0.49 m</b> | CEP90 1.01 m</div>
+                      <div>• <b>Infrastructure (21,174 / 42.8k, 49.4%):</b> CEP50 <b>1.00 m</b> | CEP90 3.51 m</div>
+                    </div>
+                  </div>
+
+                  {/* IoU >= 0.5 Row */}
+                  <div style={{ borderTop: '1px solid #142733', paddingTop: '4px', marginBottom: '6px' }}>
+                    <div style={{ color: '#fbbf24', fontWeight: 600, marginBottom: '2px' }}>
+                      Tight Physical Match (IoU &ge; 0.5) — Overall: CEP50 <b>{kpis?.kpi_categories?.geolocation_precision?.iou_0_5?.overall?.cep50_m != null ? `${kpis.kpi_categories.geolocation_precision.iou_0_5.overall.cep50_m} m` : 'n/a'}</b> | CEP90 {kpis?.kpi_categories?.geolocation_precision?.iou_0_5?.overall?.cep90_m != null ? `${kpis.kpi_categories.geolocation_precision.iou_0_5.overall.cep90_m} m` : 'n/a'} (Matched: {kpis?.kpi_categories?.geolocation_precision?.iou_0_5?.overall?.matched_count?.toLocaleString() ?? 'n/a'} / {kpis?.kpi_categories?.geolocation_precision?.total_gt_count?.toLocaleString() ?? 'n/a'}, {kpis?.kpi_categories?.geolocation_precision?.iou_0_5?.overall?.gt_matched_pct != null ? `${kpis.kpi_categories.geolocation_precision.iou_0_5.overall.gt_matched_pct}%` : 'n/a'}):
+                    </div>
+                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '8px' }}>
+                      <div>• <b>Vessels (40 / 280, 14.3%):</b> CEP50 <b>0.64 m</b> | CEP90 2.07 m</div>
+                      <div>• <b>Aircraft (39 / 45, 86.7%):</b> CEP50 <b>1.46 m</b> | CEP90 5.22 m</div>
+                      <div>• <b>Vehicles (12,048 / 23.4k, 51.5%):</b> CEP50 <b>0.47 m</b> | CEP90 0.93 m</div>
+                      <div>• <b>Infrastructure (15,733 / 42.8k, 36.7%):</b> CEP50 <b>0.93 m</b> | CEP90 2.71 m</div>
+                    </div>
+                  </div>
+
+                  <div style={{ marginTop: '4px', color: '#7994a3', fontSize: '8.5px', borderTop: '1px solid #142733', paddingTop: '4px' }}>
+                    ⚠️ <b>Conditional Match Disclosure:</b> Geolocation CEP is strictly conditional on an IoU bounding-box match. Undetected ground-truth targets have no predicted box regression.<br />
+                    ⚠️ <b>Truth Scope Disclosure:</b> Localisation error is evaluated strictly against the dataset's own GeoTIFF georeferencing metadata (bounding-box regression and affine transform fidelity), not independent GPS ground truth.
                   </div>
                 </div>
               </section>

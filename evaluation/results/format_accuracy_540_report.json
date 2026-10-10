@@ -1,0 +1,121 @@
+{
+  "eval_manifest": "evaluation/val_report_tiles.txt",
+  "tiles_evaluated": 540,
+  "ground_truth_counts": {
+    "Vessel": 280,
+    "Aircraft": 45,
+    "Vehicle": 23372,
+    "Infrastructure": 42824,
+    "total": 66521
+  },
+  "formats": {
+    "pytorch_fp32": {
+      "format": "PyTorch FP32",
+      "eval_time_seconds": 32.47,
+      "overall": {
+        "precision": 0.5402,
+        "recall": 0.4801,
+        "map50": 0.4837,
+        "map50_95": 0.1442
+      },
+      "per_class": {
+        "Vessel": {
+          "precision": 0.3607,
+          "recall": 0.1429,
+          "map50": 0.1238,
+          "map50_95": 0.0256
+        },
+        "Aircraft": {
+          "precision": 0.5791,
+          "recall": 0.8667,
+          "map50": 0.8977,
+          "map50_95": 0.31
+        },
+        "Vehicle": {
+          "precision": 0.6001,
+          "recall": 0.5251,
+          "map50": 0.4689,
+          "map50_95": 0.1212
+        },
+        "Infrastructure": {
+          "precision": 0.6208,
+          "recall": 0.3858,
+          "map50": 0.4445,
+          "map50_95": 0.1201
+        }
+      }
+    },
+    "pytorch_fp16_half": {
+      "format": "PyTorch FP16 (.half())",
+      "eval_time_seconds": 25.34,
+      "overall": {
+        "precision": 0.5378,
+        "recall": 0.4817,
+        "map50": 0.4846,
+        "map50_95": 0.1445
+      },
+      "per_class": {
+        "Vessel": {
+          "precision": 0.3629,
+          "recall": 0.1465,
+          "map50": 0.1275,
+          "map50_95": 0.0264
+        },
+        "Aircraft": {
+          "precision": 0.5787,
+          "recall": 0.8667,
+          "map50": 0.8985,
+          "map50_95": 0.3106
+        },
+        "Vehicle": {
+          "precision": 0.5914,
+          "recall": 0.5261,
+          "map50": 0.4683,
+          "map50_95": 0.1209
+        },
+        "Infrastructure": {
+          "precision": 0.6184,
+          "recall": 0.3875,
+          "map50": 0.4441,
+          "map50_95": 0.1202
+        }
+      }
+    },
+    "onnx_runtime_cpu": {
+      "format": "ONNX Runtime (CPU baseline)",
+      "eval_time_seconds": 215.42,
+      "overall": {
+        "precision": 0.547,
+        "recall": 0.473,
+        "map50": 0.478,
+        "map50_95": 0.1476
+      },
+      "per_class": {
+        "Vessel": {
+          "precision": 0.3629,
+          "recall": 0.1424,
+          "map50": 0.1249,
+          "map50_95": 0.0268
+        },
+        "Aircraft": {
+          "precision": 0.6005,
+          "recall": 0.8667,
+          "map50": 0.8932,
+          "map50_95": 0.328
+        },
+        "Vehicle": {
+          "precision": 0.6084,
+          "recall": 0.5134,
+          "map50": 0.4604,
+          "map50_95": 0.1188
+        },
+        "Infrastructure": {
+          "precision": 0.6163,
+          "recall": 0.3695,
+          "map50": 0.4337,
+          "map50_95": 0.1168
+        }
+      }
+    }
+  }
+}

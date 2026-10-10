@@ -1,0 +1,304 @@
+{
+  "benchmark_title": "Project Rakshak 2.0 \u2014 Empirical Edge SWaP-C & Multi-Format Profiling",
+  "timestamp_utc": "2026-10-10T14:05:00.488367+00:00",
+  "hardware_environment": {
+    "host_gpu": "NVIDIA GeForce RTX 4060 Laptop GPU",
+    "gpu_vram_total_mib": 8188,
+    "cuda_version": "12.8",
+    "driver_version": "610.88",
+    "python_version": "3.13.9",
+    "torch_version": "2.11.0+cu128",
+    "onnx_version": "1.23.1",
+    "onnxruntime_version": "1.31.0",
+    "ort_cuda_status": "NOT DONE (CUDA 13/12 MISMATCH, AIR-GAPPED)",
+    "ort_cuda_note": "onnxruntime-gpu CUDA 12 build was not done. The local pip environment contains onnxruntime-gpu 1.31.0 built against CUDA 13/cuDNN 9 (requiring cublasLt64_13.dll), which mismatches host PyTorch CUDA 12.8 (cublasLt64_12.dll). External wheel downloads are prohibited under the zero-network air-gap mandate. CPUExecutionProvider reported as CPU baseline."
+  },
+  "latency_spread_and_thermal_state_audit": {
+    "explanation": "Why projection base T_meas varies between 17.39 ms and 35.74 ms: On the RTX 4060 Laptop GPU (AD107), latency is directly governed by dynamic clock scaling and thermal state. Under High-Performance Boost (AC plugged in, GPU clock 2,610-2,625 MHz, board power ~78-81 W, temp 63-82 C), FP16 (.half()) latency is 17.47 +/- 0.14 ms (p50: 16.6-16.9 ms, 57.5 FPS). Under Unboosted / Power-Throttled conditions (clocks ~1.1-1.3 GHz, board power ~43 W), latency scales by ~2.08x to 35.74 ms (p50: 34.54 ms, 28.0 FPS). Both configurations are empirical.",
+    "rerun_3_repeats_boosted": {
+      "mean_ms": 17.85,
+      "std_ms": 0.11,
+      "range_ms": [
+        17.7,
+        17.97
+      ],
+      "runs": [
+        {
+          "run": 1,
+          "mean_ms": 17.97,
+          "p50_ms": 17.37,
+          "p95_ms": 20.86,
+          "p99_ms": 26.57,
+          "fps": 55.65,
+          "gpu_telemetry": {
+            "temp_c": 77.0,
+            "power_w": 80.71,
+            "clock_mhz": 2610.0,
+            "mem_mhz": 8001.0
+          }
+        },
+        {
+          "run": 2,
+          "mean_ms": 17.7,
+          "p50_ms": 17.24,
+          "p95_ms": 21.63,
+          "p99_ms": 26.23,
+          "fps": 56.51,
+          "gpu_telemetry": {
+            "temp_c": 79.0,
+            "power_w": 74.45,
+            "clock_mhz": 2610.0,
+            "mem_mhz": 8001.0
+          }
+        },
+        {
+          "run": 3,
+          "mean_ms": 17.88,
+          "p50_ms": 17.37,
+          "p95_ms": 20.67,
+          "p99_ms": 27.02,
+          "fps": 55.92,
+          "gpu_telemetry": {
+            "temp_c": 79.0,
+            "power_w": 79.48,
+            "clock_mhz": 2610.0,
+            "mem_mhz": 8001.0
+          }
+        }
+      ]
+    },
+    "unboosted_throttled_state": {
+      "mean_ms": 35.74,
+      "p50_ms": 34.54,
+      "board_power_w": 43.07
+    }
+  },
+  "power_measurement_protocol": {
+    "label": "RTX 4060 GPU board power (nvidia-smi)",
+    "sampling_frequency_hz": 12.5,
+    "steady_iterations_per_run": 200,
+    "repeats": 3,
+    "idle_power_w": 12.64,
+    "amp_vs_half_finding": "In steady 3-repeat measurement, PyTorch FP16 (.half()) draws 43.07 +/- 0.20 W gross (29.42 W net), while PyTorch FP16 (torch.amp.autocast) draws 43.42 +/- 0.29 W gross (29.77 W net). The delta is +0.35 W, which is statistically negligible within measurement noise (+/- 0.29 W). Thermal saturation figures and dynamic casting power overhead claims are dropped.",
+    "three_repeat_measurements": {
+      "idle_baseline_w": 12.64,
+      "yolo11m_fp16_half": {
+        "gross_mean_w": 43.07,
+        "gross_std_w": 0.2,
+        "net_active_mean_w": 30.43,
+        "runs_w": [
+          42.82,
+          43.31,
+          43.09
+        ]
+      },
+      "yolo11m_fp16_amp": {
+        "gross_mean_w": 43.42,
+        "gross_std_w": 0.29,
+        "net_active_mean_w": 30.78,
+        "runs_w": [
+          43.08,
+          43.78,
+          43.39
+        ]
+      },
+      "delta_amp_minus_half_w": 0.35
+    }
+  },
+  "vessel_specialist_evaluation": {
+    "dataset_scope": "5 scenes / 21 tiles / 280 vessels",
+    "scenes_count": 5,
+    "tiles_count": 21,
+    "vessels_ground_truth_count": 280,
+    "training_scenes_count": 276,
+    "scene_overlap_count": 0,
+    "scene_overlap_verified": true,
+    "metrics": {
+      "specialist_yolo11n": {
+        "map50": 0.1624,
+        "precision": 0.3515,
+        "recall": 0.2357
+      },
+      "primary_yolo11m": {
+        "map50": 0.1207,
+        "precision": 0.234,
+        "recall": 0.2036
+      },
+      "relative_gain_map50": "+34.5% relative gain"
+    }
+  },
+  "multi_format_accuracy_540_val_report": {
+    "eval_manifest": "evaluation/val_report_tiles.txt",
+    "tiles_evaluated": 540,
+    "ground_truth_counts": {
+      "Vessel": 280,
+      "Aircraft": 45,
+      "Vehicle": 23372,
+      "Infrastructure": 42824,
+      "total": 66521
+    },
+    "formats": {
+      "pytorch_fp32": {
+        "format": "PyTorch FP32",
+        "eval_time_seconds": 32.47,
+        "overall": {
+          "precision": 0.5402,
+          "recall": 0.4801,
+          "map50": 0.4837,
+          "map50_95": 0.1442
+        },
+        "per_class": {
+          "Vessel": {
+            "precision": 0.3607,
+            "recall": 0.1429,
+            "map50": 0.1238,
+            "map50_95": 0.0256
+          },
+          "Aircraft": {
+            "precision": 0.5791,
+            "recall": 0.8667,
+            "map50": 0.8977,
+            "map50_95": 0.31
+          },
+          "Vehicle": {
+            "precision": 0.6001,
+            "recall": 0.5251,
+            "map50": 0.4689,
+            "map50_95": 0.1212
+          },
+          "Infrastructure": {
+            "precision": 0.6208,
+            "recall": 0.3858,
+            "map50": 0.4445,
+            "map50_95": 0.1201
+          }
+        }
+      },
+      "pytorch_fp16_half": {
+        "format": "PyTorch FP16 (.half())",
+        "eval_time_seconds": 25.34,
+        "overall": {
+          "precision": 0.5378,
+          "recall": 0.4817,
+          "map50": 0.4846,
+          "map50_95": 0.1445
+        },
+        "per_class": {
+          "Vessel": {
+            "precision": 0.3629,
+            "recall": 0.1465,
+            "map50": 0.1275,
+            "map50_95": 0.0264
+          },
+          "Aircraft": {
+            "precision": 0.5787,
+            "recall": 0.8667,
+            "map50": 0.8985,
+            "map50_95": 0.3106
+          },
+          "Vehicle": {
+            "precision": 0.5914,
+            "recall": 0.5261,
+            "map50": 0.4683,
+            "map50_95": 0.1209
+          },
+          "Infrastructure": {
+            "precision": 0.6184,
+            "recall": 0.3875,
+            "map50": 0.4441,
+            "map50_95": 0.1202
+          }
+        }
+      },
+      "onnx_runtime_cpu": {
+        "format": "ONNX Runtime (CPU baseline)",
+        "eval_time_seconds": 215.42,
+        "overall": {
+          "precision": 0.547,
+          "recall": 0.473,
+          "map50": 0.478,
+          "map50_95": 0.1476
+        },
+        "per_class": {
+          "Vessel": {
+            "precision": 0.3629,
+            "recall": 0.1424,
+            "map50": 0.1249,
+            "map50_95": 0.0268
+          },
+          "Aircraft": {
+            "precision": 0.6005,
+            "recall": 0.8667,
+            "map50": 0.8932,
+            "map50_95": 0.328
+          },
+          "Vehicle": {
+            "precision": 0.6084,
+            "recall": 0.5134,
+            "map50": 0.4604,
+            "map50_95": 0.1188
+          },
+          "Infrastructure": {
+            "precision": 0.6163,
+            "recall": 0.3695,
+            "map50": 0.4337,
+            "map50_95": 0.1168
+          }
+        }
+      }
+    }
+  },
+  "jetson_edge_projections": {
+    "status_label": "UNVALIDATED",
+    "superseded_figures_status": "SUPERSEDED_ARCHIVED (19.4ms, 38.2ms, 28W, 12W figures removed from active telemetry)",
+    "arithmetic_accumulate_mode": "FP16 Tensor Core arithmetic with FP32 accumulation",
+    "tensorrt_speedup_factor_assumed": "1.3x to 2.0x acceleration over eager PyTorch",
+    "tflops_sources": {
+      "host_rtx4060": "58.2 Dense FP16 Tensor TFLOPs (24 SMs * 4 TC/SM * 256 FMA ops/cycle * 2.37 GHz boost; Source: NVIDIA Ada Lovelace Whitepaper & AD107 device attributes)",
+      "jetson_agx_orin_64gb": "42.6 Dense FP16 Tensor TFLOPs (2,048 Ampere CUDA cores @ 1.30 GHz, 64 Tensor Cores = 42.598 TFLOPs; Source: NVIDIA Jetson AGX Orin Series Data Sheet DS-10654-001_v1.7 Table 1)",
+      "jetson_orin_nano_8gb": "10.24 Dense FP16 Tensor TFLOPs (1,024 Ampere CUDA cores @ 625 MHz, 32 Tensor Cores = 10.24 TFLOPs; Source: NVIDIA Jetson Orin Nano Series Data Sheet DS-11105-001_v1.3 Table 1)"
+    },
+    "jetson_agx_orin_64gb": {
+      "provenance": "UNVALIDATED",
+      "target_role": "Shipboard C2 / Western Naval Command Workstation",
+      "tdp_budget_w": "target envelope <=60W, not validated",
+      "measured_power_draw": "not estimated (requires Jetson tegrastats rail sampling)",
+      "wide_latency_range_ms": [
+        10.8,
+        23.8
+      ],
+      "wide_throughput_range_fps": [
+        42.0,
+        92.6
+      ],
+      "unaccelerated_roofline_range_ms": [
+        21.7,
+        23.8
+      ],
+      "compute_bound_formula": "17.39ms * (58.2 / 42.6 Dense TFLOPs) = 23.8 ms",
+      "bandwidth_bound_formula": "17.39ms * (256.0 / 204.8 GB/s) = 21.7 ms",
+      "tensorrt_speedup_formula": "Lower bound: 21.7ms / 2.0x TRT = 10.8 ms (92.6 FPS); Upper bound: 23.8ms unaccelerated = 23.8 ms (42.0 FPS)"
+    },
+    "jetson_orin_nano_8gb": {
+      "provenance": "UNVALIDATED",
+      "target_role": "Tactical Drone UAV Payload (Garuda-04 Gimbal)",
+      "tdp_budget_w": "target envelope <=15W, not validated",
+      "measured_power_draw": "not estimated (requires Jetson tegrastats rail sampling)",
+      "wide_latency_range_ms": [
+        32.8,
+        98.8
+      ],
+      "wide_throughput_range_fps": [
+        10.1,
+        30.5
+      ],
+      "unaccelerated_roofline_range_ms": [
+        65.5,
+        98.8
+      ],
+      "compute_bound_formula": "17.39ms * (58.2 / 10.24 Dense TFLOPs) = 98.8 ms",
+      "bandwidth_bound_formula": "17.39ms * (256.0 / 68.0 GB/s) = 65.5 ms",
+      "tensorrt_speedup_formula": "Lower bound: 65.5ms / 2.0x TRT = 32.8 ms (30.5 FPS); Upper bound: 98.8ms unaccelerated = 98.8 ms (10.1 FPS)"
+    }
+  }
+}

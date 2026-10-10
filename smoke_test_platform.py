@@ -244,8 +244,11 @@ def run_smoke_tests():
         status, data = request("GET", "/api/kpis")
         if status == 200 and "kpi_categories" in data:
             k = data.get("kpi_categories", {})
-            target_pct = data.get("deployment_target_benchmarks", {}).get("dark_vessel_capture_rate_target_pct", 91.7)
-            return True, f"Platform KPIs loaded ({len(k)} categories) | Target Capture Rate: {target_pct}%"
+            target_pct = data.get("deployment_target_benchmarks", {}).get("dark_vessel_capture_rate_target_pct")
+            det_acc = k.get("detection_accuracy", {})
+            e2e_rate = det_acc.get("headline_end_to_end_capture_pct") or det_acc.get("dark_vessel_capture_rate_pct")
+            post_det = det_acc.get("post_detection_recall_pct")
+            return True, f"Platform KPIs loaded ({len(k)} categories) | E2E Dark Capture: {e2e_rate}% (Post-Det Recall: {post_det}%) | Measured (simulated): {target_pct}%"
         return False, f"HTTP {status}: {data}"
     test("12. Tactical Defense KPIs & Benchmarks", t_kpis)
 

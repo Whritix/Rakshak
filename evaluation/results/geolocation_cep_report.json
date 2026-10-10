@@ -1,0 +1,150 @@
+{
+  "benchmark_title": "Project Rakshak 2.0 \u2014 Task B: Empirical Geolocation CEP Benchmark (Dual-IoU)",
+  "timestamp_utc": "2026-10-10T14:42:14.571014+00:00",
+  "evaluation_partition": "Strictly val_report holdout (540 tiles across 38 distinct scenes)",
+  "total_ground_truth_targets": 66521,
+  "ground_truth_inventory": {
+    "Vessel": 280,
+    "Aircraft": 45,
+    "Vehicle": 23372,
+    "Infrastructure": 42824
+  },
+  "conditional_matching_disclosure": "IMPORTANT SCOPE DISCLOSURE: Geolocation CEP is strictly conditional on an IoU bounding-box match. Undetected ground-truth targets have no predicted bounding box regression, and thus have undefined centre localisation error. Matched percentages indicate detection coverage at each IoU threshold.",
+  "truth_scope_disclaimer": "TRUTH BOUNDARY: This measurement quantifies the localisation error of neural network bounding box regressions evaluated strictly against the xView dataset's own internal GeoTIFF georeferencing metadata. It does NOT represent an evaluation against independent external physical GPS ground truth.",
+  "iou_0_3_metrics": {
+    "overall": {
+      "matched_count": 37300,
+      "total_gt_count": 66521,
+      "gt_matched_pct": 56.07,
+      "cep50_m": 0.7,
+      "cep90_m": 2.43,
+      "mean_m": 1.17,
+      "rmse_m": 2.03
+    },
+    "per_class": {
+      "Vessel": {
+        "matched_count": 78,
+        "total_gt_count": 280,
+        "gt_matched_pct": 27.86,
+        "cep50_m": 0.92,
+        "cep90_m": 6.54,
+        "mean_m": 2.74,
+        "rmse_m": 7.1
+      },
+      "Aircraft": {
+        "matched_count": 39,
+        "total_gt_count": 45,
+        "gt_matched_pct": 86.67,
+        "cep50_m": 1.46,
+        "cep90_m": 5.22,
+        "mean_m": 2.14,
+        "rmse_m": 2.79
+      },
+      "Vehicle": {
+        "matched_count": 16009,
+        "total_gt_count": 23372,
+        "gt_matched_pct": 68.5,
+        "cep50_m": 0.49,
+        "cep90_m": 1.01,
+        "mean_m": 0.56,
+        "rmse_m": 0.66
+      },
+      "Infrastructure": {
+        "matched_count": 21174,
+        "total_gt_count": 42824,
+        "gt_matched_pct": 49.44,
+        "cep50_m": 1.0,
+        "cep90_m": 3.51,
+        "mean_m": 1.62,
+        "rmse_m": 2.59
+      }
+    }
+  },
+  "iou_0_5_metrics": {
+    "overall": {
+      "matched_count": 27860,
+      "total_gt_count": 66521,
+      "gt_matched_pct": 41.88,
+      "cep50_m": 0.67,
+      "cep90_m": 1.99,
+      "mean_m": 0.97,
+      "rmse_m": 1.5
+    },
+    "per_class": {
+      "Vessel": {
+        "matched_count": 40,
+        "total_gt_count": 280,
+        "gt_matched_pct": 14.29,
+        "cep50_m": 0.64,
+        "cep90_m": 2.07,
+        "mean_m": 1.82,
+        "rmse_m": 6.26
+      },
+      "Aircraft": {
+        "matched_count": 39,
+        "total_gt_count": 45,
+        "gt_matched_pct": 86.67,
+        "cep50_m": 1.46,
+        "cep90_m": 5.22,
+        "mean_m": 2.14,
+        "rmse_m": 2.79
+      },
+      "Vehicle": {
+        "matched_count": 12048,
+        "total_gt_count": 23372,
+        "gt_matched_pct": 51.55,
+        "cep50_m": 0.47,
+        "cep90_m": 0.93,
+        "mean_m": 0.52,
+        "rmse_m": 0.6
+      },
+      "Infrastructure": {
+        "matched_count": 15733,
+        "total_gt_count": 42824,
+        "gt_matched_pct": 36.74,
+        "cep50_m": 0.93,
+        "cep90_m": 2.71,
+        "mean_m": 1.32,
+        "rmse_m": 1.89
+      }
+    }
+  },
+  "registration_sensitivity_at_iou_0_3": {
+    "offset_0_0_px": {
+      "matched_count": 37300,
+      "total_gt_count": 66521,
+      "gt_matched_pct": 56.07,
+      "cep50_m": 0.7,
+      "cep90_m": 2.43,
+      "mean_m": 1.17,
+      "rmse_m": 2.03
+    },
+    "offset_0_5_px": {
+      "matched_count": 37300,
+      "total_gt_count": 66521,
+      "gt_matched_pct": 56.07,
+      "cep50_m": 0.72,
+      "cep90_m": 2.45,
+      "mean_m": 1.18,
+      "rmse_m": 2.04
+    },
+    "offset_1_0_px": {
+      "matched_count": 37300,
+      "total_gt_count": 66521,
+      "gt_matched_pct": 56.07,
+      "cep50_m": 0.77,
+      "cep90_m": 2.51,
+      "mean_m": 1.23,
+      "rmse_m": 2.07
+    },
+    "offset_2_0_px": {
+      "matched_count": 37300,
+      "total_gt_count": 66521,
+      "gt_matched_pct": 56.07,
+      "cep50_m": 0.97,
+      "cep90_m": 2.64,
+      "mean_m": 1.39,
+      "rmse_m": 2.16
+    }
+  }
+}

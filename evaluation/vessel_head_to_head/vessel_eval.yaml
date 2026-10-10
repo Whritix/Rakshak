@@ -1,0 +1,5 @@
+names:
+  0: Vessel
+path: C:/Users/awhri/OneDrive/Desktop/DEF/evaluation/vessel_head_to_head
+train: images
+val: images

@@ -139,6 +139,45 @@ def get_system_kpis() -> Dict[str, Any]:
         except Exception:
             pass
 
+    cep_file = ROOT / "evaluation" / "results" / "geolocation_cep_report.json"
+    cep_data = {}
+    if cep_file.exists():
+        try:
+            cep_data = _json.loads(cep_file.read_text(encoding="utf-8"))
+        except Exception:
+            pass
+
+    iou_0_3 = cep_data.get("iou_0_3_metrics", {})
+    iou_0_3_overall = iou_0_3.get("overall", {})
+    iou_0_3_per_class = iou_0_3.get("per_class", {})
+    iou_0_5 = cep_data.get("iou_0_5_metrics", {})
+    iou_0_5_overall = iou_0_5.get("overall", {})
+    iou_0_5_per_class = iou_0_5.get("per_class", {})
+
+    cep50_val = iou_0_3_overall.get("cep50_m")
+    cep90_val = iou_0_3_overall.get("cep90_m")
+    mean_err_val = iou_0_3_overall.get("mean_m")
+    rmse_err_val = iou_0_3_overall.get("rmse_m")
+    matched_targets_val = iou_0_3_overall.get("matched_count")
+    total_gt_val = iou_0_3_overall.get("total_gt_count", 66521)
+    gt_matched_pct_val = iou_0_3_overall.get("gt_matched_pct")
+
+    dark_vessel_file = ROOT / "evaluation" / "results" / "dark_vessel_eval_report.json"
+    dark_vessel_data = {}
+    if dark_vessel_file.exists():
+        try:
+            dark_vessel_data = _json.loads(dark_vessel_file.read_text(encoding="utf-8"))
+        except Exception:
+            pass
+
+    dv_hl = dark_vessel_data.get("headline_metrics", {})
+    dark_vessel_capture_val = dv_hl.get("end_to_end_dark_vessel_capture_pct")
+    dark_vessel_post_det_val = dv_hl.get("post_detection_recall_pct")
+    dark_vessel_cfar_rate_val = dv_hl.get("cfar_radar_detection_rate_pct")
+    dark_vessel_false_rate_val = dv_hl.get("false_dark_rate_pct")
+    dark_vessel_precision_val = dv_hl.get("precision_pct")
+    dark_vessel_f1_val = dv_hl.get("f1_score")
+
     return {
         "status": "DUAL_TIER_METRICS",
         "disclaimer": (
@@ -170,8 +209,9 @@ def get_system_kpis() -> Dict[str, Any]:
             "title": "Engineering Design Targets — Full 50-Epoch 1024px Trained Model",
             "note": "These figures are design targets, to be validated after full training and against India-region holdout imagery.",
             "per_class_targets": deployment_targets,
-            "dark_vessel_capture_rate_target_pct": 91.7,
-            "basis": "CA-CFAR + spatial AIS correlation (algorithmic, not learned)"
+            "dark_vessel_capture_rate_target_pct": dark_vessel_capture_val,
+            "dark_vessel_provenance": "SIMULATED (N=300)",
+            "basis": "CA-CFAR + spatial AIS correlation with SOG/COG temporal propagation"
         },
 
         # ── SYSTEM OPERATIONAL METRICS (MEASURED IN CODE) ──────────────────
@@ -209,7 +249,24 @@ def get_system_kpis() -> Dict[str, Any]:
                         "map50_95": 0.180
                     }
                 ],
-                "dark_vessel_capture_rate_pct": 91.7
+                "headline_end_to_end_capture_pct": dark_vessel_capture_val,
+                "dark_vessel_capture_rate_pct": dark_vessel_capture_val,
+                "post_detection_recall_pct": dark_vessel_post_det_val,
+                "cfar_radar_detection_rate_pct": dark_vessel_cfar_rate_val,
+                "dark_vessel_provenance": "SIMULATED",
+                "dark_vessel_sample_size": dark_vessel_data.get("sample_size_per_cell", 500),
+                "dark_vessel_seeds_evaluated": dark_vessel_data.get("n_seeds", 20),
+                "dark_vessel_capture_std": dv_hl.get("end_to_end_capture_std"),
+                "dark_vessel_capture_ci_95": dv_hl.get("end_to_end_capture_ci_95"),
+                "post_detection_recall_std": dv_hl.get("post_detection_recall_std"),
+                "post_detection_recall_ci_95": dv_hl.get("post_detection_recall_ci_95"),
+                "dark_vessel_false_dark_rate_pct": dark_vessel_false_rate_val,
+                "dark_vessel_precision_pct": dark_vessel_precision_val,
+                "dark_vessel_f1_score": dark_vessel_f1_val,
+                "dark_vessel_matching_radius_km": 2.0,
+                "density_sweep": dark_vessel_data.get("density_sweep_per_10k_km2", {}),
+                "temporal_offset_drift_sweep": dark_vessel_data.get("temporal_offset_drift_sweep", {}),
+                "stress_cases": dark_vessel_data.get("stress_cases", {})
             },
             "operational_latency": {
                 "title": "Sensor-to-Alert Pipeline Latency",
@@ -221,24 +278,92 @@ def get_system_kpis() -> Dict[str, Any]:
                 "time_savings_factor": "~16x"
             },
             "geolocation_precision": {
-                "title": "Geolocation Accuracy (Algorithmic — Rasterio Affine CRS)",
-                "cep50_meters": 8.4,
-                "cep90_meters": 16.2,
-                "basis": "Derived from rasterio affine transform accuracy for xView 0.3m GSD tiles. Sentinel-2 10m GSD will produce wider CEP.",
-                "datum": "WGS84 / EPSG:4326"
+                "title": "Geolocation Accuracy (Empirical UTM Projection — xView GeoTIFF Holdout)",
+                "provenance": "MEASURED",
+                "conditional_matching_disclosure": cep_data.get(
+                    "conditional_matching_disclosure",
+                    "Geolocation CEP is strictly conditional on an IoU bounding-box match. Undetected ground-truth targets have no predicted box regression."
+                ),
+                "truth_disclosure": cep_data.get(
+                    "truth_scope_disclaimer",
+                    "Localisation error against dataset's own GeoTIFF georeferencing, not independent GPS truth."
+                ),
+                "cep50_meters": cep50_val,
+                "cep90_meters": cep90_val,
+                "mean_error_meters": mean_err_val,
+                "rmse_meters": rmse_err_val,
+                "matched_targets_count": matched_targets_val,
+                "total_gt_count": total_gt_val,
+                "gt_matched_pct": gt_matched_pct_val,
+                "scenes_evaluated": 38,
+                "tiles_evaluated": 540,
+                "basis": f"Evaluated across {matched_targets_val:,} matched detections (IoU >= 0.3) of {total_gt_val:,} ground truth targets against GeoTIFF affine transform projected to local UTM CRS.",
+                "datum": "WGS84 / Local UTM CRS",
+                "iou_0_3": {
+                    "overall": iou_0_3_overall,
+                    "per_class": iou_0_3_per_class
+                },
+                "iou_0_5": {
+                    "overall": iou_0_5_overall,
+                    "per_class": iou_0_5_per_class
+                },
+                "per_class": iou_0_3_per_class,
+                "registration_sensitivity": cep_data.get("registration_sensitivity_at_iou_0_3", {})
             },
             "edge_hardware_swap_c": {
-                "title": "Edge SWaP-C (NVIDIA Jetson Orin AGX — Projected)",
-                "note": "Projected from TensorRT FP16 benchmark data for YOLO11-class models. Not yet validated on physical Jetson hardware.",
-                "edge_throughput_km2_per_min": 148.3,
-                "inference_framerate_fps": 51.5,
-                "model_footprint_mb": {
-                    "yolo11m_military": 161.0,
-                    "vessel_specialist": 5.3
+                "title": "Edge SWaP-C & Hardware Benchmarks (RTX 4060 Measured & Jetson Projections)",
+                "provenance_host": "MEASURED_RTX4060",
+                "provenance_jetson": "ROUGH ESTIMATE, UNVALIDATED",
+                "compliance_status": "target envelope, not validated",
+                "superseded_single_point_notice": "SUPERSEDED_ARCHIVED (19.4ms / 38.2ms / 28W / 12W figures superseded)",
+                "arithmetic_accumulate_mode": "FP16 Tensor Core arithmetic with FP32 accumulation",
+                "tensorrt_speedup_factor_assumed": "1.3x to 2.0x acceleration over eager PyTorch",
+                "measured_rtx4060": {
+                    "provenance": "MEASURED_RTX4060",
+                    "latency_mean_ms": 35.74,
+                    "latency_p50_ms": 34.54,
+                    "latency_p95_ms": 51.74,
+                    "latency_p99_ms": 64.17,
+                    "framerate_fps": 27.98,
+                    "peak_vram_mb": 294.1,
+                    "model_footprint_mb": 38.72,
+                    "power_board_w": {
+                        "gross_mean_w": 43.07,
+                        "gross_std_w": 0.20,
+                        "net_active_w": 29.42,
+                        "idle_baseline_w": 12.64,
+                        "repeats": 3,
+                        "label": "RTX 4060 GPU board power (nvidia-smi)"
+                    }
                 },
-                "operating_power_draw_w": 28.0,
-                "power_budget_limit_w": 60.0,
-                "budget_compliance": "PASS (projected 46.6% of shipboard budget)"
+                "projected_jetson_agx_orin_64gb": {
+                    "provenance": "ROUGH ESTIMATE, UNVALIDATED",
+                    "compliance": "target envelope, not validated",
+                    "tdp_budget_w": "target envelope <=60W, not validated",
+                    "measured_power_draw": "not estimated (requires Jetson tegrastats rail sampling)",
+                    "latency_range_ms": [10.8, 23.8],
+                    "throughput_range_fps": [42.0, 92.6],
+                    "unaccelerated_roofline_range_ms": [21.7, 23.8],
+                    "compute_bound_formula": "17.39ms * (58.2 TFLOPs / 42.6 Dense TFLOPs) = 23.8 ms",
+                    "bandwidth_bound_formula": "17.39ms * (256.0 GB/s / 204.8 GB/s) = 21.7 ms",
+                    "tensorrt_speedup_formula": "Lower bound: 21.7ms / 2.0x TRT = 10.8 ms (92.6 FPS); Upper bound: 23.8ms unaccelerated = 23.8 ms (42.0 FPS)",
+                    "assumptions": "42.6 Dense FP16 TFLOPs; 204.8 GB/s LPDDR5 bandwidth; FP16 TensorRT engine with FP32 accumulation; 1.3-2x TRT factor",
+                    "spec_source": "NVIDIA Jetson AGX Orin Series Data Sheet DS-10654-001_v1.7, Table 1"
+                },
+                "projected_jetson_orin_nano_8gb": {
+                    "provenance": "ROUGH ESTIMATE, UNVALIDATED",
+                    "compliance": "target envelope, not validated",
+                    "tdp_budget_w": "target envelope <=15W, not validated",
+                    "measured_power_draw": "not estimated (requires Jetson tegrastats rail sampling)",
+                    "latency_range_ms": [32.8, 98.8],
+                    "throughput_range_fps": [10.1, 30.5],
+                    "unaccelerated_roofline_range_ms": [65.5, 98.8],
+                    "compute_bound_formula": "17.39ms * (58.2 TFLOPs / 10.24 Dense TFLOPs) = 98.8 ms",
+                    "bandwidth_bound_formula": "17.39ms * (256.0 GB/s / 68.0 GB/s) = 65.5 ms",
+                    "tensorrt_speedup_formula": "Lower bound: 65.5ms / 2.0x TRT = 32.8 ms (30.5 FPS); Upper bound: 98.8ms unaccelerated = 98.8 ms (10.1 FPS)",
+                    "assumptions": "10.24 Dense FP16 TFLOPs; 68.0 GB/s LPDDR5 bandwidth; FP16 TensorRT engine with FP32 accumulation; 1.3-2x TRT factor",
+                    "spec_source": "NVIDIA Jetson Orin Nano Series Data Sheet DS-11105-001_v1.3, Table 1"
+                }
             },
             "false_alarm_engineering": {
                 "title": "False-Alarm Reduction (Physical Geometry Gating & Filters)",

@@ -295,14 +295,15 @@ class Track:
         angle_rad = math.atan2(vecs[0, 0], vecs[1, 0])
         orientation_deg = (math.degrees(angle_rad) + 360.0) % 360.0
 
-        # Circular Error Probable (CEP50 approximation: 0.59 * (semi_major + semi_minor))
+        # Position uncertainty (tracker) (CEP50 approximation: 0.59 * (semi_major + semi_minor))
         cep_50 = 0.5887 * semi_major + 0.5887 * semi_minor
 
         return {
             "semi_major_m": round(float(semi_major), 2),
             "semi_minor_m": round(float(semi_minor), 2),
             "orientation_deg": round(float(orientation_deg), 1),
-            "cep_m": round(float(cep_50), 2)
+            "cep_m": round(float(cep_50), 2),
+            "position_uncertainty_tracker_m": round(float(cep_50), 2)
         }
 
     def _record_history(self, timestamp: float, sensor_name: str) -> None:

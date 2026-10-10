@@ -9,6 +9,9 @@ Key enhancements:
 - Unifies rag_knowledge_base table creation alongside all other sovereign defense tables.
 """
 from __future__ import annotations
+import os
+import sys
+import secrets
 import sqlite3
 import json
 import uuid
@@ -218,23 +221,71 @@ def init_database() -> None:
                 default_zones
             )
 
-        # ── Seed Default Tactical Operators if Empty ────────────────────────
+        # ── 10. Sovereign Security & Operational Audit Log ────────────────
+        c.execute('''
+        CREATE TABLE IF NOT EXISTS audit_logs(
+            id TEXT PRIMARY KEY,
+            timestamp TEXT NOT NULL,
+            event_type TEXT NOT NULL,
+            operator_username TEXT,
+            operator_role TEXT,
+            ip_address TEXT,
+            details TEXT,
+            status TEXT DEFAULT 'SUCCESS'
+        )''')
+        _ensure_column(c, 'users', 'must_change_password', 'INTEGER DEFAULT 0')
+
+        # ── Seed Default Tactical Operators from .env if Empty or Update Default Credentials ──
         cur_u = c.execute('SELECT COUNT(*) FROM users')
+        cmd_env_pass = os.getenv('RAKSHAK_SEED_COMMANDER_PASSWORD') or 'CommanderBootstrap!2026'
+        ana_env_pass = os.getenv('RAKSHAK_SEED_ANALYST_PASSWORD') or 'AnalystBootstrap!2026'
+        from backend.app.auth import hash_password
+        h1, s1 = hash_password(cmd_env_pass)
+        h2, s2 = hash_password(ana_env_pass)
+        now_iso = datetime.now(timezone.utc).isoformat()
+
         if cur_u.fetchone()[0] == 0:
-            from backend.app.auth import hash_password
-            h1, s1 = hash_password('rakshak2026')
-            h2, s2 = hash_password('tactical123')
-            now_iso = datetime.now(timezone.utc).isoformat()
             default_users = [
-                ('commander', h1, s1, 'Cdr. Vikram Sharma', 'TRIDENT-ACTUAL', 'Commander, IN', 'COMMANDER', 'TOP SECRET // COSMIC', now_iso),
-                ('analyst', h2, s2, 'Maj. Rajesh Rathore', 'GARUDA-LEAD', 'Major, IA', 'ANALYST', 'SECRET // TACTICAL', now_iso),
+                ('commander', h1, s1, 'Cdr. Vikram Sharma', 'TRIDENT-ACTUAL', 'Commander, IN', 'COMMANDER', 'TOP SECRET // COSMIC', now_iso, 1),
+                ('analyst', h2, s2, 'Maj. Rajesh Rathore', 'GARUDA-LEAD', 'Major, IA', 'ANALYST', 'SECRET // TACTICAL', now_iso, 1),
             ]
-            c.executemany('INSERT INTO users VALUES (?,?,?,?,?,?,?,?,?)', default_users)
+            c.executemany(
+                'INSERT INTO users (username, password_hash, salt, full_name, callsign, rank, role, clearance, created_at, must_change_password) VALUES (?,?,?,?,?,?,?,?,?,?)',
+                default_users
+            )
+        else:
+            # Sync default seeded accounts to .env credentials and enforce mandatory first-login password rotation
+            c.execute('UPDATE users SET password_hash = ?, salt = ?, must_change_password = 1 WHERE username = "commander"', (h1, s1))
+            c.execute('UPDATE users SET password_hash = ?, salt = ?, must_change_password = 1 WHERE username = "analyst"', (h2, s2))
 
         c.commit()
     finally:
         c.close()
 
 
+def log_audit_event(
+    event_type: str,
+    operator_username: Optional[str] = None,
+    operator_role: Optional[str] = None,
+    ip_address: Optional[str] = None,
+    details: Optional[str] = None,
+    status: str = 'SUCCESS'
+) -> str:
+    """Record an immutable security audit event into sovereign SQLite log."""
+    log_id = f"aud-{uuid.uuid4().hex[:12]}"
+    now_iso = datetime.now(timezone.utc).isoformat()
+    try:
+        with get_db() as c:
+            c.execute('''
+                INSERT INTO audit_logs (id, timestamp, event_type, operator_username, operator_role, ip_address, details, status)
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+            ''', (log_id, now_iso, event_type, operator_username or 'SYSTEM', operator_role or 'SYSTEM', ip_address or '127.0.0.1', details or '', status))
+            c.commit()
+    except Exception as e:
+        print(f"[AUDIT LOG WARNING] Failed to record audit event: {e}", file=sys.stderr)
+    return log_id
+
+
 # Execute idempotent database schema initialization on module import
 init_database()
+
